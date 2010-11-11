@@ -1,4 +1,0 @@
-$Id$
-
-■ディレクトリ
-　→loveapple.service
