@@ -3,7 +3,7 @@ package cn.loveapple.service.cool.service.impl;
 import java.util.Date;
 import java.util.List;
 
-import jp.co.active.kteam.cool.meta.SampleModelMeta;
+import cn.loveapple.service.cool.meta.SampleModelMeta;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
