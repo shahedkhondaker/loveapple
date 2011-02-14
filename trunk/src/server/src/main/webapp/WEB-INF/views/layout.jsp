@@ -1,30 +1,25 @@
 <%@ include file="include.jsp" %>
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
-"http://www.w3.org/TR/html4/loose.dtd">
-<html>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="${pageContext.response.locale}">
 <head>
-	<META�http-equiv="Content-Type"�content="text/html;charset=UTF-8">
-	<title><tiles:insertAttribute name="title" ignore="true" /></title>
-	<link rel="stylesheet" href="<c:url value="/styles/blueprint/screen.css" />" type="text/css" media="screen, projection">
-	<link rel="stylesheet" href="<c:url value="/styles/blueprint/print.css" />" type="text/css" media="print">
-	<!--[if lt IE 8]>
-		<link rel="stylesheet" href="<c:url value="/styles/blueprint/ie.css" />" type="text/css" media="screen, projection">
-	<![endif]-->
+	<link type="text/css" rel="stylesheet" href="./css/style.css" />
+	<tiles:insertAttribute name="meta" ignore="true" />
 </head>
 <body>
-<table border="1" cellpadding="2" cellspacing="2" align="center">
-	<tr>
-		<td height="30" colspan="2"><tiles:insertAttribute name="header" />
-		</td>
-	</tr>
-	<tr>
-		<td height="250"><tiles:insertAttribute name="menu" /></td>
-		<td width="350"><tiles:insertAttribute name="body" /></td>
-	</tr>
-	<tr>
-		<td height="30" colspan="2"><tiles:insertAttribute name="footer" />
-		</td>
-	</tr>
+<div id="page">
+<table border="0" cellpadding="0" cellspacing="0" width="100%">
+	<tbody><tiles:insertAttribute name="header" /></tbody>
 </table>
+<table border="0" cellpadding="0" cellspacing="0" width="100%">
+	<tbody>
+		<tr valign="top">
+			<td style="width: 155px; background: #FFFEFE;"><tiles:insertAttribute name="leftMenu" /></td>
+			<td style="padding: 7px" id="main"><div id="body"><tiles:insertAttribute name="body" /></div></td>
+			<td style="width: 125px; padding-top: 1px;"><tiles:insertAttribute name="rightMenu" /></td>
+		</tr>
+	</tbody>
+</table>
+<tiles:insertAttribute name="footer" />
+</div>
 </body>
 </html>
