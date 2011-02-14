@@ -3,6 +3,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="${pageContext.response.locale}" lang="${pageContext.response.locale}">
 <head>
 	<link type="text/css" rel="stylesheet" href="./css/style.css" />
+	<meta name="author" content="loveapple" />
 	<tiles:insertAttribute name="meta" ignore="true" />
 </head>
 <body>
