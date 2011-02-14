@@ -516,14 +516,12 @@ org.eclipse.jdt.apt.reconcileEnabled=false
 						</goals>
 						<configuration>
 							<encoding>${project.build.sourceEncoding}</encoding>
-							<outputDirectory>${generated.war}/WEB-INF</outputDirectory>
+							<outputDirectory>${generated.war}</outputDirectory>
 							<resources>
 								<resource>
-									<directory>target/${project.artifactId}-${project.version}/WEB-INF</directory>
+									<directory>target/${project.artifactId}-${project.version}</directory>
 									<includes>
-										<include>**/*.xml</include>
-										<include>**/*.properties</include>
-										<include>**/*.jsp</include>
+										<include>**/*</include>
 									</includes>
 									<excludes>
 										<exclude>classes/**</exclude>

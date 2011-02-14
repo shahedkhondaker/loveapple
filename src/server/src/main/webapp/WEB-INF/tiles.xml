@@ -4,15 +4,15 @@
 	   "http://tiles.apache.org/dtds/tiles-config_2_1.dtd">
 <tiles-definitions>
 	<definition name="base.definition" template="/WEB-INF/views/layout.jsp">
-		<put-attribute name="title" value="" />
+		<put-attribute name="meta" value="/WEB-INF/views/common/meta.jsp" />
 		<put-attribute name="header" value="/WEB-INF/views/common/header.jsp" />
-		<put-attribute name="menu" value="/WEB-INF/views/common/menu.jsp" />
+		<put-attribute name="leftMenu" value="/WEB-INF/views/common/leftMenu.jsp" />
+		<put-attribute name="rightMenu" value="/WEB-INF/views/common/rightMenu.jsp" />
 		<put-attribute name="body" value="" />
 		<put-attribute name="footer" value="/WEB-INF/views/common/footer.jsp" />
 	</definition>
-	<definition name="welcome" extends="base.definition">
-		<put-attribute name="title" value="/WEB-INF/views/common/title.jsp" />
-		<put-attribute name="body" value="/WEB-INF/views/common/body.jsp" />
+	<definition name="index" extends="base.definition">
+		<put-attribute name="body" value="/WEB-INF/views/index/body.jsp" />
 	</definition>
 	<definition name="sample/createForm" extends="base.definition">
 		<put-attribute name="title" value="sample createform" />
