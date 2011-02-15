@@ -22,4 +22,12 @@
 		<put-attribute name="title" value="sample view" />
 		<put-attribute name="body" value="/WEB-INF/views/sample/view.jsp" />
 	</definition>
+	<definition name="member/index" extends="base.definition">
+		<put-attribute name="title" value="${title}" />
+		<put-attribute name="body" value="/WEB-INF/views/member/index.jsp" />
+	</definition>
+	<definition name="member/core/info" extends="base.definition">
+		<put-attribute name="title" value="${title}" />
+		<put-attribute name="body" value="/WEB-INF/views/member/info.jsp" />
+	</definition>
 </tiles-definitions>
