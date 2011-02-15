@@ -99,7 +99,7 @@ public class SampleControllerTest {
 
 	/**
 	 * Test method for
-	 * {@link cn.loveapple.service.controller.sample.action.SampleController#create(jp.co.active.kterm.controller.sample.SampleForm, org.springframework.validation.BindingResult)}
+	 * {@link cn.loveapple.service.controller.sample.action.SampleController#create(MemberForm.co.active.kterm.controller.sample.SampleForm, org.springframework.validation.BindingResult)}
 	 * .
 	 */
 	@Test

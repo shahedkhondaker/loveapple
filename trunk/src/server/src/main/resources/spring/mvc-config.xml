@@ -29,7 +29,7 @@
 		
 		<!-- 会員向けURL -->
 		<mvc:interceptor>
-			<mvc:mapping path="/*" />
+			<mvc:mapping path="/*/core" />
 			<bean class="cn.loveapple.service.interceptor.front.core.GoogleAuthInterceptor" />
 		</mvc:interceptor>
 	</mvc:interceptors>
