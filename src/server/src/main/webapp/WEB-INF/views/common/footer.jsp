@@ -1,7 +1,7 @@
 <%@ include file="../include.jsp" %>
 <div>
 <center><br />
-loveapple(暂定)公开引擎名称，归属loveapple开发组所有<br />
+<fmt:message key="msg.index.footer.right"/><br />
 <br />
 </center>
 </div>
