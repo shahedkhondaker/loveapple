@@ -26,7 +26,7 @@ public class MemberAuthForm {
 	 * パスワード
 	 */
 	@NotNull
-	@Size(min=32, max=32)
+	@Size(min=32, max=32, message="javax.validation.constraints.Pattern.message")
 	//@Pattern(regexp="\\p{Alnum}=")
 	private String password;
 
