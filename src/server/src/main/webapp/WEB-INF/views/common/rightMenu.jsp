@@ -22,7 +22,6 @@ src="http://pagead2.googlesyndication.com/pagead/show_ads.js">
 	href="#">Feed</a-->
 <a href="http://sourceforge.jp/projects/loveapple"><img width="96" height="31" border="0" alt="SourceForge.JP" src="http://sourceforge.jp/sflogo.php?group_id=3419"/></a>
 <br />
-<a href="http://sourceforge.jp/projects/loveapple/wiki/FrontPage">日本語WIKI</a>
 </center>
 
 <br />
