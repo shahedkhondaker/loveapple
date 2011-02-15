@@ -9,7 +9,7 @@
 	<inceptionYear>2010</inceptionYear>
 	<properties>
 		<slim3.version>1.0.5</slim3.version>
-		<appengine.version>1.3.8</appengine.version>
+		<appengine.version>1.4.2</appengine.version>
 		<generated.war>war</generated.war>
 		<eclipse.lib>eclipse.lib</eclipse.lib>
 		<generated.src>target/apt_generated</generated.src>
