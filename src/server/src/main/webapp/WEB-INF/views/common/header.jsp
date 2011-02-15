@@ -17,7 +17,7 @@
 </tr>
 <tr>
 	<td align="right" class="menu" valign="bottom" height="31">
-		<div><a href="/"><fmt:message key="msg.index.summary"/></a> 
+		<div><a href="/member"><fmt:message key="msg.member.login"/></a> 
 			<%--
 			<a href="#">主体设计</a> 
 			<a href="#">相关信息</a>
