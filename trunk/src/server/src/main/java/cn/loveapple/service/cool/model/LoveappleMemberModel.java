@@ -1,0 +1,273 @@
+package cn.loveapple.service.cool.model;
+import static cn.loveapple.service.cool.model.ModelConstant.*;
+
+import java.util.Date;
+
+import org.apache.commons.lang.builder.ToStringBuilder;
+import org.slim3.datastore.Attribute;
+import org.slim3.datastore.Model;
+
+import com.google.appengine.api.datastore.GeoPt;
+import com.google.appengine.api.datastore.Key;
+
+/**
+ * Loveapple会員モデル
+ * 
+ * @author hao_shunri
+ *
+ */
+@Model(kind=LOVEAPPLE_MEMBER_MODEL)
+public class LoveappleMemberModel {
+
+	/**
+	 * キー
+	 */
+	@Attribute(primaryKey=true)
+	private Key key;
+	
+	/**
+	 * ログインID
+	 */
+	@Attribute(unindexed=false)
+	private String loginId;
+	
+	/**
+	 * ドメイン名付きのGmailのログインID
+	 */
+	@Attribute(unindexed=false)
+	private String gmailId;
+	
+	/**
+	 * 表示用のユーザ名
+	 */
+	@Attribute(unindexed=true)
+	private String name;
+	
+	/**
+	 * QQのID
+	 */
+	@Attribute(unindexed=true)
+	private String qqId;
+	
+	/**
+	 * QQ認証キー
+	 */
+	@Attribute(unindexed=true)
+	private String qqAuthKey;
+	
+	/**
+	 * パスワード
+	 */
+	@Attribute(unindexed=true)
+	private String password;
+	
+	/**
+	 * 直近更新した座標
+	 */
+	@Attribute(unindexed=false)
+	private GeoPt lastLocation;
+	
+
+	/**
+	 * 直近更新した誤差
+	 */
+	@Attribute(unindexed=true)
+	private Double lastAccuracy;
+		
+	/**
+	 * 登録日時
+	 */
+	@Attribute(unindexed=true)
+	private Date insertDate;
+	
+	/**
+	 * 更新日時
+	 */
+	@Attribute(unindexed=true)
+	private Date updateDate;
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public String toString(){
+		return ToStringBuilder.reflectionToString(this);
+	}
+
+	/**
+	 * キーを取得します。
+	 * @return キー
+	 */
+	public Key getKey() {
+	    return key;
+	}
+
+	/**
+	 * キーを設定します。
+	 * @param key キー
+	 */
+	public void setKey(Key key) {
+	    this.key = key;
+	}
+
+	/**
+	 * ログインIDを取得します。
+	 * @return ログインID
+	 */
+	public String getLoginId() {
+	    return loginId;
+	}
+
+	/**
+	 * ログインIDを設定します。
+	 * @param loginId ログインID
+	 */
+	public void setLoginId(String loginId) {
+	    this.loginId = loginId;
+	}
+
+	/**
+	 * ドメイン名付きのGmailのログインIDを取得します。
+	 * @return ドメイン名付きのGmailのログインID
+	 */
+	public String getGmailId() {
+	    return gmailId;
+	}
+
+	/**
+	 * ドメイン名付きのGmailのログインIDを設定します。
+	 * @param gmailId ドメイン名付きのGmailのログインID
+	 */
+	public void setGmailId(String gmailId) {
+	    this.gmailId = gmailId;
+	}
+
+	/**
+	 * 表示用のユーザ名を取得します。
+	 * @return 表示用のユーザ名
+	 */
+	public String getName() {
+	    return name;
+	}
+
+	/**
+	 * 表示用のユーザ名を設定します。
+	 * @param name 表示用のユーザ名
+	 */
+	public void setName(String name) {
+	    this.name = name;
+	}
+
+	/**
+	 * QQのIDを取得します。
+	 * @return QQのID
+	 */
+	public String getQqId() {
+	    return qqId;
+	}
+
+	/**
+	 * QQのIDを設定します。
+	 * @param qqId QQのID
+	 */
+	public void setQqId(String qqId) {
+	    this.qqId = qqId;
+	}
+
+	/**
+	 * QQ認証キーを取得します。
+	 * @return QQ認証キー
+	 */
+	public String getQqAuthKey() {
+	    return qqAuthKey;
+	}
+
+	/**
+	 * QQ認証キーを設定します。
+	 * @param qqAuthKey QQ認証キー
+	 */
+	public void setQqAuthKey(String qqAuthKey) {
+	    this.qqAuthKey = qqAuthKey;
+	}
+
+	/**
+	 * パスワードを取得します。
+	 * @return パスワード
+	 */
+	public String getPassword() {
+	    return password;
+	}
+
+	/**
+	 * パスワードを設定します。
+	 * @param password パスワード
+	 */
+	public void setPassword(String password) {
+	    this.password = password;
+	}
+
+	/**
+	 * 直近更新した座標を取得します。
+	 * @return 直近更新した座標
+	 */
+	public GeoPt getLastLocation() {
+	    return lastLocation;
+	}
+
+	/**
+	 * 直近更新した座標を設定します。
+	 * @param lastLocation 直近更新した座標
+	 */
+	public void setLastLocation(GeoPt lastLocation) {
+	    this.lastLocation = lastLocation;
+	}
+
+	/**
+	 * 直近更新した誤差を取得します。
+	 * @return 直近更新した誤差
+	 */
+	public Double getLastAccuracy() {
+	    return lastAccuracy;
+	}
+
+	/**
+	 * 直近更新した誤差を設定します。
+	 * @param lastAccuracy 直近更新した誤差
+	 */
+	public void setLastAccuracy(Double lastAccuracy) {
+	    this.lastAccuracy = lastAccuracy;
+	}
+
+	/**
+	 * 登録日時を取得します。
+	 * @return 登録日時
+	 */
+	public Date getInsertDate() {
+	    return insertDate;
+	}
+
+	/**
+	 * 登録日時を設定します。
+	 * @param insertDate 登録日時
+	 */
+	public void setInsertDate(Date insertDate) {
+	    this.insertDate = insertDate;
+	}
+
+	/**
+	 * 更新日時を取得します。
+	 * @return 更新日時
+	 */
+	public Date getUpdateDate() {
+	    return updateDate;
+	}
+
+	/**
+	 * 更新日時を設定します。
+	 * @param updateDate 更新日時
+	 */
+	public void setUpdateDate(Date updateDate) {
+	    this.updateDate = updateDate;
+	}
+
+}
