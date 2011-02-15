@@ -2,7 +2,7 @@
 <div>
 <center><br />
 <fmt:message key="msg.index.footer.right"/><br />
-<br />
+<fmt:message key="msg.index.footer.poweredby"/><br />
 </center>
 </div>
 
