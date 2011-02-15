@@ -286,6 +286,11 @@
 			<artifactId>spring-core</artifactId>
 			<version>${org.springframework.version}</version>
 		</dependency>
+		<dependency>
+			<groupId>commons-httpclient</groupId>
+			<artifactId>commons-httpclient</artifactId>
+			<version>3.1</version>
+		</dependency>
 	</dependencies>
 	<build>
 		<outputDirectory>${generated.war}/WEB-INF/classes</outputDirectory>
