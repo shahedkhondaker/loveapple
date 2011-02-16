@@ -27,15 +27,18 @@ public final class Constant {
 	/**
 	 * ベースURL定義：会員認証系
 	 */
+	@Deprecated
 	public static final String URL_CORE = "/core";
 	/**
 	 * ベースURL定義：{@linkplain BaseController ベースコントローラ}用
 	 */
+	@Deprecated
 	public static final String URL_BASE = "/system";
 	
 
 	/**
 	 * ベースURL定義：サンプルコントローラ用
 	 */
+	@Deprecated
 	public static final String URL_SAMPLE = "/sample";
 }

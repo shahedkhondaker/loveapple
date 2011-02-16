@@ -1,5 +1,6 @@
 package cn.loveapple.service.cool.model;
 
+import java.io.Serializable;
 import java.util.Date;
 
 import org.apache.commons.lang.builder.ToStringBuilder;
@@ -15,8 +16,9 @@ import com.google.appengine.api.datastore.Key;
  * @author hao_shunri
  *
  */
+@SuppressWarnings("serial")
 @Model
-public class SampleModel {
+public class SampleModel implements Serializable{
 
 	/**
 	 * キー
