@@ -71,6 +71,9 @@ public class MemberController {
 
 		if(member == null){
 			result.addError(new ObjectError("auth", "errors.auth"));
+			if(log.isDebugEnabled()){
+				log.debug("not have user:" + form.getLoginId());
+			}
 			return "member/index";
 		}
 		
