@@ -1,4 +1,4 @@
-<%@ include file="../include.jsp" %>
+<%@ include file="/WEB-INF/views/common/include.jsp" %>
 <script type="text/javascript" src="/javascript/md5.js"></script>
 <script type="text/javascript">
 <!--

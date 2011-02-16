@@ -1,4 +1,4 @@
-<%@ include file="../include.jsp" %>
+<%@ include file="/WEB-INF/views/common/include.jsp" %>
 <tr class="headerbox">
 	<td rowspan="2" height="70"><a href="/"> <!-- img
 		src="./images/logo-java.png" border="0" height="70" width="221"
@@ -17,7 +17,7 @@
 </tr>
 <tr>
 	<td align="right" class="menu" valign="bottom" height="31">
-		<div><a href="/member"><fmt:message key="msg.member.login"/></a> 
+		<div><a href="/member"><loveapple:loginLink /></a>
 			<%--
 			<a href="#">主体设计</a> 
 			<a href="#">相关信息</a>

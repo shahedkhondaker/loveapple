@@ -1,5 +1,4 @@
-<%@ include file="../include.jsp" %>
-
+<%@ include file="/WEB-INF/views/common/include.jsp" %>
 <h1><fmt:message key="msg.index.title"/></h1>
 
 <h3><span><a href="#"><fmt:message key="msg.index.summary"/></a></span></h3>

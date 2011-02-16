@@ -1,5 +1,4 @@
-<%@ include file="../include.jsp" %>
-
+<%@ include file="/WEB-INF/views/common/include.jsp" %>
 <script type="text/javascript"><!--
 google_ad_client = "pub-2097865745512830";
 /* 160x600, java-sourceテンプレート 09/02/25 */

@@ -1,5 +1,4 @@
-<%@ include file="../include.jsp" %>
-
+<%@ include file="/WEB-INF/views/common/include.jsp" %>
 <table border="0" id="leftmenu" cellpadding="0" cellspacing="0">
 	<tbody>
 		<tr>

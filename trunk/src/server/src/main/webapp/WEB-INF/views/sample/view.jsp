@@ -1,4 +1,4 @@
-<%@ include file="../include.jsp" %>
+<%@ include file="/WEB-INF/views/common/include.jsp" %>
 </head>	
 <body onload="initialize()" onunload="GUnload()">
 <div class="container">
