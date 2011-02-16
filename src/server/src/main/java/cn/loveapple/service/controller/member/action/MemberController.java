@@ -1,5 +1,6 @@
 package cn.loveapple.service.controller.member.action;
 
+import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 
 import org.apache.commons.logging.Log;
@@ -13,6 +14,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
+import cn.loveapple.service.controller.SessionLabel;
 import cn.loveapple.service.controller.exception.ResourceNotFoundException;
 import cn.loveapple.service.controller.member.form.MemberAuthForm;
 import cn.loveapple.service.cool.model.LoveappleMemberModel;
@@ -29,7 +31,7 @@ import cn.loveapple.service.cool.service.MemberCoreService;
  */
 @Controller
 @RequestMapping(value="/member")
-public class MemberController {
+public class MemberController implements SessionLabel{
 	/**
 	 * ログ
 	 */
@@ -44,11 +46,13 @@ public class MemberController {
 	/**
 	 * 直打ちの場合、実行される
 	 * 
+	 * @param session
 	 * @param model
 	 * @return
 	 */
 	@RequestMapping(method=RequestMethod.GET)
-	public String index(Model model) {
+	public String index(HttpSession session, Model model) {
+		clearMemberInfo(session);
 		MemberAuthForm form = new MemberAuthForm();
 		
 		model.addAttribute(form);
@@ -62,7 +66,7 @@ public class MemberController {
 	 * @return
 	 */
 	@RequestMapping(value="auth", method=RequestMethod.POST)
-	public String auth(@Valid MemberAuthForm form, BindingResult result) {
+	public String auth(@Valid MemberAuthForm form, HttpSession session, BindingResult result) {
 		if (result.hasErrors()) {
 			return "member/index";
 		}
@@ -76,6 +80,8 @@ public class MemberController {
 			}
 			return "member/index";
 		}
+		
+		session.setAttribute(LOVEAPPLE_MEMBER, member);
 		
 		return "redirect:/member/core/info" + member.getKey().getId();
 	}
@@ -100,6 +106,14 @@ public class MemberController {
 		return "member/core/info";
 	}
 	
+	/**
+	 * セッション情報から会員情報を削除する。
+	 * 
+	 * @param session セッション
+	 */
+	protected void clearMemberInfo(HttpSession session) {
+		session.removeAttribute(LOVEAPPLE_MEMBER);
+	}
 	/**
 	 * 会員情報操作ロジックを設定します。
 	 * @param memberCoreService 会員情報操作ロジック
