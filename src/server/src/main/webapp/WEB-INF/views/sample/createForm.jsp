@@ -1,4 +1,4 @@
-<%@ include file="../include.jsp" %>
+<%@ include file="/WEB-INF/views/common/include.jsp" %>
 <script type="text/javascript"><!--
 window.onload = function(){
     navigator.geolocation.watchPosition(update);

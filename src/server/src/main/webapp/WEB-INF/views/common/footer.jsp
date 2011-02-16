@@ -1,4 +1,4 @@
-<%@ include file="../include.jsp" %>
+<%@ include file="/WEB-INF/views/common/include.jsp" %>
 <div>
 <center><br />
 <fmt:message key="msg.index.footer.right"/><br />
