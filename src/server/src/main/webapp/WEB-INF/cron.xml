@@ -1,8 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
+<!-- 説明：http://code.google.com/intl/ja/appengine/docs/java/config/cron.html -->
 <cronentries>
 	<cron>
-		<url>/_ah/sessioncleanup?clear</url>
+		<url>/admin/cron/sessionCleanup?clear</url>
 		<description>Clean up sessions</description>
-		<schedule>every day</schedule>
+		<schedule>every 1 hours</schedule>
+		<timezone>Asia/Tokyo</timezone>
 	</cron>
 </cronentries>
