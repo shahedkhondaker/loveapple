@@ -12,6 +12,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.ObjectError;
+import org.springframework.validation.ValidationUtils;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -19,6 +21,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import cn.loveapple.service.controller.SessionLabel;
 import cn.loveapple.service.controller.exception.ResourceNotFoundException;
 import cn.loveapple.service.controller.member.form.MemberAuthForm;
+import cn.loveapple.service.controller.member.form.MemberValidator;
 import cn.loveapple.service.cool.model.LoveappleMemberModel;
 import cn.loveapple.service.cool.service.MemberCoreService;
 
@@ -34,6 +37,7 @@ import cn.loveapple.service.cool.service.MemberCoreService;
 @Controller
 @RequestMapping(value="/member")
 public class MemberController implements SessionLabel{
+	private MemberValidator validator = new MemberValidator();
 	/**
 	 * ログ
 	 */
@@ -115,7 +119,7 @@ public class MemberController implements SessionLabel{
 	 * @return
 	 */
 	@RequestMapping(value="auth", method=RequestMethod.POST)
-	public String auth(@Valid MemberAuthForm form, HttpSession session, BindingResult result) {
+	public String auth(@Valid MemberAuthForm form, BindingResult result, HttpSession session) {
 		if (result.hasErrors()) {
 			return "member/index";
 		}
@@ -123,10 +127,10 @@ public class MemberController implements SessionLabel{
 		LoveappleMemberModel member = memberCoreService.authenticateLoveappleMember(form.getLoginId(), form.getPassword());
 
 		if(member == null){
-			result.addError(new ObjectError("loginId", "errors.auth"));
 			if(log.isDebugEnabled()){
 				log.debug("not have user:" + form.getLoginId());
 			}
+			result.reject("errors.auth");
 			return "member/index";
 		}
 				
