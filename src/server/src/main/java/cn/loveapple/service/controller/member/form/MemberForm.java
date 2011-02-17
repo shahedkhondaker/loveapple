@@ -1,98 +1,81 @@
-package cn.loveapple.service.cool.model;
-import static cn.loveapple.service.cool.model.ModelConstant.*;
-
+package cn.loveapple.service.controller.member.form;
 import java.io.Serializable;
-import java.util.Date;
+
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 
 import org.apache.commons.lang.builder.ToStringBuilder;
-import org.slim3.datastore.Attribute;
-import org.slim3.datastore.Model;
+import org.hibernate.validator.constraints.Email;
 
 import com.google.appengine.api.datastore.GeoPt;
-import com.google.appengine.api.datastore.Key;
 
 /**
  * Loveapple会員モデル
  * 
  * @author hao_shunri
- *
+ * TODO 作成中
  */
-@SuppressWarnings("serial")
-@Model(kind=LOVEAPPLE_MEMBER_MODEL)
-public class LoveappleMemberModel implements Serializable{
-
-	/**
-	 * キー
-	 */
-	@Attribute(primaryKey=true)
-	private Key key;
+public class MemberForm implements Serializable{
 	
 	/**
 	 * ログインID
 	 */
-	@Attribute(unindexed=false)
+	@NotNull
+	@Size(min=1, max=25)
+	//@Pattern(regexp="\\p{Alnum}\\-\\_")
 	private String loginId;
 	
 	/**
 	 * ドメイン名付きのGmailのログインID
 	 */
-	@Attribute(unindexed=false)
+	@Email
 	private String gmailId;
+	
+	/**
+	 * Gmailアカウントのパスワード
+	 */
+	private String gmailPassword;
 	
 	/**
 	 * 表示用のユーザ名
 	 */
-	@Attribute(unindexed=true)
 	private String name;
 	
 	/**
 	 * QQのID
 	 */
-	@Attribute(unindexed=true)
 	private String qqId;
+	
+	/**
+	 * QQアカウントのパスワード
+	 */
+	private String qqIdPassword;
 	
 	/**
 	 * QQ認証キー
 	 */
-	@Attribute(unindexed=true)
 	private String qqAuthKey;
 	
 	/**
 	 * パスワード
 	 */
-	@Attribute(unindexed=true)
+	@NotNull
+	@Size(min=32, max=32, message="javax.validation.constraints.Pattern.message")
+	//@Pattern(regexp="\\p{Alnum}=")
 	private String password;
 	
 	/**
 	 * 直近更新した座標
 	 */
-	@Attribute(unindexed=false)
 	private GeoPt lastLocation;
 	
 
 	/**
 	 * 直近更新した誤差
 	 */
-	@Attribute(unindexed=true)
 	private Double lastAccuracy;
 		
-	/**
-	 * 登録日時
-	 */
-	@Attribute(unindexed=true)
-	private Date insertDate;
 	
-	/**
-	 * 直近ログインした日時
-	 */
-	@Attribute(unindexed=true)
-	private Date lastLoginDate;
-	
-	/**
-	 * 更新日時
-	 */
-	@Attribute(unindexed=true)
-	private Date updateDate;
 
 	/**
 	 * {@inheritDoc}
@@ -100,22 +83,6 @@ public class LoveappleMemberModel implements Serializable{
 	@Override
 	public String toString(){
 		return ToStringBuilder.reflectionToString(this);
-	}
-
-	/**
-	 * キーを取得します。
-	 * @return キー
-	 */
-	public Key getKey() {
-	    return key;
-	}
-
-	/**
-	 * キーを設定します。
-	 * @param key キー
-	 */
-	public void setKey(Key key) {
-	    this.key = key;
 	}
 
 	/**
@@ -151,6 +118,22 @@ public class LoveappleMemberModel implements Serializable{
 	}
 
 	/**
+	 * Gmailアカウントのパスワードを取得します。
+	 * @return Gmailアカウントのパスワード
+	 */
+	public String getGmailPassword() {
+	    return gmailPassword;
+	}
+
+	/**
+	 * Gmailアカウントのパスワードを設定します。
+	 * @param gmailPassword Gmailアカウントのパスワード
+	 */
+	public void setGmailPassword(String gmailPassword) {
+	    this.gmailPassword = gmailPassword;
+	}
+
+	/**
 	 * 表示用のユーザ名を取得します。
 	 * @return 表示用のユーザ名
 	 */
@@ -180,6 +163,22 @@ public class LoveappleMemberModel implements Serializable{
 	 */
 	public void setQqId(String qqId) {
 	    this.qqId = qqId;
+	}
+
+	/**
+	 * QQアカウントのパスワードを取得します。
+	 * @return QQアカウントのパスワード
+	 */
+	public String getQqIdPassword() {
+	    return qqIdPassword;
+	}
+
+	/**
+	 * QQアカウントのパスワードを設定します。
+	 * @param qqIdPassword QQアカウントのパスワード
+	 */
+	public void setQqIdPassword(String qqIdPassword) {
+	    this.qqIdPassword = qqIdPassword;
 	}
 
 	/**
@@ -246,52 +245,5 @@ public class LoveappleMemberModel implements Serializable{
 	    this.lastAccuracy = lastAccuracy;
 	}
 
-	/**
-	 * 登録日時を取得します。
-	 * @return 登録日時
-	 */
-	public Date getInsertDate() {
-	    return insertDate;
-	}
-
-	/**
-	 * 登録日時を設定します。
-	 * @param insertDate 登録日時
-	 */
-	public void setInsertDate(Date insertDate) {
-	    this.insertDate = insertDate;
-	}
-
-	/**
-	 * 直近ログインした日時を取得します。
-	 * @return 直近ログインした日時
-	 */
-	public Date getLastLoginDate() {
-	    return lastLoginDate;
-	}
-
-	/**
-	 * 直近ログインした日時を設定します。
-	 * @param lastLoginDate 直近ログインした日時
-	 */
-	public void setLastLoginDate(Date lastLoginDate) {
-	    this.lastLoginDate = lastLoginDate;
-	}
-
-	/**
-	 * 更新日時を取得します。
-	 * @return 更新日時
-	 */
-	public Date getUpdateDate() {
-	    return updateDate;
-	}
-
-	/**
-	 * 更新日時を設定します。
-	 * @param updateDate 更新日時
-	 */
-	public void setUpdateDate(Date updateDate) {
-	    this.updateDate = updateDate;
-	}
 
 }
