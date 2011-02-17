@@ -22,7 +22,12 @@
 	<!-- アプリケーションメッセージバンドル -->
 	<bean id="messageSource"
 		class="org.springframework.context.support.ReloadableResourceBundleMessageSource">
-		<property name="basename" value="classpath:messages" />
+		<property name="basenames">
+			<list>
+				<value>classpath:messages</value>
+				<value>classpath:ValidationMessages</value>
+			</list>
+		</property>
 		<property name="cacheSeconds" value="0" />
 	</bean>
 
