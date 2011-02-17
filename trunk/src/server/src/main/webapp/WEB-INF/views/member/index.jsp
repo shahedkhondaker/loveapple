@@ -3,7 +3,7 @@
 <script type="text/javascript">
 <!--
 function encryptPassword(form){
-	if(form.password.value != null){
+	if(form.password.value){
 		data = utf16to8(form.password.value);
 		form.password.value = MD5_hexhash(data);
 	}
