@@ -15,7 +15,7 @@ import com.google.appengine.api.datastore.GeoPt;
  * @author hao_shunri
  * TODO 作成中
  */
-public class MemberForm implements Serializable{
+public class MemberForm extends MemberAuthForm implements Serializable{
 	
 	/**
 	 * ログインID
@@ -60,7 +60,7 @@ public class MemberForm implements Serializable{
 	 * パスワード
 	 */
 	@NotNull
-	@Size(min=32, max=32, message="javax.validation.constraints.Pattern.message")
+	@Size(min=32, max=32, message="{javax.validation.constraints.Pattern.message}")
 	//@Pattern(regexp="\\p{Alnum}=")
 	private String password;
 	
