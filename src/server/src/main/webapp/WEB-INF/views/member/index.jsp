@@ -16,13 +16,14 @@ function encryptPassword(form){
 <div>
 	<form:form action="/member/auth" modelAttribute="memberAuthForm" onsubmit="encryptPassword(this)" method="post">
 		<fieldset>
+			<form:errors path="*"  cssErrorClass="error" />
 			<p>
 				<form:label	for="loginId" path="loginId" cssErrorClass="error"><fmt:message key="msg.member.login.id"/></form:label><br/>
-				<form:input path="loginId" /> <form:errors path="loginId" />	
+				<form:input path="loginId" />
 			</p>
 			<p>
 				<form:label	for="password" path="password" cssErrorClass="error"><fmt:message key="msg.member.login.password"/></form:label><br/>
-				<form:password path="password" /> <form:errors path="password" />	
+				<form:password path="password" />	
 			</p>
 			<p>
 				<input type="submit" />
