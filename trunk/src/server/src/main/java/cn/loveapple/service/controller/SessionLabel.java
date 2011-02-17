@@ -14,4 +14,9 @@ public interface SessionLabel {
 	 * {@linkplain LoveappleMemberModel 会員情報}を格納するキー
 	 */
 	public static final String LOVEAPPLE_MEMBER = "loveappleMember";
+	
+	/**
+	 * 「/」始まりの遷移先のURL
+	 */
+	public static final String REFERER_INNER_URL = "refererUrl";
 }

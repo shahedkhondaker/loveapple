@@ -1,5 +1,7 @@
 package cn.loveapple.service.controller.member.action;
 
+import java.util.Date;
+
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 
@@ -42,6 +44,53 @@ public class MemberController implements SessionLabel{
 	 */
 	private MemberCoreService memberCoreService;
 
+	/**
+	 * 登録入力
+	 * 
+	 * @param session
+	 * @param model
+	 * @return
+	 */
+	@RequestMapping(value = "regist", method=RequestMethod.GET)
+	public String regist(HttpSession session, Model model) {
+		clearMemberInfo(session);
+		MemberAuthForm form = new MemberAuthForm();
+		
+		model.addAttribute(form);
+		return "member/regist";
+	}
+	
+	/**
+	 * 登録確認
+	 * 
+	 * @param session
+	 * @param model
+	 * @return
+	 */
+	@RequestMapping(value = "registConfirm", method=RequestMethod.POST)
+	public String registConfirm(HttpSession session, Model model) {
+		clearMemberInfo(session);
+		MemberAuthForm form = new MemberAuthForm();
+		
+		model.addAttribute(form);
+		return "member/registConfirm";
+	}
+	
+	/**
+	 * 登録完了
+	 * 
+	 * @param session
+	 * @param model
+	 * @return
+	 */
+	@RequestMapping(value = "registComplete", method=RequestMethod.POST)
+	public String registComplete(HttpSession session, Model model) {
+		clearMemberInfo(session);
+		MemberAuthForm form = new MemberAuthForm();
+		
+		model.addAttribute(form);
+		return "redirect:/member/core/info/" /*+ member.getKey().getId()*/;
+	}
 
 	/**
 	 * 直打ちの場合、実行される
@@ -74,16 +123,21 @@ public class MemberController implements SessionLabel{
 		LoveappleMemberModel member = memberCoreService.authenticateLoveappleMember(form.getLoginId(), form.getPassword());
 
 		if(member == null){
-			result.addError(new ObjectError("auth", "errors.auth"));
+			result.addError(new ObjectError("loginId", "errors.auth"));
 			if(log.isDebugEnabled()){
 				log.debug("not have user:" + form.getLoginId());
 			}
 			return "member/index";
 		}
-		
+				
 		session.setAttribute(LOVEAPPLE_MEMBER, member);
 		
-		return "redirect:/member/core/info" + member.getKey().getId();
+		Object refererUrl = String.valueOf(session.getAttribute(REFERER_INNER_URL));
+		
+		if(refererUrl != null){
+			return "redirect:" + refererUrl;
+		}
+		return "redirect:/member/core/info/" + member.getKey().getId();
 	}
 
 	/**

@@ -35,7 +35,8 @@ public class MemberCoreServiceImpl implements MemberCoreService {
 		}
 		LoveappleMemberModel member = findByLoginId(loginId);
 		if(member != null && password.equals(member.getPassword())){
-			return member;
+			member.setLastLoginDate(new Date());
+			return newAndPut(member);
 		}
 		return null;
 	}
