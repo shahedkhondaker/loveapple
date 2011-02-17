@@ -12,6 +12,7 @@ import org.springframework.stereotype.Component;
 
 import cn.loveapple.service.cool.model.SampleModel;
 import cn.loveapple.service.cool.service.SampleService;
+import cn.loveapple.service.type.Service;
 
 import com.google.appengine.api.datastore.GeoPt;
 import com.google.appengine.api.datastore.Key;
@@ -23,7 +24,7 @@ import com.google.appengine.api.datastore.KeyFactory;
  * @author hao_shunri
  *
  */
-@Component
+@Service
 public class SampleServiceImpl implements SampleService {
 
 	/**

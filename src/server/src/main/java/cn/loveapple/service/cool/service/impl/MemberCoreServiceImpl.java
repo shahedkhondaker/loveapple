@@ -11,6 +11,7 @@ import org.springframework.stereotype.Component;
 import cn.loveapple.service.cool.meta.LoveappleMemberModelMeta;
 import cn.loveapple.service.cool.model.LoveappleMemberModel;
 import cn.loveapple.service.cool.service.MemberCoreService;
+import cn.loveapple.service.type.Service;
 
 import com.google.appengine.api.datastore.Key;
 import com.google.appengine.api.datastore.KeyFactory;
@@ -21,7 +22,7 @@ import com.google.appengine.api.datastore.KeyFactory;
  * @since 2011/02/15
  * @version $Revision$
  */
-@Component
+@Service
 public class MemberCoreServiceImpl implements MemberCoreService {
 
 	/**

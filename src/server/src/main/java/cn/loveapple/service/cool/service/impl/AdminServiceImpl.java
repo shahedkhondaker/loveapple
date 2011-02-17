@@ -8,6 +8,7 @@ import org.apache.commons.logging.LogFactory;
 import org.springframework.stereotype.Component;
 
 import cn.loveapple.service.cool.service.AdminService;
+import cn.loveapple.service.type.Service;
 
 import com.google.appengine.api.datastore.DatastoreService;
 import com.google.appengine.api.datastore.DatastoreServiceFactory;
@@ -26,7 +27,7 @@ import com.google.appengine.api.datastore.Query.FilterOperator;
  * @since 2011/02/16
  * @version $Revision$
  */
-@Component
+@Service
 public class AdminServiceImpl implements AdminService {
 
 	/**
