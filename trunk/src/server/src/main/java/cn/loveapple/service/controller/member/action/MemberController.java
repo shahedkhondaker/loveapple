@@ -2,12 +2,15 @@ package cn.loveapple.service.controller.member.action;
 
 import java.util.Date;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 
+import org.apache.commons.lang.builder.ToStringBuilder;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.converter.HttpMessageNotWritableException;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -17,10 +20,12 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.servlet.mvc.multiaction.NoSuchRequestHandlingMethodException;
 
 import cn.loveapple.service.controller.SessionLabel;
 import cn.loveapple.service.controller.exception.ResourceNotFoundException;
 import cn.loveapple.service.controller.member.form.MemberAuthForm;
+import cn.loveapple.service.controller.member.form.MemberForm;
 import cn.loveapple.service.controller.member.form.MemberValidator;
 import cn.loveapple.service.cool.model.LoveappleMemberModel;
 import cn.loveapple.service.cool.service.MemberCoreService;
@@ -72,11 +77,19 @@ public class MemberController implements SessionLabel{
 	 * @return
 	 */
 	@RequestMapping(value = "registConfirm", method=RequestMethod.POST)
-	public String registConfirm(HttpSession session, Model model) {
-		clearMemberInfo(session);
-		MemberAuthForm form = new MemberAuthForm();
+	public String registConfirm(@Valid MemberForm form, BindingResult result, HttpSession session, Model model) {
+		LoveappleMemberModel member = memberCoreService.findByLoginId(form.getLoginId());
+		if(member != null){
+			result.reject("errors.beRegisted", new Object[]{"msg.member.login.id"}, "");
+			model.addAttribute(form);
+			return "member/regist";
+		}
+		member = new LoveappleMemberModel();
 		
-		model.addAttribute(form);
+		// TODO 変換
+		
+		session.setAttribute(LOVEAPPLE_MEMBER_TMP, member);
+		
 		return "member/registConfirm";
 	}
 	
@@ -88,12 +101,24 @@ public class MemberController implements SessionLabel{
 	 * @return
 	 */
 	@RequestMapping(value = "registComplete", method=RequestMethod.POST)
-	public String registComplete(HttpSession session, Model model) {
-		clearMemberInfo(session);
-		MemberAuthForm form = new MemberAuthForm();
+	public String registComplete(HttpSession session, HttpServletRequest request, Model model) {
 		
-		model.addAttribute(form);
-		return "redirect:/member/core/info/" /*+ member.getKey().getId()*/;
+		LoveappleMemberModel member = (LoveappleMemberModel) session.getAttribute(LOVEAPPLE_MEMBER_TMP);
+		
+		if(member == null){
+			try {
+				throw new NoSuchRequestHandlingMethodException(request);
+			} catch (NoSuchRequestHandlingMethodException e) {
+				throw new HttpMessageNotWritableException(e.getMessage(), e);
+			}
+		}
+		member = memberCoreService.newAndPut(member);
+		if(member == null){
+			throw new HttpMessageNotWritableException("can not regist member. "
+					+ ToStringBuilder.reflectionToString(session.getAttribute(LOVEAPPLE_MEMBER_TMP)));
+		}
+		
+		return "redirect:/member/core/info/" + member.getKey().getId();
 	}
 
 	/**
