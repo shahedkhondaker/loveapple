@@ -26,6 +26,14 @@ public class MemberForm extends MemberAuthForm implements Serializable{
 	private String loginId;
 	
 	/**
+	 * パスワード
+	 */
+	@NotNull
+	@Size(min=32, max=32, message="{javax.validation.constraints.Pattern.message}")
+	//@Pattern(regexp="\\p{Alnum}=")
+	private String password;
+	
+	/**
 	 * ドメイン名付きのGmailのログインID
 	 */
 	@Email
@@ -56,13 +64,6 @@ public class MemberForm extends MemberAuthForm implements Serializable{
 	 */
 	private String qqAuthKey;
 	
-	/**
-	 * パスワード
-	 */
-	@NotNull
-	@Size(min=32, max=32, message="{javax.validation.constraints.Pattern.message}")
-	//@Pattern(regexp="\\p{Alnum}=")
-	private String password;
 	
 	/**
 	 * 直近更新した座標

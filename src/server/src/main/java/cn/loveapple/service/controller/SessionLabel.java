@@ -19,4 +19,9 @@ public interface SessionLabel {
 	 * 「/」始まりの遷移先のURL
 	 */
 	public static final String REFERER_INNER_URL = "refererUrl";
+	
+	/**
+	 * {@linkplain LoveappleMemberModel 会員情報}登録、更新処理のために、一時的保存するキー
+	 */
+	public static final String LOVEAPPLE_MEMBER_TMP = "loveappleMemberTmp";
 }
