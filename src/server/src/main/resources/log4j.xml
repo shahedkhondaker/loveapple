@@ -12,9 +12,9 @@
 		<priority value="DEBUG" />
 		<appender-ref ref="console" />
 	</category>
-	<root>
-		<level value="warn" />
+	<category name="org.springframework.web.servlet">
+		<priority value="DEBUG" />
 		<appender-ref ref="console" />
-	</root>
+	</category>
 
 </log4j:configuration>
