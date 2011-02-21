@@ -7,6 +7,13 @@ function encryptPassword(form){
 		data = utf16to8(form.password.value);
 		form.password.value = MD5_hexhash(data);
 	}
+	return form;
+}
+function submit(form, action){
+	form = encryptPassword(form);
+	if(action){
+		form.action = action;
+	}
 }
 //-->
 </script>
@@ -14,7 +21,7 @@ function encryptPassword(form){
 
 <h3><span><fmt:message key="msg.member.join.input"/></span></h3>
 <div>
-	<form:form action="/member/registConfirm" modelAttribute="memberForm" onsubmit="encryptPassword(this)" method="post">
+	<form:form action="/member/registConfirm" modelAttribute="memberForm" onsubmit="submit(this)" method="post">
 		<fieldset>
 			<p>
 				<form:label	for="loginId" path="loginId" cssErrorClass="error"><fmt:message key="msg.member.id"/></form:label><br/>
@@ -58,6 +65,7 @@ function encryptPassword(form){
 			</p>
 			<p>
 				<input type="submit" />
+				<input type="button" onclick="submit(this.form, '<spring:url value="/member/regist" />')" />
 				<input type="reset"/> 
 			</p>
 		</fieldset>
