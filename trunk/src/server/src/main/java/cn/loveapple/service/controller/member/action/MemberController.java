@@ -158,7 +158,7 @@ public class MemberController implements SessionLabel{
 			if(log.isDebugEnabled()){
 				log.debug("not have user:" + form.getLoginId());
 			}
-			result.reject("errors.auth");
+			result.reject("loveappleErrors.auth");
 			return "member/index";
 		}
 				
