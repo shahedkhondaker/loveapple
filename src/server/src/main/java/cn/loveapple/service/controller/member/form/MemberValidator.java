@@ -27,7 +27,7 @@ public class MemberValidator implements Validator {
 	 */
 	@Override
 	public boolean supports(Class<?> clazz) {
-		return MemberAuthForm.class.equals(clazz);
+		return MemberForm.class.equals(clazz);
 	}
 
 	/**
@@ -36,6 +36,11 @@ public class MemberValidator implements Validator {
 	 */
 	@Override
 	public void validate(Object target, Errors errors) {
+		
+		MemberForm form = (MemberForm) target;
+		if(!form.getPassword().equals(form.getPasswordConfirm())){
+			errors.reject("loveappleErrors.invalid", new Object[]{"msg.member.password"}, "");
+		}
 	}
 
 }

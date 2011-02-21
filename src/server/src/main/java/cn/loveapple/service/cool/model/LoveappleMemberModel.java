@@ -5,7 +5,11 @@ import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
 
+import javax.validation.constraints.Size;
+
 import org.apache.commons.lang.builder.ToStringBuilder;
+import org.hibernate.validator.constraints.Email;
+import org.hibernate.validator.constraints.NotEmpty;
 import org.slim3.datastore.Attribute;
 import org.slim3.datastore.Model;
 
@@ -31,18 +35,21 @@ public class LoveappleMemberModel implements Serializable{
 	/**
 	 * ログインID
 	 */
+	@NotEmpty
 	@Attribute(unindexed=false)
 	private String loginId;
 	
 	/**
 	 * ドメイン名付きのGmailのログインID
 	 */
+	@Email
 	@Attribute(unindexed=false)
 	private String gmailId;
 	
 	/**
 	 * 表示用のユーザ名
 	 */
+	@NotEmpty
 	@Attribute(unindexed=true)
 	private String name;
 	
@@ -50,7 +57,7 @@ public class LoveappleMemberModel implements Serializable{
 	 * QQのID
 	 */
 	@Attribute(unindexed=true)
-	private String qqId;
+	private Long qqId;
 	
 	/**
 	 * QQ認証キー
@@ -61,6 +68,7 @@ public class LoveappleMemberModel implements Serializable{
 	/**
 	 * パスワード
 	 */
+	@Size(min = 32, max = 32)
 	@Attribute(unindexed=true)
 	private String password;
 	
@@ -183,7 +191,7 @@ public class LoveappleMemberModel implements Serializable{
 	 * QQのIDを取得します。
 	 * @return QQのID
 	 */
-	public String getQqId() {
+	public Long getQqId() {
 	    return qqId;
 	}
 
@@ -191,7 +199,7 @@ public class LoveappleMemberModel implements Serializable{
 	 * QQのIDを設定します。
 	 * @param qqId QQのID
 	 */
-	public void setQqId(String qqId) {
+	public void setQqId(Long qqId) {
 	    this.qqId = qqId;
 	}
 
