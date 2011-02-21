@@ -42,7 +42,7 @@ import cn.loveapple.service.cool.service.MemberCoreService;
 @Controller
 @RequestMapping(value="/member")
 public class MemberController implements SessionLabel{
-	private MemberValidator validator = new MemberValidator();
+
 	/**
 	 * ログ
 	 */
@@ -78,6 +78,7 @@ public class MemberController implements SessionLabel{
 	 */
 	@RequestMapping(value = "registConfirm", method=RequestMethod.POST)
 	public String registConfirm(@Valid MemberForm form, BindingResult result, HttpSession session, Model model) {
+		new MemberValidator().validate(form, result);
 		if(result.hasErrors()){
 			return "member/regist";
 		}

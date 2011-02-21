@@ -2,11 +2,11 @@ package cn.loveapple.service.controller.member.form;
 
 import java.io.Serializable;
 
-import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
 import org.apache.commons.lang.builder.ToStringBuilder;
 import org.hibernate.validator.constraints.Email;
+import org.hibernate.validator.constraints.NotEmpty;
 
 /**
  * Loveapple会員モデル
@@ -16,25 +16,9 @@ import org.hibernate.validator.constraints.Email;
 public class MemberForm extends MemberAuthForm implements Serializable {
 
 	/**
-	 * ログインID
-	 */
-	@NotNull
-	@Size(min = 1, max = 25)
-	// @Pattern(regexp="\\p{Alnum}\\-\\_")
-	private String loginId;
-
-	/**
-	 * パスワード
-	 */
-	@NotNull
-	@Size(min = 32, max = 32, message = "{javax.validation.constraints.Pattern.message}")
-	// @Pattern(regexp="\\p{Alnum}=")
-	private String password;
-
-	/**
 	 * 確認用パスワード
 	 */
-	@NotNull
+	@NotEmpty
 	@Size(min = 32, max = 32, message = "{javax.validation.constraints.Pattern.message}")
 	private String passwordConfirm;
 
@@ -53,7 +37,7 @@ public class MemberForm extends MemberAuthForm implements Serializable {
 	/**
 	 * 表示用のユーザ名
 	 */
-	@NotNull
+	@NotEmpty
 	@Size(max = 100)
 	private String name;
 
@@ -95,25 +79,6 @@ public class MemberForm extends MemberAuthForm implements Serializable {
 	@Override
 	public String toString() {
 		return ToStringBuilder.reflectionToString(this);
-	}
-
-	/**
-	 * ログインIDを取得します。
-	 * 
-	 * @return ログインID
-	 */
-	public String getLoginId() {
-		return loginId;
-	}
-
-	/**
-	 * ログインIDを設定します。
-	 * 
-	 * @param loginId
-	 *            ログインID
-	 */
-	public void setLoginId(String loginId) {
-		this.loginId = loginId;
 	}
 
 	/**
@@ -306,25 +271,6 @@ public class MemberForm extends MemberAuthForm implements Serializable {
 	// public void setQqIdPassword(String qqIdPassword) {
 	// this.qqIdPassword = qqIdPassword;
 	// }
-
-	/**
-	 * パスワードを取得します。
-	 * 
-	 * @return パスワード
-	 */
-	public String getPassword() {
-		return password;
-	}
-
-	/**
-	 * パスワードを設定します。
-	 * 
-	 * @param password
-	 *            パスワード
-	 */
-	public void setPassword(String password) {
-		this.password = password;
-	}
 
 	/**
 	 * QQアカウントのパスワードを取得します。
