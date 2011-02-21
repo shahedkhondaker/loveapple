@@ -1,13 +1,12 @@
 package cn.loveapple.service.controller.member.form;
 import java.io.Serializable;
 
+import javax.validation.constraints.Max;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
 import org.apache.commons.lang.builder.ToStringBuilder;
 import org.hibernate.validator.constraints.Email;
-
-import com.google.appengine.api.datastore.GeoPt;
 
 /**
  * Loveapple会員モデル
@@ -34,6 +33,13 @@ public class MemberForm extends MemberAuthForm implements Serializable{
 	private String password;
 	
 	/**
+	 * 確認用パスワード
+	 */
+	@NotNull
+	@Size(min=32, max=32, message="{javax.validation.constraints.Pattern.message}")
+	private String passwordConfirm;
+	
+	/**
 	 * ドメイン名付きのGmailのログインID
 	 */
 	@Email
@@ -42,33 +48,43 @@ public class MemberForm extends MemberAuthForm implements Serializable{
 	/**
 	 * Gmailアカウントのパスワード
 	 */
+	@Max(value=100)
 	private String gmailPassword;
 	
 	/**
 	 * 表示用のユーザ名
 	 */
+	@Max(value=100)
+	@NotNull
 	private String name;
 	
 	/**
 	 * QQのID
 	 */
+	@Max(value=50)
 	private String qqId;
 	
 	/**
 	 * QQアカウントのパスワード
 	 */
-	private String qqIdPassword;
+//	private String qqIdPassword;
 	
 	/**
 	 * QQ認証キー
 	 */
+	@Max(value=100)
 	private String qqAuthKey;
 	
 	
 	/**
-	 * 直近更新した座標
+	 * 直近更新した座標の経度
 	 */
-	private GeoPt lastLocation;
+	private Float longitude;
+	
+	/**
+	 * 直近更新した座標の緯度
+	 */
+	private Float latitude;
 	
 
 	/**
@@ -100,6 +116,86 @@ public class MemberForm extends MemberAuthForm implements Serializable{
 	 */
 	public void setLoginId(String loginId) {
 	    this.loginId = loginId;
+	}
+
+	/**
+	 * パスワードを取得します。
+	 * @return パスワード
+	 */
+	//    public String getQqIdPassword() {
+	//	    return qqIdPassword;
+	//	}
+	
+	/**
+	 * QQアカウントのパスワードを設定します。
+	 * @param qqIdPassword QQアカウントのパスワード
+	 */
+	//	public void setQqIdPassword(String qqIdPassword) {
+	//	    this.qqIdPassword = qqIdPassword;
+	//	}
+	
+	/**
+	 * パスワードを取得します。
+	 * @return パスワード
+	 */
+	//    public String getQqIdPassword() {
+	//	    return qqIdPassword;
+	//	}
+	
+	/**
+	 * QQアカウントのパスワードを設定します。
+	 * @param qqIdPassword QQアカウントのパスワード
+	 */
+	//	public void setQqIdPassword(String qqIdPassword) {
+	//	    this.qqIdPassword = qqIdPassword;
+	//	}
+	
+	/**
+	 * 確認用パスワードを取得します。
+	 * @return 確認用パスワード
+	 */
+	public String getPasswordConfirm() {
+	    return passwordConfirm;
+	}
+
+	/**
+	 * 確認用パスワードを設定します。
+	 * @param passwordConfirm 確認用パスワード
+	 */
+	//    public String getQqIdPassword() {
+	//	    return qqIdPassword;
+	//	}
+	
+	/**
+	 * QQアカウントのパスワードを設定します。
+	 * @param qqIdPassword QQアカウントのパスワード
+	 */
+	//	public void setQqIdPassword(String qqIdPassword) {
+	//	    this.qqIdPassword = qqIdPassword;
+	//	}
+	
+	/**
+	 * パスワードを取得します。
+	 * @return パスワード
+	 */
+	//    public String getQqIdPassword() {
+	//	    return qqIdPassword;
+	//	}
+	
+	/**
+	 * QQアカウントのパスワードを設定します。
+	 * @param qqIdPassword QQアカウントのパスワード
+	 */
+	//	public void setQqIdPassword(String qqIdPassword) {
+	//	    this.qqIdPassword = qqIdPassword;
+	//	}
+	
+	/**
+	 * 確認用パスワードを設定します。
+	 * @param passwordConfirm 確認用パスワード
+	 */
+	public void setPasswordConfirm(String passwordConfirm) {
+	    this.passwordConfirm = passwordConfirm;
 	}
 
 	/**
@@ -170,33 +266,17 @@ public class MemberForm extends MemberAuthForm implements Serializable{
 	 * QQアカウントのパスワードを取得します。
 	 * @return QQアカウントのパスワード
 	 */
-	public String getQqIdPassword() {
-	    return qqIdPassword;
-	}
+//	public String getQqIdPassword() {
+//	    return qqIdPassword;
+//	}
 
 	/**
 	 * QQアカウントのパスワードを設定します。
 	 * @param qqIdPassword QQアカウントのパスワード
 	 */
-	public void setQqIdPassword(String qqIdPassword) {
-	    this.qqIdPassword = qqIdPassword;
-	}
-
-	/**
-	 * QQ認証キーを取得します。
-	 * @return QQ認証キー
-	 */
-	public String getQqAuthKey() {
-	    return qqAuthKey;
-	}
-
-	/**
-	 * QQ認証キーを設定します。
-	 * @param qqAuthKey QQ認証キー
-	 */
-	public void setQqAuthKey(String qqAuthKey) {
-	    this.qqAuthKey = qqAuthKey;
-	}
+//	public void setQqIdPassword(String qqIdPassword) {
+//	    this.qqIdPassword = qqIdPassword;
+//	}
 
 	/**
 	 * パスワードを取得します。
@@ -215,19 +295,83 @@ public class MemberForm extends MemberAuthForm implements Serializable{
 	}
 
 	/**
-	 * 直近更新した座標を取得します。
-	 * @return 直近更新した座標
+	 * QQアカウントのパスワードを取得します。
+	 * @return QQアカウントのパスワード
 	 */
-	public GeoPt getLastLocation() {
-	    return lastLocation;
+	//    public String getQqIdPassword() {
+	//	    return qqIdPassword;
+	//	}
+	
+	/**
+	 * QQアカウントのパスワードを設定します。
+	 * @param qqIdPassword QQアカウントのパスワード
+	 */
+	//	public void setQqIdPassword(String qqIdPassword) {
+	//	    this.qqIdPassword = qqIdPassword;
+	//	}
+	
+	/**
+	 * QQ認証キーを取得します。
+	 * @return QQ認証キー
+	 */
+	public String getQqAuthKey() {
+	    return qqAuthKey;
 	}
 
 	/**
-	 * 直近更新した座標を設定します。
-	 * @param lastLocation 直近更新した座標
+	 * QQアカウントのパスワードを設定します。
+	 * @param qqAuthKey QQアカウントのパスワード
 	 */
-	public void setLastLocation(GeoPt lastLocation) {
-	    this.lastLocation = lastLocation;
+	//    public String getQqIdPassword() {
+	//	    return qqIdPassword;
+	//	}
+	
+	/**
+	 * QQアカウントのパスワードを設定します。
+	 * @param qqIdPassword QQアカウントのパスワード
+	 */
+	//	public void setQqIdPassword(String qqIdPassword) {
+	//	    this.qqIdPassword = qqIdPassword;
+	//	}
+	
+	/**
+	 * QQ認証キーを設定します。
+	 * @param qqAuthKey QQ認証キー
+	 */
+	public void setQqAuthKey(String qqAuthKey) {
+	    this.qqAuthKey = qqAuthKey;
+	}
+
+	/**
+	 * 直近更新した座標の経度を取得します。
+	 * @return 直近更新した座標の経度
+	 */
+	public Float getLongitude() {
+	    return longitude;
+	}
+
+	/**
+	 * 直近更新した座標の経度を設定します。
+	 * @param longitude 直近更新した座標の経度
+	 */
+	public void setLongitude(Float longitude) {
+	    this.longitude = longitude;
+	}
+
+	/**
+	 * 直近更新した座標の緯度を取得します。
+	 * @return 直近更新した座標の緯度
+	 */
+	public Float getLatitude() {
+	    return latitude;
+	}
+
+	/**
+	 * 直近更新した座標の緯度を設定します。
+	 * @param latitude 直近更新した座標の緯度
+	 */
+	public void setLatitude(Float latitude) {
+	    this.latitude = latitude;
 	}
 
 	/**
@@ -245,6 +389,5 @@ public class MemberForm extends MemberAuthForm implements Serializable{
 	public void setLastAccuracy(Double lastAccuracy) {
 	    this.lastAccuracy = lastAccuracy;
 	}
-
 
 }

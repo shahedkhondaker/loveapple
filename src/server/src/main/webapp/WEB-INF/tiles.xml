@@ -30,4 +30,12 @@
 		<put-attribute name="title" value="${title}" />
 		<put-attribute name="body" value="/WEB-INF/views/member/info.jsp" />
 	</definition>
+	<definition name="member/regist" extends="base.definition">
+		<put-attribute name="title" value="${title}" />
+		<put-attribute name="body" value="/WEB-INF/views/member/regist.jsp" />
+	</definition>
+	<definition name="member/registConfirm" extends="base.definition">
+		<put-attribute name="title" value="${title}" />
+		<put-attribute name="body" value="/WEB-INF/views/member/registConfirm.jsp" />
+	</definition>
 </tiles-definitions>

@@ -18,15 +18,16 @@ function encryptPassword(form){
 		<fieldset>
 			<form:errors path="*"  cssErrorClass="error" />
 			<p>
-				<form:label	for="loginId" path="loginId" cssErrorClass="error"><fmt:message key="msg.member.login.id"/></form:label><br/>
+				<form:label	for="loginId" path="loginId" cssErrorClass="error"><fmt:message key="msg.member.id"/></form:label><br/>
 				<form:input path="loginId" />
 			</p>
 			<p>
-				<form:label	for="password" path="password" cssErrorClass="error"><fmt:message key="msg.member.login.password"/></form:label><br/>
+				<form:label	for="password" path="password" cssErrorClass="error"><fmt:message key="msg.member.password"/></form:label><br/>
 				<form:password path="password" />	
 			</p>
 			<p>
 				<input type="submit" />
+				<input type="reset" />
 			</p>
 		</fieldset>
 	</form:form>
