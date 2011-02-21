@@ -12,4 +12,9 @@ public class ModelConstant {
 	 * {@linkplain LoveappleMemberModel}のモデル名
 	 */
 	public static final String LOVEAPPLE_MEMBER_MODEL = "LoveappleMember";
+	
+	/**
+	 * {@linkplain MemberGroup}のモデル名
+	 */
+	public static final String MemberGroup = "MemberGroup";
 }

@@ -3,6 +3,7 @@ import static cn.loveapple.service.cool.model.ModelConstant.*;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.List;
 
 import org.apache.commons.lang.builder.ToStringBuilder;
 import org.slim3.datastore.Attribute;
@@ -93,6 +94,18 @@ public class LoveappleMemberModel implements Serializable{
 	 */
 	@Attribute(unindexed=true)
 	private Date updateDate;
+	
+	/**
+	 * 権限
+	 */
+	@Attribute(unindexed=false)
+	private Integer permission;
+	
+	/**
+	 * 属しているグループ名
+	 */
+	@Attribute(unindexed=false,lob=false )
+	private List<String> groupName;
 
 	/**
 	 * {@inheritDoc}
@@ -294,4 +307,35 @@ public class LoveappleMemberModel implements Serializable{
 	    this.updateDate = updateDate;
 	}
 
+	/**
+	 * 権限を取得します。
+	 * @return 権限
+	 */
+	public Integer getPermission() {
+	    return permission;
+	}
+
+	/**
+	 * 権限を設定します。
+	 * @param permission 権限
+	 */
+	public void setPermission(Integer permission) {
+	    this.permission = permission;
+	}
+
+	/**
+	 * 属しているグループ名を取得します。
+	 * @return 属しているグループ名
+	 */
+	public List<String> getGroupName() {
+	    return groupName;
+	}
+
+	/**
+	 * 属しているグループ名を設定します。
+	 * @param groupName 属しているグループ名
+	 */
+	public void setGroupName(List<String> groupName) {
+	    this.groupName = groupName;
+	}
 }
