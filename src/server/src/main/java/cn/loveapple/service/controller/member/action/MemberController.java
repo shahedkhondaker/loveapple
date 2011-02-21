@@ -78,6 +78,7 @@ public class MemberController implements SessionLabel{
 	 */
 	@RequestMapping(value = "registConfirm", method=RequestMethod.POST)
 	public String registConfirm(@Valid MemberForm form, BindingResult result, HttpSession session, Model model) {
+		model.addAttribute(form);
 		new MemberValidator().validate(form, result);
 		if(result.hasErrors()){
 			return "member/regist";
@@ -92,7 +93,7 @@ public class MemberController implements SessionLabel{
 		
 		// TODO 変換
 		
-		session.setAttribute(LOVEAPPLE_MEMBER_TMP, member);
+		session.setAttribute(LOVEAPPLE_MEMBER_TMP, form);
 		
 		return "member/registConfirm";
 	}
