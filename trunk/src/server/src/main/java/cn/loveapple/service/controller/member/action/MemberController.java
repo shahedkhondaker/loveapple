@@ -63,7 +63,7 @@ public class MemberController implements SessionLabel{
 	@RequestMapping(value = "regist", method=RequestMethod.GET)
 	public String regist(HttpSession session, Model model) {
 		clearMemberInfo(session);
-		MemberAuthForm form = new MemberAuthForm();
+		MemberForm form = new MemberForm();
 		
 		model.addAttribute(form);
 		return "member/regist";
@@ -78,6 +78,9 @@ public class MemberController implements SessionLabel{
 	 */
 	@RequestMapping(value = "registConfirm", method=RequestMethod.POST)
 	public String registConfirm(@Valid MemberForm form, BindingResult result, HttpSession session, Model model) {
+		if(result.hasErrors()){
+			return "member/regist";
+		}
 		LoveappleMemberModel member = memberCoreService.findByLoginId(form.getLoginId());
 		if(member != null){
 			result.reject("errors.beRegisted", new Object[]{"msg.member.login.id"}, "");
