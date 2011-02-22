@@ -14,6 +14,11 @@ import com.google.appengine.api.datastore.Key;
  *
  */
 public interface MemberCoreService {
+	
+	/**
+	 * デフォルト会員の権限値
+	 */
+	public static final int DEFAULT_MEMBER_PERMISSION = 0;
 	/**
 	 * Loveapple会員の認証処理を行う。
 	 * 

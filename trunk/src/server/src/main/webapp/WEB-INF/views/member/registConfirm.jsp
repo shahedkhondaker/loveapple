@@ -21,7 +21,7 @@ function submit(form, action){
 
 <h3><span><fmt:message key="msg.member.join.input"/></span></h3>
 <div>
-	<form:form action="/member/registConfirm" modelAttribute="memberForm" onsubmit="submit(this)" method="post">
+	<form:form action="/member/registComplete" modelAttribute="memberForm" onsubmit="submit(this)" method="post">
 		<fieldset>
 			<p>
 				<form:label	for="loginId" path="loginId" cssErrorClass="error"><fmt:message key="msg.member.id"/></form:label><br/>
@@ -36,12 +36,8 @@ function submit(form, action){
 				******
 			</p>
 			<p>
-				<form:label	for="gmailId" path="gmailId" cssErrorClass="error"><fmt:message key="msg.member.gmailId"/></form:label><br/>
-				<c:out value="${memberForm.gmailId}" />
-			</p>
-			<p>
-				<form:label	for="gmailPassword" path="gmailPassword" cssErrorClass="error"><fmt:message key="msg.member.gmailPassword"/></form:label><br/>
-				******
+				<form:label	for="mail" path="mail" cssErrorClass="error"><fmt:message key="msg.member.mail"/></form:label><br/>
+				<c:out value="${memberForm.mail}" />
 			</p>
 			<p>
 				<form:label	for="qqId" path="qqId" cssErrorClass="error"><fmt:message key="msg.member.qqId"/></form:label><br/>
@@ -65,7 +61,7 @@ function submit(form, action){
 			</p>
 			<p>
 				<input type="submit" />
-				<input type="button" onclick="submit(this.form, '<spring:url value="/member/regist" />')" />
+				<input type="button" onclick="submit(this.form, '<spring:url value="/member/regist" />')" value="<spring:message code="msg.back" />" />
 				<input type="reset"/> 
 			</p>
 		</fieldset>

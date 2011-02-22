@@ -1,5 +1,8 @@
 package cn.loveapple.service.controller.member.action;
 
+import static cn.loveapple.service.cool.service.MemberCoreService.*;
+import static cn.loveapple.service.cool.model.LoveappleMemberModel.*;
+
 import java.util.Locale;
 
 import javax.servlet.http.HttpServletRequest;
@@ -27,6 +30,8 @@ import cn.loveapple.service.controller.member.form.MemberForm;
 import cn.loveapple.service.controller.member.form.MemberValidator;
 import cn.loveapple.service.cool.model.LoveappleMemberModel;
 import cn.loveapple.service.cool.service.MemberCoreService;
+
+import com.google.appengine.api.datastore.GeoPt;
 
 /**
  * サンプルコントローラ
@@ -66,7 +71,11 @@ public class MemberController implements SessionLabel{
 	@RequestMapping(value = "regist", method=RequestMethod.GET)
 	public String regist(HttpSession session, Model model) {
 		clearMemberInfo(session);
-		MemberForm form = new MemberForm();
+		
+		MemberForm form = (MemberForm) session.getAttribute(MemberForm.FORM_NAME);
+		if(form == null){
+			form = new MemberForm();
+		}
 		
 		model.addAttribute(form);
 		return "member/regist";
@@ -92,13 +101,36 @@ public class MemberController implements SessionLabel{
 			model.addAttribute(form);
 			return "member/regist";
 		}
-		member = new LoveappleMemberModel();
+		member = createModel(form);
 		
-		// TODO 変換
-		
-		session.setAttribute(LOVEAPPLE_MEMBER_TMP, form);
+		session.setAttribute(MemberForm.FORM_NAME, form);
+		session.setAttribute(LOVEAPPLE_MEMBER_TMP, member);
 		
 		return "member/registConfirm";
+	}
+	
+	/**
+	 * 
+	 * @param form
+	 * @return
+	 */
+	protected LoveappleMemberModel createModel(MemberForm form){
+		LoveappleMemberModel model = new LoveappleMemberModel();
+		
+		model.setMail(form.getMail());
+		model.setLastAccuracy(form.getLastAccuracy());
+		if(form.getLatitude() != null && form.getLongitude() != null){
+			model.setLastLocation(new GeoPt(form.getLatitude(), form.getLongitude()));
+		}
+		model.setLoginId(form.getLoginId());
+		model.setName(form.getName());
+		model.setPassword(form.getPassword());
+		model.setPermission(DEFAULT_MEMBER_PERMISSION);
+		model.setQqAuthKey(form.getQqAuthKey());
+		model.setQqId(form.getQqId());
+		model.setStatus(Status.CONFIRMATION);
+		
+		return model;
 	}
 	
 	/**
@@ -125,6 +157,9 @@ public class MemberController implements SessionLabel{
 			throw new HttpMessageNotWritableException("can not regist member. "
 					+ ToStringBuilder.reflectionToString(session.getAttribute(LOVEAPPLE_MEMBER_TMP)));
 		}
+		session.removeAttribute(MemberForm.FORM_NAME);
+		session.removeAttribute(LOVEAPPLE_MEMBER_TMP);
+		session.setAttribute(LOVEAPPLE_MEMBER, member);
 		
 		return "redirect:/member/core/info/" + member.getKey().getId();
 	}
@@ -184,8 +219,8 @@ public class MemberController implements SessionLabel{
 	 * @return
 	 */
 	@RequestMapping(value="core/info/{id}", method=RequestMethod.GET)
-	public String info(@PathVariable Long id, Model model) {
-		
+	public String info(@PathVariable Long id, Model model, HttpSession session) {
+				
 		LoveappleMemberModel member = memberCoreService.queryByKey(id);
 		
 		if(member == null){

@@ -3,13 +3,11 @@ package cn.loveapple.service.cool.service.impl;
 import java.util.Date;
 import java.util.List;
 
-import cn.loveapple.service.cool.meta.SampleModelMeta;
-
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.slim3.datastore.Datastore;
-import org.springframework.stereotype.Component;
 
+import cn.loveapple.service.cool.meta.SampleModelMeta;
 import cn.loveapple.service.cool.model.SampleModel;
 import cn.loveapple.service.cool.service.SampleService;
 import cn.loveapple.service.type.Service;

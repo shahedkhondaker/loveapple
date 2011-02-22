@@ -2,6 +2,7 @@ package cn.loveapple.service.controller.member.form;
 
 import java.io.Serializable;
 
+import javax.validation.constraints.Max;
 import javax.validation.constraints.Size;
 
 import org.apache.commons.lang.builder.ToStringBuilder;
@@ -13,7 +14,13 @@ import org.hibernate.validator.constraints.NotEmpty;
  * 
  * @author hao_shunri TODO 作成中
  */
+@SuppressWarnings("serial")
 public class MemberForm extends MemberAuthForm implements Serializable {
+	
+	/**
+	 * フォーム名
+	 */
+	public static final String FORM_NAME = "memberForm";
 
 	/**
 	 * 確認用パスワード
@@ -23,16 +30,11 @@ public class MemberForm extends MemberAuthForm implements Serializable {
 	private String passwordConfirm;
 
 	/**
-	 * ドメイン名付きのGmailのログインID
+	 * 連絡用メールアドレス
 	 */
+	@NotEmpty
 	@Email
-	private String gmailId;
-
-	/**
-	 * Gmailアカウントのパスワード
-	 */
-	@Size(max = 100)
-	private String gmailPassword;
+	private String mail;
 
 	/**
 	 * 表示用のユーザ名
@@ -44,8 +46,8 @@ public class MemberForm extends MemberAuthForm implements Serializable {
 	/**
 	 * QQのID
 	 */
-	@Size(max = 100)
-	private String qqId;
+	@Max(value = 99999999999999L)
+	private Long qqId;
 
 	/**
 	 * QQアカウントのパスワード
@@ -130,14 +132,12 @@ public class MemberForm extends MemberAuthForm implements Serializable {
 
 	/**
 	 * 確認用パスワードを設定します。
-	 * 
-	 * @param passwordConfirm
-	 *            確認用パスワード
+	 * @param passwordConfirm 確認用パスワード
 	 */
-	// public String getQqIdPassword() {
+	//    public String getQqIdPassword() {
 	// return qqIdPassword;
 	// }
-
+	
 	/**
 	 * QQアカウントのパスワードを設定します。
 	 * 
@@ -147,7 +147,7 @@ public class MemberForm extends MemberAuthForm implements Serializable {
 	// public void setQqIdPassword(String qqIdPassword) {
 	// this.qqIdPassword = qqIdPassword;
 	// }
-
+	
 	/**
 	 * パスワードを取得します。
 	 * 
@@ -156,7 +156,7 @@ public class MemberForm extends MemberAuthForm implements Serializable {
 	// public String getQqIdPassword() {
 	// return qqIdPassword;
 	// }
-
+	
 	/**
 	 * QQアカウントのパスワードを設定します。
 	 * 
@@ -166,7 +166,7 @@ public class MemberForm extends MemberAuthForm implements Serializable {
 	// public void setQqIdPassword(String qqIdPassword) {
 	// this.qqIdPassword = qqIdPassword;
 	// }
-
+	
 	/**
 	 * 確認用パスワードを設定します。
 	 * 
@@ -178,46 +178,23 @@ public class MemberForm extends MemberAuthForm implements Serializable {
 	}
 
 	/**
-	 * ドメイン名付きのGmailのログインIDを取得します。
-	 * 
-	 * @return ドメイン名付きのGmailのログインID
+	 * 連絡用メールアドレスを取得します。
+	 * @return 連絡用メールアドレス
 	 */
-	public String getGmailId() {
-		return gmailId;
+	public String getMail() {
+	    return mail;
 	}
 
 	/**
-	 * ドメイン名付きのGmailのログインIDを設定します。
-	 * 
-	 * @param gmailId
-	 *            ドメイン名付きのGmailのログインID
+	 * 連絡用メールアドレスを設定します。
+	 * @param mail 連絡用メールアドレス
 	 */
-	public void setGmailId(String gmailId) {
-		this.gmailId = gmailId;
-	}
-
-	/**
-	 * Gmailアカウントのパスワードを取得します。
-	 * 
-	 * @return Gmailアカウントのパスワード
-	 */
-	public String getGmailPassword() {
-		return gmailPassword;
-	}
-
-	/**
-	 * Gmailアカウントのパスワードを設定します。
-	 * 
-	 * @param gmailPassword
-	 *            Gmailアカウントのパスワード
-	 */
-	public void setGmailPassword(String gmailPassword) {
-		this.gmailPassword = gmailPassword;
+	public void setMail(String mail) {
+	    this.mail = mail;
 	}
 
 	/**
 	 * 表示用のユーザ名を取得します。
-	 * 
 	 * @return 表示用のユーザ名
 	 */
 	public String getName() {
@@ -226,9 +203,7 @@ public class MemberForm extends MemberAuthForm implements Serializable {
 
 	/**
 	 * 表示用のユーザ名を設定します。
-	 * 
-	 * @param name
-	 *            表示用のユーザ名
+	 * @param name 表示用のユーザ名
 	 */
 	public void setName(String name) {
 		this.name = name;
@@ -236,65 +211,23 @@ public class MemberForm extends MemberAuthForm implements Serializable {
 
 	/**
 	 * QQのIDを取得します。
-	 * 
 	 * @return QQのID
 	 */
-	public String getQqId() {
+	public Long getQqId() {
 		return qqId;
 	}
 
 	/**
 	 * QQのIDを設定します。
-	 * 
-	 * @param qqId
-	 *            QQのID
+	 * @param qqId QQのID
 	 */
-	public void setQqId(String qqId) {
+	public void setQqId(Long qqId) {
 		this.qqId = qqId;
 	}
 
 	/**
 	 * QQアカウントのパスワードを取得します。
-	 * 
 	 * @return QQアカウントのパスワード
-	 */
-	// public String getQqIdPassword() {
-	// return qqIdPassword;
-	// }
-
-	/**
-	 * QQアカウントのパスワードを設定します。
-	 * 
-	 * @param qqIdPassword
-	 *            QQアカウントのパスワード
-	 */
-	// public void setQqIdPassword(String qqIdPassword) {
-	// this.qqIdPassword = qqIdPassword;
-	// }
-
-	/**
-	 * QQアカウントのパスワードを取得します。
-	 * 
-	 * @return QQアカウントのパスワード
-	 */
-	// public String getQqIdPassword() {
-	// return qqIdPassword;
-	// }
-
-	/**
-	 * QQアカウントのパスワードを設定します。
-	 * 
-	 * @param qqIdPassword
-	 *            QQアカウントのパスワード
-	 */
-	// public void setQqIdPassword(String qqIdPassword) {
-	// this.qqIdPassword = qqIdPassword;
-	// }
-
-	/**
-	 * QQ認証キーを取得します。
-	 * 
-	 * @return QQ認証キー
 	 */
 	public String getQqAuthKey() {
 		return qqAuthKey;
@@ -302,29 +235,7 @@ public class MemberForm extends MemberAuthForm implements Serializable {
 
 	/**
 	 * QQアカウントのパスワードを設定します。
-	 * 
-	 * @param qqAuthKey
-	 *            QQアカウントのパスワード
-	 */
-	// public String getQqIdPassword() {
-	// return qqIdPassword;
-	// }
-
-	/**
-	 * QQアカウントのパスワードを設定します。
-	 * 
-	 * @param qqIdPassword
-	 *            QQアカウントのパスワード
-	 */
-	// public void setQqIdPassword(String qqIdPassword) {
-	// this.qqIdPassword = qqIdPassword;
-	// }
-
-	/**
-	 * QQ認証キーを設定します。
-	 * 
-	 * @param qqAuthKey
-	 *            QQ認証キー
+	 * @param qqAuthKey QQアカウントのパスワード
 	 */
 	public void setQqAuthKey(String qqAuthKey) {
 		this.qqAuthKey = qqAuthKey;
@@ -332,7 +243,6 @@ public class MemberForm extends MemberAuthForm implements Serializable {
 
 	/**
 	 * 直近更新した座標の経度を取得します。
-	 * 
 	 * @return 直近更新した座標の経度
 	 */
 	public Float getLongitude() {
@@ -341,9 +251,7 @@ public class MemberForm extends MemberAuthForm implements Serializable {
 
 	/**
 	 * 直近更新した座標の経度を設定します。
-	 * 
-	 * @param longitude
-	 *            直近更新した座標の経度
+	 * @param longitude 直近更新した座標の経度
 	 */
 	public void setLongitude(Float longitude) {
 		this.longitude = longitude;
@@ -351,7 +259,6 @@ public class MemberForm extends MemberAuthForm implements Serializable {
 
 	/**
 	 * 直近更新した座標の緯度を取得します。
-	 * 
 	 * @return 直近更新した座標の緯度
 	 */
 	public Float getLatitude() {
@@ -360,9 +267,7 @@ public class MemberForm extends MemberAuthForm implements Serializable {
 
 	/**
 	 * 直近更新した座標の緯度を設定します。
-	 * 
-	 * @param latitude
-	 *            直近更新した座標の緯度
+	 * @param latitude 直近更新した座標の緯度
 	 */
 	public void setLatitude(Float latitude) {
 		this.latitude = latitude;
@@ -370,7 +275,6 @@ public class MemberForm extends MemberAuthForm implements Serializable {
 
 	/**
 	 * 直近更新した誤差を取得します。
-	 * 
 	 * @return 直近更新した誤差
 	 */
 	public Double getLastAccuracy() {
@@ -379,9 +283,7 @@ public class MemberForm extends MemberAuthForm implements Serializable {
 
 	/**
 	 * 直近更新した誤差を設定します。
-	 * 
-	 * @param lastAccuracy
-	 *            直近更新した誤差
+	 * @param lastAccuracy 直近更新した誤差
 	 */
 	public void setLastAccuracy(Double lastAccuracy) {
 		this.lastAccuracy = lastAccuracy;

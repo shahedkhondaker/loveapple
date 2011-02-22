@@ -38,12 +38,8 @@ function encryptPassword(form){
 				<form:password path="passwordConfirm" /><form:errors path="passwordConfirm" />
 			</p>
 			<p>
-				<form:label	for="gmailId" path="gmailId" cssErrorClass="error"><fmt:message key="msg.member.gmailId"/></form:label><br/>
-				<form:input path="gmailId" /><form:errors path="gmailId" />
-			</p>
-			<p>
-				<form:label	for="gmailPassword" path="gmailPassword" cssErrorClass="error"><fmt:message key="msg.member.gmailPassword"/></form:label><br/>
-				<form:password path="gmailPassword" /><form:errors path="gmailPassword" />
+				<form:label	for="mail" path="mail" cssErrorClass="error"><fmt:message key="msg.member.mail"/></form:label><br/>
+				<form:input path="mail" /><form:errors path="mail" />
 			</p>
 			<p>
 				<form:label	for="qqId" path="qqId" cssErrorClass="error"><fmt:message key="msg.member.qqId"/></form:label><br/>

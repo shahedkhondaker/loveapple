@@ -6,7 +6,6 @@ import java.util.Date;
 
 import org.apache.commons.lang.StringUtils;
 import org.slim3.datastore.Datastore;
-import org.springframework.stereotype.Component;
 
 import cn.loveapple.service.cool.meta.LoveappleMemberModelMeta;
 import cn.loveapple.service.cool.model.LoveappleMemberModel;
@@ -50,11 +49,14 @@ public class MemberCoreServiceImpl implements MemberCoreService {
 		if(member == null){
 			throw new IllegalArgumentException("member info is empty.");
 		}
-		if(member != null){
-			LoveappleMemberModel result = findByLoginId(member.getLoginId());
+		LoveappleMemberModel result = findByLoginId(member.getLoginId());
+		if(result != null){
 			member.setKey(result.getKey());
 			member.setUpdateDate(new Date());
+		}else{
+			member.setInsertDate(new Date());
 		}
+		
 		Key key = Datastore.put(member);
 		
 		return queryByKey(key);
