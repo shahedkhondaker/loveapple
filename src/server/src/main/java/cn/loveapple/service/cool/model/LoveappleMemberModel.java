@@ -25,7 +25,7 @@ import com.google.appengine.api.datastore.Key;
 @SuppressWarnings("serial")
 @Model(kind=LOVEAPPLE_MEMBER_MODEL)
 public class LoveappleMemberModel implements Serializable{
-	
+		
 	/**
 	 * キー
 	 */
@@ -46,11 +46,11 @@ public class LoveappleMemberModel implements Serializable{
 	private String loginId;
 	
 	/**
-	 * ドメイン名付きのGmailのログインID
+	 * 連絡用メールアドレス
 	 */
 	@Email
 	@Attribute(unindexed=false)
-	private String gmailId;
+	private String mail;
 	
 	/**
 	 * 表示用のユーザ名
@@ -179,19 +179,19 @@ public class LoveappleMemberModel implements Serializable{
 	}
 
 	/**
-	 * ドメイン名付きのGmailのログインIDを取得します。
-	 * @return ドメイン名付きのGmailのログインID
+	 * 連絡用メールアドレスを取得します。
+	 * @return 連絡用メールアドレス
 	 */
-	public String getGmailId() {
-	    return gmailId;
+	public String getMail() {
+	    return mail;
 	}
 
 	/**
-	 * ドメイン名付きのGmailのログインIDを設定します。
-	 * @param gmailId ドメイン名付きのGmailのログインID
+	 * 連絡用メールアドレスを設定します。
+	 * @param mail 連絡用メールアドレス
 	 */
-	public void setGmailId(String gmailId) {
-	    this.gmailId = gmailId;
+	public void setMail(String mail) {
+	    this.mail = mail;
 	}
 
 	/**

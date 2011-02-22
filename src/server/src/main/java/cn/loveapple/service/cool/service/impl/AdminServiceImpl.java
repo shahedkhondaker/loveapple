@@ -5,7 +5,6 @@ import java.util.List;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.springframework.stereotype.Component;
 
 import cn.loveapple.service.cool.service.AdminService;
 import cn.loveapple.service.type.Service;

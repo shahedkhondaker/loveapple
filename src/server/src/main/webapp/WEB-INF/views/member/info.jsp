@@ -1,18 +1,32 @@
 <%@ include file="/WEB-INF/views/common/include.jsp" %>
-<script type="text/javascript" src="/javascript/md5.js"></script>
-<script type="text/javascript">
-<!--
-function encryptPassword(form){
-	if(form.password.value != null){
-		data = utf16to8(form.password.value);
-		form.password.value = MD5_hexhash(data);
-	}
-}
-//-->
-</script>
 <h1><fmt:message key="msg.member.login"/></h1>
 
-<h3><span><fmt:message key="msg.member.login.input"/></span></h3>
+<h3><span><spring:message code="msg.member.info"/></span></h3>
 <div>
-	
+	<table>
+		<tr>
+			<td><spring:message code="msg.member.id"/></td><td><c:out value="${member.loginId}" /></td>
+		</tr>
+		<tr>
+			<td><spring:message code="msg.member.name"/></td><td><c:out value="${member.name}" /></td>
+		</tr>
+		<tr>
+			<td><spring:message code="msg.member.mail"/></td><td><c:out value="${member.mail}" /></td>
+		</tr>
+		<tr>
+			<td><spring:message code="msg.member.qqId"/></td><td><c:out value="${member.qqId}" /></td>
+		</tr>
+		<tr>
+			<td><spring:message code="msg.member.qqAuthKey"/></td><td><c:out value="${member.qqAuthKey}" /></td>
+		</tr>
+		<tr>
+			<td><spring:message code="msg.member.update"/></td><td><c:out value="${member.updateDate}" /></td>
+		</tr>
+		<tr>
+			<td><spring:message code="msg.member.insert"/></td><td><c:out value="${member.insertDate}" /></td>
+		</tr>
+		<tr>
+			<td><spring:message code="msg.member.lastLoginDate"/></td><td><c:out value="${member.lastLoginDate}" /></td>
+		</tr>
+	</table>
 </div>
