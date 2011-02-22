@@ -28,6 +28,10 @@ function submit(form, action){
 				<c:out value="${memberForm.loginId}" />
 			</p>
 			<p>
+				<form:label	for="name" path="name" cssErrorClass="error"><fmt:message key="msg.member.name"/></form:label><br/>
+				<c:out value="${memberForm.name}" />
+			</p>
+			<p>
 				<form:label	for="password" path="password" cssErrorClass="error"><fmt:message key="msg.member.password"/></form:label><br/>
 				******
 			</p>
@@ -38,10 +42,6 @@ function submit(form, action){
 			<p>
 				<form:label	for="gmailPassword" path="gmailPassword" cssErrorClass="error"><fmt:message key="msg.member.gmailPassword"/></form:label><br/>
 				******
-			</p>
-			<p>
-				<form:label	for="name" path="name" cssErrorClass="error"><fmt:message key="msg.member.name"/></form:label><br/>
-				<c:out value="${memberForm.name}" />
 			</p>
 			<p>
 				<form:label	for="qqId" path="qqId" cssErrorClass="error"><fmt:message key="msg.member.qqId"/></form:label><br/>

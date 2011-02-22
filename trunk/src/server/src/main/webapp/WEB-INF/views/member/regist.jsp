@@ -26,6 +26,10 @@ function encryptPassword(form){
 				<form:input path="loginId" /><form:errors path="loginId" />
 			</p>
 			<p>
+				<form:label	for="name" path="name" cssErrorClass="error"><fmt:message key="msg.member.name"/></form:label><br/>
+				<form:input path="name" /><form:errors path="name" />
+			</p>
+			<p>
 				<form:label	for="password" path="password" cssErrorClass="error"><fmt:message key="msg.member.password"/></form:label><br/>
 				<form:password path="password" /><form:errors path="password" />
 			</p>
@@ -40,10 +44,6 @@ function encryptPassword(form){
 			<p>
 				<form:label	for="gmailPassword" path="gmailPassword" cssErrorClass="error"><fmt:message key="msg.member.gmailPassword"/></form:label><br/>
 				<form:password path="gmailPassword" /><form:errors path="gmailPassword" />
-			</p>
-			<p>
-				<form:label	for="name" path="name" cssErrorClass="error"><fmt:message key="msg.member.name"/></form:label><br/>
-				<form:input path="name" /><form:errors path="name" />
 			</p>
 			<p>
 				<form:label	for="qqId" path="qqId" cssErrorClass="error"><fmt:message key="msg.member.qqId"/></form:label><br/>
