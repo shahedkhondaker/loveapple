@@ -1,10 +1,13 @@
 package cn.loveapple.service.controller.member.form;
 
+import java.util.Locale;
+
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.springframework.context.support.ReloadableResourceBundleMessageSource;
 import org.springframework.validation.Errors;
-import org.springframework.validation.ValidationUtils;
-import org.springframework.validation.Validator;
+
+import cn.loveapple.service.controller.BaseValidator;
 
 /**
  * TODO
@@ -14,7 +17,15 @@ import org.springframework.validation.Validator;
  * @since 2011/02/17
  * @version $Revision$
  */
-public class MemberValidator implements Validator {
+public class MemberValidator extends BaseValidator {
+		
+	/**
+	 * 
+	 * @param messageSource
+	 */
+	public MemberValidator(ReloadableResourceBundleMessageSource messageSource, Locale locale){
+		super(messageSource, locale);
+	}
 
 	/**
 	 * ログ
@@ -39,7 +50,7 @@ public class MemberValidator implements Validator {
 		
 		MemberForm form = (MemberForm) target;
 		if(!form.getPassword().equals(form.getPasswordConfirm())){
-			errors.reject("loveappleErrors.invalid", new Object[]{"msg.member.password"}, "");
+			errors.reject("loveappleErrors.invalid", createArgs("msg.member.password"), "");
 		}
 	}
 

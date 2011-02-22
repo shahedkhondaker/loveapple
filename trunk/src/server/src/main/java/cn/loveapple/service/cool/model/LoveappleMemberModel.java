@@ -25,12 +25,18 @@ import com.google.appengine.api.datastore.Key;
 @SuppressWarnings("serial")
 @Model(kind=LOVEAPPLE_MEMBER_MODEL)
 public class LoveappleMemberModel implements Serializable{
-
+	
 	/**
 	 * キー
 	 */
 	@Attribute(primaryKey=true)
 	private Key key;
+
+	/**
+	 * 会員状態
+	 */
+	@Attribute()
+	private Status status;
 	
 	/**
 	 * ログインID
@@ -114,6 +120,7 @@ public class LoveappleMemberModel implements Serializable{
 	 */
 	@Attribute(unindexed=false,lob=false )
 	private List<String> groupName;
+	
 
 	/**
 	 * {@inheritDoc}
@@ -137,6 +144,22 @@ public class LoveappleMemberModel implements Serializable{
 	 */
 	public void setKey(Key key) {
 	    this.key = key;
+	}
+
+	/**
+	 * 会員状態を取得します。
+	 * @return 会員状態
+	 */
+	public Status getStatus() {
+	    return status;
+	}
+
+	/**
+	 * 会員状態を設定します。
+	 * @param status 会員状態
+	 */
+	public void setStatus(Status status) {
+	    this.status = status;
 	}
 
 	/**
@@ -346,4 +369,14 @@ public class LoveappleMemberModel implements Serializable{
 	public void setGroupName(List<String> groupName) {
 	    this.groupName = groupName;
 	}
+	
+	/**
+	 * {@linkplain #DELETE 削除}、{@linkplain #CONFIRMATION 確認中}、
+	 * {@linkplain #NORMAL 正常}の状態を管理する。
+	 * 
+	 * @author hao_shunri
+	 * @since 2011/02/22
+	 * @version $Revision$
+	 */
+	public static enum Status{DELETE, CONFIRMATION, NORMAL};
 }
