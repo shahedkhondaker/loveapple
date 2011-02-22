@@ -1,6 +1,6 @@
 package cn.loveapple.service.controller.member.action;
 
-import java.util.Date;
+import java.util.Locale;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -10,13 +10,11 @@ import org.apache.commons.lang.builder.ToStringBuilder;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.support.ReloadableResourceBundleMessageSource;
 import org.springframework.http.converter.HttpMessageNotWritableException;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.validation.ObjectError;
-import org.springframework.validation.ValidationUtils;
-import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -52,6 +50,11 @@ public class MemberController implements SessionLabel{
 	 * 会員情報操作ロジック
 	 */
 	private MemberCoreService memberCoreService;
+	
+	/**
+	 * メッセージソース
+	 */
+	private ReloadableResourceBundleMessageSource messageSource;
 
 	/**
 	 * 登録入力
@@ -77,9 +80,9 @@ public class MemberController implements SessionLabel{
 	 * @return
 	 */
 	@RequestMapping(value = "registConfirm", method=RequestMethod.POST)
-	public String registConfirm(@Valid MemberForm form, BindingResult result, HttpSession session, Model model) {
+	public String registConfirm(@Valid MemberForm form, BindingResult result, HttpSession session, Model model, Locale locale) {
 		model.addAttribute(form);
-		new MemberValidator().validate(form, result);
+		new MemberValidator(messageSource, locale).validate(form, result);
 		if(result.hasErrors()){
 			return "member/regist";
 		}
@@ -210,4 +213,15 @@ public class MemberController implements SessionLabel{
 	public void setMemberCoreService(MemberCoreService memberCoreService) {
 	    this.memberCoreService = memberCoreService;
 	}
+
+	/**
+	 * メッセージソースを設定します。
+	 * @param messageSource メッセージソース
+	 */
+	@Autowired(required=true)
+	public void setMessageSource(ReloadableResourceBundleMessageSource messageSource) {
+	    this.messageSource = messageSource;
+	}
+	
+	
 }
