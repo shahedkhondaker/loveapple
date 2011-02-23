@@ -91,13 +91,17 @@ public class MemberController implements SessionLabel{
 	@RequestMapping(value = "registConfirm", method=RequestMethod.POST)
 	public String registConfirm(@Valid MemberForm form, BindingResult result, HttpSession session, Model model, Locale locale) {
 		model.addAttribute(form);
-		new MemberValidator(messageSource, locale).validate(form, result);
+		MemberValidator validator = new MemberValidator(messageSource, locale);
+		validator.validate(form, result);
 		if(result.hasErrors()){
+			if(log.isDebugEnabled()){
+				log.debug(ToStringBuilder.reflectionToString(result.getAllErrors()));
+			}
 			return "member/regist";
 		}
 		LoveappleMemberModel member = memberCoreService.findByLoginId(form.getLoginId());
 		if(member != null){
-			result.reject("errors.beRegisted", new Object[]{"msg.member.login.id"}, "");
+			result.reject("errors.beRegisted", validator.createArgs("msg.member"), "");
 			model.addAttribute(form);
 			return "member/regist";
 		}
@@ -152,7 +156,7 @@ public class MemberController implements SessionLabel{
 				throw new HttpMessageNotWritableException(e.getMessage(), e);
 			}
 		}
-		member = memberCoreService.newAndPut(member);
+		member = memberCoreService.updateLoveappleMember(member);
 		if(member == null){
 			throw new HttpMessageNotWritableException("can not regist member. "
 					+ ToStringBuilder.reflectionToString(session.getAttribute(LOVEAPPLE_MEMBER_TMP)));
