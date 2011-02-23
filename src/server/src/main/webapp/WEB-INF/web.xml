@@ -72,7 +72,7 @@
 		<init-param>
 			<param-name>contextConfigLocation</param-name>
 			<param-value>
-				classpath:spring/app-config.xml,classpath:spring/tiles-config.xml
+				classpath:spring/app-config.xml,classpath:spring/tiles-config.xml,classpath:spring/aop-config.xml
 			</param-value>
 		</init-param>
 		<load-on-startup>1</load-on-startup>

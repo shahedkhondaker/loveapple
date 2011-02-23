@@ -1,6 +1,6 @@
 package cn.loveapple.service.cool.service.impl;
 
-import static cn.loveapple.service.cool.model.ModelConstant.*;
+import static cn.loveapple.service.cool.model.LoveappleModel.*;
 
 import java.util.Date;
 
@@ -36,7 +36,7 @@ public class MemberCoreServiceImpl implements MemberCoreService {
 		LoveappleMemberModel member = findByLoginId(loginId);
 		if(member != null && password.equals(member.getPassword())){
 			member.setLastLoginDate(new Date());
-			return newAndPut(member);
+			return updateLoveappleMember(member);
 		}
 		return null;
 	}
@@ -45,7 +45,19 @@ public class MemberCoreServiceImpl implements MemberCoreService {
 	 * {@inheritDoc}
 	 */
 	@Override
-	public LoveappleMemberModel newAndPut(LoveappleMemberModel member) {
+	public LoveappleMemberModel updateLoveappleMember(LoveappleMemberModel member) {
+		if(member == null){
+			throw new IllegalArgumentException("member info is empty.");
+		}
+		return dmLoveappleMember(member);
+	}
+
+	/**
+	 * 
+	 * @param member
+	 * @return
+	 */
+	public LoveappleMemberModel dmLoveappleMember(LoveappleMemberModel member) {
 		if(member == null){
 			throw new IllegalArgumentException("member info is empty.");
 		}
@@ -61,7 +73,6 @@ public class MemberCoreServiceImpl implements MemberCoreService {
 		
 		return queryByKey(key);
 	}
-
 	/**
 	 * 
 	 * {@inheritDoc}
@@ -88,6 +99,10 @@ public class MemberCoreServiceImpl implements MemberCoreService {
 		return queryByKey(key);
 	}
 
+	/**
+	 * 
+	 * {@inheritDoc}
+	 */
 	@Override
 	public LoveappleMemberModel queryByKey(Key key) {
 		if(key == null){

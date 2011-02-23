@@ -13,7 +13,7 @@
 $* ------------------------------------------------------------------------*/
 package cn.loveapple.service.cool.service.impl;
 
-import static cn.loveapple.service.cool.model.ModelConstant.*;
+import static cn.loveapple.service.cool.model.LoveappleModel.*;
 import static org.junit.Assert.*;
 
 import javax.inject.Inject;
@@ -93,13 +93,13 @@ public class MemberCoreServiceImplTest {
 	}
 
 	/**
-	 * Test method for {@link cn.loveapple.service.cool.service.impl.MemberCoreServiceImpl#newAndPut(cn.loveapple.service.cool.model.LoveappleMemberModel)}.
+	 * Test method for {@link cn.loveapple.service.cool.service.impl.MemberCoreServiceImpl#updateLoveappleMember(cn.loveapple.service.cool.model.LoveappleMemberModel)}.
 	 */
 	@Test
 	public void testNewAndPut() {
 
 		try{
-			logic.newAndPut(null);
+			logic.updateLoveappleMember(null);
 			fail();
 		}catch (Exception e) {
 			assertTrue(e instanceof IllegalArgumentException);

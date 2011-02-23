@@ -35,7 +35,7 @@ public interface MemberCoreService {
 	 * @param member 登録、又は更新しようとする会員情報
 	 * @return 登録、又は更新した会員情報を戻す。
 	 */
-	public LoveappleMemberModel newAndPut(LoveappleMemberModel member);
+	public LoveappleMemberModel updateLoveappleMember(LoveappleMemberModel member);
 	
 	/**
 	 * キーをもとにデータを検索する
