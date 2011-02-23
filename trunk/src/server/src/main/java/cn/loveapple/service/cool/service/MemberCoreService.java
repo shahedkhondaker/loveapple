@@ -22,7 +22,7 @@ public interface MemberCoreService {
 	/**
 	 * Loveapple会員の認証処理を行う。
 	 * 
-	 * @see #findByLoginId(String) 
+	 * @see #findByEmail(String) 
 	 * @param loginId ログインID
 	 * @param password MD5で暗号化したパスワード
 	 * @return 認証が失敗した場合、<code>null</code>を返す。
@@ -30,12 +30,19 @@ public interface MemberCoreService {
 	public LoveappleMemberModel authenticateLoveappleMember(String loginId, String password);
 	
 	/**
-	 * 新たな会員情報の登録、又は更新を行う。
+	 * 新たな会員情報の更新を行う。
 	 * 
-	 * @param member 登録、又は更新しようとする会員情報
+	 * @param member 更新しようとする会員情報
 	 * @return 登録、又は更新した会員情報を戻す。
 	 */
 	public LoveappleMemberModel updateLoveappleMember(LoveappleMemberModel member);
+	/**
+	 * 新たな会員情報の登録を行う。
+	 * 
+	 * @param member 登録更新しようとする会員情報
+	 * @return 登録、又は更新した会員情報を戻す。
+	 */
+	public LoveappleMemberModel insertLoveappleMember(LoveappleMemberModel member);
 	
 	/**
 	 * キーをもとにデータを検索する
@@ -50,7 +57,7 @@ public interface MemberCoreService {
 	 * @param loginId ログインID
 	 * @return 見つからない場合、<code>null</code>を返す。
 	 */
-	public LoveappleMemberModel findByLoginId(String loginId);
+	public LoveappleMemberModel findByEmail(String loginId);
 	/**
 	 * 
 	 * キーをもとにデータを検索する

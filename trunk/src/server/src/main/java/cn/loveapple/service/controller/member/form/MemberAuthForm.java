@@ -4,6 +4,8 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
 import org.apache.commons.lang.builder.ToStringBuilder;
+import org.hibernate.validator.constraints.Email;
+import org.hibernate.validator.constraints.NotEmpty;
 
 /**
  * ログインフォーム
@@ -12,19 +14,19 @@ import org.apache.commons.lang.builder.ToStringBuilder;
  *
  */
 public class MemberAuthForm {
-	
+
 	/**
-	 * ログインID
+	 * 連絡用メールアドレス
 	 */
-	@NotNull
-	@Size(min=1, max=25)
-	//@Pattern(regexp="\\p{Alnum}\\-\\_")
-	private String loginId;
+	@NotEmpty
+	@Email
+	@Size(max = 256)
+	private String mail;
 		
 	/**
 	 * パスワード
 	 */
-	@NotNull
+	@NotEmpty
 	//@Size(min=32, max=32, message="javax.validation.constraints.Pattern.message")
 	//@Pattern(regexp="\\p{Alnum}=")
 	private String password;
@@ -35,22 +37,6 @@ public class MemberAuthForm {
 	@Override
 	public String toString(){
 		return ToStringBuilder.reflectionToString(this);
-	}
-
-	/**
-	 * ログインIDを取得します。
-	 * @return ログインID
-	 */
-	public String getLoginId() {
-	    return loginId;
-	}
-
-	/**
-	 * ログインIDを設定します。
-	 * @param loginId ログインID
-	 */
-	public void setLoginId(String loginId) {
-	    this.loginId = loginId;
 	}
 
 	/**
@@ -68,4 +54,20 @@ public class MemberAuthForm {
 	public void setPassword(String password) {
 	    this.password = password;
 	}
+	/**
+	 * 連絡用メールアドレスを取得します。
+	 * @return 連絡用メールアドレス
+	 */
+	public String getMail() {
+	    return mail;
+	}
+
+	/**
+	 * 連絡用メールアドレスを設定します。
+	 * @param mail 連絡用メールアドレス
+	 */
+	public void setMail(String mail) {
+	    this.mail = mail;
+	}
+
 }

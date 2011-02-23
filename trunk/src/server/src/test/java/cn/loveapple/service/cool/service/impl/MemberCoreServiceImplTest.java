@@ -107,14 +107,14 @@ public class MemberCoreServiceImplTest {
 	}
 
 	/**
-	 * Test method for {@link cn.loveapple.service.cool.service.impl.MemberCoreServiceImpl#findByLoginId(java.lang.String)}.
+	 * Test method for {@link cn.loveapple.service.cool.service.impl.MemberCoreServiceImpl#findByEmail(java.lang.String)}.
 	 */
 	@Test
 	public void testFindByLoginId() {
 		String loginId = "id";
 
 		try{
-			logic.findByLoginId(null);
+			logic.findByEmail(null);
 			fail();
 		}catch (Exception e) {
 			assertTrue(e instanceof IllegalArgumentException);

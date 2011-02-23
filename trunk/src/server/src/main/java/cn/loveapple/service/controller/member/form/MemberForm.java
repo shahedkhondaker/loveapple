@@ -29,12 +29,6 @@ public class MemberForm extends MemberAuthForm implements Serializable {
 	@Size(min = 32, max = 32, message = "{javax.validation.constraints.Pattern.message}")
 	private String passwordConfirm;
 
-	/**
-	 * 連絡用メールアドレス
-	 */
-	@NotEmpty
-	@Email
-	private String mail;
 
 	/**
 	 * 表示用のユーザ名
@@ -175,22 +169,6 @@ public class MemberForm extends MemberAuthForm implements Serializable {
 	 */
 	public void setPasswordConfirm(String passwordConfirm) {
 		this.passwordConfirm = passwordConfirm;
-	}
-
-	/**
-	 * 連絡用メールアドレスを取得します。
-	 * @return 連絡用メールアドレス
-	 */
-	public String getMail() {
-	    return mail;
-	}
-
-	/**
-	 * 連絡用メールアドレスを設定します。
-	 * @param mail 連絡用メールアドレス
-	 */
-	public void setMail(String mail) {
-	    this.mail = mail;
 	}
 
 	/**

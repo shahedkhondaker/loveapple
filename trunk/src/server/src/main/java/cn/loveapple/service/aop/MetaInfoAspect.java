@@ -84,9 +84,7 @@ public class MetaInfoAspect {
 			model.setLastUpdateDate(new Date());
 			result = metaInfoService.dmMetaInfo(model);
 		}
-		if(log.isDebugEnabled()){
-			log.debug("Update MetaInfo: " + result);
-		}
+		log.info("Update MetaInfo: " + result);
 		return result;
 	}
 	/**

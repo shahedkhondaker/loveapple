@@ -37,14 +37,7 @@ public class LoveappleMemberModel implements LoveappleModel{
 	 */
 	@Attribute()
 	private Status status;
-	
-	/**
-	 * ログインID
-	 */
-	@NotEmpty
-	@Attribute(unindexed=false)
-	private String loginId;
-	
+		
 	/**
 	 * 連絡用メールアドレス
 	 */
@@ -160,22 +153,6 @@ public class LoveappleMemberModel implements LoveappleModel{
 	 */
 	public void setStatus(Status status) {
 	    this.status = status;
-	}
-
-	/**
-	 * ログインIDを取得します。
-	 * @return ログインID
-	 */
-	public String getLoginId() {
-	    return loginId;
-	}
-
-	/**
-	 * ログインIDを設定します。
-	 * @param loginId ログインID
-	 */
-	public void setLoginId(String loginId) {
-	    this.loginId = loginId;
 	}
 
 	/**
