@@ -6,5 +6,5 @@
 	<a href="/member/regist"><fmt:message key="msg.member.join"/></a>
 	<a href="/member"><fmt:message key="msg.member.login"/></a>
 	</c:when>
-	<c:otherwise><a href="/member/core/info/${sessionScope[sessionKey]['key']['id']}">${sessionScope[sessionKey]['loginId']}</a></c:otherwise>
+	<c:otherwise><a href="/member/core/info/${sessionScope[sessionKey]['key']['id']}">${sessionScope[sessionKey]['name']}</a></c:otherwise>
 </c:choose>
