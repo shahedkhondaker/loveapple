@@ -32,9 +32,13 @@
  */
 package cn.loveapple.service.interceptor.front.core;
 
+
+import java.util.Map;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.apache.commons.lang.builder.ToStringBuilder;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.web.servlet.ModelAndView;
@@ -61,6 +65,8 @@ public class ResponseInterceptor extends HandlerInterceptorAdapter {
 	public void postHandle(HttpServletRequest request,
 			HttpServletResponse response, Object handler,
 			ModelAndView modelAndView) throws Exception {
-		log.info("[postHandle]ResponseInterceptor. handler:" + handler);
+		if(log.isDebugEnabled()){
+			log.debug("Form Parameters:" + ToStringBuilder.reflectionToString(request.getParameterMap()));
+		}
 	}
 }

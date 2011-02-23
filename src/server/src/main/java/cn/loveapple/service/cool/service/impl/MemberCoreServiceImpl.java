@@ -4,6 +4,8 @@ import static cn.loveapple.service.cool.model.LoveappleModel.*;
 
 import java.util.Date;
 
+import javax.management.RuntimeErrorException;
+
 import org.apache.commons.lang.StringUtils;
 import org.slim3.datastore.Datastore;
 
@@ -28,12 +30,12 @@ public class MemberCoreServiceImpl implements MemberCoreService {
 	 * {@inheritDoc}
 	 */
 	@Override
-	public LoveappleMemberModel authenticateLoveappleMember(String loginId,
+	public LoveappleMemberModel authenticateLoveappleMember(String mail,
 			String password) {
-		if(StringUtils.isEmpty(loginId) || StringUtils.isEmpty(password)){
-			throw new IllegalArgumentException("loginId or password is empty.");
+		if(StringUtils.isEmpty(mail) || StringUtils.isEmpty(password)){
+			throw new IllegalArgumentException("mail or password is empty.");
 		}
-		LoveappleMemberModel member = findByLoginId(loginId);
+		LoveappleMemberModel member = findByEmail(mail);
 		if(member != null && password.equals(member.getPassword())){
 			member.setLastLoginDate(new Date());
 			return updateLoveappleMember(member);
@@ -49,6 +51,27 @@ public class MemberCoreServiceImpl implements MemberCoreService {
 		if(member == null){
 			throw new IllegalArgumentException("member info is empty.");
 		}
+		LoveappleMemberModel result = findByEmail(member.getMail());
+		if(result == null){
+			throw new RuntimeException("not found member. " + member.getMail());
+		}
+		member.setUpdateDate(new Date());
+		member.setKey(result.getKey());
+		return dmLoveappleMember(member);
+	}
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public LoveappleMemberModel insertLoveappleMember(LoveappleMemberModel member) {
+		if(member == null){
+			throw new IllegalArgumentException("member info is empty.");
+		}
+		LoveappleMemberModel result = findByEmail(member.getMail());
+		if(result != null){
+			throw new RuntimeException("member is ben registed." + member.getMail());
+		}
+		member.setUpdateDate(new Date());
 		return dmLoveappleMember(member);
 	}
 
@@ -57,18 +80,7 @@ public class MemberCoreServiceImpl implements MemberCoreService {
 	 * @param member
 	 * @return
 	 */
-	public LoveappleMemberModel dmLoveappleMember(LoveappleMemberModel member) {
-		if(member == null){
-			throw new IllegalArgumentException("member info is empty.");
-		}
-		LoveappleMemberModel result = findByLoginId(member.getLoginId());
-		if(result != null){
-			member.setKey(result.getKey());
-			member.setUpdateDate(new Date());
-		}else{
-			member.setInsertDate(new Date());
-		}
-		
+	private LoveappleMemberModel dmLoveappleMember(LoveappleMemberModel member) {
 		Key key = Datastore.put(member);
 		
 		return queryByKey(key);
@@ -77,13 +89,13 @@ public class MemberCoreServiceImpl implements MemberCoreService {
 	 * 
 	 * {@inheritDoc}
 	 */
-	public LoveappleMemberModel findByLoginId(String loginId){
+	public LoveappleMemberModel findByEmail(String mail){
 
-		if(StringUtils.isEmpty(loginId)){
+		if(StringUtils.isEmpty(mail)){
 			throw new IllegalArgumentException("loginId is empty.");
 		}
 		LoveappleMemberModelMeta meta = LoveappleMemberModelMeta.get();
-		return Datastore.query(LoveappleMemberModel.class).filter(meta.loginId.equal(loginId)).asSingle();
+		return Datastore.query(LoveappleMemberModel.class).filter(meta.mail.equal(mail)).asSingle();
 	}
 	/**
 	 * {@inheritDoc}

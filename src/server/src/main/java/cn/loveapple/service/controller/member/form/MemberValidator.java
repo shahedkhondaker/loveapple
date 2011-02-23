@@ -47,6 +47,7 @@ public class MemberValidator extends BaseValidator {
 	 */
 	@Override
 	public void validate(Object target, Errors errors) {
+		super.validate(target, errors);
 		
 		MemberForm form = (MemberForm) target;
 		if(!form.getPassword().equals(form.getPasswordConfirm())){

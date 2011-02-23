@@ -2,6 +2,7 @@ package cn.loveapple.service.controller.member.action;
 
 import static cn.loveapple.service.cool.service.MemberCoreService.*;
 import static cn.loveapple.service.cool.model.LoveappleMemberModel.*;
+import static org.hamcrest.CoreMatchers.*;
 
 import java.util.Locale;
 
@@ -71,8 +72,8 @@ public class MemberController implements SessionLabel{
 	@RequestMapping(value = "regist", method=RequestMethod.GET)
 	public String regist(HttpSession session, Model model) {
 		clearMemberInfo(session);
-		
-		MemberForm form = (MemberForm) session.getAttribute(MemberForm.FORM_NAME);
+		Object formObj = session.getAttribute(MemberForm.FORM_NAME);
+		MemberForm form = formObj instanceof MemberForm ? (MemberForm)formObj :null ;
 		if(form == null){
 			form = new MemberForm();
 		}
@@ -92,19 +93,21 @@ public class MemberController implements SessionLabel{
 	public String registConfirm(@Valid MemberForm form, BindingResult result, HttpSession session, Model model, Locale locale) {
 		model.addAttribute(form);
 		MemberValidator validator = new MemberValidator(messageSource, locale);
-		validator.validate(form, result);
+		validator.validate(form, result);		
 		if(result.hasErrors()){
 			if(log.isDebugEnabled()){
 				log.debug(ToStringBuilder.reflectionToString(result.getAllErrors()));
 			}
 			return "member/regist";
 		}
-		LoveappleMemberModel member = memberCoreService.findByLoginId(form.getLoginId());
+		
+		LoveappleMemberModel member = memberCoreService.findByEmail(form.getMail());
 		if(member != null){
-			result.reject("errors.beRegisted", validator.createArgs("msg.member"), "");
-			model.addAttribute(form);
-			return "member/regist";
+			result.reject("loveappleErrors.beRegisted", validator.createArgs("msg.member"), "");
+			return "member/regist"; 
 		}
+		
+		
 		member = createModel(form);
 		
 		session.setAttribute(MemberForm.FORM_NAME, form);
@@ -126,7 +129,6 @@ public class MemberController implements SessionLabel{
 		if(form.getLatitude() != null && form.getLongitude() != null){
 			model.setLastLocation(new GeoPt(form.getLatitude(), form.getLongitude()));
 		}
-		model.setLoginId(form.getLoginId());
 		model.setName(form.getName());
 		model.setPassword(form.getPassword());
 		model.setPermission(DEFAULT_MEMBER_PERMISSION);
@@ -156,7 +158,7 @@ public class MemberController implements SessionLabel{
 				throw new HttpMessageNotWritableException(e.getMessage(), e);
 			}
 		}
-		member = memberCoreService.updateLoveappleMember(member);
+		member = memberCoreService.insertLoveappleMember(member);
 		if(member == null){
 			throw new HttpMessageNotWritableException("can not regist member. "
 					+ ToStringBuilder.reflectionToString(session.getAttribute(LOVEAPPLE_MEMBER_TMP)));
@@ -196,21 +198,21 @@ public class MemberController implements SessionLabel{
 			return "member/index";
 		}
 		
-		LoveappleMemberModel member = memberCoreService.authenticateLoveappleMember(form.getLoginId(), form.getPassword());
+		LoveappleMemberModel member = memberCoreService.authenticateLoveappleMember(form.getMail(), form.getPassword());
 
 		if(member == null){
-			if(log.isDebugEnabled()){
-				log.debug("not have user:" + form.getLoginId());
-			}
 			result.reject("loveappleErrors.auth");
 			return "member/index";
 		}
 				
 		session.setAttribute(LOVEAPPLE_MEMBER, member);
 		
-		Object refererUrl = String.valueOf(session.getAttribute(REFERER_INNER_URL));
-		
+		Object refererUrl = session.getAttribute(REFERER_INNER_URL);
+		if(log.isDebugEnabled()){
+			log.debug("auth will redirect? [" + refererUrl + "]");
+		}
 		if(refererUrl != null){
+			session.removeAttribute(REFERER_INNER_URL);
 			return "redirect:" + refererUrl;
 		}
 		return "redirect:/member/core/info/" + member.getKey().getId();
