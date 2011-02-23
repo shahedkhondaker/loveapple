@@ -11,6 +11,17 @@ function encryptPassword(form){
 		data = utf16to8(form.passwordConfirm.value);
 		form.passwordConfirm.value = MD5_hexhash(data);
 	}
+	return form;
+}
+
+function submit(form, action){
+	form = encryptPassword(form);
+	if(action){
+		form.action = action;
+	}
+	if(form != null){
+		form.submit();
+	}
 }
 //-->
 </script>
@@ -20,10 +31,10 @@ function encryptPassword(form){
 <div>
 	<form:form action="/member/registConfirm" modelAttribute="memberForm" onsubmit="encryptPassword(this)" method="post">
 		<fieldset>
-			<form:errors path="errors.*"  cssErrorClass="error" />
+			<form:errors messages="*"  cssErrorClass="error" />
 			<p>
-				<form:label	for="loginId" path="loginId" cssErrorClass="error"><fmt:message key="msg.member.id"/></form:label><br/>
-				<form:input path="loginId" /><form:errors path="loginId" />
+				<form:label	for="mail" path="mail" cssErrorClass="error"><fmt:message key="msg.member.mail"/></form:label><br/>
+				<form:input path="mail" /><form:errors path="mail" />
 			</p>
 			<p>
 				<form:label	for="name" path="name" cssErrorClass="error"><fmt:message key="msg.member.name"/></form:label><br/>
@@ -36,10 +47,6 @@ function encryptPassword(form){
 			<p>
 				<form:label	for="passwordConfirm" path="passwordConfirm" cssErrorClass="error"><fmt:message key="msg.member.passwordConfirm"/></form:label><br/>
 				<form:password path="passwordConfirm" /><form:errors path="passwordConfirm" />
-			</p>
-			<p>
-				<form:label	for="mail" path="mail" cssErrorClass="error"><fmt:message key="msg.member.mail"/></form:label><br/>
-				<form:input path="mail" /><form:errors path="mail" />
 			</p>
 			<p>
 				<form:label	for="qqId" path="qqId" cssErrorClass="error"><fmt:message key="msg.member.qqId"/></form:label><br/>
@@ -62,7 +69,7 @@ function encryptPassword(form){
 				<form:input path="lastAccuracy" /><form:errors path="lastAccuracy" />
 			</p>
 			<p>
-				<input type="submit" />
+				<input type="button" onclick="javascript:submit(this.form);" value="<spring:message code="msg.confirm" />" />
 				<input type="reset"/> 
 			</p>
 		</fieldset>
