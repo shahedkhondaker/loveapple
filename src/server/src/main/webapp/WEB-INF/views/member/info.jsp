@@ -5,13 +5,10 @@
 <div>
 	<table>
 		<tr>
-			<td><spring:message code="msg.member.id"/></td><td><c:out value="${member.loginId}" /></td>
+			<td><spring:message code="msg.member.mail"/></td><td><c:out value="${member.mail}" /></td>
 		</tr>
 		<tr>
 			<td><spring:message code="msg.member.name"/></td><td><c:out value="${member.name}" /></td>
-		</tr>
-		<tr>
-			<td><spring:message code="msg.member.mail"/></td><td><c:out value="${member.mail}" /></td>
 		</tr>
 		<tr>
 			<td><spring:message code="msg.member.qqId"/></td><td><c:out value="${member.qqId}" /></td>

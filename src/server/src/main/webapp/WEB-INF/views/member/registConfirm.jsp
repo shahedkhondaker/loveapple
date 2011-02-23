@@ -14,6 +14,9 @@ function submit(form, action){
 	if(action){
 		form.action = action;
 	}
+	if(form != null){
+		form.submit();
+	}
 }
 //-->
 </script>
@@ -24,8 +27,8 @@ function submit(form, action){
 	<form:form action="/member/registComplete" modelAttribute="memberForm" onsubmit="submit(this)" method="post">
 		<fieldset>
 			<p>
-				<form:label	for="loginId" path="loginId" cssErrorClass="error"><fmt:message key="msg.member.id"/></form:label><br/>
-				<c:out value="${memberForm.loginId}" />
+				<form:label	for="mail" path="mail" cssErrorClass="error"><fmt:message key="msg.member.mail"/></form:label><br/>
+				<c:out value="${memberForm.mail}" />
 			</p>
 			<p>
 				<form:label	for="name" path="name" cssErrorClass="error"><fmt:message key="msg.member.name"/></form:label><br/>
@@ -34,10 +37,6 @@ function submit(form, action){
 			<p>
 				<form:label	for="password" path="password" cssErrorClass="error"><fmt:message key="msg.member.password"/></form:label><br/>
 				******
-			</p>
-			<p>
-				<form:label	for="mail" path="mail" cssErrorClass="error"><fmt:message key="msg.member.mail"/></form:label><br/>
-				<c:out value="${memberForm.mail}" />
 			</p>
 			<p>
 				<form:label	for="qqId" path="qqId" cssErrorClass="error"><fmt:message key="msg.member.qqId"/></form:label><br/>
@@ -60,8 +59,8 @@ function submit(form, action){
 				<c:out value="${memberForm.lastAccuracy}" />
 			</p>
 			<p>
-				<input type="submit" />
-				<input type="button" onclick="submit(this.form, '<spring:url value="/member/regist" />')" value="<spring:message code="msg.back" />" />
+				<input type="button" onclick="javascript:submit(this.form);" value="<spring:message code="msg.send" />" />
+				<input type="button" onclick="javascript:submit(this.form, '<spring:url value="/member/regist" />');" value="<spring:message code="msg.back" />" />
 				<input type="reset"/> 
 			</p>
 		</fieldset>
