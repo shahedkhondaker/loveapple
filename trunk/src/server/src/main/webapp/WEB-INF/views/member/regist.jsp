@@ -19,7 +19,7 @@ function encryptPassword(form){
 	return form;
 }
 
-function submit(form, action){
+function submitForm(form, action){
 	form = encryptPassword(form);
 	if(action){
 		form.action = action;
@@ -74,7 +74,7 @@ function submit(form, action){
 				<form:input path="lastAccuracy" /><form:errors path="lastAccuracy" />
 			</p>
 			<p>
-				<a href="#" onclick="javascript:submit($('memberForm'));"><spring:message code="msg.confirm" /></a>
+				<a href="#" onclick="javascript:submitForm($('memberForm'));"><spring:message code="msg.confirm" /></a>
 				<a href="#" onclick="javascript:$('memberForm').reset();"><spring:message code="msg.reset" /></a>
 			</p>
 		</fieldset>
