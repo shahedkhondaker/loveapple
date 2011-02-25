@@ -1,13 +1,9 @@
 <%@ include file="/WEB-INF/views/common/include.jsp" %>
-<script type="text/javascript" src="/javascript/prototype.js"></script>
-<script type="text/javascript" src="/javascript/md5.js"></script>
 <script type="text/javascript">
 <!--
 function encryptPassword(form){
 	if(form.password.value){
-		if(form.password.value.length() < 6 || 20 < form.password.value.length() ){
-			$("p.errors").innerHTML="<spring:message code='loveappleErrors.Size' arguments='6,20' argumentSeparator=',' javaScriptEscape='true' />";
-			return null;
+		if(form.password.value.length < 6 || 20 < form.password.value.length ){
 		}else{
 			data = utf16to8(form.password.value);
 			form.password.value = MD5_hexhash(data);
@@ -40,12 +36,12 @@ function submit(form, action){
 		</p>
 		<p>
 			<form:label	for="password" path="password" cssErrorClass="error"><fmt:message key="msg.member.password"/></form:label><br/>
-			<form:password path="password" /><form:errors path="password" /><div id="p.errors" />
+			<form:password path="password" /><form:errors path="password" />
 		</p>
 		</form:form>
 		<p>
-			<input type="button" onclick="javascript:submit($('memberAuthForm'));" value="<spring:message code="msg.member.login" />" />
-			<input type="reset" onclick="javascript:$('memberAuthForm').reset" />
+			<a href="#" onclick="javascript:submit($('memberAuthForm'));"><spring:message code="msg.member.login" /></a>
+			<a href="#" onclick="javascript:$('memberAuthForm').reset();"><spring:message code="msg.reset" /></a>
 		</p>
 	</fieldset>
 </div>

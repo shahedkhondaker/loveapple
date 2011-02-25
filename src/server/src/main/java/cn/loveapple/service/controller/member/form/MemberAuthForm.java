@@ -27,7 +27,7 @@ public class MemberAuthForm {
 	 * パスワード
 	 */
 	@NotEmpty
-	//@Size(min=32, max=32, message="javax.validation.constraints.Pattern.message")
+	@Size(min=32, max=32, message="{loveappleErrors.passwordSize}")
 	//@Pattern(regexp="\\p{Alnum}=")
 	private String password;
 

@@ -24,6 +24,8 @@ public final class Constant {
 	public static final String STATUS_CODE_USER_ERROR = "10000";
 	public static final String STATUS_CODE_SYSTEM_ERROR = "E9999";
 
+	public static final String APP_URL_HEAD = "/app";
+	
 	/**
 	 * ベースURL定義：会員認証系
 	 */

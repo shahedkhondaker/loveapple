@@ -2,7 +2,6 @@ package cn.loveapple.service.controller.member.action;
 
 import static cn.loveapple.service.cool.service.MemberCoreService.*;
 import static cn.loveapple.service.cool.model.LoveappleMemberModel.*;
-import static org.hamcrest.CoreMatchers.*;
 
 import java.util.Locale;
 

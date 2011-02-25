@@ -1,15 +1,20 @@
 <%@ include file="/WEB-INF/views/common/include.jsp" %>
-<script type="text/javascript" src="/javascript/md5.js"></script>
 <script type="text/javascript">
 <!--
 function encryptPassword(form){
 	if(form.password.value){
-		data = utf16to8(form.password.value);
-		form.password.value = MD5_hexhash(data);
+		if(form.password.value.length < 6 || 20 < form.password.value.length ){
+		}else{
+			data = utf16to8(form.password.value);
+			form.password.value = MD5_hexhash(data);
+		}
 	}
 	if(form.passwordConfirm.value){
-		data = utf16to8(form.passwordConfirm.value);
-		form.passwordConfirm.value = MD5_hexhash(data);
+		if(form.passwordConfirm.value.length < 6 || 20 < form.passwordConfirm.value.length ){
+		}else{
+			data = utf16to8(form.passwordConfirm.value);
+			form.passwordConfirm.value = MD5_hexhash(data);
+		}
 	}
 	return form;
 }
@@ -29,7 +34,7 @@ function submit(form, action){
 
 <h3><span><fmt:message key="msg.member.join.input"/></span></h3>
 <div>
-	<form:form action="/member/registConfirm" modelAttribute="memberForm" onsubmit="encryptPassword(this)" method="post">
+	<form:form action="/member/registConfirm" modelAttribute="memberForm" method="post">
 		<fieldset>
 			<form:errors messages="*"  cssErrorClass="error" />
 			<p>
@@ -69,8 +74,8 @@ function submit(form, action){
 				<form:input path="lastAccuracy" /><form:errors path="lastAccuracy" />
 			</p>
 			<p>
-				<input type="button" onclick="javascript:submit(this.form);" value="<spring:message code="msg.confirm" />" />
-				<input type="reset"/> 
+				<a href="#" onclick="javascript:submit($('memberForm'));"><spring:message code="msg.confirm" /></a>
+				<a href="#" onclick="javascript:$('memberForm').reset();"><spring:message code="msg.reset" /></a>
 			</p>
 		</fieldset>
 	</form:form>

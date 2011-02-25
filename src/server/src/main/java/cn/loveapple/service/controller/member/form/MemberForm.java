@@ -26,7 +26,7 @@ public class MemberForm extends MemberAuthForm implements Serializable {
 	 * 確認用パスワード
 	 */
 	@NotEmpty
-	@Size(min = 32, max = 32, message = "{javax.validation.constraints.Pattern.message}")
+	@Size(min = 32, max = 32, message = "{loveappleErrors.passwordSize}")
 	private String passwordConfirm;
 
 

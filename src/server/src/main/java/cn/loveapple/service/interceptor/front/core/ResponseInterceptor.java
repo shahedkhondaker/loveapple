@@ -33,14 +33,14 @@
 package cn.loveapple.service.interceptor.front.core;
 
 
-import java.util.Map;
+import java.util.Enumeration;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.apache.commons.lang.builder.ToStringBuilder;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.apache.derby.iapi.util.ReuseFactory;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
 
@@ -65,8 +65,30 @@ public class ResponseInterceptor extends HandlerInterceptorAdapter {
 	public void postHandle(HttpServletRequest request,
 			HttpServletResponse response, Object handler,
 			ModelAndView modelAndView) throws Exception {
+		
+	}
+	
+	/**
+	 * 
+	 * {@inheritDoc}
+	 */
+	@Override
+	public boolean preHandle(HttpServletRequest request,
+			HttpServletResponse response, Object handler) throws Exception {
 		if(log.isDebugEnabled()){
-			log.debug("Form Parameters:" + ToStringBuilder.reflectionToString(request.getParameterMap()));
+			log.debug("Request URI:" + request.getRequestURI());
+			StringBuilder paramStr = new StringBuilder(1024);
+			
+			for (Enumeration e = request.getParameterNames(); e.hasMoreElements();) {
+				String name = (String) e.nextElement();			
+				paramStr.append("[");
+				paramStr.append(name);
+				paramStr.append("=");
+				paramStr.append(request.getParameter(name));
+				paramStr.append("]");
+			}
+			log.debug("Form Parameters:" + paramStr);
 		}
+		return true;
 	}
 }
