@@ -4,8 +4,6 @@ import static cn.loveapple.service.cool.model.LoveappleModel.*;
 
 import java.util.Date;
 
-import javax.management.RuntimeErrorException;
-
 import org.apache.commons.lang.StringUtils;
 import org.slim3.datastore.Datastore;
 

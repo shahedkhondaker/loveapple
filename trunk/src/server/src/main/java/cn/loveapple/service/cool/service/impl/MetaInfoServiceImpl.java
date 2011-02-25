@@ -1,7 +1,5 @@
 package cn.loveapple.service.cool.service.impl;
 
-import java.util.Date;
-
 import org.apache.commons.lang.StringUtils;
 import org.slim3.datastore.Datastore;
 

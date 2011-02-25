@@ -4,11 +4,26 @@
 package cn.loveapple.service.util.web;
 
 import static cn.loveapple.service.util.web.FrontUtil.*;
-import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.*;
+
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.UnsupportedEncodingException;
+import java.security.Principal;
+import java.util.Enumeration;
+import java.util.Locale;
+import java.util.Map;
+
+import javax.servlet.RequestDispatcher;
+import javax.servlet.ServletInputStream;
+import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
+import org.springframework.mock.web.MockHttpServletRequest;
 
 /**
  * @author hcl
@@ -57,4 +72,11 @@ public class FrontUtilTest {
 		assertEquals("redirect:/", createRedirectUrlStr(new CharSequence[]{}));
 	}
 
+	@Test
+	public void testCreateFullRequestUrlHttpServletRequest(){
+		MockHttpServletRequest request = new MockHttpServletRequest();
+		request.setRequestURI("/app/abc");
+		assertEquals("/app/abc", createFullRequestUrl(request, null));
+		assertEquals("/abc", createFullRequestUrl(request, "/app"));
+	}
 }

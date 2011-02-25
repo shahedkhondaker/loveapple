@@ -29,7 +29,7 @@
 		
 		<!-- 会員向けURL -->
 		<mvc:interceptor>
-			<mvc:mapping path="/*/core/*" />
+			<mvc:mapping path="/**/core/**" />
 			<bean class="cn.loveapple.service.interceptor.front.core.LoveappleMemberAuthInterceptor" />
 		</mvc:interceptor>
 	</mvc:interceptors>

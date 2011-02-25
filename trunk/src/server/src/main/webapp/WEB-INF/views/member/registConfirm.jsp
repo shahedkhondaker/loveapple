@@ -1,16 +1,7 @@
 <%@ include file="/WEB-INF/views/common/include.jsp" %>
-<script type="text/javascript" src="/javascript/md5.js"></script>
 <script type="text/javascript">
 <!--
-function encryptPassword(form){
-	if(form.password.value){
-		data = utf16to8(form.password.value);
-		form.password.value = MD5_hexhash(data);
-	}
-	return form;
-}
 function submit(form, action){
-	form = encryptPassword(form);
 	if(action){
 		form.action = action;
 	}
@@ -24,7 +15,7 @@ function submit(form, action){
 
 <h3><span><fmt:message key="msg.member.join.input"/></span></h3>
 <div>
-	<form:form action="/member/registComplete" modelAttribute="memberForm" onsubmit="submit(this)" method="post">
+	<form:form action="/member/registComplete" modelAttribute="memberForm" method="post">
 		<fieldset>
 			<p>
 				<form:label	for="mail" path="mail" cssErrorClass="error"><fmt:message key="msg.member.mail"/></form:label><br/>
@@ -59,9 +50,9 @@ function submit(form, action){
 				<c:out value="${memberForm.lastAccuracy}" />
 			</p>
 			<p>
-				<input type="button" onclick="javascript:submit(this.form);" value="<spring:message code="msg.send" />" />
-				<input type="button" onclick="javascript:submit(this.form, '<spring:url value="/member/regist" />');" value="<spring:message code="msg.back" />" />
-				<input type="reset"/> 
+				<a href="#" onclick="javascript:submit($('memberForm'));"><spring:message code="msg.send" /></a>
+				<a href="#" onclick="javascript:submit(this.form, '<spring:url value="/member/regist" />');"><spring:message code="msg.back" /></a>
+				<a href="#" onclick="javascript:$('memberForm').reset();"><spring:message code="msg.reset" /></a>
 			</p>
 		</fieldset>
 	</form:form>
