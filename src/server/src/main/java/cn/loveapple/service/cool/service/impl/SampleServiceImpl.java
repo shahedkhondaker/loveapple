@@ -10,7 +10,7 @@ import org.slim3.datastore.Datastore;
 import cn.loveapple.service.cool.meta.SampleModelMeta;
 import cn.loveapple.service.cool.model.SampleModel;
 import cn.loveapple.service.cool.service.SampleService;
-import cn.loveapple.service.type.Service;
+import cn.loveapple.service.type.ServiceComp;
 
 import com.google.appengine.api.datastore.GeoPt;
 import com.google.appengine.api.datastore.Key;
@@ -22,7 +22,7 @@ import com.google.appengine.api.datastore.KeyFactory;
  * @author hao_shunri
  *
  */
-@Service
+@ServiceComp
 public class SampleServiceImpl implements SampleService {
 
 	/**

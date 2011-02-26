@@ -8,6 +8,8 @@ import org.apache.commons.lang.StringUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
+import com.sun.xml.internal.ws.resources.HttpserverMessages;
+
 import cn.loveapple.service.controller.Constant;
 
 /**
@@ -101,12 +103,14 @@ public class FrontUtil {
 		fullRequestUrl.append(queryString);
 		return fullRequestUrl.toString();
 	}
-	
-	public static boolean hasAttributeInSession(HttpServletRequest request, String attributeName){
-		if(request == null){
-			return false;
-		}
-		HttpSession session = request.getSession(false);
+
+	/**
+	 * 
+	 * @param session
+	 * @param attributeName
+	 * @return
+	 */
+	public static boolean hasAttributeInSession(HttpSession session, String attributeName){
 		if(session == null){
 			return false;
 		}
@@ -114,5 +118,19 @@ public class FrontUtil {
 			return false;
 		}
 		return true;
+	}
+	
+	/**
+	 * 
+	 * @param request
+	 * @param attributeName
+	 * @return
+	 */
+	public static boolean hasAttributeInSession(HttpServletRequest request, String attributeName){
+		if(request == null){
+			return false;
+		}
+		HttpSession session = request.getSession(false);
+		return hasAttributeInSession(session, attributeName);
 	}
 }

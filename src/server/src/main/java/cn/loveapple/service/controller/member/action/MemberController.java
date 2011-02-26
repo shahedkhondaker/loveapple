@@ -2,6 +2,7 @@ package cn.loveapple.service.controller.member.action;
 
 import static cn.loveapple.service.cool.service.MemberCoreService.*;
 import static cn.loveapple.service.cool.model.LoveappleMemberModel.*;
+import static cn.loveapple.service.util.web.FrontUtil.*;
 
 import java.util.Locale;
 
@@ -183,6 +184,18 @@ public class MemberController implements SessionLabel{
 		
 		model.addAttribute(form);
 		return "member/index";
+	}
+	/**
+	 * 
+	 * @param session
+	 * @return
+	 */
+	@RequestMapping(value="logout")
+	public String logout(HttpSession session){
+		if(hasAttributeInSession(session, LOVEAPPLE_MEMBER)){
+			session.removeAttribute(LOVEAPPLE_MEMBER);
+		}
+		return "redirect:/";
 	}
 	/**
 	 * ポスト送信された場合、実行される

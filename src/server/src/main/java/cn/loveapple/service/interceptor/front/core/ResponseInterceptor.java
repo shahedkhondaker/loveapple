@@ -1,8 +1,8 @@
 /*
- * $HeadURL: https://k-team.googlecode.com/svn/trunk/server/service/src/main/java/jp/co/active/kteam/interceptor/front/core/ResponseInterceptor.java $
- * $Author: hao0323 $
- * $Revision: 97 $
- * $Date: 2010-10-19 10:11:57 +0900 (火, 19 10 2010) $
+ * $HeadURL$
+ * $Author$
+ * $Revision$
+ * $Date$
  *
  * ====================================================================
  *
@@ -40,15 +40,14 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.apache.derby.iapi.util.ReuseFactory;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
 
 /**
  * @author $author:$
- * @version $Revision: 97 $
- * @date $Date: 2010-10-19 10:11:57 +0900 (火, 19 10 2010) $
- * @id $Id: ResponseInterceptor.java 97 2010-10-19 01:11:57Z hao0323 $
+ * @version $Revision$
+ * @date $Date$
+ * @id $Id$
  *
  */
 public class ResponseInterceptor extends HandlerInterceptorAdapter {
@@ -79,7 +78,7 @@ public class ResponseInterceptor extends HandlerInterceptorAdapter {
 			log.debug("Request URI:" + request.getRequestURI());
 			StringBuilder paramStr = new StringBuilder(1024);
 			
-			for (Enumeration e = request.getParameterNames(); e.hasMoreElements();) {
+			for (@SuppressWarnings("unchecked") Enumeration e = request.getParameterNames(); e.hasMoreElements();) {
 				String name = (String) e.nextElement();			
 				paramStr.append("[");
 				paramStr.append(name);

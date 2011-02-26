@@ -10,7 +10,7 @@ import org.slim3.datastore.Datastore;
 import cn.loveapple.service.cool.meta.LoveappleMemberModelMeta;
 import cn.loveapple.service.cool.model.LoveappleMemberModel;
 import cn.loveapple.service.cool.service.MemberCoreService;
-import cn.loveapple.service.type.Service;
+import cn.loveapple.service.type.ServiceComp;
 
 import com.google.appengine.api.datastore.Key;
 import com.google.appengine.api.datastore.KeyFactory;
@@ -21,7 +21,7 @@ import com.google.appengine.api.datastore.KeyFactory;
  * @since 2011/02/15
  * @version $Revision$
  */
-@Service
+@ServiceComp
 public class MemberCoreServiceImpl implements MemberCoreService {
 
 	/**
