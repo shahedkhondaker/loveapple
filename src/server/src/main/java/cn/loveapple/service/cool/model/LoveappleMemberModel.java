@@ -114,6 +114,12 @@ public class LoveappleMemberModel implements LoveappleModel{
 	@Attribute(unindexed=false,lob=false )
 	private List<String> groupName;
 	
+	/**
+	 * 認証コード
+	 */
+	@Attribute
+	private String certificationCode;
+	
 
 	/**
 	 * {@inheritDoc}
@@ -355,5 +361,33 @@ public class LoveappleMemberModel implements LoveappleModel{
 	 * @since 2011/02/22
 	 * @version $Revision$
 	 */
-	public static enum Status{DELETE, CONFIRMATION, NORMAL};
+	public static enum Status{
+		/**
+		 * 削除
+		 */
+		DELETE, 
+		/**
+		 * 確認中
+		 */
+		CONFIRMATION,
+		/**
+		 * 正常
+		 */
+		NORMAL}
+
+	/**
+	 * 認証コードを取得します。
+	 * @return 認証コード
+	 */
+	public String getCertificationCode() {
+	    return certificationCode;
+	}
+
+	/**
+	 * 認証コードを設定します。
+	 * @param certificationCode 認証コード
+	 */
+	public void setCertificationCode(String certificationCode) {
+	    this.certificationCode = certificationCode;
+	};
 }

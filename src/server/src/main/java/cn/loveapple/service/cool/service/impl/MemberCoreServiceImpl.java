@@ -11,6 +11,7 @@ import cn.loveapple.service.cool.meta.LoveappleMemberModelMeta;
 import cn.loveapple.service.cool.model.LoveappleMemberModel;
 import cn.loveapple.service.cool.service.MemberCoreService;
 import cn.loveapple.service.type.ServiceComp;
+import cn.loveapple.service.util.web.AccountUtil;
 
 import com.google.appengine.api.datastore.Key;
 import com.google.appengine.api.datastore.KeyFactory;
@@ -69,6 +70,7 @@ public class MemberCoreServiceImpl implements MemberCoreService {
 		if(result != null){
 			throw new RuntimeException("member is ben registed." + member.getMail());
 		}
+		member.setCertificationCode(AccountUtil.genCertificationCode());
 		member.setUpdateDate(new Date());
 		return dmLoveappleMember(member);
 	}

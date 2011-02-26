@@ -21,7 +21,12 @@ public interface LoveappleModel extends Serializable {
 	public static final String LOVEAPPLE_MEMBER_MODEL = "LoveappleMember";
 	
 	/**
-	 * {@linkplain MemberGroup}のモデル名
+	 * {@linkplain MEMBER_GROUP_MODEL}のモデル名
 	 */
-	public static final String MemberGroup = "MemberGroup";
+	public static final String MEMBER_GROUP_MODEL = "MEMBER_GROUP_MODEL";
+	
+	/**
+	 * {@linkplain FixedMailModel}のモデル名
+	 */
+	public static final String FIXED_MAIL_MODEL = "FixedMailModel";
 }
