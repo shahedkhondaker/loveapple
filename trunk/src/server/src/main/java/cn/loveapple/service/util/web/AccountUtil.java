@@ -3,6 +3,8 @@
  */
 package cn.loveapple.service.util.web;
 
+import java.util.Random;
+
 import javax.servlet.http.HttpServletRequest;
 
 import com.google.appengine.api.users.UserService;
@@ -18,5 +20,14 @@ public class AccountUtil {
 			return service.createLoginURL(requestUrl);
 		}
 		return service.createLogoutURL(requestUrl);
+	}
+	
+	/**
+	 * 
+	 * @return
+	 */
+	public static String genCertificationCode(){
+		Random random = new Random();
+		return Long.toHexString(random.nextLong()) + Long.toHexString(random.nextLong());
 	}
 }
