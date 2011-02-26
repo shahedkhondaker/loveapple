@@ -20,6 +20,6 @@ import org.springframework.stereotype.Component;
 @Retention(RetentionPolicy.RUNTIME)
 @Documented
 @Component
-public @interface Service {
+public @interface ServiceComp {
 
 }

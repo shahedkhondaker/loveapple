@@ -6,7 +6,7 @@ import org.slim3.datastore.Datastore;
 import cn.loveapple.service.cool.meta.MetaInfoModelMeta;
 import cn.loveapple.service.cool.model.MetaInfoModel;
 import cn.loveapple.service.cool.service.MetaInfoService;
-import cn.loveapple.service.type.Service;
+import cn.loveapple.service.type.ServiceComp;
 
 import com.google.appengine.api.datastore.Key;
 
@@ -17,7 +17,7 @@ import com.google.appengine.api.datastore.Key;
  * @since 2011/02/23
  * @version $Revision$
  */
-@Service
+@ServiceComp
 public class MetaInfoServiceImpl implements MetaInfoService {
 
 	/**
