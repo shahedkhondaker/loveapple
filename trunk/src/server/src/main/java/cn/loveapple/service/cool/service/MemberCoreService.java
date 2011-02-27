@@ -66,4 +66,10 @@ public interface MemberCoreService {
 	 * @return
 	 */
 	public LoveappleMemberModel queryByKey(Key key);
+	
+	/**
+	 * 登録後認証メールを送信
+	 * @param mail
+	 */
+	//public void sendRegistMail(String mail);
 }
