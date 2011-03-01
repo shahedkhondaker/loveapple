@@ -56,6 +56,8 @@
   <classpathentry kind="var" path="M2_REPO/org/apache/tiles/tiles-servlet/2.2.1/tiles-servlet-2.2.1.jar" sourcepath="M2_REPO/org/apache/tiles/tiles-servlet/2.2.1/tiles-servlet-2.2.1-sources.jar"/>
   <classpathentry kind="var" path="M2_REPO/org/apache/tiles/tiles-template/2.2.1/tiles-template-2.2.1.jar" sourcepath="M2_REPO/org/apache/tiles/tiles-template/2.2.1/tiles-template-2.2.1-sources.jar"/>
   <classpathentry kind="var" path="M2_REPO/org/tuckey/urlrewritefilter/3.1.0/urlrewritefilter-3.1.0.jar"/>
+  <classpathentry kind="var" path="M2_REPO/velocity/velocity/1.5-beta2/velocity-1.5-beta2.jar"/>
+  <classpathentry kind="var" path="M2_REPO/velocity-tools/velocity-tools/1.4/velocity-tools-1.4.jar"/>
   <classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
   <classpathentry kind="con" path="com.google.appengine.eclipse.core.GAE_CONTAINER"/>
 </classpath>
