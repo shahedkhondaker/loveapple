@@ -32,5 +32,10 @@
 	</bean>
 
 	<!-- Spring MVC設定をインポートする -->
-	<import resource="mvc-config.xml" />	
+	<import resource="mvc-config.xml" />
+	
+	<!-- メール送信 -->
+	<bean id="mailSender" class="org.springframework.mail.javamail.JavaMailSenderImpl">
+		<property name="defaultEncoding"><value>UTF-8</value></property>
+	</bean>
 </beans>

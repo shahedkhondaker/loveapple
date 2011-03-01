@@ -4,6 +4,7 @@ import static cn.loveapple.service.cool.model.LoveappleModel.*;
 
 import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 
 import javax.validation.constraints.Size;
 
@@ -119,6 +120,12 @@ public class LoveappleMemberModel implements LoveappleModel{
 	 */
 	@Attribute
 	private String certificationCode;
+	
+	/**
+	 * デフォルトロケール
+	 */
+	@Attribute(lob = true)
+	private Locale defaultLocale;
 	
 
 	/**
@@ -389,5 +396,21 @@ public class LoveappleMemberModel implements LoveappleModel{
 	 */
 	public void setCertificationCode(String certificationCode) {
 	    this.certificationCode = certificationCode;
+	}
+
+	/**
+	 * デフォルトロケールを取得します。
+	 * @return デフォルトロケール
+	 */
+	public Locale getDefaultLocale() {
+	    return defaultLocale;
+	}
+
+	/**
+	 * デフォルトロケールを設定します。
+	 * @param defaultLocale デフォルトロケール
+	 */
+	public void setDefaultLocale(Locale defaultLocale) {
+	    this.defaultLocale = defaultLocale;
 	};
 }

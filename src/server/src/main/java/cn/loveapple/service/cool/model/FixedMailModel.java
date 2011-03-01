@@ -36,6 +36,8 @@ import static cn.loveapple.service.cool.model.LoveappleModel.*;
 
 import java.util.Locale;
 
+import javax.mail.internet.InternetAddress;
+
 import org.slim3.datastore.Attribute;
 import org.slim3.datastore.Model;
 
@@ -64,11 +66,6 @@ public class FixedMailModel implements LoveappleModel {
 	@Attribute(unindexed=false)
 	private String mailCode;
 	
-	/**
-	 * 送信(返信)元アドレス
-	 */
-	@Attribute
-	private String fromAddress;
 
 	/**
 	 * 位置情報
@@ -94,6 +91,12 @@ public class FixedMailModel implements LoveappleModel {
 	@Attribute
 	private String encode;
 
+	/**
+	 * 送信(返信)元アドレス
+	 */
+	@Attribute(lob=true)
+	private InternetAddress fromAddress;
+	
 	/**
 	 * キーを取得します。
 	 * @return キー
@@ -124,22 +127,6 @@ public class FixedMailModel implements LoveappleModel {
 	 */
 	public void setMailCode(String mailCode) {
 	    this.mailCode = mailCode;
-	}
-
-	/**
-	 * 送信(返信)元アドレスを取得します。
-	 * @return 送信(返信)元アドレス
-	 */
-	public String getFromAddress() {
-	    return fromAddress;
-	}
-
-	/**
-	 * 送信(返信)元アドレスを設定します。
-	 * @param fromAddress 送信(返信)元アドレス
-	 */
-	public void setFromAddress(String fromAddress) {
-	    this.fromAddress = fromAddress;
 	}
 
 	/**
@@ -204,5 +191,21 @@ public class FixedMailModel implements LoveappleModel {
 	 */
 	public void setEncode(String encode) {
 	    this.encode = encode;
+	}
+
+	/**
+	 * 送信(返信)元アドレスを取得します。
+	 * @return 送信(返信)元アドレス
+	 */
+	public InternetAddress getFromAddress() {
+	    return fromAddress;
+	}
+
+	/**
+	 * 送信(返信)元アドレスを設定します。
+	 * @param fromAddress 送信(返信)元アドレス
+	 */
+	public void setFromAddress(InternetAddress fromAddress) {
+	    this.fromAddress = fromAddress;
 	}
 }
