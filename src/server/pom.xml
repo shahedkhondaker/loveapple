@@ -291,6 +291,16 @@
 			<artifactId>commons-httpclient</artifactId>
 			<version>3.1</version>
 		</dependency>
+		<dependency>
+			<groupId>velocity-tools</groupId>
+			<artifactId>velocity-tools</artifactId>
+			<version>1.4</version>
+		</dependency>
+		<dependency>
+			<groupId>velocity</groupId>
+			<artifactId>velocity</artifactId>
+			<version>1.5-beta2</version>
+		</dependency>
 	</dependencies>
 	<build>
 		<outputDirectory>${generated.war}/WEB-INF/classes</outputDirectory>
