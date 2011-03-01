@@ -6,6 +6,7 @@ import static cn.loveapple.service.util.web.FrontUtil.*;
 
 import java.util.Locale;
 
+import javax.mail.internet.MimeMessage;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
@@ -31,6 +32,7 @@ import cn.loveapple.service.controller.member.form.MemberForm;
 import cn.loveapple.service.controller.member.form.MemberValidator;
 import cn.loveapple.service.cool.model.LoveappleMemberModel;
 import cn.loveapple.service.cool.service.MemberCoreService;
+import cn.loveapple.service.cool.service.exception.MailException;
 
 import com.google.appengine.api.datastore.GeoPt;
 
@@ -108,7 +110,7 @@ public class MemberController implements SessionLabel{
 		}
 		
 		
-		member = createModel(form);
+		member = createModel(form, locale);
 		
 		session.setAttribute(MemberForm.FORM_NAME, form);
 		session.setAttribute(LOVEAPPLE_MEMBER_TMP, member);
@@ -121,7 +123,7 @@ public class MemberController implements SessionLabel{
 	 * @param form
 	 * @return
 	 */
-	protected LoveappleMemberModel createModel(MemberForm form){
+	protected LoveappleMemberModel createModel(MemberForm form, Locale locale){
 		LoveappleMemberModel model = new LoveappleMemberModel();
 		
 		model.setMail(form.getMail());
@@ -135,6 +137,7 @@ public class MemberController implements SessionLabel{
 		model.setQqAuthKey(form.getQqAuthKey());
 		model.setQqId(form.getQqId());
 		model.setStatus(Status.CONFIRMATION);
+		model.setDefaultLocale(locale);
 		
 		return model;
 	}
@@ -147,7 +150,7 @@ public class MemberController implements SessionLabel{
 	 * @return
 	 */
 	@RequestMapping(value = "registComplete", method=RequestMethod.POST)
-	public String registComplete(HttpSession session, HttpServletRequest request, Model model) {
+	public String registComplete(HttpSession session, HttpServletRequest request, Model model, Locale locale) {
 		
 		LoveappleMemberModel member = (LoveappleMemberModel) session.getAttribute(LOVEAPPLE_MEMBER_TMP);
 		
@@ -166,6 +169,14 @@ public class MemberController implements SessionLabel{
 		session.removeAttribute(MemberForm.FORM_NAME);
 		session.removeAttribute(LOVEAPPLE_MEMBER_TMP);
 		session.setAttribute(LOVEAPPLE_MEMBER, member);
+		
+		// 承認メールを送信
+		try {
+			MimeMessage message = memberCoreService.sendRegistCertificationMail(member.getMail(), member.getDefaultLocale());
+			log.info("Send mail: " + ToStringBuilder.reflectionToString(message));
+		} catch (MailException e) {
+			log.warn("メール送信失敗。", e);
+		}
 		
 		return "redirect:/member/core/info/" + member.getKey().getId();
 	}

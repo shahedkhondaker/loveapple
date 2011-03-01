@@ -1,6 +1,11 @@
 package cn.loveapple.service.cool.service;
 
+import java.util.Locale;
+
+import javax.mail.internet.MimeMessage;
+
 import cn.loveapple.service.cool.model.LoveappleMemberModel;
+import cn.loveapple.service.cool.service.exception.MailException;
 
 import com.google.appengine.api.datastore.Key;
 
@@ -70,6 +75,8 @@ public interface MemberCoreService {
 	/**
 	 * 登録後認証メールを送信
 	 * @param mail
+	 * @param locale TODO
+	 * @throws MailException TODO
 	 */
-	//public void sendRegistMail(String mail);
+	public MimeMessage sendRegistCertificationMail(String mail, Locale locale) throws MailException;
 }
