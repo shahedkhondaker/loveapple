@@ -5,16 +5,16 @@ import static cn.loveapple.service.util.service.MailUtil.*;
 
 import java.io.UnsupportedEncodingException;
 import java.util.Date;
-import java.util.Properties;
 
 import javax.mail.MessagingException;
-import javax.mail.Session;
 import javax.mail.Transport;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
 
 import org.apache.commons.lang.StringUtils;
 import org.slim3.datastore.Datastore;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.mail.javamail.JavaMailSender;
 
 import cn.loveapple.service.cool.meta.LoveappleMemberModelMeta;
 import cn.loveapple.service.cool.model.FixedMailModel;
@@ -37,9 +37,9 @@ import com.google.appengine.api.datastore.KeyFactory;
 public class MemberCoreServiceImpl implements MemberCoreService {
 
 	/**
-	 * メール送信メッセージ
+	 * メール送信
 	 */
-	private MimeMessage mimeMessage;
+	private JavaMailSender javaMailSender;
 	
 	/**
 	 * {@inheritDoc}
@@ -174,7 +174,7 @@ public class MemberCoreServiceImpl implements MemberCoreService {
 		fixedMail.setSubject("loveapple登録の承認");
 		
 		
-		MimeMessage mimeMessage = getMimeMessage();
+		MimeMessage mimeMessage = javaMailSender.createMimeMessage();
 		try {
 			mimeMessage = genMessageFromFixed(fixedMail, mimeMessage, member.getMail(), null);
 			Transport.send(mimeMessage);
@@ -186,11 +186,12 @@ public class MemberCoreServiceImpl implements MemberCoreService {
 	}
 
 	/**
-	 * メール送信メッセージを取得します。
-	 * @return メール送信メッセージ
+	 * メール送信を設定します。
+	 * @param javaMailSender メール送信
 	 */
-	private MimeMessage getMimeMessage() {
-		Session session = Session.getDefaultInstance(new Properties(), null);
-	    return new MimeMessage(session);
+	@Autowired(required=true)
+	public void setJavaMailSender(JavaMailSender javaMailSender) {
+	    this.javaMailSender = javaMailSender;
 	}
+
 }
