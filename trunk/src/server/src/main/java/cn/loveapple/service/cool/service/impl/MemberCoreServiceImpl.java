@@ -5,17 +5,16 @@ import static cn.loveapple.service.util.service.MailUtil.*;
 
 import java.io.UnsupportedEncodingException;
 import java.util.Date;
-import java.util.Locale;
+import java.util.Properties;
 
 import javax.mail.MessagingException;
+import javax.mail.Session;
 import javax.mail.Transport;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
 
 import org.apache.commons.lang.StringUtils;
 import org.slim3.datastore.Datastore;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.mail.javamail.JavaMailSender;
 
 import cn.loveapple.service.cool.meta.LoveappleMemberModelMeta;
 import cn.loveapple.service.cool.model.FixedMailModel;
@@ -38,9 +37,9 @@ import com.google.appengine.api.datastore.KeyFactory;
 public class MemberCoreServiceImpl implements MemberCoreService {
 
 	/**
-	 * メール送信
+	 * メール送信メッセージ
 	 */
-	private JavaMailSender javaMailSender;
+	private MimeMessage mimeMessage;
 	
 	/**
 	 * {@inheritDoc}
@@ -52,7 +51,9 @@ public class MemberCoreServiceImpl implements MemberCoreService {
 			throw new IllegalArgumentException("mail or password is empty.");
 		}
 		LoveappleMemberModel member = findByEmail(mail);
-		if(member != null && password.equals(member.getPassword())){
+		if(member != null 
+				&& password.equals(member.getPassword())
+				&& LoveappleMemberModel.Status.NORMAL.equals(member.getStatus())){
 			member.setLastLoginDate(new Date());
 			return updateLoveappleMember(member);
 		}
@@ -87,8 +88,12 @@ public class MemberCoreServiceImpl implements MemberCoreService {
 		if(result != null){
 			throw new RuntimeException("member is ben registed." + member.getMail());
 		}
+		
+		Date now = new Date();
+		
 		member.setCertificationCode(AccountUtil.genCertificationCode());
-		member.setUpdateDate(new Date());
+		member.setInsertDate(now);
+		member.setUpdateDate(now);
 		return dmLoveappleMember(member);
 	}
 
@@ -147,43 +152,45 @@ public class MemberCoreServiceImpl implements MemberCoreService {
 	 * {@inheritDoc}
 	 */
 	@Override
-	public MimeMessage sendRegistCertificationMail(String mail, Locale locale) throws MailException {
-		if(mail == null){
+	public MimeMessage sendRegistCertificationMail(LoveappleMemberModel member) throws MailException {
+		if(member == null){
 			throw new IllegalArgumentException("mail address is empty.");
 		}
 		
 		// TODO 定形メールを取得する。
 		FixedMailModel fixedMail = new FixedMailModel();
-		fixedMail.setMailCode(mail);
+		fixedMail.setMailCode("");
 		fixedMail.setEncode("ISO-2022-JP");
-		fixedMail.setBody("承認操作を行い、登録を完成させてください。");
+		fixedMail.setBody("以下のURLへアクセスして登録を完成させてください。\n" +
+				"http://loveapple-facade.appspot.com/member/certification?" +
+				"id=" + member.getKey().getId() +
+				"&certificationCode=" + member.getCertificationCode());
 		try {
 			fixedMail.setFromAddress(new InternetAddress("hao0323@gmail.com", "loveapple", fixedMail.getEncode()));
 		} catch (UnsupportedEncodingException e) {
 			throw new MailException("invalid encode: " + fixedMail.getEncode() , e);
 		}
-		fixedMail.setLocale(locale);
+		fixedMail.setLocale(member.getDefaultLocale());
 		fixedMail.setSubject("loveapple登録の承認");
 		
 		
-		MimeMessage mimeMessage = javaMailSender.createMimeMessage();
+		MimeMessage mimeMessage = getMimeMessage();
 		try {
-			mimeMessage = genMessageFromFixed(fixedMail, mimeMessage, mail, null);
+			mimeMessage = genMessageFromFixed(fixedMail, mimeMessage, member.getMail(), null);
 			Transport.send(mimeMessage);
 		} catch (MessagingException e) {
-			throw new MailException("fail send mail: " + mail, e);
+			throw new MailException("fail send mail: " + member.getMail(), e);
 		}
 		
 		return mimeMessage;
 	}
 
 	/**
-	 * メール送信を設定します。
-	 * @param javaMailSender メール送信
+	 * メール送信メッセージを取得します。
+	 * @return メール送信メッセージ
 	 */
-	@Autowired(required=true)
-	public void setJavaMailSender(JavaMailSender javaMailSender) {
-	    this.javaMailSender = javaMailSender;
+	private MimeMessage getMimeMessage() {
+		Session session = Session.getDefaultInstance(new Properties(), null);
+	    return new MimeMessage(session);
 	}
-
 }
