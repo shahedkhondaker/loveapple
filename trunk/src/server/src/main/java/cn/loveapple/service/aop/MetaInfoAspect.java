@@ -42,7 +42,7 @@ public class MetaInfoAspect {
 			log.debug("AOP: updateMetaInfo. " + retVal);
 		}
 		if(retVal instanceof LoveappleModel){
-			updateMetaInfo((Class<LoveappleModel>) retVal.getClass());
+			updateMetaInfo((Class<LoveappleModel>) retVal.getClass(), 0);
 		}else{
 			throw new RuntimeException(" Model is not a type of " + LoveappleModel.class.getName());
 		}
@@ -59,7 +59,7 @@ public class MetaInfoAspect {
 			log.debug("AOP: insertMetaInfo. " + retVal);
 		}
 		if(retVal instanceof LoveappleModel){
-			updateMetaInfo((Class<LoveappleModel>) retVal.getClass());
+			updateMetaInfo((Class<LoveappleModel>) retVal.getClass(), 1);
 		}else{
 			throw new RuntimeException(" Model is not a type of " + LoveappleModel.class.getName());
 		}
@@ -69,18 +69,18 @@ public class MetaInfoAspect {
 	 * @param clz
 	 * @return
 	 */
-	private MetaInfoModel updateMetaInfo(Class<LoveappleModel> clz){
+	private MetaInfoModel updateMetaInfo(Class<LoveappleModel> clz, int count){
 		String kindName = getKindName(clz);
 		MetaInfoModel model = metaInfoService.findByKind(kindName);
 		MetaInfoModel result = null;
 		if(model == null){
 			model = new MetaInfoModel();
 			model.setKindName(kindName);
-			model.setCount(1);
+			model.setCount(count);
 			model.setLastUpdateDate(new Date());
 			result = metaInfoService.dmMetaInfo(model);
 		}else{
-			model.setCount(model.getCount() + 1);
+			model.setCount(model.getCount() + count);
 			model.setLastUpdateDate(new Date());
 			result = metaInfoService.dmMetaInfo(model);
 		}
