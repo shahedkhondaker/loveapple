@@ -1,6 +1,5 @@
 package cn.loveapple.service.cool.service;
 
-import java.util.Locale;
 
 import javax.mail.internet.MimeMessage;
 
@@ -59,10 +58,10 @@ public interface MemberCoreService {
 	/**
 	 * ログインIDをもとに、{@linkplain LoveappleMemberModel Loveapple会員情報}を取得する。
 	 * 
-	 * @param loginId ログインID
+	 * @param mail ログインID
 	 * @return 見つからない場合、<code>null</code>を返す。
 	 */
-	public LoveappleMemberModel findByEmail(String loginId);
+	public LoveappleMemberModel findByEmail(String mail);
 	/**
 	 * 
 	 * キーをもとにデータを検索する
@@ -74,9 +73,8 @@ public interface MemberCoreService {
 	
 	/**
 	 * 登録後認証メールを送信
-	 * @param mail
-	 * @param locale TODO
+	 * @param member TODO
 	 * @throws MailException TODO
 	 */
-	public MimeMessage sendRegistCertificationMail(String mail, Locale locale) throws MailException;
+	public MimeMessage sendRegistCertificationMail(LoveappleMemberModel member) throws MailException;
 }

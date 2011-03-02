@@ -1,7 +1,6 @@
 package cn.loveapple.service.controller.member.action;
 
 import static cn.loveapple.service.cool.service.MemberCoreService.*;
-import static cn.loveapple.service.cool.model.LoveappleMemberModel.*;
 import static cn.loveapple.service.util.web.FrontUtil.*;
 
 import java.util.Locale;
@@ -11,6 +10,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 
+import org.apache.commons.lang.StringUtils;
 import org.apache.commons.lang.builder.ToStringBuilder;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -28,9 +28,11 @@ import org.springframework.web.servlet.mvc.multiaction.NoSuchRequestHandlingMeth
 import cn.loveapple.service.controller.SessionLabel;
 import cn.loveapple.service.controller.exception.ResourceNotFoundException;
 import cn.loveapple.service.controller.member.form.MemberAuthForm;
+import cn.loveapple.service.controller.member.form.MemberCertificationForm;
 import cn.loveapple.service.controller.member.form.MemberForm;
 import cn.loveapple.service.controller.member.form.MemberValidator;
 import cn.loveapple.service.cool.model.LoveappleMemberModel;
+import cn.loveapple.service.cool.model.LoveappleMemberModel.Status;
 import cn.loveapple.service.cool.service.MemberCoreService;
 import cn.loveapple.service.cool.service.exception.MailException;
 
@@ -168,17 +170,16 @@ public class MemberController implements SessionLabel{
 		}
 		session.removeAttribute(MemberForm.FORM_NAME);
 		session.removeAttribute(LOVEAPPLE_MEMBER_TMP);
-		session.setAttribute(LOVEAPPLE_MEMBER, member);
 		
 		// 承認メールを送信
 		try {
-			MimeMessage message = memberCoreService.sendRegistCertificationMail(member.getMail(), member.getDefaultLocale());
+			MimeMessage message = memberCoreService.sendRegistCertificationMail(member);
 			log.info("Send mail: " + ToStringBuilder.reflectionToString(message));
 		} catch (MailException e) {
 			log.warn("メール送信失敗。", e);
 		}
 		
-		return "redirect:/member/core/info/" + member.getKey().getId();
+		return "redirect:/member/certification";
 	}
 
 	/**
@@ -207,6 +208,26 @@ public class MemberController implements SessionLabel{
 			session.removeAttribute(LOVEAPPLE_MEMBER);
 		}
 		return "redirect:/";
+	}
+	
+	@RequestMapping(value="certification", method=RequestMethod.GET)
+	public String certification(@Valid MemberCertificationForm form, BindingResult result, Model model){
+		if(result.hasErrors()){
+			model.addAttribute("certificationResult", false);
+			return "member/certification";
+		}
+		LoveappleMemberModel member = memberCoreService.queryByKey(new Long(form.getId()));
+		
+		if(member != null && form.getCertificationCode().equals(member.getCertificationCode())){
+			member.setStatus(Status.NORMAL);
+			member.setCertificationCode(null);
+			memberCoreService.updateLoveappleMember(member);
+			model.addAttribute("certificationResult", true);
+		}else{
+			model.addAttribute("certificationResult", false);
+		}
+		
+		return "member/certification";
 	}
 	/**
 	 * ポスト送信された場合、実行される
