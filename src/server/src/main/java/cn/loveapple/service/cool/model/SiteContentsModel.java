@@ -34,25 +34,21 @@ package cn.loveapple.service.cool.model;
 
 import static cn.loveapple.service.cool.model.LoveappleModel.*;
 
-import java.util.Locale;
-
-import javax.mail.internet.InternetAddress;
-
 import org.slim3.datastore.Attribute;
 import org.slim3.datastore.Model;
 
 import com.google.appengine.api.datastore.Key;
 
 /**
- * @author $author:$
+ * @author $Author$
  * @version $Revision$
  * @date $Date$
  * @id $Id$
  *
  */
 @SuppressWarnings("serial")
-@Model(kind=FIXED_MAIL_MODEL)
-public class FixedMailModel implements LoveappleModel {
+@Model(kind=SITE_CONTENTS_MODEL)
+public class SiteContentsModel implements LoveappleModel {
 
 	/**
 	 * キー
@@ -61,23 +57,23 @@ public class FixedMailModel implements LoveappleModel {
 	private Key key;
 
 	/**
-	 * メールの一意コード
+	 * タイトル
 	 */
 	@Attribute(unindexed=false)
-	private String mailCode;
+	private String title;
 	
 
 	/**
-	 * 位置情報
-	 */
-	@Attribute(lob=true)
-	private Locale locale;
-
-	/**
-	 * タイトル
+	 * ヘッダー
 	 */
 	@Attribute
-	private String subject;
+	private String header;
+
+	/**
+	 * 言語
+	 */
+	@Attribute(unindexed = false)
+	private String language;
 
 	/**
 	 * 内容
@@ -86,17 +82,23 @@ public class FixedMailModel implements LoveappleModel {
 	private String body;
 
 	/**
-	 * エンコード
+	 * コンテンツタグ名
+	 */
+	@Attribute(lob = true)
+	private String[] tags;
+	
+	/**
+	 * カテゴリID
+	 */
+	@Attribute(unindexed = false)
+	private Long categoryId;
+	
+	/**
+	 * カテゴリ名
 	 */
 	@Attribute
-	private String encode;
+	private String categoryName;
 
-	/**
-	 * 送信(返信)元アドレス
-	 */
-	@Attribute(lob=true)
-	private InternetAddress fromAddress;
-	
 	/**
 	 * キーを取得します。
 	 * @return キー
@@ -114,51 +116,51 @@ public class FixedMailModel implements LoveappleModel {
 	}
 
 	/**
-	 * メールの一意コードを取得します。
-	 * @return メールの一意コード
-	 */
-	public String getMailCode() {
-	    return mailCode;
-	}
-
-	/**
-	 * メールの一意コードを設定します。
-	 * @param mailCode メールの一意コード
-	 */
-	public void setMailCode(String mailCode) {
-	    this.mailCode = mailCode;
-	}
-
-	/**
-	 * 位置情報を取得します。
-	 * @return 位置情報
-	 */
-	public Locale getLocale() {
-	    return locale;
-	}
-
-	/**
-	 * 位置情報を設定します。
-	 * @param locale 位置情報
-	 */
-	public void setLocale(Locale locale) {
-	    this.locale = locale;
-	}
-
-	/**
 	 * タイトルを取得します。
 	 * @return タイトル
 	 */
-	public String getSubject() {
-	    return subject;
+	public String getTitle() {
+	    return title;
 	}
 
 	/**
 	 * タイトルを設定します。
-	 * @param subject タイトル
+	 * @param title タイトル
 	 */
-	public void setSubject(String subject) {
-	    this.subject = subject;
+	public void setTitle(String title) {
+	    this.title = title;
+	}
+
+	/**
+	 * ヘッダーを取得します。
+	 * @return ヘッダー
+	 */
+	public String getHeader() {
+	    return header;
+	}
+
+	/**
+	 * ヘッダーを設定します。
+	 * @param header ヘッダー
+	 */
+	public void setHeader(String header) {
+	    this.header = header;
+	}
+
+	/**
+	 * 言語を取得します。
+	 * @return 言語
+	 */
+	public String getLanguage() {
+	    return language;
+	}
+
+	/**
+	 * 言語を設定します。
+	 * @param language 言語
+	 */
+	public void setLanguage(String language) {
+	    this.language = language;
 	}
 
 	/**
@@ -178,34 +180,50 @@ public class FixedMailModel implements LoveappleModel {
 	}
 
 	/**
-	 * エンコードを取得します。
-	 * @return エンコード
+	 * コンテンツタグ名を取得します。
+	 * @return コンテンツタグ
 	 */
-	public String getEncode() {
-	    return encode;
+	public String[] getTags() {
+	    return tags;
 	}
 
 	/**
-	 * エンコードを設定します。
-	 * @param encode エンコード
+	 * コンテンツタグ名を設定します。
+	 * @param tags コンテンツタグ
 	 */
-	public void setEncode(String encode) {
-	    this.encode = encode;
+	public void setTags(String[] tags) {
+	    this.tags = tags;
 	}
 
 	/**
-	 * 送信(返信)元アドレスを取得します。
-	 * @return 送信(返信)元アドレス
+	 * カテゴリIDを取得します。
+	 * @return カテゴリID
 	 */
-	public InternetAddress getFromAddress() {
-	    return fromAddress;
+	public Long getCategoryId() {
+	    return categoryId;
 	}
 
 	/**
-	 * 送信(返信)元アドレスを設定します。
-	 * @param fromAddress 送信(返信)元アドレス
+	 * カテゴリIDを設定します。
+	 * @param categoryId カテゴリID
 	 */
-	public void setFromAddress(InternetAddress fromAddress) {
-	    this.fromAddress = fromAddress;
+	public void setCategoryId(Long categoryId) {
+	    this.categoryId = categoryId;
+	}
+
+	/**
+	 * カテゴリ名を取得します。
+	 * @return カテゴリ名
+	 */
+	public String getCategoryName() {
+	    return categoryName;
+	}
+
+	/**
+	 * カテゴリ名を設定します。
+	 * @param categoryName カテゴリ名
+	 */
+	public void setCategoryName(String categoryName) {
+	    this.categoryName = categoryName;
 	}
 }
