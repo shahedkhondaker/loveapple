@@ -47,8 +47,8 @@ import com.google.appengine.api.datastore.Key;
  *
  */
 @SuppressWarnings("serial")
-@Model(kind=SITE_CONTENTS_TAG_MODEL)
-public class SiteContentsTagModel implements LoveappleModel {
+@Model(kind=SITE_CONTENTS_FILE_MODEL)
+public class SiteContentsFileModel implements LoveappleModel {
 
 	/**
 	 * キー
@@ -57,24 +57,29 @@ public class SiteContentsTagModel implements LoveappleModel {
 	private Key key;
 
 	/**
-	 * タグ名
+	 * ファイル名
 	 */
-	@Attribute(unindexed=false)
+	@Attribute
 	private String name;
 	
 
 	/**
-	 * 件数
+	 * ファイルタイプ
 	 */
 	@Attribute
-	private Integer count;
+	private String type;
 
 	/**
-	 * 言語
+	 * ファイルのバイト
 	 */
-	@Attribute(unindexed = false)
-	private String language;
+	@Attribute(lob = true)
+	private byte[] body;
 
+	/**
+	 * 紹介
+	 */
+	@Attribute
+	private String detail;
 
 	/**
 	 * キーを取得します。
@@ -84,7 +89,6 @@ public class SiteContentsTagModel implements LoveappleModel {
 	    return key;
 	}
 
-
 	/**
 	 * キーを設定します。
 	 * @param key キー
@@ -93,57 +97,68 @@ public class SiteContentsTagModel implements LoveappleModel {
 	    this.key = key;
 	}
 
-
 	/**
-	 * タグ名を取得します。
-	 * @return タグ名
+	 * ファイル名を取得します。
+	 * @return ファイル名
 	 */
 	public String getName() {
 	    return name;
 	}
 
-
 	/**
-	 * タグ名を設定します。
-	 * @param name タグ名
+	 * ファイル名を設定します。
+	 * @param name ファイル名
 	 */
 	public void setName(String name) {
 	    this.name = name;
 	}
 
-
 	/**
-	 * 件数を取得します。
-	 * @return 件数
+	 * ファイルタイプを取得します。
+	 * @return ファイルタイプ
 	 */
-	public Integer getCount() {
-	    return count;
+	public String getType() {
+	    return type;
 	}
 
-
 	/**
-	 * 件数を設定します。
-	 * @param count 件数
+	 * ファイルタイプを設定します。
+	 * @param type ファイルタイプ
 	 */
-	public void setCount(Integer count) {
-	    this.count = count;
+	public void setType(String type) {
+	    this.type = type;
 	}
 
-
 	/**
-	 * 言語を取得します。
-	 * @return 言語
+	 * ファイルのバイトを取得します。
+	 * @return ファイルのバイト
 	 */
-	public String getLanguage() {
-	    return language;
+	public byte[] getBody() {
+	    return body;
 	}
 
+	/**
+	 * ファイルのバイトを設定します。
+	 * @param body ファイルのバイト
+	 */
+	public void setBody(byte[] body) {
+	    this.body = body;
+	}
 
 	/**
-	 * 言語を設定します。
-	 * @param language 言語
+	 * 紹介を取得します。
+	 * @return 紹介
 	 */
-	public void setLanguage(String language) {
-	    this.language = language;
+	public String getDetail() {
+	    return detail;
 	}
+
+	/**
+	 * 紹介を設定します。
+	 * @param detail 紹介
+	 */
+	public void setDetail(String detail) {
+	    this.detail = detail;
+	}
+
 }

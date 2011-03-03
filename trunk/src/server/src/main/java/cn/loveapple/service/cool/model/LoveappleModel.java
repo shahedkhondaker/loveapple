@@ -75,5 +75,10 @@ public interface LoveappleModel extends Serializable {
 	/**
 	 * {@linkplain SiteContentsTagModel}のモデル名
 	 */
-	public static final String SITE_CONTENTS_TAG = "SiteContentsTagModel";
+	public static final String SITE_CONTENTS_TAG_MODEL = "SiteContentsTagModel";
+	
+	/**
+	 * {@linkplain SiteContentsFileModel}のモデル名
+	 */
+	public static final String SITE_CONTENTS_FILE_MODEL = "SiteContentsFileModel";
 }
