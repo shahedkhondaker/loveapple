@@ -67,13 +67,14 @@ public interface SiteContentsService {
 	
 	/**
 	 * 指定される言語のカテゴリを検索する
-	 * 
+	 * @param creatorMail TODO
 	 * @param lang
 	 * @param start
 	 * @param size
+	 * 
 	 * @return
 	 */
-	public List<SiteContentsCategoryModel> findSiteContentsCategory(String lang, int start, int size);
+	public List<SiteContentsCategoryModel> findSiteContentsCategory(String creatorMail, String lang, int start, int size);
 	
 	/**
 	 * サイトコンテンツ情報を登録する

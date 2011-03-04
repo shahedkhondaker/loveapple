@@ -94,6 +94,24 @@ public class SiteContentsCategoryModel implements LoveappleModel {
 	 */
 	@Attribute
 	private Date insertDate;
+	
+	/**
+	 * 作成者ID
+	 */
+	@Attribute(unindexed = false)
+	private Key creatorId;
+
+	/**
+	 * 作成者名(ペーンネーム)
+	 */
+	@Attribute
+	private String creatorName;
+	
+	/**
+	 * 作成者メール
+	 */
+	@Attribute
+	private String creatorMail;
 
 	/**
 	 * キーを取得します。
@@ -205,5 +223,53 @@ public class SiteContentsCategoryModel implements LoveappleModel {
 	 */
 	public void setInsertDate(Date insertDate) {
 	    this.insertDate = insertDate;
+	}
+
+	/**
+	 * 作者IDを取得します。
+	 * @return 作者ID
+	 */
+	public Key getCreatorId() {
+	    return creatorId;
+	}
+
+	/**
+	 * 作者IDを設定します。
+	 * @param creatorId 作者ID
+	 */
+	public void setCreatorId(Key creatorId) {
+	    this.creatorId = creatorId;
+	}
+
+	/**
+	 * 作者名(ペーンネーム)を取得します。
+	 * @return 作者名(ペーンネーム)
+	 */
+	public String getCreatorName() {
+	    return creatorName;
+	}
+
+	/**
+	 * 作者名(ペーンネーム)を設定します。
+	 * @param creatorName 作者名(ペーンネーム)
+	 */
+	public void setCreatorName(String creatorName) {
+	    this.creatorName = creatorName;
+	}
+
+	/**
+	 * 作者メールを取得します。
+	 * @return 作者メール
+	 */
+	public String getCreatorMail() {
+	    return creatorMail;
+	}
+
+	/**
+	 * 作者メールを設定します。
+	 * @param creatorMail 作者メール
+	 */
+	public void setCreatorMail(String creatorMail) {
+	    this.creatorMail = creatorMail;
 	}
 }

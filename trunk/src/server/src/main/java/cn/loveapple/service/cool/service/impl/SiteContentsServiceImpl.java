@@ -32,10 +32,14 @@
  */
 package cn.loveapple.service.cool.service.impl;
 
+import static cn.loveapple.service.util.service.LocaleUtil.*;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.apache.commons.lang.StringUtils;
 import org.slim3.datastore.Datastore;
+import org.slim3.datastore.EqualCriterion;
+import org.slim3.datastore.FilterCriterion;
 import org.springframework.util.CollectionUtils;
 
 import cn.loveapple.service.cool.meta.SiteContentsCategoryModelMeta;
@@ -85,9 +89,11 @@ public class SiteContentsServiceImpl implements SiteContentsService {
 	 */
 	@Override
 	public List<SiteContentsCategoryModel> findSiteContentsCategory(
-			String lang, int start, int size) {
-		// TODO langの判定
-		List<SiteContentsCategoryModel> tmp = findSiteContentsCategory(lang);
+			String creatorMail, String lang, int start, int size) {
+		if(!isSupportedLanguage(lang)){
+			throw new RuntimeException("not be supported language. " + lang);
+		}
+		List<SiteContentsCategoryModel> tmp = findSiteContentsCategory(null, lang);
 		
 		if(CollectionUtils.isEmpty(tmp) || tmp.size() < start){
 			return null;
@@ -102,15 +108,26 @@ public class SiteContentsServiceImpl implements SiteContentsService {
 	}
 	
 	/**
+	 * {@linkplain SiteContentsCategoryModel#getUpdateDate() 更新日時}の降順、
+	 * {@linkplain SiteContentsCategoryModel#getName() カテゴリ名}の昇順でコンテンツカテゴリを取得する。<br />
+	 * 作者メール、又は対象言語は、指定された場合だけ、検索条件にすること。
 	 * 
-	 * @param lang
+	 * @param creatorMail 作者メール
+	 * @param lang 対象言語
 	 * @return
 	 */
 	public List<SiteContentsCategoryModel> findSiteContentsCategory(
-			String lang) {
+			String creatorMail, String lang) {
 		SiteContentsCategoryModelMeta meta = SiteContentsCategoryModelMeta.get();
+		List<EqualCriterion> filter = new ArrayList<EqualCriterion>(2);
+		if(StringUtils.isNotEmpty(creatorMail)){
+			filter.add(meta.creatorMail.equal(creatorMail));
+		}
+		if(StringUtils.isNotEmpty(lang)){
+			filter.add(meta.language.equal(lang));
+		}
 		return Datastore.query(SiteContentsCategoryModel.class)
-			.filter(meta.language.equal(lang))
+			.filter(filter.toArray(new FilterCriterion[]{}))
 			.sort(meta.updateDate.desc, meta.name.asc).asList();
 	}
 

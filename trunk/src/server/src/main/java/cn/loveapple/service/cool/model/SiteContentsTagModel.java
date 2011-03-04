@@ -74,6 +74,24 @@ public class SiteContentsTagModel implements LoveappleModel {
 	 */
 	@Attribute(unindexed = false)
 	private String language;
+	
+	/**
+	 * 作成者ID
+	 */
+	@Attribute(unindexed = false)
+	private Key creatorId;
+
+	/**
+	 * 作成者名(ペーンネーム)
+	 */
+	@Attribute
+	private String creatorName;
+	
+	/**
+	 * 作成者メール
+	 */
+	@Attribute
+	private String creatorMail;
 
 
 	/**
@@ -145,5 +163,59 @@ public class SiteContentsTagModel implements LoveappleModel {
 	 */
 	public void setLanguage(String language) {
 	    this.language = language;
+	}
+
+
+	/**
+	 * 作成者IDを取得します。
+	 * @return 作成者ID
+	 */
+	public Key getCreatorId() {
+	    return creatorId;
+	}
+
+
+	/**
+	 * 作成者IDを設定します。
+	 * @param creatorId 作成者ID
+	 */
+	public void setCreatorId(Key creatorId) {
+	    this.creatorId = creatorId;
+	}
+
+
+	/**
+	 * 作成者名(ペーンネーム)を取得します。
+	 * @return 作成者名(ペーンネーム)
+	 */
+	public String getCreatorName() {
+	    return creatorName;
+	}
+
+
+	/**
+	 * 作成者名(ペーンネーム)を設定します。
+	 * @param creatorName 作成者名(ペーンネーム)
+	 */
+	public void setCreatorName(String creatorName) {
+	    this.creatorName = creatorName;
+	}
+
+
+	/**
+	 * 作成者メールを取得します。
+	 * @return 作成者メール
+	 */
+	public String getCreatorMail() {
+	    return creatorMail;
+	}
+
+
+	/**
+	 * 作成者メールを設定します。
+	 * @param creatorMail 作成者メール
+	 */
+	public void setCreatorMail(String creatorMail) {
+	    this.creatorMail = creatorMail;
 	}
 }
