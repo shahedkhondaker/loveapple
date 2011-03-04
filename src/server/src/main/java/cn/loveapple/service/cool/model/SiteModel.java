@@ -50,7 +50,7 @@ import com.google.appengine.api.datastore.Key;
  */
 @SuppressWarnings("serial")
 @Model(kind=SITE_CONTENTS_CATEGORY_MODEL)
-public class SiteContentsCategoryModel implements LoveappleModel {
+public class SiteModel implements LoveappleModel {
 
 	/**
 	 * キー
@@ -59,24 +59,29 @@ public class SiteContentsCategoryModel implements LoveappleModel {
 	private Key key;
 
 	/**
-	 * カテゴリ名
+	 * サイト名
 	 */
 	@Attribute(unindexed=false)
 	private String name;
 	
-
 	/**
-	 * 位置情報
+	 * 言語
 	 */
 	@Attribute(unindexed=false)
 	private String language;
 
 	/**
-	 * コンテンツ数
+	 * カテゴリ数
 	 */
 	@Attribute
-	private Integer count;
-
+	private Integer categoryCount;
+	
+	/**
+	 * タグ数
+	 */
+	@Attribute
+	private Integer tagCount;
+	
 	/**
 	 * 紹介
 	 */
@@ -96,34 +101,23 @@ public class SiteContentsCategoryModel implements LoveappleModel {
 	private Date insertDate;
 	
 	/**
-	 * 作成者ID
+	 * オーナID
 	 */
-	@Attribute(unindexed = false)
-	private Long creatorId;
+	@Attribute(lob = true)
+	private Key[] ownerId;
 
 	/**
-	 * 作成者名(ペーンネーム)
+	 * オーナ名
 	 */
-	@Attribute
-	private String creatorName;
+	@Attribute(lob = true)
+	private String[] ownerName;
 	
 	/**
-	 * 作成者メール
+	 * オーナメール
 	 */
-	@Attribute
-	private String creatorMail;
+	@Attribute(lob = true)
+	private String[] ownerMail;
 
-	/**
-	 * 所属サイトID
-	 */
-	@Attribute(unindexed = false)
-	private Long siteId;
-
-	/**
-	 * 所属サイト名
-	 */
-	@Attribute
-	private String siteName;
 	/**
 	 * キーを取得します。
 	 * @return キー
@@ -141,51 +135,67 @@ public class SiteContentsCategoryModel implements LoveappleModel {
 	}
 
 	/**
-	 * カテゴリ名を取得します。
-	 * @return カテゴリ名
+	 * サイト名を取得します。
+	 * @return サイト名
 	 */
 	public String getName() {
 	    return name;
 	}
 
 	/**
-	 * カテゴリ名を設定します。
-	 * @param name カテゴリ名
+	 * サイト名を設定します。
+	 * @param name サイト名
 	 */
 	public void setName(String name) {
 	    this.name = name;
 	}
 
 	/**
-	 * 位置情報を取得します。
-	 * @return 位置情報
+	 * 言語を取得します。
+	 * @return 言語
 	 */
 	public String getLanguage() {
 	    return language;
 	}
 
 	/**
-	 * 位置情報を設定します。
-	 * @param language 位置情報
+	 * 言語を設定します。
+	 * @param language 言語
 	 */
 	public void setLanguage(String language) {
 	    this.language = language;
 	}
 
 	/**
-	 * コンテンツ数を取得します。
-	 * @return コンテンツ数
+	 * カテゴリ数を取得します。
+	 * @return カテゴリ数
 	 */
-	public Integer getCount() {
-	    return count;
+	public Integer getCategoryCount() {
+	    return categoryCount;
 	}
 
 	/**
-	 * コンテンツ数を設定します。
-	 * @param count コンテンツ数
+	 * カテゴリ数を設定します。
+	 * @param categoryCount カテゴリ数
 	 */
-	public void setCount(Integer count) {
-	    this.count = count;
+	public void setCategoryCount(Integer categoryCount) {
+	    this.categoryCount = categoryCount;
+	}
+
+	/**
+	 * タグ数を取得します。
+	 * @return タグ数
+	 */
+	public Integer getTagCount() {
+	    return tagCount;
+	}
+
+	/**
+	 * タグ数を設定します。
+	 * @param tagCount タグ数
+	 */
+	public void setTagCount(Integer tagCount) {
+	    this.tagCount = tagCount;
 	}
 
 	/**
@@ -237,82 +247,51 @@ public class SiteContentsCategoryModel implements LoveappleModel {
 	}
 
 	/**
-	 * 作成者IDを取得します。
-	 * @return 作成者ID
+	 * オーナIDを取得します。
+	 * @return オーナID
 	 */
-	public Long getCreatorId() {
-	    return creatorId;
+	public Key[] getOwnerId() {
+	    return ownerId;
 	}
 
 	/**
-	 * 作成者IDを設定します。
-	 * @param creatorId 作成者ID
+	 * オーナIDを設定します。
+	 * @param ownerId オーナID
 	 */
-	public void setCreatorId(Long creatorId) {
-	    this.creatorId = creatorId;
+	public void setOwnerId(Key[] ownerId) {
+	    this.ownerId = ownerId;
 	}
 
 	/**
-	 * 作成者名(ペーンネーム)を取得します。
-	 * @return 作成者名(ペーンネーム)
+	 * オーナ名を取得します。
+	 * @return オーナ名
 	 */
-	public String getCreatorName() {
-	    return creatorName;
+	public String[] getOwnerName() {
+	    return ownerName;
 	}
 
 	/**
-	 * 作成者名(ペーンネーム)を設定します。
-	 * @param creatorName 作成者名(ペーンネーム)
+	 * オーナ名を設定します。
+	 * @param ownerName オーナ名
 	 */
-	public void setCreatorName(String creatorName) {
-	    this.creatorName = creatorName;
+	public void setOwnerName(String[] ownerName) {
+	    this.ownerName = ownerName;
 	}
 
 	/**
-	 * 作成者メールを取得します。
-	 * @return 作成者メール
+	 * オーナメールを取得します。
+	 * @return オーナメール
 	 */
-	public String getCreatorMail() {
-	    return creatorMail;
+	public String[] getOwnerMail() {
+	    return ownerMail;
 	}
 
 	/**
-	 * 作成者メールを設定します。
-	 * @param creatorMail 作成者メール
+	 * オーナメールを設定します。
+	 * @param ownerMail オーナメール
 	 */
-	public void setCreatorMail(String creatorMail) {
-	    this.creatorMail = creatorMail;
+	public void setOwnerMail(String[] ownerMail) {
+	    this.ownerMail = ownerMail;
 	}
 
-	/**
-	 * 所属サイトIDを取得します。
-	 * @return 所属サイトID
-	 */
-	public Long getSiteId() {
-	    return siteId;
-	}
-
-	/**
-	 * 所属サイトIDを設定します。
-	 * @param siteId 所属サイトID
-	 */
-	public void setSiteId(Long siteId) {
-	    this.siteId = siteId;
-	}
-
-	/**
-	 * 所属サイト名を取得します。
-	 * @return 所属サイト名
-	 */
-	public String getSiteName() {
-	    return siteName;
-	}
-
-	/**
-	 * 所属サイト名を設定します。
-	 * @param siteName 所属サイト名
-	 */
-	public void setSiteName(String siteName) {
-	    this.siteName = siteName;
-	}
 }
