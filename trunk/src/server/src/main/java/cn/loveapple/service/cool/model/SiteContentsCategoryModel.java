@@ -34,6 +34,8 @@ package cn.loveapple.service.cool.model;
 
 import static cn.loveapple.service.cool.model.LoveappleModel.*;
 
+import java.util.Date;
+
 import org.slim3.datastore.Attribute;
 import org.slim3.datastore.Model;
 
@@ -80,6 +82,18 @@ public class SiteContentsCategoryModel implements LoveappleModel {
 	 */
 	@Attribute
 	private String detail;
+
+	/**
+	 * 更新日時
+	 */
+	@Attribute
+	private Date updateDate;
+
+	/**
+	 * 作成日時
+	 */
+	@Attribute
+	private Date insertDate;
 
 	/**
 	 * キーを取得します。
@@ -159,5 +173,37 @@ public class SiteContentsCategoryModel implements LoveappleModel {
 	 */
 	public void setDetail(String detail) {
 	    this.detail = detail;
+	}
+
+	/**
+	 * 更新日時を取得します。
+	 * @return 更新日時
+	 */
+	public Date getUpdateDate() {
+	    return updateDate;
+	}
+
+	/**
+	 * 更新日時を設定します。
+	 * @param updateDate 更新日時
+	 */
+	public void setUpdateDate(Date updateDate) {
+	    this.updateDate = updateDate;
+	}
+
+	/**
+	 * 作成日時を取得します。
+	 * @return 作成日時
+	 */
+	public Date getInsertDate() {
+	    return insertDate;
+	}
+
+	/**
+	 * 作成日時を設定します。
+	 * @param insertDate 作成日時
+	 */
+	public void setInsertDate(Date insertDate) {
+	    this.insertDate = insertDate;
 	}
 }
