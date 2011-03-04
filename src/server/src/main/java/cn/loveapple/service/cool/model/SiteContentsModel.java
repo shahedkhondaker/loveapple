@@ -34,6 +34,8 @@ package cn.loveapple.service.cool.model;
 
 import static cn.loveapple.service.cool.model.LoveappleModel.*;
 
+import java.util.Date;
+
 import org.slim3.datastore.Attribute;
 import org.slim3.datastore.Model;
 
@@ -98,6 +100,12 @@ public class SiteContentsModel implements LoveappleModel {
 	 */
 	@Attribute
 	private String categoryName;
+	
+	/**
+	 * 公開日時
+	 */
+	@Attribute
+	private Date publicDate;
 
 	/**
 	 * キーを取得します。
@@ -181,7 +189,7 @@ public class SiteContentsModel implements LoveappleModel {
 
 	/**
 	 * コンテンツタグ名を取得します。
-	 * @return コンテンツタグ
+	 * @return コンテンツタグ名
 	 */
 	public String[] getTags() {
 	    return tags;
@@ -189,7 +197,7 @@ public class SiteContentsModel implements LoveappleModel {
 
 	/**
 	 * コンテンツタグ名を設定します。
-	 * @param tags コンテンツタグ
+	 * @param tags コンテンツタグ名
 	 */
 	public void setTags(String[] tags) {
 	    this.tags = tags;
@@ -209,6 +217,22 @@ public class SiteContentsModel implements LoveappleModel {
 	 */
 	public void setCategoryId(Long categoryId) {
 	    this.categoryId = categoryId;
+	}
+
+	/**
+	 * 公開日時を取得します。
+	 * @return 公開日時
+	 */
+	public Date getPublicDate() {
+	    return publicDate;
+	}
+
+	/**
+	 * 公開日時を設定します。
+	 * @param publicDate 公開日時
+	 */
+	public void setPublicDate(Date publicDate) {
+	    this.publicDate = publicDate;
 	}
 
 	/**
