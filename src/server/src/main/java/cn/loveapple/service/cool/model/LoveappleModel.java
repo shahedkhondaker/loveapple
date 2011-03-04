@@ -55,30 +55,30 @@ public interface LoveappleModel extends Serializable {
 	/**
 	 * {@linkplain MEMBER_GROUP_MODEL}のモデル名
 	 */
-	public static final String MEMBER_GROUP_MODEL = "MEMBER_GROUP_MODEL";
+	public static final String MEMBER_GROUP_MODEL = "MemberGroup";
 	
 	/**
 	 * {@linkplain FixedMailModel}のモデル名
 	 */
-	public static final String FIXED_MAIL_MODEL = "FixedMailModel";
+	public static final String FIXED_MAIL_MODEL = "FixedMail";
 	
 	/**
 	 * {@linkplain SiteContentsModel}のモデル名
 	 */
-	public static final String SITE_CONTENTS_MODEL = "SiteContentsModel";
+	public static final String SITE_CONTENTS_MODEL = "SiteContents";
 	
 	/**
 	 * {@linkplain SiteContentsCategoryModel}のモデル名
 	 */
-	public static final String SITE_CONTENTS_CATEGORY_MODEL = "SiteContentsCategoryModel";
+	public static final String SITE_CONTENTS_CATEGORY_MODEL = "SiteContentsCategory";
 	
 	/**
 	 * {@linkplain SiteContentsTagModel}のモデル名
 	 */
-	public static final String SITE_CONTENTS_TAG_MODEL = "SiteContentsTagModel";
+	public static final String SITE_CONTENTS_TAG_MODEL = "SiteContentsTag";
 	
 	/**
 	 * {@linkplain SiteContentsFileModel}のモデル名
 	 */
-	public static final String SITE_CONTENTS_FILE_MODEL = "SiteContentsFileModel";
+	public static final String SITE_CONTENTS_FILE_MODEL = "SiteContentsFile";
 }
