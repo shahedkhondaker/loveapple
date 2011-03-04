@@ -85,7 +85,7 @@ public class SiteContentsFileModel implements LoveappleModel {
 	 * 作成者ID
 	 */
 	@Attribute(unindexed = false)
-	private Key creatorId;
+	private Long creatorId;
 
 	/**
 	 * 作成者名(ペーンネーム)
@@ -99,6 +99,17 @@ public class SiteContentsFileModel implements LoveappleModel {
 	@Attribute
 	private String creatorMail;
 
+	/**
+	 * 所属サイトID
+	 */
+	@Attribute(unindexed = false)
+	private Long siteId;
+
+	/**
+	 * 所属サイト名
+	 */
+	@Attribute
+	private String siteName;
 	/**
 	 * キーを取得します。
 	 * @return キー
@@ -183,7 +194,7 @@ public class SiteContentsFileModel implements LoveappleModel {
 	 * 作成者IDを取得します。
 	 * @return 作成者ID
 	 */
-	public Key getCreatorId() {
+	public Long getCreatorId() {
 	    return creatorId;
 	}
 
@@ -191,7 +202,7 @@ public class SiteContentsFileModel implements LoveappleModel {
 	 * 作成者IDを設定します。
 	 * @param creatorId 作成者ID
 	 */
-	public void setCreatorId(Key creatorId) {
+	public void setCreatorId(Long creatorId) {
 	    this.creatorId = creatorId;
 	}
 
@@ -225,6 +236,38 @@ public class SiteContentsFileModel implements LoveappleModel {
 	 */
 	public void setCreatorMail(String creatorMail) {
 	    this.creatorMail = creatorMail;
+	}
+
+	/**
+	 * 所属サイトIDを取得します。
+	 * @return 所属サイトID
+	 */
+	public Long getSiteId() {
+	    return siteId;
+	}
+
+	/**
+	 * 所属サイトIDを設定します。
+	 * @param siteId 所属サイトID
+	 */
+	public void setSiteId(Long siteId) {
+	    this.siteId = siteId;
+	}
+
+	/**
+	 * 所属サイト名を取得します。
+	 * @return 所属サイト名
+	 */
+	public String getSiteName() {
+	    return siteName;
+	}
+
+	/**
+	 * 所属サイト名を設定します。
+	 * @param siteName 所属サイト名
+	 */
+	public void setSiteName(String siteName) {
+	    this.siteName = siteName;
 	}
 
 }

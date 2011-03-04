@@ -89,11 +89,11 @@ public class SiteContentsServiceImpl implements SiteContentsService {
 	 */
 	@Override
 	public List<SiteContentsCategoryModel> findSiteContentsCategory(
-			String creatorMail, String lang, int start, int size) {
+			Long siteId, Long creatorId, String creatorMail, String lang, int start, int size) {
 		if(!isSupportedLanguage(lang)){
 			throw new RuntimeException("not be supported language. " + lang);
 		}
-		List<SiteContentsCategoryModel> tmp = findSiteContentsCategory(null, lang);
+		List<SiteContentsCategoryModel> tmp = findSiteContentsCategory(siteId, creatorId, creatorMail, lang);
 		
 		if(CollectionUtils.isEmpty(tmp) || tmp.size() < start){
 			return null;
@@ -108,18 +108,19 @@ public class SiteContentsServiceImpl implements SiteContentsService {
 	}
 	
 	/**
-	 * {@linkplain SiteContentsCategoryModel#getUpdateDate() 更新日時}の降順、
-	 * {@linkplain SiteContentsCategoryModel#getName() カテゴリ名}の昇順でコンテンツカテゴリを取得する。<br />
-	 * 作者メール、又は対象言語は、指定された場合だけ、検索条件にすること。
 	 * 
-	 * @param creatorMail 作者メール
-	 * @param lang 対象言語
-	 * @return
+	 * {@inheritDoc}
 	 */
 	public List<SiteContentsCategoryModel> findSiteContentsCategory(
-			String creatorMail, String lang) {
+			Long siteId, Long creatorId, String creatorMail, String lang) {
 		SiteContentsCategoryModelMeta meta = SiteContentsCategoryModelMeta.get();
-		List<EqualCriterion> filter = new ArrayList<EqualCriterion>(2);
+		List<EqualCriterion> filter = new ArrayList<EqualCriterion>(3);
+		if(siteId != null){
+			filter.add(meta.siteId.equal(siteId));
+		}
+		if(creatorId != null){
+			filter.add(meta.creatorId.equal(creatorId));
+		}
 		if(StringUtils.isNotEmpty(creatorMail)){
 			filter.add(meta.creatorMail.equal(creatorMail));
 		}

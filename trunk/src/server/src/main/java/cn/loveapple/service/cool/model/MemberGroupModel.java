@@ -16,7 +16,7 @@ import com.google.appengine.api.datastore.Key;
  */
 @SuppressWarnings("serial")
 @Model(kind=MEMBER_GROUP_MODEL)
-public class MemberGroup implements LoveappleModel {
+public class MemberGroupModel implements LoveappleModel {
 
 	/**
 	 * キー

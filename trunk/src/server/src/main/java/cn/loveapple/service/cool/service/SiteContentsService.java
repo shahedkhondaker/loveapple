@@ -66,16 +66,32 @@ public interface SiteContentsService {
 	public SiteContentsCategoryModel updateSiteContentsCategory(SiteContentsCategoryModel category);
 	
 	/**
-	 * 指定される言語のカテゴリを検索する
-	 * @param creatorMail TODO
-	 * @param lang
-	 * @param start
-	 * @param size
+	 * 件数を取得して、{@linkplain SiteContentsCategoryModel#getUpdateDate() 更新日時}の降順、
+	 * {@linkplain SiteContentsCategoryModel#getName() カテゴリ名}の昇順でコンテンツカテゴリを取得する。<br />
 	 * 
-	 * @return
+	 * @see #findSiteContentsCategory(Long, Long, String, String) 検索処理を行うメソッド
+	 * @param siteId サイトID
+	 * @param creatorId 作者ID
+	 * @param creatorMail 作者メール
+	 * @param lang 対象言語
+	 * @param start 開始ポイント
+	 * @param size 取得件数
+	 * @return 検索結果
 	 */
-	public List<SiteContentsCategoryModel> findSiteContentsCategory(String creatorMail, String lang, int start, int size);
+	public List<SiteContentsCategoryModel> findSiteContentsCategory(Long siteId, Long creatorId, String creatorMail, String lang, int start, int size);
 	
+	/**
+	 * 
+	 * {@linkplain SiteContentsCategoryModel#getUpdateDate() 更新日時}の降順、
+	 * {@linkplain SiteContentsCategoryModel#getName() カテゴリ名}の昇順でコンテンツカテゴリを取得する。<br />
+	 * 作者メール、又は対象言語は、指定された場合だけ、検索条件にすること。
+	 * @param siteId サイトID
+	 * @param creatorId 作者ID
+	 * @param creatorMail 作者メール
+	 * @param lang 対象言語
+	 * @return 検索結果
+	 */
+	public List<SiteContentsCategoryModel> findSiteContentsCategory(Long siteId, Long creatorId, String creatorMail, String lang);
 	/**
 	 * サイトコンテンツ情報を登録する
 	 * 
