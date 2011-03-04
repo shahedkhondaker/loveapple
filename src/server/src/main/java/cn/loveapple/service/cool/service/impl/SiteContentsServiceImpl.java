@@ -47,6 +47,7 @@ import cn.loveapple.service.cool.model.SiteContentsCategoryModel;
 import cn.loveapple.service.cool.model.SiteContentsFileModel;
 import cn.loveapple.service.cool.model.SiteContentsModel;
 import cn.loveapple.service.cool.model.SiteContentsTagModel;
+import cn.loveapple.service.cool.model.SiteModel;
 import cn.loveapple.service.cool.service.SiteContentsService;
 
 
@@ -192,6 +193,26 @@ public class SiteContentsServiceImpl implements SiteContentsService {
 	@Override
 	public SiteContentsFileModel updateSiteContentsFileModel(
 			SiteContentsFileModel file) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	/**
+	 * 
+	 * {@inheritDoc}
+	 */
+	@Override
+	public SiteModel insertSite(SiteModel site) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	/**
+	 * 
+	 * {@inheritDoc}
+	 */
+	@Override
+	public SiteModel updateSite(SiteModel site) {
 		// TODO Auto-generated method stub
 		return null;
 	}
