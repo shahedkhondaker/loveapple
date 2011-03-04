@@ -38,6 +38,7 @@ import cn.loveapple.service.cool.model.SiteContentsCategoryModel;
 import cn.loveapple.service.cool.model.SiteContentsFileModel;
 import cn.loveapple.service.cool.model.SiteContentsModel;
 import cn.loveapple.service.cool.model.SiteContentsTagModel;
+import cn.loveapple.service.cool.model.SiteModel;
 
 /**
  * サイトコンテンツ操作サービス
@@ -64,6 +65,22 @@ public interface SiteContentsService {
 	 * @return
 	 */
 	public SiteContentsCategoryModel updateSiteContentsCategory(SiteContentsCategoryModel category);
+
+	/**
+	 * サイト情報を登録する。
+	 * 
+	 * @param site
+	 * @return 登録したサイト情報を戻す
+	 */
+	public SiteModel insertSite(SiteModel site);
+	
+	/**
+	 * サイト情報を更新する。
+	 * 
+	 * @param site
+	 * @return
+	 */
+	public SiteModel updateSite(SiteModel site);
 	
 	/**
 	 * 件数を取得して、{@linkplain SiteContentsCategoryModel#getUpdateDate() 更新日時}の降順、
