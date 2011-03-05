@@ -35,6 +35,7 @@ package cn.loveapple.service.cool.model;
 import static cn.loveapple.service.cool.model.LoveappleModel.*;
 
 import java.util.Date;
+import java.util.TimeZone;
 
 import org.slim3.datastore.Attribute;
 import org.slim3.datastore.Model;
@@ -69,6 +70,12 @@ public class SiteModel implements LoveappleModel {
 	 */
 	@Attribute(unindexed=false)
 	private String language;
+	
+	/**
+	 * サイトタイムゾーン
+	 */
+	@Attribute(lob = true)
+	private TimeZone timeZone;
 
 	/**
 	 * カテゴリ数
@@ -119,6 +126,24 @@ public class SiteModel implements LoveappleModel {
 	private String[] ownerMail;
 
 	/**
+	 * サイトURL
+	 */
+	@Attribute
+	private String siteUrl;
+	
+	/**
+	 * ロゴパス
+	 */
+	@Attribute
+	private String logo;
+	
+	/**
+	 * Google Analytics Web Property ID
+	 */
+	@Attribute
+	private String googleAnalyticsId;
+	
+	/**
 	 * キーを取得します。
 	 * @return キー
 	 */
@@ -164,6 +189,22 @@ public class SiteModel implements LoveappleModel {
 	 */
 	public void setLanguage(String language) {
 	    this.language = language;
+	}
+
+	/**
+	 * サイトタイムゾーンを取得します。
+	 * @return サイトタイムゾーン
+	 */
+	public TimeZone getTimeZone() {
+	    return timeZone;
+	}
+
+	/**
+	 * サイトタイムゾーンを設定します。
+	 * @param timeZone サイトタイムゾーン
+	 */
+	public void setTimeZone(TimeZone timeZone) {
+	    this.timeZone = timeZone;
 	}
 
 	/**
@@ -292,6 +333,54 @@ public class SiteModel implements LoveappleModel {
 	 */
 	public void setOwnerMail(String[] ownerMail) {
 	    this.ownerMail = ownerMail;
+	}
+
+	/**
+	 * サイトURLを取得します。
+	 * @return サイトURL
+	 */
+	public String getSiteUrl() {
+	    return siteUrl;
+	}
+
+	/**
+	 * サイトURLを設定します。
+	 * @param siteUrl サイトURL
+	 */
+	public void setSiteUrl(String siteUrl) {
+	    this.siteUrl = siteUrl;
+	}
+
+	/**
+	 * ロゴパスを取得します。
+	 * @return ロゴパス
+	 */
+	public String getLogo() {
+	    return logo;
+	}
+
+	/**
+	 * ロゴパスを設定します。
+	 * @param logo ロゴパス
+	 */
+	public void setLogo(String logo) {
+	    this.logo = logo;
+	}
+
+	/**
+	 * Google Analytics Web Property IDを取得します。
+	 * @return Google Analytics Web Property ID
+	 */
+	public String getGoogleAnalyticsId() {
+	    return googleAnalyticsId;
+	}
+
+	/**
+	 * Google Analytics Web Property IDを設定します。
+	 * @param googleAnalyticsId Google Analytics Web Property ID
+	 */
+	public void setGoogleAnalyticsId(String googleAnalyticsId) {
+	    this.googleAnalyticsId = googleAnalyticsId;
 	}
 
 }
