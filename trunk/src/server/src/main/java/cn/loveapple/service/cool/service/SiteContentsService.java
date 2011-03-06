@@ -49,7 +49,7 @@ import cn.loveapple.service.cool.model.SiteModel;
  * @id $Id$
  *
  */
-public interface SiteContentsService {
+public interface SiteContentsService extends BaseService {
 	/**
 	 * カテゴリ情報を登録する。
 	 * 
@@ -156,4 +156,12 @@ public interface SiteContentsService {
 	 * @return
 	 */
 	public SiteContentsFileModel updateSiteContentsFileModel(SiteContentsFileModel file);
+	
+	/**
+	 * IDからサイト情報を検索する
+	 * 
+	 * @param idList 対象サイトID
+	 * @return
+	 */
+	public List<SiteModel> findSite(Long ...idList);
 }

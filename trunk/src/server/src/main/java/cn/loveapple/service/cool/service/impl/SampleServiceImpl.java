@@ -23,7 +23,7 @@ import com.google.appengine.api.datastore.KeyFactory;
  *
  */
 @ServiceComp
-public class SampleServiceImpl implements SampleService {
+public class SampleServiceImpl extends BaseServiceImpl implements SampleService {
 
 	/**
 	 * ログ

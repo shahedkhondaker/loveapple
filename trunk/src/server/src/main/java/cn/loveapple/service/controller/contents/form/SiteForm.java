@@ -6,7 +6,7 @@
  *
  * ====================================================================
  *
- * Copyright (C) 2008 by loveapple.cn
+ * Copyright (C) 2008 by loveapple.sourceforge.jp
  *
  * All copyright notices regarding loveapple and loveapple CoreLib
  * MUST remain intact in the scripts, documents and source code.
@@ -30,134 +30,79 @@
  *
  * @author: loveapple
  */
-package cn.loveapple.service.cool.model;
+package cn.loveapple.service.controller.contents.form;
 
-import static cn.loveapple.service.cool.model.LoveappleModel.*;
+import java.io.Serializable;
 
-import java.util.Date;
-import java.util.TimeZone;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 
-import org.slim3.datastore.Attribute;
-import org.slim3.datastore.Model;
+import org.hibernate.validator.constraints.NotEmpty;
 
-import com.google.appengine.api.datastore.Key;
 
 /**
- * @author $Author$
+ * 
+ * 
+ * @author $author:$
  * @version $Revision$
  * @date $Date$
  * @id $Id$
  *
  */
-@SuppressWarnings("serial")
-@Model(kind=SITE_MODEL)
-public class SiteModel implements LoveappleModel {
-
-	/**
-	 * キー
-	 */
-	@Attribute(primaryKey=true)
-	private Key key;
+public class SiteForm implements Serializable {
 
 	/**
 	 * サイト名
 	 */
-	@Attribute(unindexed=false)
+	@NotEmpty
+	@Size(max = 100)
 	private String name;
 	
 	/**
 	 * 言語
 	 */
-	@Attribute(unindexed=false)
+	@NotEmpty
+	@Size(max = 3)
 	private String language;
 	
 	/**
 	 * サイトタイムゾーン
 	 */
-	@Attribute(lob = true)
-	private TimeZone timeZone;
-
-	/**
-	 * カテゴリ数
-	 */
-	@Attribute
-	private Integer categoryCount;
-	
-	/**
-	 * タグ数
-	 */
-	@Attribute
-	private Integer tagCount;
+	@NotEmpty
+	@Size(max = 3)
+	private String timeZone;
 	
 	/**
 	 * 紹介
 	 */
-	@Attribute
+	@Size(max = 1000)
 	private String detail;
-
-	/**
-	 * 更新日時
-	 */
-	@Attribute
-	private Date updateDate;
-
-	/**
-	 * 作成日時
-	 */
-	@Attribute
-	private Date insertDate;
-	
-	/**
-	 * オーナID
-	 */
-	@Attribute(lob = true)
-	private Key[] ownerId;
 
 	/**
 	 * オーナ名
 	 */
-	@Attribute(lob = true)
+	@NotNull
 	private String[] ownerName;
 	
-	/**
-	 * オーナメール
-	 */
-	@Attribute(lob = true)
-	private String[] ownerMail;
 
 	/**
 	 * サイトURL
 	 */
-	@Attribute
+	@NotEmpty
+	@Size(max = 256)
 	private String siteUrl;
 	
 	/**
 	 * ロゴパス
 	 */
-	@Attribute
+	@Size(max = 256)
 	private String logo;
 	
 	/**
 	 * Google Analytics Web Property ID
 	 */
-	@Attribute
+	@Size(max = 100)
 	private String googleAnalyticsId;
-	
-	/**
-	 * キーを取得します。
-	 * @return キー
-	 */
-	public Key getKey() {
-	    return key;
-	}
-
-	/**
-	 * キーを設定します。
-	 * @param key キー
-	 */
-	public void setKey(Key key) {
-	    this.key = key;
-	}
 
 	/**
 	 * サイト名を取得します。
@@ -195,7 +140,7 @@ public class SiteModel implements LoveappleModel {
 	 * サイトタイムゾーンを取得します。
 	 * @return サイトタイムゾーン
 	 */
-	public TimeZone getTimeZone() {
+	public String getTimeZone() {
 	    return timeZone;
 	}
 
@@ -203,40 +148,8 @@ public class SiteModel implements LoveappleModel {
 	 * サイトタイムゾーンを設定します。
 	 * @param timeZone サイトタイムゾーン
 	 */
-	public void setTimeZone(TimeZone timeZone) {
+	public void setTimeZone(String timeZone) {
 	    this.timeZone = timeZone;
-	}
-
-	/**
-	 * カテゴリ数を取得します。
-	 * @return カテゴリ数
-	 */
-	public Integer getCategoryCount() {
-	    return categoryCount;
-	}
-
-	/**
-	 * カテゴリ数を設定します。
-	 * @param categoryCount カテゴリ数
-	 */
-	public void setCategoryCount(Integer categoryCount) {
-	    this.categoryCount = categoryCount;
-	}
-
-	/**
-	 * タグ数を取得します。
-	 * @return タグ数
-	 */
-	public Integer getTagCount() {
-	    return tagCount;
-	}
-
-	/**
-	 * タグ数を設定します。
-	 * @param tagCount タグ数
-	 */
-	public void setTagCount(Integer tagCount) {
-	    this.tagCount = tagCount;
 	}
 
 	/**
@@ -256,54 +169,6 @@ public class SiteModel implements LoveappleModel {
 	}
 
 	/**
-	 * 更新日時を取得します。
-	 * @return 更新日時
-	 */
-	public Date getUpdateDate() {
-	    return updateDate;
-	}
-
-	/**
-	 * 更新日時を設定します。
-	 * @param updateDate 更新日時
-	 */
-	public void setUpdateDate(Date updateDate) {
-	    this.updateDate = updateDate;
-	}
-
-	/**
-	 * 作成日時を取得します。
-	 * @return 作成日時
-	 */
-	public Date getInsertDate() {
-	    return insertDate;
-	}
-
-	/**
-	 * 作成日時を設定します。
-	 * @param insertDate 作成日時
-	 */
-	public void setInsertDate(Date insertDate) {
-	    this.insertDate = insertDate;
-	}
-
-	/**
-	 * オーナIDを取得します。
-	 * @return オーナID
-	 */
-	public Key[] getOwnerId() {
-	    return ownerId;
-	}
-
-	/**
-	 * オーナIDを設定します。
-	 * @param ownerId オーナID
-	 */
-	public void setOwnerId(Key[] ownerId) {
-	    this.ownerId = ownerId;
-	}
-
-	/**
 	 * オーナ名を取得します。
 	 * @return オーナ名
 	 */
@@ -317,22 +182,6 @@ public class SiteModel implements LoveappleModel {
 	 */
 	public void setOwnerName(String[] ownerName) {
 	    this.ownerName = ownerName;
-	}
-
-	/**
-	 * オーナメールを取得します。
-	 * @return オーナメール
-	 */
-	public String[] getOwnerMail() {
-	    return ownerMail;
-	}
-
-	/**
-	 * オーナメールを設定します。
-	 * @param ownerMail オーナメール
-	 */
-	public void setOwnerMail(String[] ownerMail) {
-	    this.ownerMail = ownerMail;
 	}
 
 	/**
@@ -382,5 +231,4 @@ public class SiteModel implements LoveappleModel {
 	public void setGoogleAnalyticsId(String googleAnalyticsId) {
 	    this.googleAnalyticsId = googleAnalyticsId;
 	}
-
 }

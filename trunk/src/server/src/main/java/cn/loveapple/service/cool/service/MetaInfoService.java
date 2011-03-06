@@ -11,7 +11,7 @@ import cn.loveapple.service.cool.model.MetaInfoModel;
  * @since 2011/02/23
  * @version $Revision$
  */
-public interface MetaInfoService {
+public interface MetaInfoService extends BaseService {
 	/**
 	 * 
 	 * @param meta

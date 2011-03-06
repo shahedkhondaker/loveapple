@@ -34,7 +34,7 @@ import com.google.appengine.api.datastore.KeyFactory;
  * @version $Revision$
  */
 @ServiceComp
-public class MemberCoreServiceImpl implements MemberCoreService {
+public class MemberCoreServiceImpl extends BaseServiceImpl implements MemberCoreService {
 
 	/**
 	 * メール送信
@@ -99,16 +99,6 @@ public class MemberCoreServiceImpl implements MemberCoreService {
 
 	/**
 	 * 
-	 * @param member
-	 * @return
-	 */
-	private LoveappleMemberModel dmLoveappleMember(LoveappleMemberModel member) {
-		Key key = Datastore.put(member);
-		
-		return queryByKey(key);
-	}
-	/**
-	 * 
 	 * {@inheritDoc}
 	 */
 	public LoveappleMemberModel findByEmail(String mail){
@@ -130,21 +120,7 @@ public class MemberCoreServiceImpl implements MemberCoreService {
 		}
 		
 		Key key = KeyFactory.createKey(LOVEAPPLE_MEMBER_MODEL, keyId);
-		return queryByKey(key);
-	}
-
-	/**
-	 * 
-	 * {@inheritDoc}
-	 */
-	@Override
-	public LoveappleMemberModel queryByKey(Key key) {
-		if(key == null){
-			throw new IllegalArgumentException("key is empty.");
-		}
-		
-		LoveappleMemberModelMeta meta = LoveappleMemberModelMeta.get();
-		return Datastore.query(LoveappleMemberModel.class).filter(meta.key.equal(key)).asSingle();
+		return queryByKey(key, LoveappleMemberModel.class);
 	}
 
 	/**

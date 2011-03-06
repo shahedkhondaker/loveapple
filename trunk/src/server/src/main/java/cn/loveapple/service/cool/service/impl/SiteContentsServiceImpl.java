@@ -32,6 +32,7 @@
  */
 package cn.loveapple.service.cool.service.impl;
 
+import static cn.loveapple.service.cool.model.LoveappleModel.*;
 import static cn.loveapple.service.util.service.LocaleUtil.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -42,7 +43,11 @@ import org.slim3.datastore.EqualCriterion;
 import org.slim3.datastore.FilterCriterion;
 import org.springframework.util.CollectionUtils;
 
+import com.google.appengine.api.datastore.Key;
+import com.google.appengine.api.datastore.KeyFactory;
+
 import cn.loveapple.service.cool.meta.SiteContentsCategoryModelMeta;
+import cn.loveapple.service.cool.meta.SiteModelMeta;
 import cn.loveapple.service.cool.model.SiteContentsCategoryModel;
 import cn.loveapple.service.cool.model.SiteContentsFileModel;
 import cn.loveapple.service.cool.model.SiteContentsModel;
@@ -60,7 +65,7 @@ import cn.loveapple.service.cool.service.SiteContentsService;
  * @id $Id$
  *
  */
-public class SiteContentsServiceImpl implements SiteContentsService {
+public class SiteContentsServiceImpl extends BaseServiceImpl implements SiteContentsService {
 
 	/**
 	 * 
@@ -69,8 +74,10 @@ public class SiteContentsServiceImpl implements SiteContentsService {
 	@Override
 	public SiteContentsCategoryModel insertSiteContentsCategory(
 			SiteContentsCategoryModel category) {
-		// TODO Auto-generated method stub
-		return null;
+		if(category == null){
+			throw new IllegalArgumentException("category is empty.");
+		}
+		return dmLoveappleMember(category);
 	}
 
 	/**
@@ -80,10 +87,12 @@ public class SiteContentsServiceImpl implements SiteContentsService {
 	@Override
 	public SiteContentsCategoryModel updateSiteContentsCategory(
 			SiteContentsCategoryModel category) {
-		// TODO Auto-generated method stub
+		if(category == null){
+			throw new IllegalArgumentException("category is empty.");
+		}
 		return null;
 	}
-
+	
 	/**
 	 * 
 	 * {@inheritDoc}
@@ -139,8 +148,10 @@ public class SiteContentsServiceImpl implements SiteContentsService {
 	 */
 	@Override
 	public SiteContentsModel insertSiteContentsModel(SiteContentsModel contents) {
-		// TODO Auto-generated method stub
-		return null;
+		if(contents == null){
+			throw new IllegalArgumentException("contents is empty.");
+		}
+		return dmLoveappleMember(contents);
 	}
 
 	/**
@@ -149,8 +160,10 @@ public class SiteContentsServiceImpl implements SiteContentsService {
 	 */
 	@Override
 	public SiteContentsModel updateSiteContentsModel(SiteContentsModel contents) {
-		// TODO Auto-generated method stub
-		return null;
+		if(contents == null){
+			throw new IllegalArgumentException("contents is empty.");
+		}
+		return dmLoveappleMember(contents);
 	}
 
 	/**
@@ -160,8 +173,10 @@ public class SiteContentsServiceImpl implements SiteContentsService {
 	@Override
 	public SiteContentsTagModel insertSiteContentsTagModel(
 			SiteContentsTagModel tag) {
-		// TODO Auto-generated method stub
-		return null;
+		if(tag == null){
+			throw new IllegalArgumentException("tag is empty.");
+		}
+		return dmLoveappleMember(tag);
 	}
 
 	/**
@@ -171,8 +186,10 @@ public class SiteContentsServiceImpl implements SiteContentsService {
 	@Override
 	public SiteContentsTagModel updateSiteContentsTagModel(
 			SiteContentsTagModel tag) {
-		// TODO Auto-generated method stub
-		return null;
+		if(tag == null){
+			throw new IllegalArgumentException("tag is empty.");
+		}
+		return dmLoveappleMember(tag);
 	}
 
 	/**
@@ -182,8 +199,10 @@ public class SiteContentsServiceImpl implements SiteContentsService {
 	@Override
 	public SiteContentsFileModel insertSiteContentsFileModel(
 			SiteContentsFileModel file) {
-		// TODO Auto-generated method stub
-		return null;
+		if(file == null){
+			throw new IllegalArgumentException("file is empty.");
+		}
+		return dmLoveappleMember(file);
 	}
 
 	/**
@@ -193,8 +212,10 @@ public class SiteContentsServiceImpl implements SiteContentsService {
 	@Override
 	public SiteContentsFileModel updateSiteContentsFileModel(
 			SiteContentsFileModel file) {
-		// TODO Auto-generated method stub
-		return null;
+		if(file == null){
+			throw new IllegalArgumentException("file is empty.");
+		}
+		return dmLoveappleMember(file);
 	}
 
 	/**
@@ -203,8 +224,10 @@ public class SiteContentsServiceImpl implements SiteContentsService {
 	 */
 	@Override
 	public SiteModel insertSite(SiteModel site) {
-		// TODO Auto-generated method stub
-		return null;
+		if(site == null){
+			throw new IllegalArgumentException("site is empty.");
+		}
+		return dmLoveappleMember(site);
 	}
 
 	/**
@@ -213,8 +236,28 @@ public class SiteContentsServiceImpl implements SiteContentsService {
 	 */
 	@Override
 	public SiteModel updateSite(SiteModel site) {
-		// TODO Auto-generated method stub
-		return null;
+		if(site == null){
+			throw new IllegalArgumentException("site is empty.");
+		}
+		return dmLoveappleMember(site);
 	}
 
+	/**
+	 * 
+	 * {@inheritDoc}
+	 */
+	@Override
+	public List<SiteModel> findSite(Long ...idList){
+		if(idList == null){
+			return null;
+		}
+		List<Key> keyList = new ArrayList<Key>(idList.length);
+		for (Long id : idList) {
+			keyList.add(KeyFactory.createKey(SITE_MODEL, id));
+		}
+		SiteModelMeta meta = SiteModelMeta.get();
+		
+		return Datastore.query(SiteModel.class).filter(
+				meta.key.in((Key[]) keyList.toArray())).asList();
+	}
 }

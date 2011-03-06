@@ -12,7 +12,7 @@ import cn.loveapple.service.cool.model.SampleModel;
  * @author hao_shunri
  *
  */
-public interface SampleService {
+public interface SampleService extends BaseService {
 	/**
 	 * 新しい位置情報を検索する
 	 * 

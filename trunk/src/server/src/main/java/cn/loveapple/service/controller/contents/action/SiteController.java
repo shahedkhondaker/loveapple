@@ -38,7 +38,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import cn.loveapple.service.controller.SessionLabel;
 
 /**
- * サイトコンテンツ操作コントローラ
+ * サイト操作コントローラ
  * 
  * @author $Author$
  * @version $Revision$
@@ -47,8 +47,8 @@ import cn.loveapple.service.controller.SessionLabel;
  *
  */
 @Controller
-@RequestMapping(value="/siteContents")
-public class SiteContentsController implements SessionLabel {
+@RequestMapping(value="/site")
+public class SiteController implements SessionLabel {
 	public String regist(){
 		return null;
 	}

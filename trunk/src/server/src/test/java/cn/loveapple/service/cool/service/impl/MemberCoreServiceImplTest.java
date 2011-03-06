@@ -155,19 +155,4 @@ public class MemberCoreServiceImplTest {
 //		
 //		assertEquals(id.longValue(), logic.queryByKey(id).getKey().getId());
 	}
-
-	/**
-	 * Test method for {@link cn.loveapple.service.cool.service.impl.MemberCoreServiceImpl#queryByKey(com.google.appengine.api.datastore.Key)}.
-	 */
-	@Test
-	public void testQueryByKeyKey() {
-
-		try{
-			logic.queryByKey((Key)null);
-			fail();
-		}catch (Exception e) {
-			assertTrue(e instanceof IllegalArgumentException);
-		}
-	}
-
 }

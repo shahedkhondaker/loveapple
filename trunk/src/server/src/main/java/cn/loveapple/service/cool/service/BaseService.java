@@ -6,7 +6,7 @@
  *
  * ====================================================================
  *
- * Copyright (C) 2008 by loveapple.cn
+ * Copyright (C) 2008 by loveapple.sourceforge.jp
  *
  * All copyright notices regarding loveapple and loveapple CoreLib
  * MUST remain intact in the scripts, documents and source code.
@@ -30,26 +30,34 @@
  *
  * @author: loveapple
  */
-package cn.loveapple.service.controller.contents.action;
+package cn.loveapple.service.cool.service;
 
-import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestMapping;
+import com.google.appengine.api.datastore.Key;
 
-import cn.loveapple.service.controller.SessionLabel;
+import cn.loveapple.service.cool.model.LoveappleModel;
 
 /**
- * サイトコンテンツ操作コントローラ
- * 
- * @author $Author$
+ * @author $author:$
  * @version $Revision$
  * @date $Date$
  * @id $Id$
  *
  */
-@Controller
-@RequestMapping(value="/siteContents")
-public class SiteContentsController implements SessionLabel {
-	public String regist(){
-		return null;
-	}
+public interface BaseService {
+	/**
+	 * 
+	 * @param <O>
+	 * @param model
+	 * @return
+	 */
+	public <O> O dmLoveappleMember(LoveappleModel model);
+	
+	/**
+	 * 
+	 * @param <O>
+	 * @param key
+	 * @param clz
+	 * @return
+	 */
+	public <O> O queryByKey(Key key, Class<O> clz);
 }
