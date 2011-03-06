@@ -60,9 +60,15 @@ public class SiteModel implements LoveappleModel {
 	private Key key;
 
 	/**
-	 * サイト名
+	 * 一意名
 	 */
 	@Attribute(unindexed=false)
+	private String unixName;
+	
+	/**
+	 * サイト名
+	 */
+	@Attribute
 	private String name;
 	
 	/**
@@ -157,6 +163,22 @@ public class SiteModel implements LoveappleModel {
 	 */
 	public void setKey(Key key) {
 	    this.key = key;
+	}
+
+	/**
+	 * 一意名を取得します。
+	 * @return 一意名
+	 */
+	public String getUnixName() {
+	    return unixName;
+	}
+
+	/**
+	 * 一意名を設定します。
+	 * @param unixName 一意名
+	 */
+	public void setUnixName(String unixName) {
+	    this.unixName = unixName;
 	}
 
 	/**

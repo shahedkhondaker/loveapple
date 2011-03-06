@@ -6,7 +6,6 @@ import javax.validation.constraints.Max;
 import javax.validation.constraints.Size;
 
 import org.apache.commons.lang.builder.ToStringBuilder;
-import org.hibernate.validator.constraints.Email;
 import org.hibernate.validator.constraints.NotEmpty;
 
 /**
@@ -17,11 +16,6 @@ import org.hibernate.validator.constraints.NotEmpty;
 @SuppressWarnings("serial")
 public class MemberForm extends MemberAuthForm implements Serializable {
 	
-	/**
-	 * フォーム名
-	 */
-	public static final String FORM_NAME = "memberForm";
-
 	/**
 	 * 確認用パスワード
 	 */

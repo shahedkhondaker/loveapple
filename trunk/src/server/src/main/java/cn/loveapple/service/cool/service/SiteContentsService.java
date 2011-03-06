@@ -164,4 +164,11 @@ public interface SiteContentsService extends BaseService {
 	 * @return
 	 */
 	public List<SiteModel> findSite(Long ...idList);
+	
+	/**
+	 * unix名からサイト情報を検索する
+	 * @param unixName
+	 * @return
+	 */
+	public SiteModel findSite(String unixName);
 }
