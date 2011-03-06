@@ -30,9 +30,14 @@
  *
  * @author: loveapple
  */
-package cn.loveapple.service.controller.contents.form;
+package cn.loveapple.service.controller.contents.action;
 
-import java.io.Serializable;
+import java.util.Locale;
+
+import org.springframework.context.support.ReloadableResourceBundleMessageSource;
+
+import cn.loveapple.service.controller.BaseValidator;
+import cn.loveapple.service.controller.contents.form.SiteForm;
 
 /**
  * @author $author:$
@@ -41,7 +46,19 @@ import java.io.Serializable;
  * @id $Id$
  *
  */
-@SuppressWarnings("serial")
-public class SiteContentsForm implements Serializable {
+public class SiteValidator extends BaseValidator {
+
+	public SiteValidator(ReloadableResourceBundleMessageSource messageSource,
+			Locale locale) {
+		super(messageSource, locale);
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public boolean supports(Class<?> clazz) {
+		return SiteForm.class.equals(clazz);
+	}
 
 }

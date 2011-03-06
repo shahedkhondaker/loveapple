@@ -107,7 +107,7 @@ public class MemberController implements SessionLabel{
 	@RequestMapping(value = "regist", method=RequestMethod.GET)
 	public String regist(HttpSession session, Model model) {
 		clearMemberInfo(session);
-		Object formObj = session.getAttribute(MemberForm.FORM_NAME);
+		Object formObj = session.getAttribute(FORM);
 		MemberForm form = formObj instanceof MemberForm ? (MemberForm)formObj :null ;
 		if(form == null){
 			form = new MemberForm();
@@ -145,7 +145,7 @@ public class MemberController implements SessionLabel{
 		
 		member = createModel(form, locale);
 		
-		session.setAttribute(MemberForm.FORM_NAME, form);
+		session.setAttribute(FORM, form);
 		session.setAttribute(LOVEAPPLE_MEMBER_TMP, member);
 		
 		return "member/registConfirm";
@@ -199,7 +199,7 @@ public class MemberController implements SessionLabel{
 			throw new HttpMessageNotWritableException("can not regist member. "
 					+ ToStringBuilder.reflectionToString(session.getAttribute(LOVEAPPLE_MEMBER_TMP)));
 		}
-		session.removeAttribute(MemberForm.FORM_NAME);
+		session.removeAttribute(FORM);
 		session.removeAttribute(LOVEAPPLE_MEMBER_TMP);
 		
 		// 承認メールを送信

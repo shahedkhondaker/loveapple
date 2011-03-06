@@ -49,6 +49,7 @@ import org.hibernate.validator.constraints.NotEmpty;
  * @id $Id$
  *
  */
+@SuppressWarnings("serial")
 public class SiteForm implements Serializable {
 
 	/**
@@ -57,6 +58,13 @@ public class SiteForm implements Serializable {
 	@NotEmpty
 	@Size(max = 100)
 	private String name;
+	
+	/**
+	 * UNIX名
+	 */
+	@Size(max = 50, min = 2)
+	@NotEmpty
+	private String unixName;
 	
 	/**
 	 * 言語
@@ -118,6 +126,22 @@ public class SiteForm implements Serializable {
 	 */
 	public void setName(String name) {
 	    this.name = name;
+	}
+
+	/**
+	 * UNIX名を取得します。
+	 * @return UNIX名
+	 */
+	public String getUnixName() {
+	    return unixName;
+	}
+
+	/**
+	 * UNIX名を設定します。
+	 * @param unixName UNIX名
+	 */
+	public void setUnixName(String unixName) {
+	    this.unixName = unixName;
 	}
 
 	/**

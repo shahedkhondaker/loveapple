@@ -25,5 +25,9 @@
 		<tr>
 			<td><spring:message code="msg.member.lastLoginDate"/></td><td><c:out value="${member.lastLoginDate}" /></td>
 		</tr>
+		<tr>
+		<%-- //TODO サイト情報表示 --%>
+			<td></td><td></td>
+		</tr>
 	</table>
 </div>

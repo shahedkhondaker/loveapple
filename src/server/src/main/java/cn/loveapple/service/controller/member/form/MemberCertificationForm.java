@@ -1,5 +1,7 @@
 package cn.loveapple.service.controller.member.form;
 
+import java.io.Serializable;
+
 import javax.validation.constraints.Digits;
 
 import org.hibernate.validator.constraints.NotEmpty;
@@ -11,7 +13,8 @@ import org.hibernate.validator.constraints.NotEmpty;
  * @since 2011/03/02
  * @version $Revision$
  */
-public class MemberCertificationForm {
+@SuppressWarnings("serial")
+public class MemberCertificationForm implements Serializable{
 	/**
 	 * 会員ID
 	 */

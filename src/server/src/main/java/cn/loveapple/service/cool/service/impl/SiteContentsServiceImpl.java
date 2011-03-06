@@ -54,6 +54,7 @@ import cn.loveapple.service.cool.model.SiteContentsModel;
 import cn.loveapple.service.cool.model.SiteContentsTagModel;
 import cn.loveapple.service.cool.model.SiteModel;
 import cn.loveapple.service.cool.service.SiteContentsService;
+import cn.loveapple.service.type.ServiceComp;
 
 
 /**
@@ -65,6 +66,7 @@ import cn.loveapple.service.cool.service.SiteContentsService;
  * @id $Id$
  *
  */
+@ServiceComp
 public class SiteContentsServiceImpl extends BaseServiceImpl implements SiteContentsService {
 
 	/**
@@ -259,5 +261,19 @@ public class SiteContentsServiceImpl extends BaseServiceImpl implements SiteCont
 		
 		return Datastore.query(SiteModel.class).filter(
 				meta.key.in((Key[]) keyList.toArray())).asList();
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public SiteModel findSite(String unixName) {
+		if(StringUtils.isEmpty(unixName)){
+			throw new IllegalArgumentException("UNIX name is empty.");
+		}
+		
+		SiteModelMeta meta = SiteModelMeta.get();
+		
+		return Datastore.query(SiteModel.class).filter(meta.unixName.equal(unixName)).asSingle();
 	}
 }

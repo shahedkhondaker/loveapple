@@ -32,10 +32,25 @@
  */
 package cn.loveapple.service.controller.contents.action;
 
+import java.util.Locale;
+
+import javax.servlet.http.HttpSession;
+import javax.validation.Valid;
+
+import org.apache.commons.lang.builder.ToStringBuilder;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
+import org.springframework.context.support.ReloadableResourceBundleMessageSource;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 
 import cn.loveapple.service.controller.SessionLabel;
+import cn.loveapple.service.controller.contents.form.SiteForm;
+import cn.loveapple.service.cool.model.SiteModel;
+import cn.loveapple.service.cool.service.SiteContentsService;
 
 /**
  * サイト操作コントローラ
@@ -49,7 +64,65 @@ import cn.loveapple.service.controller.SessionLabel;
 @Controller
 @RequestMapping(value="/site")
 public class SiteController implements SessionLabel {
-	public String regist(){
-		return null;
+
+	/**
+	 * ログ
+	 */
+	private static Log log = LogFactory.getLog(SiteController.class);
+	
+	/**
+	 * サイトコンテンツ操作
+	 */
+	private SiteContentsService siteContentsService;
+	
+	/**
+	 * メッセージソース
+	 */
+	private ReloadableResourceBundleMessageSource messageSource;
+
+	/**
+	 * 
+	 * @param session
+	 * @param model
+	 * @return
+	 */
+	@RequestMapping(value = "regist", method=RequestMethod.GET)
+	public String regist(HttpSession session, Model model){
+		session.removeAttribute(FORM);
+		SiteForm form = new SiteForm();		
+		model.addAttribute(form);
+		return "member/regist";
+	}
+
+	/**
+	 * 登録確認
+	 * 
+	 * @param session
+	 * @param model
+	 * @return
+	 */
+	@RequestMapping(value = "registConfirm", method=RequestMethod.POST)
+	public String registConfirm(@Valid SiteForm form, BindingResult result, HttpSession session, Model model, Locale locale) {
+		model.addAttribute(form);	
+		SiteValidator validator = new SiteValidator(messageSource, locale);
+		if(result.hasErrors()){
+			if(log.isDebugEnabled()){
+				log.debug(ToStringBuilder.reflectionToString(result.getAllErrors()));
+			}
+			return "member/regist";
+		}
+		
+		SiteModel siteModel = siteContentsService.findSite(form.getUnixName());
+		
+		if(siteModel != null){
+			result.reject("loveappleErrors.beRegisted", validator.createArgs("msg.member"), "");
+			return "member/regist"; 
+		}
+		
+		//TODO
+		
+		session.setAttribute(FORM, form);
+		
+		return "member/registConfirm";
 	}
 }

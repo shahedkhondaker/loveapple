@@ -1,5 +1,7 @@
 package cn.loveapple.service.controller.member.form;
 
+import java.io.Serializable;
+
 import javax.validation.constraints.Size;
 
 import org.apache.commons.lang.builder.ToStringBuilder;
@@ -12,7 +14,8 @@ import org.hibernate.validator.constraints.NotEmpty;
  * @author hao_shunri
  *
  */
-public class MemberAuthForm {
+@SuppressWarnings("serial")
+public class MemberAuthForm implements Serializable {
 
 	/**
 	 * 連絡用メールアドレス

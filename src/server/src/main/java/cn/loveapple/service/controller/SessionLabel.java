@@ -24,4 +24,9 @@ public interface SessionLabel {
 	 * {@linkplain LoveappleMemberModel 会員情報}登録、更新処理のために、一時的保存するキー
 	 */
 	public static final String LOVEAPPLE_MEMBER_TMP = "loveappleMemberTmp";
+	
+	/**
+	 * セッションに保存する入力フォーム
+	 */
+	public static final String FORM = "inputForm";
 }
