@@ -18,7 +18,7 @@ import com.google.appengine.api.datastore.Key;
  * @version $Revision$
  */
 @ServiceComp
-public class MetaInfoServiceImpl implements MetaInfoService {
+public class MetaInfoServiceImpl extends BaseServiceImpl implements MetaInfoService {
 
 	/**
 	 * 

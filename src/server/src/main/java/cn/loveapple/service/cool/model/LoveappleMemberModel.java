@@ -159,6 +159,18 @@ public class LoveappleMemberModel implements LoveappleModel{
 	@Attribute(lob = true)
 	private Locale defaultLocale;
 	
+	/**
+	 * 管理するサイトIDリスト
+	 */
+	@Attribute(lob = true)
+	private Long[] siteId;
+	
+	/**
+	 * 管理するサイト名リスト
+	 */
+	@Attribute(lob = true)
+	private String[] siteName;
+	
 
 	/**
 	 * {@inheritDoc}
@@ -444,5 +456,37 @@ public class LoveappleMemberModel implements LoveappleModel{
 	 */
 	public void setDefaultLocale(Locale defaultLocale) {
 	    this.defaultLocale = defaultLocale;
+	}
+
+	/**
+	 * 管理するサイトIDリストを取得します。
+	 * @return 管理するサイトIDリスト
+	 */
+	public Long[] getSiteId() {
+	    return siteId;
+	}
+
+	/**
+	 * 管理するサイトIDリストを設定します。
+	 * @param siteId 管理するサイトIDリスト
+	 */
+	public void setSiteId(Long[] siteId) {
+	    this.siteId = siteId;
+	}
+
+	/**
+	 * 管理するサイト名リストを取得します。
+	 * @return 管理するサイト名リスト
+	 */
+	public String[] getSiteName() {
+	    return siteName;
+	}
+
+	/**
+	 * 管理するサイト名リストを設定します。
+	 * @param siteName 管理するサイト名リスト
+	 */
+	public void setSiteName(String[] siteName) {
+	    this.siteName = siteName;
 	};
 }

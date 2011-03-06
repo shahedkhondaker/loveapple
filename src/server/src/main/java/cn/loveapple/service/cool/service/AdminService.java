@@ -12,7 +12,7 @@ import com.google.appengine.api.datastore.Key;
  * @author hao_shunri
  *
  */
-public interface AdminService {
+public interface AdminService extends BaseService {
 	/**
 	 * 最大削除するセッション数
 	 */

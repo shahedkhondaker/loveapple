@@ -27,7 +27,7 @@ import com.google.appengine.api.datastore.Query.FilterOperator;
  * @version $Revision$
  */
 @ServiceComp
-public class AdminServiceImpl implements AdminService {
+public class AdminServiceImpl extends BaseServiceImpl implements AdminService {
 
 	/**
 	 * ログ

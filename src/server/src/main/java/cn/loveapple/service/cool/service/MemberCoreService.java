@@ -38,8 +38,6 @@ import javax.mail.internet.MimeMessage;
 import cn.loveapple.service.cool.model.LoveappleMemberModel;
 import cn.loveapple.service.cool.service.exception.MailException;
 
-import com.google.appengine.api.datastore.Key;
-
 /**
  * 認証、会員情報更新/削除など、直接{@linkplain LoveappleMemberModel Loveapple会員情報}に対して
  * 操作を行うロジック処理を行うサービス。
@@ -50,7 +48,7 @@ import com.google.appengine.api.datastore.Key;
  * @id $Id$
  *
  */
-public interface MemberCoreService {
+public interface MemberCoreService extends BaseService {
 	
 	/**
 	 * デフォルト会員の権限値
@@ -95,14 +93,6 @@ public interface MemberCoreService {
 	 * @return 見つからない場合、<code>null</code>を返す。
 	 */
 	public LoveappleMemberModel findByEmail(String mail);
-	/**
-	 * 
-	 * キーをもとにデータを検索する
-	 * 
-	 * @param key
-	 * @return
-	 */
-	public LoveappleMemberModel queryByKey(Key key);
 	
 	/**
 	 * 登録後認証メールを送信
