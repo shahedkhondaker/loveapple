@@ -96,10 +96,10 @@ public class SiteModel implements LoveappleModel {
 	private Integer tagCount;
 	
 	/**
-	 * 紹介
+	 * 説明
 	 */
 	@Attribute
-	private String detail;
+	private String description;
 
 	/**
 	 * 更新日時
@@ -262,19 +262,19 @@ public class SiteModel implements LoveappleModel {
 	}
 
 	/**
-	 * 紹介を取得します。
-	 * @return 紹介
+	 * 説明を取得します。
+	 * @return 説明
 	 */
-	public String getDetail() {
-	    return detail;
+	public String getDescription() {
+	    return description;
 	}
 
 	/**
-	 * 紹介を設定します。
-	 * @param detail 紹介
+	 * 説明を設定します。
+	 * @param description 説明
 	 */
-	public void setDetail(String detail) {
-	    this.detail = detail;
+	public void setDescription(String description) {
+	    this.description = description;
 	}
 
 	/**
