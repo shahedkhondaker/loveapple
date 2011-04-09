@@ -37,6 +37,7 @@ import java.io.Serializable;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
+import org.hibernate.validator.constraints.Email;
 import org.hibernate.validator.constraints.NotEmpty;
 
 
@@ -81,10 +82,10 @@ public class SiteForm implements Serializable {
 	private String timeZone;
 	
 	/**
-	 * 紹介
+	 * 説明
 	 */
 	@Size(max = 1000)
-	private String detail;
+	private String description;
 
 	/**
 	 * オーナ名
@@ -111,6 +112,12 @@ public class SiteForm implements Serializable {
 	 */
 	@Size(max = 100)
 	private String googleAnalyticsId;
+	
+	/**
+	 * 管理者メール
+	 */
+	@Email
+	private String adminMail;
 
 	/**
 	 * サイト名を取得します。
@@ -177,19 +184,19 @@ public class SiteForm implements Serializable {
 	}
 
 	/**
-	 * 紹介を取得します。
-	 * @return 紹介
+	 * 説明を取得します。
+	 * @return 説明
 	 */
-	public String getDetail() {
-	    return detail;
+	public String getDescription() {
+	    return description;
 	}
 
 	/**
-	 * 紹介を設定します。
-	 * @param detail 紹介
+	 * 説明を設定します。
+	 * @param description 説明
 	 */
-	public void setDetail(String detail) {
-	    this.detail = detail;
+	public void setDescription(String description) {
+	    this.description = description;
 	}
 
 	/**
@@ -254,5 +261,21 @@ public class SiteForm implements Serializable {
 	 */
 	public void setGoogleAnalyticsId(String googleAnalyticsId) {
 	    this.googleAnalyticsId = googleAnalyticsId;
+	}
+
+	/**
+	 * 管理者メールを取得します。
+	 * @return 管理者メール
+	 */
+	public String getAdminMail() {
+	    return adminMail;
+	}
+
+	/**
+	 * 管理者メールを設定します。
+	 * @param adminMail 管理者メール
+	 */
+	public void setAdminMail(String adminMail) {
+	    this.adminMail = adminMail;
 	}
 }
