@@ -59,7 +59,7 @@ public class BasalBodyTemperatureModel implements LoveappleModel{
 	 * おりもの
 	 * 
 	 */
-	public static enum VaginalDischarge {LITTLE, USUALLY, MUCH};
+	public static enum Leukorrhea {LITTLE, USUALLY, MUCH};
 	
 	/**
 	 * キー
@@ -114,7 +114,7 @@ public class BasalBodyTemperatureModel implements LoveappleModel{
 	 * おりもの
 	 */
 	@Attribute
-	private VaginalDischarge vaginalDischarge;
+	private Leukorrhea leukorrhea;
 
 	/**
 	 * キーを取得します。
@@ -133,16 +133,16 @@ public class BasalBodyTemperatureModel implements LoveappleModel{
 	}
 
 	/**
-	 * 計測日を取得します。
-	 * @return 計測日
+	 * 計測日<br>を取得します。
+	 * @return 計測日<br>
 	 */
 	public String getMeasureDay() {
 	    return measureDay;
 	}
 
 	/**
-	 * 計測日を設定します。
-	 * @param measureDay 計測日
+	 * 計測日<br>を設定します。
+	 * @param measureDay 計測日<br>
 	 */
 	public void setMeasureDay(String measureDay) {
 	    this.measureDay = measureDay;
@@ -248,15 +248,16 @@ public class BasalBodyTemperatureModel implements LoveappleModel{
 	 * おりものを取得します。
 	 * @return おりもの
 	 */
-	public VaginalDischarge getVaginalDischarge() {
-	    return vaginalDischarge;
+	public Leukorrhea getLeukorrhea() {
+	    return leukorrhea;
 	}
 
 	/**
 	 * おりものを設定します。
-	 * @param vaginalDischarge おりもの
+	 * @param leukorrhea おりもの
 	 */
-	public void setVaginalDischarge(VaginalDischarge vaginalDischarge) {
-	    this.vaginalDischarge = vaginalDischarge;
+	public void setLeukorrhea(Leukorrhea leukorrhea) {
+	    this.leukorrhea = leukorrhea;
 	}
+
 }
