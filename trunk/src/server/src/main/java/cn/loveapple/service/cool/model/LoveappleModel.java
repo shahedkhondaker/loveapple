@@ -34,6 +34,8 @@ package cn.loveapple.service.cool.model;
 
 import java.io.Serializable;
 
+import cn.loveapple.service.cool.model.health.BasalBodyTemperatureModel;
+
 /**
  * モデル名の定数群
  * 
@@ -85,5 +87,10 @@ public interface LoveappleModel extends Serializable {
 	/**
 	 * {@linkplain SiteModel}のモデル名
 	 */
-	public static final String SITE_MODEL = "SiteModel";
+	public static final String SITE_MODEL = "Site";
+	
+	/**
+	 * {@linkplain BasalBodyTemperatureModel}のモデル名
+	 */
+	public static final String BASAL_BODY_TEMPERATURE_MODEL = "BasalBodyTemperature";
 }
