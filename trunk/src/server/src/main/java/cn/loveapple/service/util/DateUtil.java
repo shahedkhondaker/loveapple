@@ -30,19 +30,14 @@
  *
  * @author: loveapple
  */
-package cn.loveapple.service.cool.service.impl;
+package cn.loveapple.service.util;
 
-import java.util.Calendar;
+import java.text.SimpleDateFormat;
 import java.util.Date;
-import java.util.List;
 
 import org.apache.commons.lang.StringUtils;
 
-import cn.loveapple.service.cool.model.health.BasalBodyTemperatureModel;
-import cn.loveapple.service.cool.service.HealthService;
-
 /**
- * loveapple健康サービス
  * 
  * @author $Author$
  * @version $Revision$
@@ -50,44 +45,41 @@ import cn.loveapple.service.cool.service.HealthService;
  * @id $Id$
  *
  */
-public class HealthServiceImpl extends BaseServiceImpl implements HealthService {
+public class DateUtil {
+	/**
+	 * 日時文字列パターン：YYYYMMDD
+	 */
+	public static final String DATE_PTTERN_YYYYMMDD = "yyyyMMdd";
 
 	/**
+	 * 文字列を時間に変換する。
 	 * 
-	 * {@inheritDoc}
+	 * @see SimpleDateFormat 変換処理を行う
+	 * @param source 元の文字列
+	 * @param pattern 時間パターン
+	 * @return 変換できない場合、<code>null</code>を戻す。成功した場合、変換結果を戻す
 	 */
-	@Override
-	public List<BasalBodyTemperatureModel> findBasalBodyTemperatureByUser(
-			String mail, String startDay, String endDay) {
-		if(StringUtils.isEmpty(mail)){
-			throw new IllegalArgumentException("mail is empty.");
+	public static Date paseDate(String source, String pattern){
+		if(StringUtils.isEmpty(source) || StringUtils.isEmpty(pattern)){
+			return null;
 		}
-		return null;
-	}
-
-	/**
-	 * 
-	 * {@inheritDoc}
-	 */
-	@Override
-	public BasalBodyTemperatureModel updateBasalBodyTemperatureModel(
-			BasalBodyTemperatureModel bbt) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	/**
-	 * 
-	 * {@inheritDoc}
-	 */
-	@Override
-	public Date getAverageBbtMeasureDate(String mail, int scope) {
-		if(StringUtils.isEmpty(mail)){
-			throw new IllegalArgumentException("mail is empty.");
+		try{
+			SimpleDateFormat format = new SimpleDateFormat(pattern);
+			return format.parse(source);
+		}catch (Exception e) {
+			return null;
 		}
-		Calendar lastPoint = Calendar.getInstance();
-		
-		return null;
 	}
-
+	
+	/**
+	 * 日時文字列が正しいかどうかをチェックする。
+	 * 
+	 * @see #paseDate(String, String)
+	 * @param source 元の文字列
+	 * @param pattern 時間パターン
+	 * @return 判定結果を戻す。
+	 */
+	public static boolean isDateStr(String source, String pattern){
+		return paseDate(source, pattern) != null;
+	}
 }

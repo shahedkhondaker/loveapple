@@ -39,6 +39,7 @@ import org.slim3.datastore.Attribute;
 import org.slim3.datastore.Model;
 
 import cn.loveapple.service.cool.model.LoveappleModel;
+import cn.loveapple.service.util.DateUtil;
 
 import com.google.appengine.api.datastore.Key;
 
@@ -69,7 +70,7 @@ public class BasalBodyTemperatureModel implements LoveappleModel{
 	
 	/**
 	 * 計測日<br>
-	 * YYYYMMDDの日付文字列
+	 * {@linkplain DateUtil#DATE_PTTERN_YYYYMMDD YYYYMMDD}の日付文字列
 	 */
 	@Attribute(unindexed=false)
 	private String measureDay;
