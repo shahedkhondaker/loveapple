@@ -116,6 +116,12 @@ public class BasalBodyTemperatureModel implements LoveappleModel{
 	 */
 	@Attribute
 	private Leukorrhea leukorrhea;
+	
+	/**
+	 * 温度(°C)
+	 */
+	@Attribute
+	private Double temperature;
 
 	/**
 	 * キーを取得します。
@@ -259,6 +265,22 @@ public class BasalBodyTemperatureModel implements LoveappleModel{
 	 */
 	public void setLeukorrhea(Leukorrhea leukorrhea) {
 	    this.leukorrhea = leukorrhea;
+	}
+
+	/**
+	 * 温度(°C)を取得します。
+	 * @return 温度(°C)
+	 */
+	public Double getTemperature() {
+	    return temperature;
+	}
+
+	/**
+	 * 温度(°C)を設定します。
+	 * @param temperature 温度(°C)
+	 */
+	public void setTemperature(Double temperature) {
+	    this.temperature = temperature;
 	}
 
 }

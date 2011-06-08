@@ -36,6 +36,7 @@ import java.util.Date;
 import java.util.List;
 
 import cn.loveapple.service.cool.model.health.BasalBodyTemperatureModel;
+import cn.loveapple.service.util.DateUtil;
 
 /**
  * loveapple健康サービス
@@ -52,8 +53,8 @@ public interface HealthService extends BaseService {
 	 * 基礎体温を検索する。
 	 * 
 	 * @param mail 対象ユーザのメールアドレス
-	 * @param startDay　計測開始日
-	 * @param endDay 計測終了日
+	 * @param startDay　計測開始日。フォーマット：{@linkplain DateUtil#DATE_PTTERN_YYYYMMDD}
+	 * @param endDay 計測終了日。フォーマット：{@linkplain DateUtil#DATE_PTTERN_YYYYMMDD}
 	 * @return 基礎体温の検索結果
 	 */
 	public List<BasalBodyTemperatureModel> findBasalBodyTemperatureByUser(String mail, String startDay, String endDay);
@@ -70,7 +71,7 @@ public interface HealthService extends BaseService {
 	 * ある期間内、平均基礎対応計測日時を取得する。
 	 * 
 	 * @param mail 対象ユーザのMail
-	 * @param scope　前日からの日数
+	 * @param scope　前日からの日数。<code>0</code>を指定した場合、前日の計測日時を戻す
 	 * @return {@linkplain BasalBodyTemperatureModel#getTimeStamp()}の平均値
 	 */
 	public Date getAverageBbtMeasureDate(String mail, int scope);

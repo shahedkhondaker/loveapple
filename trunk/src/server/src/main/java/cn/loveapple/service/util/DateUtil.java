@@ -82,4 +82,22 @@ public class DateUtil {
 	public static boolean isDateStr(String source, String pattern){
 		return paseDate(source, pattern) != null;
 	}
+	
+	/**
+	 * 
+	 * @param source
+	 * @param pattern
+	 * @return
+	 */
+	public static String toDateString(Date source, String pattern){
+		if(source == null || StringUtils.isEmpty(pattern)){
+			return null;
+		}
+		try{
+			SimpleDateFormat format = new SimpleDateFormat(pattern);
+			return format.format(source);
+		}catch (Exception e) {
+			return null;
+		}
+	}
 }
