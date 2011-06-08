@@ -30,19 +30,19 @@
  *
  * @author: loveapple
  */
-package cn.loveapple.service.cool.service.impl;
+package cn.loveapple.service.util;
+
+import static org.junit.Assert.*;
+import static cn.loveapple.service.util.DateUtil.*;
 
 import java.util.Calendar;
 import java.util.Date;
-import java.util.List;
 
-import org.apache.commons.lang.StringUtils;
+import org.junit.Before;
+import org.junit.Test;
 
-import cn.loveapple.service.cool.model.health.BasalBodyTemperatureModel;
-import cn.loveapple.service.cool.service.HealthService;
 
 /**
- * loveapple健康サービス
  * 
  * @author $Author$
  * @version $Revision$
@@ -50,44 +50,45 @@ import cn.loveapple.service.cool.service.HealthService;
  * @id $Id$
  *
  */
-public class HealthServiceImpl extends BaseServiceImpl implements HealthService {
+public class DateUtilTest {
 
 	/**
-	 * 
-	 * {@inheritDoc}
+	 * @throws java.lang.Exception
 	 */
-	@Override
-	public List<BasalBodyTemperatureModel> findBasalBodyTemperatureByUser(
-			String mail, String startDay, String endDay) {
-		if(StringUtils.isEmpty(mail)){
-			throw new IllegalArgumentException("mail is empty.");
-		}
-		return null;
+	@Before
+	public void setUp() throws Exception {
 	}
 
 	/**
-	 * 
-	 * {@inheritDoc}
+	 * Test method for {@link cn.loveapple.service.util.DateUtil#paseDate(java.lang.String, java.lang.String)}.
 	 */
-	@Override
-	public BasalBodyTemperatureModel updateBasalBodyTemperatureModel(
-			BasalBodyTemperatureModel bbt) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	/**
-	 * 
-	 * {@inheritDoc}
-	 */
-	@Override
-	public Date getAverageBbtMeasureDate(String mail, int scope) {
-		if(StringUtils.isEmpty(mail)){
-			throw new IllegalArgumentException("mail is empty.");
-		}
-		Calendar lastPoint = Calendar.getInstance();
+	@Test
+	public void testPaseDate() {
+		String str = "19800323";
+		Date date = paseDate(str, DATE_PTTERN_YYYYMMDD);
 		
-		return null;
+		assertNotNull(date);
+		Calendar calendar = Calendar.getInstance();
+		calendar.setTime(date);
+		assertEquals(1980, calendar.get(Calendar.YEAR));
+		assertEquals(3-1, calendar.get(Calendar.MONTH));
+		assertEquals(23, calendar.get(Calendar.DATE));
+		
+		assertNull(paseDate("", DATE_PTTERN_YYYYMMDD));
+		assertNull(paseDate(str, ""));
+		
+	}
+
+	/**
+	 * Test method for {@link cn.loveapple.service.util.DateUtil#isDateStr(java.lang.String, java.lang.String)}.
+	 */
+	@Test
+	public void testIsDateStr() {
+		String str = "19800323";
+		assertTrue(isDateStr(str, DATE_PTTERN_YYYYMMDD));
+		
+		assertFalse(isDateStr("", DATE_PTTERN_YYYYMMDD));
+		assertFalse(isDateStr(str, ""));
 	}
 
 }
