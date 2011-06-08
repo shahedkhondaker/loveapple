@@ -37,9 +37,15 @@ import java.util.Date;
 import java.util.List;
 
 import org.apache.commons.lang.StringUtils;
+import org.apache.velocity.runtime.parser.node.MathUtils;
+import org.slim3.datastore.Datastore;
 
+import com.sun.swing.internal.plaf.metal.resources.metal;
+
+import cn.loveapple.service.cool.meta.health.BasalBodyTemperatureModelMeta;
 import cn.loveapple.service.cool.model.health.BasalBodyTemperatureModel;
 import cn.loveapple.service.cool.service.HealthService;
+import cn.loveapple.service.util.DateUtil;
 
 /**
  * loveapple健康サービス
@@ -62,7 +68,19 @@ public class HealthServiceImpl extends BaseServiceImpl implements HealthService 
 		if(StringUtils.isEmpty(mail)){
 			throw new IllegalArgumentException("mail is empty.");
 		}
-		return null;
+		if(!DateUtil.isDateStr(startDay, DateUtil.DATE_PTTERN_YYYYMMDD)){
+			throw new IllegalArgumentException("startDay is invalid.");
+		}
+		if(!DateUtil.isDateStr(endDay, DateUtil.DATE_PTTERN_YYYYMMDD)){
+			throw new IllegalArgumentException("endDay is invalid.");
+		}
+		
+		BasalBodyTemperatureModelMeta bbtMeta = BasalBodyTemperatureModelMeta.get();
+		
+		return Datastore.query(BasalBodyTemperatureModel.class).filter(
+				bbtMeta.mail.equal(mail),
+				bbtMeta.measureDay.lessThanOrEqual(endDay),
+				bbtMeta.measureDay.greaterThanOrEqual(startDay)).asList();
 	}
 
 	/**
@@ -86,6 +104,18 @@ public class HealthServiceImpl extends BaseServiceImpl implements HealthService 
 			throw new IllegalArgumentException("mail is empty.");
 		}
 		Calendar lastPoint = Calendar.getInstance();
+		lastPoint.set(Calendar.DATE, -1);
+		
+		Calendar startPoint = Calendar.getInstance();
+		startPoint.set(Calendar.DATE, -(scope+1));
+		
+		List<BasalBodyTemperatureModel> bbtList =
+				findBasalBodyTemperatureByUser(
+						mail,
+						DateUtil.toDateString(startPoint.getTime(), DateUtil.DATE_PTTERN_YYYYMMDD), 
+						DateUtil.toDateString(lastPoint.getTime(), DateUtil.DATE_PTTERN_YYYYMMDD));
+		double totalTime = 0;
+		// TODO 平均値計算
 		
 		return null;
 	}
