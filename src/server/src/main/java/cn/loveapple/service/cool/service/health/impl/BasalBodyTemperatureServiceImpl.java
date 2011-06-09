@@ -30,25 +30,23 @@
  *
  * @author: loveapple
  */
-package cn.loveapple.service.cool.service.impl;
+package cn.loveapple.service.cool.service.health.impl;
 
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
 import org.apache.commons.lang.StringUtils;
-import org.apache.velocity.runtime.parser.node.MathUtils;
 import org.slim3.datastore.Datastore;
-
-import com.sun.swing.internal.plaf.metal.resources.metal;
 
 import cn.loveapple.service.cool.meta.health.BasalBodyTemperatureModelMeta;
 import cn.loveapple.service.cool.model.health.BasalBodyTemperatureModel;
-import cn.loveapple.service.cool.service.HealthService;
+import cn.loveapple.service.cool.service.health.BasalBodyTemperatureService;
+import cn.loveapple.service.cool.service.impl.BaseServiceImpl;
 import cn.loveapple.service.util.DateUtil;
 
 /**
- * loveapple健康サービス
+ * loveapple基礎体温サービス
  * 
  * @author $Author$
  * @version $Revision$
@@ -56,7 +54,7 @@ import cn.loveapple.service.util.DateUtil;
  * @id $Id$
  *
  */
-public class HealthServiceImpl extends BaseServiceImpl implements HealthService {
+public class BasalBodyTemperatureServiceImpl extends BaseServiceImpl implements BasalBodyTemperatureService {
 
 	/**
 	 * 
@@ -88,18 +86,26 @@ public class HealthServiceImpl extends BaseServiceImpl implements HealthService 
 	 * {@inheritDoc}
 	 */
 	@Override
-	public BasalBodyTemperatureModel updateBasalBodyTemperatureModel(
+	public BasalBodyTemperatureModel insertBasalBodyTemperatureModel(
 			BasalBodyTemperatureModel bbt) {
-		// TODO Auto-generated method stub
-		return null;
+		if(bbt == null){
+			throw new IllegalArgumentException("bbt is empty.");
+		}
+		if(bbt.getKey() != null){
+			throw new IllegalArgumentException("bbt hased be instered.");
+		}
+		Date now = new Date();
+		bbt.setInsertDate(now);
+		bbt.setUpdateDate(now);
+		return dmLoveappleModel(bbt);
 	}
-
+	
 	/**
 	 * 
 	 * {@inheritDoc}
 	 */
 	@Override
-	public Date getAverageBbtMeasureDate(String mail, int scope) {
+	public double getAverageBbtMeasureTime(String mail, int scope) {
 		if(StringUtils.isEmpty(mail)){
 			throw new IllegalArgumentException("mail is empty.");
 		}
@@ -115,9 +121,14 @@ public class HealthServiceImpl extends BaseServiceImpl implements HealthService 
 						DateUtil.toDateString(startPoint.getTime(), DateUtil.DATE_PTTERN_YYYYMMDD), 
 						DateUtil.toDateString(lastPoint.getTime(), DateUtil.DATE_PTTERN_YYYYMMDD));
 		double totalTime = 0;
-		// TODO 平均値計算
+		// 平均値計算
+		Calendar temp = Calendar.getInstance();
+		for (BasalBodyTemperatureModel basalBodyTemperatureModel : bbtList) {
+			temp.setTime(basalBodyTemperatureModel.getTimeStamp());
+			totalTime += (temp.get(Calendar.MINUTE)/60 + temp.get(Calendar.HOUR));
+		}
 		
-		return null;
+		return totalTime/bbtList.size();
 	}
 
 }

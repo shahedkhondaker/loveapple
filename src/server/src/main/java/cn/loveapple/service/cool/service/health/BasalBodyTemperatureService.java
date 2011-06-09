@@ -30,16 +30,16 @@
  *
  * @author: loveapple
  */
-package cn.loveapple.service.cool.service;
+package cn.loveapple.service.cool.service.health;
 
-import java.util.Date;
 import java.util.List;
 
 import cn.loveapple.service.cool.model.health.BasalBodyTemperatureModel;
+import cn.loveapple.service.cool.service.BaseService;
 import cn.loveapple.service.util.DateUtil;
 
 /**
- * loveapple健康サービス
+ * loveapple基礎体温サービス
  * 
  * @author $Author$
  * @version $Revision$
@@ -47,13 +47,13 @@ import cn.loveapple.service.util.DateUtil;
  * @id $Id$
  *
  */
-public interface HealthService extends BaseService {
+public interface BasalBodyTemperatureService extends BaseService {
 
 	/**
 	 * 基礎体温を検索する。
 	 * 
 	 * @param mail 対象ユーザのメールアドレス
-	 * @param startDay　計測開始日。フォーマット：{@linkplain DateUtil#DATE_PTTERN_YYYYMMDD}
+	 * @param startDay　計測開始日。フォーマット：{@linkplain DateUtil#DATE_PBasalBodyTemperatureServiceD}
 	 * @param endDay 計測終了日。フォーマット：{@linkplain DateUtil#DATE_PTTERN_YYYYMMDD}
 	 * @return 基礎体温の検索結果
 	 */
@@ -65,14 +65,14 @@ public interface HealthService extends BaseService {
 	 * @param bbt 登録/更新する基礎体温
 	 * @return 登録/更新した基礎体温を戻す
 	 */
-	public BasalBodyTemperatureModel updateBasalBodyTemperatureModel(BasalBodyTemperatureModel bbt);
+	public BasalBodyTemperatureModel insertBasalBodyTemperatureModel(BasalBodyTemperatureModel bbt);
 
 	/**
-	 * ある期間内、平均基礎対応計測日時を取得する。
+	 * ある期間内、平均基礎対応計測時刻を取得する。
 	 * 
 	 * @param mail 対象ユーザのMail
 	 * @param scope　前日からの日数。<code>0</code>を指定した場合、前日の計測日時を戻す
-	 * @return {@linkplain BasalBodyTemperatureModel#getTimeStamp()}の平均値
+	 * @return 時間の平均値を戻す
 	 */
-	public Date getAverageBbtMeasureDate(String mail, int scope);
+	public double getAverageBbtMeasureTime(String mail, int scope);
 }

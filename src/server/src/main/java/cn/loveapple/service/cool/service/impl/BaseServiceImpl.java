@@ -14,28 +14,28 @@ import com.google.appengine.api.datastore.Key;
 public class BaseServiceImpl {
 
 	/**
-	 * TODO 未試験
+	 * {@linkplain LoveappleModel}の実装モデルに対してデータ更新を行う。
 	 * 
-	 * @param member
-	 * @return
+	 * @param source 更新元
+	 * @return　DBに更新した結果を戻す
 	 */
 	@SuppressWarnings("unchecked")
-	public <O> O dmLoveappleMember(LoveappleModel model) {
+	public <O> O dmLoveappleModel(LoveappleModel source) {
 		
-		Key key = Datastore.put(model);
-		return (O) queryByKey(key, model.getClass());
+		Key key = Datastore.put(source);
+		return (O) queryByKey(key, source.getClass());
 	}
 	
 
 	/**
-	 * TODO 未試験
+	 * DBのキーをもとに、{@linkplain LoveappleModel}の実装モデルを検索する。
 	 * 
 	 * @param <O> 検索結果の{@linkplain LoveappleModel モデル}を戻す。
 	 * @param key 検索キー
 	 * @param clz 検索対象のクラス
-	 * @return
+	 * @return 検索結果を戻す。
 	 */
-	@SuppressWarnings("unchecked")
+	@SuppressWarnings({"unchecked","rawtypes"})
 	public <O> O queryByKey(Key key, Class<O> clz) {
 		if(key == null){
 			throw new IllegalArgumentException("key is empty.");

@@ -120,19 +120,19 @@ public class LoveappleMemberModel implements LoveappleModel{
 	/**
 	 * 登録日時
 	 */
-	@Attribute(unindexed=true)
+	@Attribute
 	private Date insertDate;
 	
 	/**
 	 * 直近ログインした日時
 	 */
-	@Attribute(unindexed=true)
+	@Attribute
 	private Date lastLoginDate;
 	
 	/**
 	 * 更新日時
 	 */
-	@Attribute(unindexed=true)
+	@Attribute
 	private Date updateDate;
 	
 	/**

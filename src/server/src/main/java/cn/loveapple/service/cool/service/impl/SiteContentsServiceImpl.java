@@ -79,7 +79,7 @@ public class SiteContentsServiceImpl extends BaseServiceImpl implements SiteCont
 		if(category == null){
 			throw new IllegalArgumentException("category is empty.");
 		}
-		return dmLoveappleMember(category);
+		return dmLoveappleModel(category);
 	}
 
 	/**
@@ -153,7 +153,7 @@ public class SiteContentsServiceImpl extends BaseServiceImpl implements SiteCont
 		if(contents == null){
 			throw new IllegalArgumentException("contents is empty.");
 		}
-		return dmLoveappleMember(contents);
+		return dmLoveappleModel(contents);
 	}
 
 	/**
@@ -165,7 +165,7 @@ public class SiteContentsServiceImpl extends BaseServiceImpl implements SiteCont
 		if(contents == null){
 			throw new IllegalArgumentException("contents is empty.");
 		}
-		return dmLoveappleMember(contents);
+		return dmLoveappleModel(contents);
 	}
 
 	/**
@@ -178,7 +178,7 @@ public class SiteContentsServiceImpl extends BaseServiceImpl implements SiteCont
 		if(tag == null){
 			throw new IllegalArgumentException("tag is empty.");
 		}
-		return dmLoveappleMember(tag);
+		return dmLoveappleModel(tag);
 	}
 
 	/**
@@ -191,7 +191,7 @@ public class SiteContentsServiceImpl extends BaseServiceImpl implements SiteCont
 		if(tag == null){
 			throw new IllegalArgumentException("tag is empty.");
 		}
-		return dmLoveappleMember(tag);
+		return dmLoveappleModel(tag);
 	}
 
 	/**
@@ -204,7 +204,7 @@ public class SiteContentsServiceImpl extends BaseServiceImpl implements SiteCont
 		if(file == null){
 			throw new IllegalArgumentException("file is empty.");
 		}
-		return dmLoveappleMember(file);
+		return dmLoveappleModel(file);
 	}
 
 	/**
@@ -217,7 +217,7 @@ public class SiteContentsServiceImpl extends BaseServiceImpl implements SiteCont
 		if(file == null){
 			throw new IllegalArgumentException("file is empty.");
 		}
-		return dmLoveappleMember(file);
+		return dmLoveappleModel(file);
 	}
 
 	/**
@@ -229,7 +229,7 @@ public class SiteContentsServiceImpl extends BaseServiceImpl implements SiteCont
 		if(site == null){
 			throw new IllegalArgumentException("site is empty.");
 		}
-		return dmLoveappleMember(site);
+		return dmLoveappleModel(site);
 	}
 
 	/**
@@ -241,7 +241,7 @@ public class SiteContentsServiceImpl extends BaseServiceImpl implements SiteCont
 		if(site == null){
 			throw new IllegalArgumentException("site is empty.");
 		}
-		return dmLoveappleMember(site);
+		return dmLoveappleModel(site);
 	}
 
 	/**

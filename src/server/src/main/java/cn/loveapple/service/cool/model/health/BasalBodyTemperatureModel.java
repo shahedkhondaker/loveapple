@@ -124,6 +124,17 @@ public class BasalBodyTemperatureModel implements LoveappleModel{
 	private Double temperature;
 
 	/**
+	 * 登録日時
+	 */
+	@Attribute
+	private Date insertDate;
+		
+	/**
+	 * 更新日時
+	 */
+	@Attribute
+	private Date updateDate;
+	/**
 	 * キーを取得します。
 	 * @return キー
 	 */
@@ -281,6 +292,38 @@ public class BasalBodyTemperatureModel implements LoveappleModel{
 	 */
 	public void setTemperature(Double temperature) {
 	    this.temperature = temperature;
+	}
+
+	/**
+	 * 登録日時を取得します。
+	 * @return 登録日時
+	 */
+	public Date getInsertDate() {
+	    return insertDate;
+	}
+
+	/**
+	 * 登録日時を設定します。
+	 * @param insertDate 登録日時
+	 */
+	public void setInsertDate(Date insertDate) {
+	    this.insertDate = insertDate;
+	}
+
+	/**
+	 * 更新日時を取得します。
+	 * @return 更新日時
+	 */
+	public Date getUpdateDate() {
+	    return updateDate;
+	}
+
+	/**
+	 * 更新日時を設定します。
+	 * @param updateDate 更新日時
+	 */
+	public void setUpdateDate(Date updateDate) {
+	    this.updateDate = updateDate;
 	}
 
 }

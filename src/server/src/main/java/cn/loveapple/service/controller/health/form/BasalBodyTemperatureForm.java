@@ -6,7 +6,7 @@
  *
  * ====================================================================
  *
- * Copyright (C) 2008 by loveapple.sourceforge.jp
+ * Copyright (C) 2008 by loveapple.cn
  *
  * All copyright notices regarding loveapple and loveapple CoreLib
  * MUST remain intact in the scripts, documents and source code.
@@ -30,34 +30,33 @@
  *
  * @author: loveapple
  */
-package cn.loveapple.service.cool.service;
+package cn.loveapple.service.controller.health.form;
 
-import com.google.appengine.api.datastore.Key;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 
-import cn.loveapple.service.cool.model.LoveappleModel;
+import org.apache.commons.lang.builder.ToStringBuilder;
+import org.springframework.format.annotation.NumberFormat;
+import org.springframework.format.annotation.NumberFormat.Style;
 
 /**
- * @author $author:$
+ * 
+ * TODO
+ * 
+ * @author $Author$
  * @version $Revision$
  * @date $Date$
  * @id $Id$
  *
  */
-public interface BaseService {
-	/**
-	 * 
-	 * @param <O>
-	 * @param model
-	 * @return
-	 */
-	public <O> O dmLoveappleModel(LoveappleModel model);
+public class BasalBodyTemperatureForm {
+	
 	
 	/**
-	 * 
-	 * @param <O>
-	 * @param key
-	 * @param clz
-	 * @return
+	 * {@inheritDoc}
 	 */
-	public <O> O queryByKey(Key key, Class<O> clz);
+	@Override
+	public String toString(){
+		return ToStringBuilder.reflectionToString(this);
+	}
 }

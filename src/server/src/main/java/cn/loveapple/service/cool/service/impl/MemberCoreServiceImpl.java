@@ -74,7 +74,7 @@ public class MemberCoreServiceImpl extends BaseServiceImpl implements MemberCore
 		}
 		member.setUpdateDate(new Date());
 		member.setKey(result.getKey());
-		return dmLoveappleMember(member);
+		return dmLoveappleModel(member);
 	}
 	/**
 	 * {@inheritDoc}
@@ -84,8 +84,7 @@ public class MemberCoreServiceImpl extends BaseServiceImpl implements MemberCore
 		if(member == null){
 			throw new IllegalArgumentException("member info is empty.");
 		}
-		LoveappleMemberModel result = findByEmail(member.getMail());
-		if(result != null){
+		if(member.getMail() != null && findByEmail(member.getMail()) != null){
 			throw new RuntimeException("member is ben registed." + member.getMail());
 		}
 		
@@ -94,7 +93,7 @@ public class MemberCoreServiceImpl extends BaseServiceImpl implements MemberCore
 		member.setCertificationCode(AccountUtil.genCertificationCode());
 		member.setInsertDate(now);
 		member.setUpdateDate(now);
-		return dmLoveappleMember(member);
+		return dmLoveappleModel(member);
 	}
 
 	/**
@@ -107,7 +106,8 @@ public class MemberCoreServiceImpl extends BaseServiceImpl implements MemberCore
 			throw new IllegalArgumentException("loginId is empty.");
 		}
 		LoveappleMemberModelMeta meta = LoveappleMemberModelMeta.get();
-		return Datastore.query(LoveappleMemberModel.class).filter(meta.mail.equal(mail)).asSingle();
+		return Datastore.query(LoveappleMemberModel.class)
+				.filter(meta.mail.equal(mail)).asSingle();
 	}
 	/**
 	 * {@inheritDoc}
