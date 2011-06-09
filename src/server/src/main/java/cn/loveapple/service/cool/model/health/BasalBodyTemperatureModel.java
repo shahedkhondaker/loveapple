@@ -97,19 +97,19 @@ public class BasalBodyTemperatureModel implements LoveappleModel{
 	 * 性交フラグ
 	 */
 	@Attribute
-	private boolean isCoitus;
+	private Boolean isCoitus;
 	
 	/**
 	 * 生理期間フラグ
 	 */
 	@Attribute
-	private boolean isMenstruation;
+	private Boolean isMenstruation;
 	
 	/**
 	 * 生理痛フラグ
 	 */
 	@Attribute
-	private boolean isDysmenorrhea;
+	private Boolean isDysmenorrhea;
 	
 	/**
 	 * おりもの
@@ -134,6 +134,7 @@ public class BasalBodyTemperatureModel implements LoveappleModel{
 	 */
 	@Attribute
 	private Date updateDate;
+
 	/**
 	 * キーを取得します。
 	 * @return キー
@@ -218,7 +219,7 @@ public class BasalBodyTemperatureModel implements LoveappleModel{
 	 * 性交フラグを取得します。
 	 * @return 性交フラグ
 	 */
-	public boolean isCoitus() {
+	public Boolean getIsCoitus() {
 	    return isCoitus;
 	}
 
@@ -226,7 +227,7 @@ public class BasalBodyTemperatureModel implements LoveappleModel{
 	 * 性交フラグを設定します。
 	 * @param isCoitus 性交フラグ
 	 */
-	public void setCoitus(boolean isCoitus) {
+	public void setIsCoitus(Boolean isCoitus) {
 	    this.isCoitus = isCoitus;
 	}
 
@@ -234,7 +235,7 @@ public class BasalBodyTemperatureModel implements LoveappleModel{
 	 * 生理期間フラグを取得します。
 	 * @return 生理期間フラグ
 	 */
-	public boolean isMenstruation() {
+	public Boolean getIsMenstruation() {
 	    return isMenstruation;
 	}
 
@@ -242,7 +243,7 @@ public class BasalBodyTemperatureModel implements LoveappleModel{
 	 * 生理期間フラグを設定します。
 	 * @param isMenstruation 生理期間フラグ
 	 */
-	public void setMenstruation(boolean isMenstruation) {
+	public void setIsMenstruation(Boolean isMenstruation) {
 	    this.isMenstruation = isMenstruation;
 	}
 
@@ -250,7 +251,7 @@ public class BasalBodyTemperatureModel implements LoveappleModel{
 	 * 生理痛フラグを取得します。
 	 * @return 生理痛フラグ
 	 */
-	public boolean isDysmenorrhea() {
+	public Boolean getIsDysmenorrhea() {
 	    return isDysmenorrhea;
 	}
 
@@ -258,7 +259,7 @@ public class BasalBodyTemperatureModel implements LoveappleModel{
 	 * 生理痛フラグを設定します。
 	 * @param isDysmenorrhea 生理痛フラグ
 	 */
-	public void setDysmenorrhea(boolean isDysmenorrhea) {
+	public void setIsDysmenorrhea(Boolean isDysmenorrhea) {
 	    this.isDysmenorrhea = isDysmenorrhea;
 	}
 
@@ -325,5 +326,4 @@ public class BasalBodyTemperatureModel implements LoveappleModel{
 	public void setUpdateDate(Date updateDate) {
 	    this.updateDate = updateDate;
 	}
-
 }
