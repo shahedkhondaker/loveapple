@@ -99,6 +99,22 @@ public class BasalBodyTemperatureServiceImpl extends BaseServiceImpl implements 
 		bbt.setUpdateDate(now);
 		return dmLoveappleModel(bbt);
 	}
+
+	/**
+	 * 
+	 * {@inheritDoc}
+	 */
+	@Override
+	public BasalBodyTemperatureModel updateBasalBodyTemperatureModel(
+			BasalBodyTemperatureModel bbt) {
+		if(bbt == null || bbt.getKey() == null){
+			throw new IllegalArgumentException("bbt is empty.");
+		}
+		
+		Date now = new Date();
+		bbt.setUpdateDate(now);
+		return dmLoveappleModel(bbt);
+	}
 	
 	/**
 	 * 

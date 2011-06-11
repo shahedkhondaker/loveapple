@@ -60,13 +60,21 @@ public interface BasalBodyTemperatureService extends BaseService {
 	public List<BasalBodyTemperatureModel> findBasalBodyTemperatureByUser(String mail, String startDay, String endDay);
 
 	/**
-	 * ユーザ、及び計測日を基準に、基礎体温を更新/登録する。
+	 * ユーザ、及び計測日を基準に、基礎体温を登録する。
 	 * 
 	 * @param bbt 登録/更新する基礎体温
 	 * @return 登録/更新した基礎体温を戻す
 	 */
 	public BasalBodyTemperatureModel insertBasalBodyTemperatureModel(BasalBodyTemperatureModel bbt);
 
+	/**
+	 * 
+	 * ユーザ、及び計測日を基準に、基礎体温を更新する。
+	 * 
+	 * @param bbt 登録/更新する基礎体温
+	 * @return 登録/更新した基礎体温を戻す
+	 */
+	public BasalBodyTemperatureModel updateBasalBodyTemperatureModel(BasalBodyTemperatureModel bbt);
 	/**
 	 * ある期間内、平均基礎対応計測時刻を取得する。
 	 * 

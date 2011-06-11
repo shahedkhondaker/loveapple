@@ -32,17 +32,18 @@
  */
 package cn.loveapple.service.controller.health.action;
 
+import static cn.loveapple.service.util.web.FrontUtil.*;
+
 import java.io.IOException;
 import java.io.OutputStream;
 import java.util.Date;
 import java.util.HashMap;
-import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
-
 
 import org.apache.commons.lang.builder.ToStringBuilder;
 import org.apache.commons.logging.Log;
@@ -56,10 +57,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.view.json.MappingJacksonJsonView;
 
-import cn.loveapple.service.controller.exception.ResourceNotFoundException;
-import cn.loveapple.service.controller.sample.form.SampleForm;
+import cn.loveapple.service.controller.SessionLabel;
+import cn.loveapple.service.controller.health.form.BasalBodyTemperatureForm;
 import cn.loveapple.service.cool.model.SampleModel;
-import cn.loveapple.service.cool.service.SampleService;
 import cn.loveapple.service.cool.service.health.BasalBodyTemperatureService;
 
 /**
@@ -73,8 +73,8 @@ import cn.loveapple.service.cool.service.health.BasalBodyTemperatureService;
  *
  */
 @Controller
-@RequestMapping(value="/health/bbt")
-public class BasalBodyTemperatureController {
+@RequestMapping(value="/core/health/bbt")
+public class BasalBodyTemperatureController implements SessionLabel {
 	/**
 	 * ログ
 	 */
@@ -86,22 +86,6 @@ public class BasalBodyTemperatureController {
 	private BasalBodyTemperatureService basalBodyTemperatureService;
 
 	/**
-	 * 直打ちの場合、実行される
-	 * 
-	 * @param model
-	 * @return
-	 */
-	@RequestMapping(method=RequestMethod.GET)
-	public String getCreateForm(Model model) {
-		SampleForm form = new SampleForm();
-		form.setName("anyone");
-
-		model.addAttribute(form);
-		
-		return "sample/createForm";
-	}
-
-	/**
 	 * ポスト送信された場合、実行される
 	 * 
 	 * @param form
@@ -109,10 +93,16 @@ public class BasalBodyTemperatureController {
 	 * @return
 	 */
 	@RequestMapping(method=RequestMethod.POST)
-	public String create(@Valid SampleForm form, BindingResult result) {
+	public String registBbt(@Valid BasalBodyTemperatureForm form, BindingResult result, HttpSession session, Model model, Locale locale) {
 		if (result.hasErrors()) {
 			return "sample/createForm";
 		}
+		
+		if(!hasAttributeInSession(session, LOVEAPPLE_MEMBER)){
+			//TODO
+		}
+		
+		//TODO ログイン中であれば、基礎体温の更新などを行う
 		
 		//SampleModel data = basalBodyTemperatureService.
 		//		newAndPut(form.getName(), form.getLatitude(), form.getLongitude(), form.getAccuracy(), form.getDetail());
@@ -127,8 +117,8 @@ public class BasalBodyTemperatureController {
 	 * @param model
 	 * @return
 	 */
-	@RequestMapping(value="{id}", method=RequestMethod.GET)
-	public String getView(@PathVariable Long id, Model model) {
+	@RequestMapping(value="list/{start}/{end}", method=RequestMethod.GET)
+	public String getBbtList(@PathVariable String start, String end, Model model) {
 		/*SampleModel data = basalBodyTemperatureService.queryByKey(id);
 		if(data == null){
 			if(log.isDebugEnabled()){
@@ -185,7 +175,6 @@ public class BasalBodyTemperatureController {
 	 */
 	@RequestMapping(value="/binary/{id}", method=RequestMethod.GET)
 	public void binaryView(@PathVariable Long id,HttpServletRequest request, HttpSession session, OutputStream outputStream) throws IOException{
-		
 		outputStream.write((ToStringBuilder.reflectionToString(session) +
 				ToStringBuilder.reflectionToString(request)).getBytes());
 	}
