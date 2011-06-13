@@ -21,8 +21,6 @@ import cn.loveapple.service.controller.pojo.Response;
  * @id $Id: BaseController.java 62 2010-10-11 11:39:25Z hao0323 $
  *
  */
-@Controller
-@RequestMapping(value=URL_BASE)
 public class BaseController{
 	/**
 	 * 
