@@ -38,6 +38,7 @@ import java.io.IOException;
 import java.io.OutputStream;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 
@@ -57,9 +58,12 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.view.json.MappingJacksonJsonView;
 
+import cn.loveapple.service.controller.BaseController;
 import cn.loveapple.service.controller.SessionLabel;
 import cn.loveapple.service.controller.health.form.BasalBodyTemperatureForm;
+import cn.loveapple.service.cool.model.LoveappleMemberModel;
 import cn.loveapple.service.cool.model.SampleModel;
+import cn.loveapple.service.cool.model.health.BasalBodyTemperatureModel;
 import cn.loveapple.service.cool.service.health.BasalBodyTemperatureService;
 
 /**
@@ -74,7 +78,7 @@ import cn.loveapple.service.cool.service.health.BasalBodyTemperatureService;
  */
 @Controller
 @RequestMapping(value="/core/health/bbt")
-public class BasalBodyTemperatureController implements SessionLabel {
+public class BasalBodyTemperatureController extends BaseController implements SessionLabel {
 	/**
 	 * ログ
 	 */
@@ -93,21 +97,31 @@ public class BasalBodyTemperatureController implements SessionLabel {
 	 * @return
 	 */
 	@RequestMapping(method=RequestMethod.POST)
-	public String registBbt(@Valid BasalBodyTemperatureForm form, BindingResult result, HttpSession session, Model model, Locale locale) {
-		if (result.hasErrors()) {
-			return "sample/createForm";
-		}
+	public MappingJacksonJsonView registBbt(@Valid BasalBodyTemperatureForm form, BindingResult result, HttpSession session, Model model, Locale locale) {
+
 		
 		if(!hasAttributeInSession(session, LOVEAPPLE_MEMBER)){
-			//TODO
+			
+			return userErrorJsonView(result);
 		}
+		if (result.hasErrors()) {
+			return userErrorJsonView(result);
+		}	
+		
+		LoveappleMemberModel member = (LoveappleMemberModel) session.getAttribute(LOVEAPPLE_MEMBER);
+		
 		
 		//TODO ログイン中であれば、基礎体温の更新などを行う
+		try{
+			List<BasalBodyTemperatureModel> bbtList = 
+				basalBodyTemperatureService.findBasalBodyTemperatureByUser(
+						member.getMail(), form.getMeasureDay(), form.getMeasureDay());
+		}catch (IllegalArgumentException e) {
+			
+		}
 		
-		//SampleModel data = basalBodyTemperatureService.
-		//		newAndPut(form.getName(), form.getLatitude(), form.getLongitude(), form.getAccuracy(), form.getDetail());
-		
-		return "redirect:/sample/" ;//+ data.getKey().getId();
+		//TODO 正常時のJSON
+		return null;
 	}
 	
 	/**

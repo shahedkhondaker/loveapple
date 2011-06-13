@@ -32,6 +32,7 @@
  */
 package cn.loveapple.service.controller.health.form;
 
+import javax.validation.constraints.Digits;
 import javax.validation.constraints.Max;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
@@ -41,6 +42,7 @@ import javax.validation.constraints.Size;
 import org.apache.commons.lang.builder.ToStringBuilder;
 
 import cn.loveapple.service.Constant;
+import cn.loveapple.service.util.DateUtil;
 
 /**
  * 
@@ -53,6 +55,14 @@ import cn.loveapple.service.Constant;
  *
  */
 public class BasalBodyTemperatureForm {
+
+	/**
+	 * 計測日<br />
+	 * 更新時に日付を設定する<br>
+	 * {@linkplain DateUtil#DATE_PTTERN_YYYYMMDD YYYYMMDD}の日付文字列
+	 */
+	@Size(max=8, min=8)
+	private String measureDay;
 
 	/**
 	 * 性交フラグ
@@ -96,6 +106,22 @@ public class BasalBodyTemperatureForm {
 	@Override
 	public String toString(){
 		return ToStringBuilder.reflectionToString(this);
+	}
+
+	/**
+	 * 計測日<br />を取得します。
+	 * @return 計測日<br />
+	 */
+	public String getMeasureDay() {
+	    return measureDay;
+	}
+
+	/**
+	 * 計測日<br />を設定します。
+	 * @param measureDay 計測日<br />
+	 */
+	public void setMeasureDay(String measureDay) {
+	    this.measureDay = measureDay;
 	}
 
 	/**
