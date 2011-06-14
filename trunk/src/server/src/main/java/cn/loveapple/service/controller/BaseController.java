@@ -54,9 +54,9 @@ public class BaseController{
 	 * @return
 	 */
 	public MappingJacksonJsonView userErrorJsonView(BindingResult result){
-		if(!result.hasErrors()){
+		/*if(!result.hasErrors()){
 			return null;
-		}
+		}*/
 		Response response = new Response();
 		response.setStatus(STATUS_NG);
 		response.setStatusCode(STATUS_CODE_USER_ERROR);
