@@ -83,7 +83,7 @@ public class BasalBodyTemperatureForm {
 	 */
 	@Size(max=1)
 	@Pattern(regexp="(" + Constant.FLG_OFF + "|" + Constant.FLG_ON + ")")
-	private String cysmenorrheaFlg;
+	private String dysmenorrheaFlg;
 	
 	/**
 	 * おりもの
@@ -156,20 +156,21 @@ public class BasalBodyTemperatureForm {
 	    this.menstruationFlg = menstruationFlg;
 	}
 
+
 	/**
 	 * 生理痛フラグを取得します。
 	 * @return 生理痛フラグ
 	 */
-	public String isCysmenorrheaFlg() {
-	    return cysmenorrheaFlg;
+	public String getDysmenorrheaFlg() {
+	    return dysmenorrheaFlg;
 	}
 
 	/**
 	 * 生理痛フラグを設定します。
-	 * @param cysmenorrheaFlg 生理痛フラグ
+	 * @param dysmenorrheaFlg 生理痛フラグ
 	 */
-	public void setCysmenorrheaFlg(String cysmenorrheaFlg) {
-	    this.cysmenorrheaFlg = cysmenorrheaFlg;
+	public void setDysmenorrheaFlg(String dysmenorrheaFlg) {
+	    this.dysmenorrheaFlg = dysmenorrheaFlg;
 	}
 
 	/**

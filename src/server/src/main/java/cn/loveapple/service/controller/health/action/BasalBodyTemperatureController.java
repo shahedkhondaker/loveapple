@@ -50,14 +50,17 @@ import org.apache.commons.lang.builder.ToStringBuilder;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.support.ReloadableResourceBundleMessageSource;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.util.CollectionUtils;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.view.json.MappingJacksonJsonView;
 
+import cn.loveapple.service.Constant;
 import cn.loveapple.service.controller.BaseController;
 import cn.loveapple.service.controller.SessionLabel;
 import cn.loveapple.service.controller.health.form.BasalBodyTemperatureForm;
@@ -90,6 +93,11 @@ public class BasalBodyTemperatureController extends BaseController implements Se
 	private BasalBodyTemperatureService basalBodyTemperatureService;
 
 	/**
+	 * メッセージソース
+	 */
+	private ReloadableResourceBundleMessageSource messageSource;
+	
+	/**
 	 * ポスト送信された場合、実行される
 	 * 
 	 * @param form
@@ -101,23 +109,33 @@ public class BasalBodyTemperatureController extends BaseController implements Se
 
 		
 		if(!hasAttributeInSession(session, LOVEAPPLE_MEMBER)){
-			
 			return userErrorJsonView(result);
 		}
+		BasalBodyTemperatureValidator validator = new BasalBodyTemperatureValidator(messageSource, locale);
+		validator.validate(form, result);
 		if (result.hasErrors()) {
 			return userErrorJsonView(result);
-		}	
+		}
 		
 		LoveappleMemberModel member = (LoveappleMemberModel) session.getAttribute(LOVEAPPLE_MEMBER);
 		
 		
-		//TODO ログイン中であれば、基礎体温の更新などを行う
+		//ログイン中であれば、基礎体温の更新などを行う
+		List<BasalBodyTemperatureModel> bbtList = null;
 		try{
-			List<BasalBodyTemperatureModel> bbtList = 
-				basalBodyTemperatureService.findBasalBodyTemperatureByUser(
+			bbtList = basalBodyTemperatureService.findBasalBodyTemperatureByUser(
 						member.getMail(), form.getMeasureDay(), form.getMeasureDay());
 		}catch (IllegalArgumentException e) {
-			
+			throw e;
+		}
+		
+		//TODO フォームから更新/登録の基礎体温の属性を設定
+		BasalBodyTemperatureModel bbt = new BasalBodyTemperatureModel();
+		bbt.setIsCoitus(Constant.FLG_ON.equals(form.getCoitusFlg()));
+		bbt.setIsDysmenorrhea(Constant.FLG_ON.equals(form.getDysmenorrheaFlg()));
+		
+		if(CollectionUtils.isEmpty(bbtList)){
+			basalBodyTemperatureService.insertBasalBodyTemperatureModel(bbt);
 		}
 		
 		//TODO 正常時のJSON
@@ -198,5 +216,15 @@ public class BasalBodyTemperatureController extends BaseController implements Se
 	@Autowired(required=true)
 	public void setBasalBodyTemperatureService(BasalBodyTemperatureService basalBodyTemperatureService) {
 		this.basalBodyTemperatureService = basalBodyTemperatureService;
+	}
+
+
+	/**
+	 * メッセージソースを設定します。
+	 * @param messageSource メッセージソース
+	 */
+	@Autowired(required=true)
+	public void setMessageSource(ReloadableResourceBundleMessageSource messageSource) {
+	    this.messageSource = messageSource;
 	}
 }
