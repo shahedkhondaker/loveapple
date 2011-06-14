@@ -60,7 +60,18 @@ public class BasalBodyTemperatureModel implements LoveappleModel{
 	 * おりもの
 	 * 
 	 */
-	public static enum Leukorrhea {LITTLE, USUALLY, MUCH};
+	public static enum Leukorrhea {
+		LITTLE, USUALLY, MUCH;
+		public static String getLittle(){
+			return LITTLE.toString();
+		}
+		public static String getUsually(){
+			return USUALLY.toString();
+		}
+		public static String getMuch(){
+			return MUCH.toString();
+		}
+	};
 	
 	/**
 	 * キー
