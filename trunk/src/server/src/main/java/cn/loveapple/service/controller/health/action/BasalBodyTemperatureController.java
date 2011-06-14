@@ -32,6 +32,7 @@
  */
 package cn.loveapple.service.controller.health.action;
 
+import static cn.loveapple.service.controller.Constant.*;
 import static cn.loveapple.service.util.web.FrontUtil.*;
 
 import java.io.IOException;
@@ -64,6 +65,7 @@ import cn.loveapple.service.Constant;
 import cn.loveapple.service.controller.BaseController;
 import cn.loveapple.service.controller.SessionLabel;
 import cn.loveapple.service.controller.health.form.BasalBodyTemperatureForm;
+import cn.loveapple.service.controller.pojo.Response;
 import cn.loveapple.service.cool.model.LoveappleMemberModel;
 import cn.loveapple.service.cool.model.SampleModel;
 import cn.loveapple.service.cool.model.health.BasalBodyTemperatureModel;
@@ -129,19 +131,52 @@ public class BasalBodyTemperatureController extends BaseController implements Se
 			throw e;
 		}
 		
-		//TODO フォームから更新/登録の基礎体温の属性を設定
-		BasalBodyTemperatureModel bbt = new BasalBodyTemperatureModel();
-		bbt.setIsCoitus(Constant.FLG_ON.equals(form.getCoitusFlg()));
-		bbt.setIsDysmenorrhea(Constant.FLG_ON.equals(form.getDysmenorrheaFlg()));
+		//フォームから更新/登録の基礎体温の属性を設定
+		BasalBodyTemperatureModel bbt = createBasalBodyTemperatureModel(form, member);
 		
 		if(CollectionUtils.isEmpty(bbtList)){
 			basalBodyTemperatureService.insertBasalBodyTemperatureModel(bbt);
+		}else{
+			basalBodyTemperatureService.updateBasalBodyTemperatureModel(bbt);
 		}
 		
 		//TODO 正常時のJSON
-		return null;
+		Response response = new Response();
+		response.setStatus(STATUS_OK);
+		response.setStatusCode(STATUS_CODE_SUCCESS);
+		MappingJacksonJsonView json = new MappingJacksonJsonView();
+		json.addStaticAttribute("response", response);
+		json.addStaticAttribute("data", bbt);
+		
+		return json;
 	}
 	
+	/**
+	 * DBに登録する基礎体温のモデルを生成する
+	 * 
+	 * @param form 元情報
+	 * @param member 会員情報
+	 * @return モデル
+	 */
+	private BasalBodyTemperatureModel createBasalBodyTemperatureModel(BasalBodyTemperatureForm form, LoveappleMemberModel member){
+		BasalBodyTemperatureModel bbt = new BasalBodyTemperatureModel();
+		bbt.setIsCoitus(Constant.FLG_ON.equals(form.getCoitusFlg()));
+		bbt.setIsDysmenorrhea(Constant.FLG_ON.equals(form.getDysmenorrheaFlg()));
+		bbt.setIsMenstruation(Constant.FLG_ON.equals(form.getMenstruationFlg()));
+		if(BasalBodyTemperatureForm.LEUKORRHEA_LITTLE_CODE.equals(form.getLeukorrhea())){
+			bbt.setLeukorrhea(BasalBodyTemperatureModel.Leukorrhea.LITTLE);
+		}else if(BasalBodyTemperatureForm.LEUKORRHEA_MUCH_CODE.equals(form.getLeukorrhea())){
+			bbt.setLeukorrhea(BasalBodyTemperatureModel.Leukorrhea.MUCH);
+		}else if(BasalBodyTemperatureForm.LEUKORRHEA_USUALLY_CODE.equals(form.getLeukorrhea())){
+			bbt.setLeukorrhea(BasalBodyTemperatureModel.Leukorrhea.USUALLY);
+		}
+		bbt.setMail(member.getMail());
+		bbt.setMeasureDay(form.getMeasureDay());
+		bbt.setName(member.getName());
+		bbt.setTemperature(form.getTemperature());
+		bbt.setTimeStamp(new Date());
+		return bbt;
+	}
 	/**
 	 * @{@link #create(BasalBodyTemperatureForm, BindingResult)}からリダイレクトされ、画面を表示させる
 	 * 

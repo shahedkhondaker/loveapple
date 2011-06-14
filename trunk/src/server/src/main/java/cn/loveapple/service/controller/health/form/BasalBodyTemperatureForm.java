@@ -32,7 +32,6 @@
  */
 package cn.loveapple.service.controller.health.form;
 
-import javax.validation.constraints.Digits;
 import javax.validation.constraints.Max;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
@@ -55,6 +54,19 @@ import cn.loveapple.service.util.DateUtil;
  *
  */
 public class BasalBodyTemperatureForm {
+	
+	/**
+	 * おりもの量：多め
+	 */
+	public static final String LEUKORRHEA_MUCH_CODE = "3";
+	/**
+	 * おりもの量：少なめ
+	 */
+	public static final String LEUKORRHEA_LITTLE_CODE = "1";
+	/**
+	 * おりもの量：普通
+	 */
+	public static final String LEUKORRHEA_USUALLY_CODE = "2";
 
 	/**
 	 * 計測日<br />
@@ -89,7 +101,10 @@ public class BasalBodyTemperatureForm {
 	 * おりもの
 	 */
 	@Size(max=1)
-	@Pattern(regexp="(" + Constant.FLG_OFF + "|" + Constant.FLG_ON + ")")
+	@Pattern(
+			regexp="(" + LEUKORRHEA_MUCH_CODE + "|" 
+			+ LEUKORRHEA_LITTLE_CODE + "|" 
+			+ LEUKORRHEA_USUALLY_CODE +  ")")
 	private String leukorrhea;
 	
 	/**
