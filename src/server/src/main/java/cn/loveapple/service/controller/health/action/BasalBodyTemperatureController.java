@@ -64,12 +64,14 @@ import org.springframework.web.servlet.view.json.MappingJacksonJsonView;
 import cn.loveapple.service.Constant;
 import cn.loveapple.service.controller.BaseController;
 import cn.loveapple.service.controller.SessionLabel;
+import cn.loveapple.service.controller.exception.ResourceNotFoundException;
 import cn.loveapple.service.controller.health.form.BasalBodyTemperatureForm;
 import cn.loveapple.service.controller.pojo.Response;
 import cn.loveapple.service.cool.model.LoveappleMemberModel;
 import cn.loveapple.service.cool.model.SampleModel;
 import cn.loveapple.service.cool.model.health.BasalBodyTemperatureModel;
 import cn.loveapple.service.cool.service.health.BasalBodyTemperatureService;
+import cn.loveapple.service.util.DateUtil;
 
 /**
  * 
@@ -82,7 +84,7 @@ import cn.loveapple.service.cool.service.health.BasalBodyTemperatureService;
  *
  */
 @Controller
-@RequestMapping(value="/core/health/bbt")
+@RequestMapping(value="/health/core/bbt")
 public class BasalBodyTemperatureController extends BaseController implements SessionLabel {
 	/**
 	 * ログ
@@ -178,35 +180,38 @@ public class BasalBodyTemperatureController extends BaseController implements Se
 		return bbt;
 	}
 	/**
-	 * @{@link #create(BasalBodyTemperatureForm, BindingResult)}からリダイレクトされ、画面を表示させる
 	 * 
-	 * @param id
+	 * @param start
+	 * @param end
+	 * @param result
+	 * @param session
 	 * @param model
+	 * @param locale
 	 * @return
 	 */
 	@RequestMapping(value="list/{start}/{end}", method=RequestMethod.GET)
-	public String getBbtList(@PathVariable String start, String end, Model model) {
-		/*SampleModel data = basalBodyTemperatureService.queryByKey(id);
-		if(data == null){
-			if(log.isDebugEnabled()){
-				log.debug("location list is empty by id :[" + id + "]");
-			}
-			throw new ResourceNotFoundException(id);
-		}
+	public MappingJacksonJsonView getBbtList(@PathVariable String start,@PathVariable  String end, BindingResult result, HttpSession session, Model model, Locale locale) {
 
-		List<SampleModel> locationList = basalBodyTemperatureService.queryAllByName(data.getName());
+		if(!DateUtil.isDateStr(start, DateUtil.DATE_PTTERN_YYYYMMDD) 
+				|| DateUtil.isDateStr(end, DateUtil.DATE_PTTERN_YYYYMMDD)){
+			throw new ResourceNotFoundException("invalid date string. start:" + start + " end:" + end);
+		}
+		if(!hasAttributeInSession(session, LOVEAPPLE_MEMBER)){
+			return userErrorJsonView(result);
+		}
 		
-		BasalBodyTemperatureForm form = new BasalBodyTemperatureForm();
-		form.setAccuracy(data.getAccuracy());
-		form.setDetail(data.getDetail());
-		form.setLatitude(data.getLocation().getLatitude());
-		form.setLongitude(data.getLocation().getLongitude());
-		form.setName(data.getName());
+		LoveappleMemberModel member = (LoveappleMemberModel) session.getAttribute(LOVEAPPLE_MEMBER);
 		
-		model.addAttribute(form);
-		model.addAttribute("locationList", locationList);*/
+		List<BasalBodyTemperatureModel> list = basalBodyTemperatureService.findBasalBodyTemperatureByUser(member.getMail(), start, end);
 		
-		return "sample/view";
+		Response response = new Response();
+		response.setStatus(STATUS_OK);
+		response.setStatusCode(STATUS_CODE_SUCCESS);
+		MappingJacksonJsonView json = new MappingJacksonJsonView();
+		json.addStaticAttribute("response", response);
+		json.addStaticAttribute("data", list);
+		
+		return json;
 	}
 	
 	/**

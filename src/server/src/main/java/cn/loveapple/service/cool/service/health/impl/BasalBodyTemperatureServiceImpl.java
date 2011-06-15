@@ -43,6 +43,7 @@ import cn.loveapple.service.cool.meta.health.BasalBodyTemperatureModelMeta;
 import cn.loveapple.service.cool.model.health.BasalBodyTemperatureModel;
 import cn.loveapple.service.cool.service.health.BasalBodyTemperatureService;
 import cn.loveapple.service.cool.service.impl.BaseServiceImpl;
+import cn.loveapple.service.type.ServiceComp;
 import cn.loveapple.service.util.DateUtil;
 
 /**
@@ -54,6 +55,7 @@ import cn.loveapple.service.util.DateUtil;
  * @id $Id$
  *
  */
+@ServiceComp
 public class BasalBodyTemperatureServiceImpl extends BaseServiceImpl implements BasalBodyTemperatureService {
 
 	/**

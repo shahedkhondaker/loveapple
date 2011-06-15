@@ -12,6 +12,8 @@ import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
 
 import org.apache.commons.lang.StringUtils;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.slim3.datastore.Datastore;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.javamail.JavaMailSender;
@@ -36,6 +38,11 @@ import com.google.appengine.api.datastore.KeyFactory;
 @ServiceComp
 public class MemberCoreServiceImpl extends BaseServiceImpl implements MemberCoreService {
 
+	/**
+	 * ログ
+	 */
+	private static Log log = LogFactory.getLog(MemberCoreServiceImpl.class);
+	
 	/**
 	 * メール送信
 	 */
@@ -93,6 +100,7 @@ public class MemberCoreServiceImpl extends BaseServiceImpl implements MemberCore
 		member.setCertificationCode(AccountUtil.genCertificationCode());
 		member.setInsertDate(now);
 		member.setUpdateDate(now);
+		
 		return dmLoveappleModel(member);
 	}
 
@@ -134,13 +142,18 @@ public class MemberCoreServiceImpl extends BaseServiceImpl implements MemberCore
 		}
 		
 		// TODO 定形メールを取得する。
+		String certificationUrl = "http://loveapple-facade.appspot.com/member/certification?" +
+							"id=" + member.getKey().getId() +
+							"&certificationCode=" + member.getCertificationCode();
 		FixedMailModel fixedMail = new FixedMailModel();
 		fixedMail.setMailCode("");
 		fixedMail.setEncode("ISO-2022-JP");
-		fixedMail.setBody("以下のURLへアクセスして登録を完成させてください。\n" +
-				"http://loveapple-facade.appspot.com/member/certification?" +
-				"id=" + member.getKey().getId() +
-				"&certificationCode=" + member.getCertificationCode());
+		fixedMail.setBody("以下のURLへアクセスして登録を完成させてください。\n" + certificationUrl);
+		
+		if(log.isDebugEnabled()){
+			log.debug("regist member:" + member.getMail() + "  certification url:" + certificationUrl);
+		}
+		
 		try {
 			fixedMail.setFromAddress(new InternetAddress("hao0323@gmail.com", "loveapple", fixedMail.getEncode()));
 		} catch (UnsupportedEncodingException e) {
