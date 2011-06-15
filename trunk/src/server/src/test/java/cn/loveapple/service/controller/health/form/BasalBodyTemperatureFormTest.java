@@ -69,7 +69,7 @@ public class BasalBodyTemperatureFormTest {
 	private BasalBodyTemperatureForm createForm(){
 		BasalBodyTemperatureForm form = new BasalBodyTemperatureForm();
 		form.setCoitusFlg("1");
-		form.setCysmenorrheaFlg("1");
+		form.setDysmenorrheaFlg("1");
 		form.setLeukorrhea("1");
 		form.setMenstruationFlg("1");
 		form.setTemperature(35.4);
