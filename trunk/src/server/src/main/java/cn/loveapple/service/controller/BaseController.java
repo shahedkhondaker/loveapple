@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.view.json.MappingJacksonJsonView;
 
 import cn.loveapple.service.controller.exception.ResourceNotFoundException;
-import cn.loveapple.service.controller.pojo.Response;
+import cn.loveapple.service.controller.pojo.JsonResponse;
 /**
  * 基底コントローラクラス。<br>
  * システム全体に関わるアクションを定期する。
@@ -57,7 +57,7 @@ public class BaseController{
 		/*if(!result.hasErrors()){
 			return null;
 		}*/
-		Response response = new Response();
+		JsonResponse response = new JsonResponse();
 		response.setStatus(STATUS_NG);
 		response.setStatusCode(STATUS_CODE_USER_ERROR);
 		StringBuilder errMsg = new StringBuilder(512);

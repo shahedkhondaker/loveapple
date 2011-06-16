@@ -66,7 +66,7 @@ import cn.loveapple.service.controller.BaseController;
 import cn.loveapple.service.controller.SessionLabel;
 import cn.loveapple.service.controller.exception.ResourceNotFoundException;
 import cn.loveapple.service.controller.health.form.BasalBodyTemperatureForm;
-import cn.loveapple.service.controller.pojo.Response;
+import cn.loveapple.service.controller.pojo.JsonResponse;
 import cn.loveapple.service.cool.model.LoveappleMemberModel;
 import cn.loveapple.service.cool.model.SampleModel;
 import cn.loveapple.service.cool.model.health.BasalBodyTemperatureModel;
@@ -143,7 +143,7 @@ public class BasalBodyTemperatureController extends BaseController implements Se
 		}
 		
 		//TODO 正常時のJSON
-		Response response = new Response();
+		JsonResponse response = new JsonResponse();
 		response.setStatus(STATUS_OK);
 		response.setStatusCode(STATUS_CODE_SUCCESS);
 		MappingJacksonJsonView json = new MappingJacksonJsonView();
@@ -190,28 +190,32 @@ public class BasalBodyTemperatureController extends BaseController implements Se
 	 * @return
 	 */
 	@RequestMapping(value="list/{start}/{end}", method=RequestMethod.GET)
-	public MappingJacksonJsonView getBbtList(@PathVariable String start,@PathVariable  String end, BindingResult result, HttpSession session, Model model, Locale locale) {
+	public MappingJacksonJsonView getBbtList(@PathVariable String start,@PathVariable  String end, HttpSession session, Model model, Locale locale) {
 
 		if(!DateUtil.isDateStr(start, DateUtil.DATE_PTTERN_YYYYMMDD) 
-				|| DateUtil.isDateStr(end, DateUtil.DATE_PTTERN_YYYYMMDD)){
+				|| !DateUtil.isDateStr(end, DateUtil.DATE_PTTERN_YYYYMMDD)){
+			if(log.isDebugEnabled()){
+				log.debug("invalid date string. start:" + start + " end:" + end);
+			}
 			throw new ResourceNotFoundException("invalid date string. start:" + start + " end:" + end);
 		}
 		if(!hasAttributeInSession(session, LOVEAPPLE_MEMBER)){
-			return userErrorJsonView(result);
+			if(log.isDebugEnabled()){
+				log.debug("invalid member longin info.");
+			}
+			throw new ResourceNotFoundException("invalid member longin info.");
 		}
 		
 		LoveappleMemberModel member = (LoveappleMemberModel) session.getAttribute(LOVEAPPLE_MEMBER);
 		
 		List<BasalBodyTemperatureModel> list = basalBodyTemperatureService.findBasalBodyTemperatureByUser(member.getMail(), start, end);
 		
-		Response response = new Response();
+		JsonResponse response = new JsonResponse();
 		response.setStatus(STATUS_OK);
 		response.setStatusCode(STATUS_CODE_SUCCESS);
-		MappingJacksonJsonView json = new MappingJacksonJsonView();
-		json.addStaticAttribute("response", response);
-		json.addStaticAttribute("data", list);
+		response.setData(list);
 		
-		return json;
+		return response;
 	}
 	
 	/**
@@ -236,20 +240,6 @@ public class BasalBodyTemperatureController extends BaseController implements Se
 		return json;
 	}
 	
-	/**
-	 * バイナリデータを返すメソッド
-	 * 
-	 * @param id
-	 * @param request
-	 * @param session
-	 * @param outputStream
-	 * @throws IOException
-	 */
-	@RequestMapping(value="/binary/{id}", method=RequestMethod.GET)
-	public void binaryView(@PathVariable Long id,HttpServletRequest request, HttpSession session, OutputStream outputStream) throws IOException{
-		outputStream.write((ToStringBuilder.reflectionToString(session) +
-				ToStringBuilder.reflectionToString(request)).getBytes());
-	}
 	/**
 	 * @param sampleService the sampleBusinessLogic to set
 	 */
