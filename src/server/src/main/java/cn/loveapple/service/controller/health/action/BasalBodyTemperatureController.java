@@ -47,6 +47,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 
+import org.apache.commons.lang.StringUtils;
 import org.apache.commons.lang.builder.ToStringBuilder;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -108,8 +109,8 @@ public class BasalBodyTemperatureController extends BaseController implements Se
 	 * @param result
 	 * @return
 	 */
-	@RequestMapping(method=RequestMethod.POST)
-	public MappingJacksonJsonView registBbt(@Valid BasalBodyTemperatureForm form, BindingResult result, HttpSession session, Model model, Locale locale) {
+	@RequestMapping(value="regist.json")
+	public MappingJacksonJsonView registBbt(@Valid BasalBodyTemperatureForm form, BindingResult result, HttpSession session, Locale locale) {
 
 		
 		if(!hasAttributeInSession(session, LOVEAPPLE_MEMBER)){
@@ -127,6 +128,10 @@ public class BasalBodyTemperatureController extends BaseController implements Se
 		//ログイン中であれば、基礎体温の更新などを行う
 		List<BasalBodyTemperatureModel> bbtList = null;
 		try{
+			if(StringUtils.isEmpty(form.getMeasureDay())){
+				form.setMeasureDay(DateUtil.toDateString(new Date(), DateUtil.DATE_PTTERN_YYYYMMDD));
+			}
+			
 			bbtList = basalBodyTemperatureService.findBasalBodyTemperatureByUser(
 						member.getMail(), form.getMeasureDay(), form.getMeasureDay());
 		}catch (IllegalArgumentException e) {
@@ -137,20 +142,18 @@ public class BasalBodyTemperatureController extends BaseController implements Se
 		BasalBodyTemperatureModel bbt = createBasalBodyTemperatureModel(form, member);
 		
 		if(CollectionUtils.isEmpty(bbtList)){
-			basalBodyTemperatureService.insertBasalBodyTemperatureModel(bbt);
+			bbt = basalBodyTemperatureService.insertBasalBodyTemperatureModel(bbt);
 		}else{
-			basalBodyTemperatureService.updateBasalBodyTemperatureModel(bbt);
+			bbt = basalBodyTemperatureService.updateBasalBodyTemperatureModel(bbt);
 		}
 		
 		//TODO 正常時のJSON
 		JsonResponse response = new JsonResponse();
 		response.setStatus(STATUS_OK);
 		response.setStatusCode(STATUS_CODE_SUCCESS);
-		MappingJacksonJsonView json = new MappingJacksonJsonView();
-		json.addStaticAttribute("response", response);
-		json.addStaticAttribute("data", bbt);
+		response.setData(bbt);
 		
-		return json;
+		return response;
 	}
 	
 	/**
@@ -189,7 +192,7 @@ public class BasalBodyTemperatureController extends BaseController implements Se
 	 * @param locale
 	 * @return
 	 */
-	@RequestMapping(value="list/{start}/{end}", method=RequestMethod.GET)
+	@RequestMapping(value="list/{start}/{end}.json", method=RequestMethod.GET)
 	public MappingJacksonJsonView getBbtList(@PathVariable String start,@PathVariable  String end, HttpSession session, Model model, Locale locale) {
 
 		if(!DateUtil.isDateStr(start, DateUtil.DATE_PTTERN_YYYYMMDD) 

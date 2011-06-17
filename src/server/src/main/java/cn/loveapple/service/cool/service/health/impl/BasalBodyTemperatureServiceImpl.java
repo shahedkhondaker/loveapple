@@ -37,7 +37,9 @@ import java.util.Date;
 import java.util.List;
 
 import org.apache.commons.lang.StringUtils;
+import org.apache.commons.lang.builder.ToStringBuilder;
 import org.slim3.datastore.Datastore;
+import org.springframework.util.CollectionUtils;
 
 import cn.loveapple.service.cool.meta.health.BasalBodyTemperatureModelMeta;
 import cn.loveapple.service.cool.model.health.BasalBodyTemperatureModel;
@@ -109,9 +111,15 @@ public class BasalBodyTemperatureServiceImpl extends BaseServiceImpl implements 
 	@Override
 	public BasalBodyTemperatureModel updateBasalBodyTemperatureModel(
 			BasalBodyTemperatureModel bbt) {
-		if(bbt == null || bbt.getKey() == null){
+		if(bbt == null){
 			throw new IllegalArgumentException("bbt is empty.");
 		}
+		
+		List<BasalBodyTemperatureModel> tmp = findBasalBodyTemperatureByUser(bbt.getMail(), bbt.getMeasureDay(), bbt.getMeasureDay());
+		if(CollectionUtils.isEmpty(tmp)){
+			throw new RuntimeException("bbt is invalid. " + ToStringBuilder.reflectionToString(tmp));
+		}
+		bbt.setKey(tmp.get(0).getKey());
 		
 		Date now = new Date();
 		bbt.setUpdateDate(now);
