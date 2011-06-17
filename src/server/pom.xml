@@ -22,7 +22,7 @@
 	</properties>
 	<description>
 	${project.name}
-	Revision: $Revision: 160 $
+	$Revision: 160 $
 	</description>
 	<url>http://www.loveapple.cn</url>
 	<licenses>
