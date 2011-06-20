@@ -1,4 +1,4 @@
-#Fri Feb 25 09:08:03 JST 2011
+#Mon Jun 20 14:02:55 JST 2011
 eclipse.preferences.version=1
 encoding//src/main/webapp/WEB-INF/views/common/footer.jsp=UTF-8
 encoding//src/main/webapp/WEB-INF/views/common/header.jsp=UTF-8
@@ -8,5 +8,6 @@ encoding//src/main/webapp/WEB-INF/views/common/rightMenu.jsp=UTF-8
 encoding//src/main/webapp/WEB-INF/views/index/body.jsp=UTF-8
 encoding//src/main/webapp/WEB-INF/views/layout.jsp=UTF-8
 encoding//src/main/webapp/WEB-INF/views/member/index.jsp=UTF-8
+encoding//src/main/webapp/WEB-INF/views/site/regist.jsp=UTF-8
 encoding//war/WEB-INF/tags/member/loginLink.tag=UTF-8
 encoding/<project>=UTF-8
