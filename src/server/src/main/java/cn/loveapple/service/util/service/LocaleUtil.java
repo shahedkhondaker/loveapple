@@ -19,6 +19,7 @@ public class LocaleUtil {
 	 * システムサポートする国
 	 */
 	public static final Set<String> COUNTRY_SET;
+	
 	static{
 		Locale[] locales = Locale.getAvailableLocales();
 		LOCALE_SET = new HashSet<Locale>(locales.length);
