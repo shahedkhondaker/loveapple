@@ -2,9 +2,7 @@ package cn.loveapple.service.util;
 
 import java.util.Locale;
 import java.util.SortedMap;
-import java.util.SortedSet;
 import java.util.TreeMap;
-import java.util.TreeSet;
 
 import org.apache.commons.lang.StringUtils;
 
@@ -12,25 +10,19 @@ public class LocaleUtil {
 	/**
 	 * システムサポートする言語
 	 */
-	public static final SortedMap<String, String> LANGUAGE_MAP;
-	/**
-	 * システムサポートするロケール
-	 */
-	public static final SortedSet<Locale> LOCALE_SET;
+	public static final SortedMap<String, Locale> LANGUAGE_MAP;
 	/**
 	 * システムサポートする国
 	 */
-	public static final SortedMap<String, String> COUNTRY_MAP;
+	public static final SortedMap<String, Locale> COUNTRY_MAP;
 	
 	static{
 		Locale[] locales = Locale.getAvailableLocales();
-		LOCALE_SET = new TreeSet<Locale>();
-		LANGUAGE_MAP = new TreeMap<String, String>();
-		COUNTRY_MAP = new TreeMap<String, String>();
+		LANGUAGE_MAP = new TreeMap<String, Locale>();
+		COUNTRY_MAP = new TreeMap<String, Locale>();
 		for (Locale locale : locales) {
-			LOCALE_SET.add(locale);
-			LANGUAGE_MAP.put(locale.getISO3Language(), locale.getLanguage());
-			COUNTRY_MAP.put(locale.getISO3Country(), locale.getCountry());
+			LANGUAGE_MAP.put(locale.getLanguage(), locale);
+			COUNTRY_MAP.put(locale.getCountry(), locale);
 		}
 	}
 	
