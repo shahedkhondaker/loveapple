@@ -1,6 +1,6 @@
 package cn.loveapple.service.util.service;
 
-import static cn.loveapple.service.util.service.LocaleUtil.*;
+import static cn.loveapple.service.util.LocaleUtil.*;
 import static org.junit.Assert.*;
 
 import org.junit.Before;
@@ -14,8 +14,8 @@ public class LocaleUtilTest {
 
 	@Test
 	public void testIsSupportedLanguage() {
-		assertTrue(isSupportedLanguage("ja"));
-		assertFalse(isSupportedLanguage("JA"));
+		assertTrue(isSupportedLanguage("jan"));
+		assertFalse(isSupportedLanguage("JAN"));
 		assertFalse(isSupportedLanguage(null));
 	}
 

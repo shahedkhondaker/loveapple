@@ -33,7 +33,8 @@
 package cn.loveapple.service.cool.service.impl;
 
 import static cn.loveapple.service.cool.model.LoveappleModel.*;
-import static cn.loveapple.service.util.service.LocaleUtil.*;
+import static cn.loveapple.service.util.LocaleUtil.*;
+
 import java.util.ArrayList;
 import java.util.List;
 

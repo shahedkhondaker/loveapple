@@ -55,7 +55,11 @@ function submitForm(form, action){
 			</p>
 			<p>
 				<form:label	for="timeZone" path="timeZone" cssErrorClass="error"><fmt:message key="msg.timeZone"/></form:label><br/>
-				<form:input path="timeZone" /><form:errors path="timeZone" />
+				<form:select path="timeZone" >
+				<!-- TODO 国の一覧 -->
+					<form:options items="${timezoneList}" itemValue="code" itemLabel="name"/>
+				</form:select>
+				<form:errors path="timeZone" />
 			</p>
 			<p>
 				<form:label	for="description" path="description" cssErrorClass="error"><fmt:message key="msg.description"/></form:label><br/>
