@@ -14,8 +14,8 @@ public class LocaleUtilTest {
 
 	@Test
 	public void testIsSupportedLanguage() {
-		assertTrue(isSupportedLanguage("jan"));
-		assertFalse(isSupportedLanguage("JAN"));
+		assertTrue(isSupportedLanguage("ja"));
+		assertFalse(isSupportedLanguage("JA"));
 		assertFalse(isSupportedLanguage(null));
 	}
 
