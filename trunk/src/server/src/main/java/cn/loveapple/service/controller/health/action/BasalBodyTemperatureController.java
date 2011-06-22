@@ -81,7 +81,7 @@ import cn.loveapple.service.util.DateUtil;
  *
  */
 @Controller
-@RequestMapping(value="/health/core/bbt")
+@RequestMapping(value="/health/bbt/core")
 public class BasalBodyTemperatureController extends BaseController implements SessionLabel {
 	/**
 	 * ログ
@@ -189,7 +189,7 @@ public class BasalBodyTemperatureController extends BaseController implements Se
 	 * @return
 	 */
 	@RequestMapping(value="list/{start}/{end}.json", method=RequestMethod.GET)
-	public MappingJacksonJsonView getBbtList(@PathVariable String start,@PathVariable  String end, HttpSession session, Model model, Locale locale) {
+	public MappingJacksonJsonView getBbtList(@PathVariable String start,@PathVariable  String end, HttpSession session, Locale locale) {
 
 		if(!DateUtil.isDateStr(start, DateUtil.DATE_PTTERN_YYYYMMDD) 
 				|| !DateUtil.isDateStr(end, DateUtil.DATE_PTTERN_YYYYMMDD)){
@@ -216,29 +216,23 @@ public class BasalBodyTemperatureController extends BaseController implements Se
 		
 		return response;
 	}
-	
+
 	/**
-	 * JSONを返すメソッド
 	 * 
-	 * @param id
+	 * @param start
+	 * @param end
+	 * @param session
 	 * @param model
+	 * @param locale
 	 * @return
 	 */
-	@RequestMapping(value="/json/{id}", method=RequestMethod.GET)
-	public MappingJacksonJsonView jsonView(@PathVariable Long id, Model model){
-		
-		SampleModel data = new SampleModel();
-		data.setName("mock data");
-		data.setUpdateDate(new Date());
-		MappingJacksonJsonView json = new MappingJacksonJsonView();
-		Map<String, Object> map = new HashMap<String, Object>();
-		map.put("id", id);
-		map.put("data", data);
-		json.setAttributesMap(map);
-		
-		return json;
+	@RequestMapping(value="smart/list/{start}/{end}.html", method=RequestMethod.GET)
+	public String getBbtList(@PathVariable String start,@PathVariable  String end, HttpSession session, Model model, Locale locale) {
+		model.addAttribute("start", start);
+		model.addAttribute("end", end);
+		return "health/bbt/smart/list";
 	}
-	
+		
 	/**
 	 * @param sampleService the sampleBusinessLogic to set
 	 */
