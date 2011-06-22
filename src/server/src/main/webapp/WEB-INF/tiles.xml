@@ -22,6 +22,7 @@
 		<put-attribute name="title" value="sample view" />
 		<put-attribute name="body" value="/WEB-INF/views/sample/view.jsp" />
 	</definition>
+	<!-- 会員情報操作 -->
 	<definition name="member/index" extends="base.definition">
 		<put-attribute name="title" value="${title}" />
 		<put-attribute name="body" value="/WEB-INF/views/member/index.jsp" />
@@ -41,5 +42,10 @@
 	<definition name="member/certification" extends="base.definition">
 		<put-attribute name="title" value="${title}" />
 		<put-attribute name="body" value="/WEB-INF/views/member/certification.jsp" />
+	</definition>
+	<!-- サイト操作 -->
+	<definition name="site/regist" extends="base.definition">
+		<put-attribute name="title" value="${title}" />
+		<put-attribute name="body" value="/WEB-INF/views/site/regist.jsp" />
 	</definition>
 </tiles-definitions>

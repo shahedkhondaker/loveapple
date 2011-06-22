@@ -86,12 +86,12 @@ public class SiteController implements SessionLabel {
 	 * @param model
 	 * @return
 	 */
-	@RequestMapping(value = "regist", method=RequestMethod.GET)
+	@RequestMapping(value = "core/regist", method=RequestMethod.GET)
 	public String regist(HttpSession session, Model model){
 		session.removeAttribute(FORM);
 		SiteForm form = new SiteForm();		
 		model.addAttribute(form);
-		return "member/regist";
+		return "site/regist";
 	}
 
 	/**
@@ -101,7 +101,7 @@ public class SiteController implements SessionLabel {
 	 * @param model
 	 * @return
 	 */
-	@RequestMapping(value = "registConfirm", method=RequestMethod.POST)
+	@RequestMapping(value = "core/registConfirm", method=RequestMethod.POST)
 	public String registConfirm(@Valid SiteForm form, BindingResult result, HttpSession session, Model model, Locale locale) {
 		model.addAttribute(form);	
 		SiteValidator validator = new SiteValidator(messageSource, locale);
