@@ -48,4 +48,9 @@
 		<put-attribute name="title" value="${title}" />
 		<put-attribute name="body" value="/WEB-INF/views/site/regist.jsp" />
 	</definition>
+	<!-- 基礎体温 -->
+	<definition name="health/bbt/smart/list" extends="base.definition">
+		<put-attribute name="title" value="${title}" />
+		<put-attribute name="body" value="/WEB-INF/views/health/bbt/smart/list.jsp" />
+	</definition>
 </tiles-definitions>
