@@ -68,6 +68,10 @@ public class BbtFacadeActivity extends Activity {
         }
         Spinner temperature = (Spinner) findViewById(id.temperature);
         temperature.setAdapter(adapter);
+        
+        // デフォルトを設定
+        temperature.setSelection(2);
+        
      // スピナーのアイテムが選択された時に呼び出されるコールバックリスナーを登録します
         temperature.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
