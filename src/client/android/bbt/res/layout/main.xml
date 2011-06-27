@@ -4,11 +4,14 @@
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
     >
-<TextView  
-    android:layout_width="fill_parent" 
-    android:layout_height="wrap_content" 
-    android:text="@string/hello"
-    />
-<CheckedTextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:id="@+id/checkedTextView1" android:text="@string/input_bbt"></CheckedTextView>
-<Spinner android:layout_width="match_parent" android:layout_height="wrap_content" android:id="@+id/spinner1"></Spinner>
+	<TextView  
+	    android:layout_width="fill_parent" 
+	    android:layout_height="wrap_content" 
+	    android:text="@string/hello"
+	    />
+	<Spinner android:layout_width="100dip" android:layout_height="wrap_content" android:id="@+id/temperature"></Spinner>
+	<EditText android:layout_width="60dip" android:layout_height="wrap_content" android:id="@+id/temperatureInput" android:inputType="number">
+		<requestFocus></requestFocus>
+	</EditText>
+	<Button android:text="@string/submit" android:id="@+id/submit" android:layout_width="wrap_content" android:layout_height="wrap_content"></Button>
 </LinearLayout>

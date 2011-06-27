@@ -3,5 +3,6 @@
     <string name="hello">ようこそ、基礎体温管理</string>
     <string name="app_name">Loveapple基礎体温管理</string>
     <string name="input_bbt">基礎体温を入力</string>
-    
+    <string name="celsius">℃</string>
+    <string name="submit">送信</string>
 </resources>
