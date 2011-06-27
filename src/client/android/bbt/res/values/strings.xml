@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="hello">Hello World, androidActivity!</string>
-    <string name="app_name">cn.loveapple.android.bbt.android</string>
+    <string name="hello">ようこそ、基礎体温管理</string>
+    <string name="app_name">Loveapple基礎体温管理</string>
+    <string name="input_bbt">基礎体温を入力</string>
+    
 </resources>
