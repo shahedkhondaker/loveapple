@@ -34,12 +34,10 @@ package cn.loveapple.client.android.bbt;
 
 import android.app.Activity;
 import android.os.Bundle;
-import android.view.View;
-import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Spinner;
-import android.widget.Toast;
 import cn.loveapple.client.android.bbt.R.id;
+import cn.loveapple.client.android.bbt.listener.TemperatureSelectedListener;
 
 /**
  * Loveapple基礎体温(Android版)ファサードアクティビティ
@@ -72,19 +70,7 @@ public class BbtFacadeActivity extends Activity {
         // デフォルトを設定
         temperature.setSelection(2);
         
-     // スピナーのアイテムが選択された時に呼び出されるコールバックリスナーを登録します
-        temperature.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> parent, View view,
-                    int position, long id) {
-                Spinner spinner = (Spinner) parent;
-                // 選択されたアイテムを取得します
-                String item = (String) spinner.getSelectedItem();
-                Toast.makeText(BbtFacadeActivity.this, item, Toast.LENGTH_LONG).show();
-            }
-            @Override
-            public void onNothingSelected(AdapterView<?> arg0) {
-            }
-        });
+        // スピナーのアイテムが選択された時に呼び出されるコールバックリスナーを登録します
+        temperature.setOnItemSelectedListener(new TemperatureSelectedListener(this));
     }
 }
