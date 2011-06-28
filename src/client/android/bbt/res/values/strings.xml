@@ -5,4 +5,11 @@
     <string name="input_bbt">基礎体温を入力</string>
     <string name="celsius">℃</string>
     <string name="submit">送信</string>
+    <string name="coitus">セックス</string>
+    <string name="menstruation">生理</string>
+    <string name="dysmenorrhea">生理痛</string>
+    <string name="leukorrhea">下り物</string>
+    <string name="much">多め</string>
+    <string name="little">少なめ</string>
+    <string name="usually">普通</string>
 </resources>

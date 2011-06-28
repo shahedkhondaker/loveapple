@@ -34,8 +34,14 @@ package cn.loveapple.client.android.bbt;
 
 import android.app.Activity;
 import android.os.Bundle;
+import android.view.View;
+import android.view.View.OnClickListener;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
+import android.widget.CheckBox;
+import android.widget.EditText;
 import android.widget.Spinner;
+import android.widget.Toast;
 import cn.loveapple.client.android.bbt.R.id;
 import cn.loveapple.client.android.bbt.listener.TemperatureSelectedListener;
 
@@ -48,7 +54,7 @@ import cn.loveapple.client.android.bbt.listener.TemperatureSelectedListener;
  * @id $Id:$
  *
  */
-public class BbtFacadeActivity extends Activity {
+public class BbtFacadeActivity extends Activity implements OnClickListener {
     
 	/**
 	 * 
@@ -72,5 +78,29 @@ public class BbtFacadeActivity extends Activity {
         
         // スピナーのアイテムが選択された時に呼び出されるコールバックリスナーを登録します
         temperature.setOnItemSelectedListener(new TemperatureSelectedListener(this));
+        
+        Button submit = (Button) findViewById(id.submit);
+        submit.setOnClickListener(this);
     }
+
+    /**
+     * 
+     * {@inheritDoc}
+     */
+	@Override
+	public void onClick(View v) {
+		EditText temperatureText = (EditText) findViewById(id.temperatureText);
+		Spinner temperature = (Spinner) findViewById(id.temperature);
+		CheckBox coitus = (CheckBox)findViewById(id.coitus);
+		CheckBox menstruation = (CheckBox)findViewById(id.menstruation);
+		CheckBox dysmenorrhea = (CheckBox) findViewById(id.dysmenorrhea);
+		Spinner leukorrhea = (Spinner) findViewById(id.leukorrhea);
+		Toast.makeText(this, "submit!!" 
+				+ "temperature:" + temperature.getSelectedItem()
+				+ " temperatureText:" + temperatureText.getText().toString()
+				+ " coitus:" + coitus.isChecked() 
+				+ " menstruation:" + menstruation.isChecked() 
+				+ " dysmenorrhea:" + dysmenorrhea.isChecked()
+				+ " leukorrhea:" + leukorrhea.getSelectedItem(), Toast.LENGTH_LONG).show();
+	}
 }
