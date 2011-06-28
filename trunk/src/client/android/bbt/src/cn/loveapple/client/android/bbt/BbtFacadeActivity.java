@@ -34,6 +34,7 @@ package cn.loveapple.client.android.bbt;
 
 import android.app.Activity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.ArrayAdapter;
@@ -95,6 +96,7 @@ public class BbtFacadeActivity extends Activity implements OnClickListener {
 		CheckBox menstruation = (CheckBox)findViewById(id.menstruation);
 		CheckBox dysmenorrhea = (CheckBox) findViewById(id.dysmenorrhea);
 		Spinner leukorrhea = (Spinner) findViewById(id.leukorrhea);
+
 		Toast.makeText(this, "submit!!" 
 				+ "temperature:" + temperature.getSelectedItem()
 				+ " temperatureText:" + temperatureText.getText().toString()
@@ -102,5 +104,6 @@ public class BbtFacadeActivity extends Activity implements OnClickListener {
 				+ " menstruation:" + menstruation.isChecked() 
 				+ " dysmenorrhea:" + dysmenorrhea.isChecked()
 				+ " leukorrhea:" + leukorrhea.getSelectedItem(), Toast.LENGTH_LONG).show();
+		
 	}
 }
