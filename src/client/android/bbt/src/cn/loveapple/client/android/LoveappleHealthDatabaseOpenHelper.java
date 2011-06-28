@@ -37,6 +37,7 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteDatabase.CursorFactory;
 import android.database.sqlite.SQLiteOpenHelper;
 
+
 /**
  * 
  * 
@@ -46,7 +47,7 @@ import android.database.sqlite.SQLiteOpenHelper;
  * @id $Id$
  *
  */
-public class LoveappleHealthOpenHelper extends SQLiteOpenHelper {
+public class LoveappleHealthDatabaseOpenHelper extends SQLiteOpenHelper {
 	
 	private static final String DB_NAME="LOVEAPPLE_HEALTH";
 
@@ -56,7 +57,7 @@ public class LoveappleHealthOpenHelper extends SQLiteOpenHelper {
 	 * @param factory
 	 * @param version
 	 */
-	public LoveappleHealthOpenHelper(Context context, CursorFactory factory, int version) {
+	public LoveappleHealthDatabaseOpenHelper(Context context, CursorFactory factory, int version) {
 		super(context, DB_NAME, factory, version);
 	}
 
@@ -84,8 +85,7 @@ public class LoveappleHealthOpenHelper extends SQLiteOpenHelper {
 	 */
 	@Override
 	public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-		// TODO Auto-generated method stub
-
+		
 	}
 
 }
