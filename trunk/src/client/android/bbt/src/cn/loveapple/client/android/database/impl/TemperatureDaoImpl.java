@@ -33,6 +33,11 @@
 package cn.loveapple.client.android.database.impl;
 
 import static cn.loveapple.client.android.database.entity.TemperatureEntity.*;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import android.R.color;
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
@@ -82,6 +87,23 @@ public class TemperatureDaoImpl implements TemperatureDao {
 			
 		}
 		
+		return result;
+	}
+	
+	public List<TemperatureEntity> findByTerm(String start, String end){
+		SQLiteDatabase db = helper.getReadableDatabase();
+		List<TemperatureEntity> result = null;
+		try{
+			Cursor cursor = db.query(TABLE_NAME, null, "?<=" + COLUMN_DATE + " AND ?=" + COLUMN_DATE , new String[]{start, end}, null, null, null);
+			result = new ArrayList<TemperatureEntity>();
+			cursor.moveToFirst();
+			while(!cursor.isAfterLast()){
+				result.add(getTemperatureEntity(cursor));
+				cursor.moveToNext();
+			}
+		}finally{
+			db.close();
+		}
 		return result;
 	}
 	public TemperatureEntity findByDate(String date){
