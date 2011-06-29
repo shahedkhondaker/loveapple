@@ -97,6 +97,7 @@ public class BbtFacadeActivity extends Activity implements OnClickListener {
 		CheckBox dysmenorrhea = (CheckBox) findViewById(id.dysmenorrhea);
 		Spinner leukorrhea = (Spinner) findViewById(id.leukorrhea);
 
+		
 		Toast.makeText(this, "submit!!" 
 				+ "temperature:" + temperature.getSelectedItem()
 				+ " temperatureText:" + temperatureText.getText().toString()
