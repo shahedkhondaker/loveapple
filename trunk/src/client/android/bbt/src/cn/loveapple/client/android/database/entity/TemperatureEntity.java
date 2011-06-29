@@ -33,13 +33,23 @@
 package cn.loveapple.client.android.database.entity;
 /**
  * 
- * @author $Author$
- * @version $Revision$
+ * @cn.loveapple.client.android.database.entity1 $
  * @date $Date$
  * @id $Id$
  *
  */
-public class TemperatureBean {
+public class TemperatureEntity {
+	public static String TABLE_NAME = "temperature";
+	public static String COLUMN_DATE = "date";
+	public static String COLUMN_TIMESTAMP = "timestamp";
+	public static String COLUMN_TEMPERATURE = "temperature";
+	public static String COLUMN_COITUS_FLG = "coitus_flg";
+	public static String COLUMN_MENSTRUATION_FLG = "menstruation_flg";
+	public static String COLUMN_DYSMENORRHEA_FLG = "dysmenorrhea_flg";
+	public static String COLUMN_LEUKORRHEA = "leukorrhea";
+	public static String COLUMN_DYSMENORRHEA_LEVEL = "dysmenorrhea_level";
+	public static String COLUMN_MENSTRUATION_CYCLE = "menstruation_cycle";
+	
 	/**
 	 * 日付
 	 */
