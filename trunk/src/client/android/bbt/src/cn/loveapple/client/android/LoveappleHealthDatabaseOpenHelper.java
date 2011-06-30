@@ -67,22 +67,25 @@ public class LoveappleHealthDatabaseOpenHelper extends SQLiteOpenHelper {
 	 */
 	@Override
 	public void onCreate(SQLiteDatabase db) {
-		
-		StringBuilder createSql = new StringBuilder();
-		createSql.append("create table temperature(");
-		createSql.append("date text primary key");
-		createSql.append(",timestamp text");
-		createSql.append(",temperature real");
-		createSql.append(",coitus_flg text");
-		createSql.append(",menstruation_flg text");
-		createSql.append(",dysmenorrhea_flg text");
-		createSql.append(",leukorrhea text");
-		createSql.append(",dysmenorrhea_level text");
-		createSql.append(",menstruation_cycle integer");
-		createSql.append(");");
-		
-		db.execSQL(createSql.toString());
-
+		try{
+			StringBuilder createSql = new StringBuilder();
+			createSql.append("create table temperature(");
+			createSql.append("date text primary key");
+			createSql.append(",timestamp text");
+			createSql.append(",temperature real");
+			createSql.append(",coitus_flg text");
+			createSql.append(",menstruation_flg text");
+			createSql.append(",dysmenorrhea_flg text");
+			createSql.append(",leukorrhea text");
+			createSql.append(",dysmenorrhea_level text");
+			createSql.append(",menstruation_cycle integer");
+			createSql.append(");");
+			
+			db.execSQL(createSql.toString());
+			db.setTransactionSuccessful();
+		}finally{
+			db.endTransaction();
+		}
 	}
 
 	/**

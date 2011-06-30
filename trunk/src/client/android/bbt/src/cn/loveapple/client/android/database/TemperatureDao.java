@@ -32,6 +32,10 @@
  */
 package cn.loveapple.client.android.database;
 
+import java.util.List;
+
+import cn.loveapple.client.android.database.entity.TemperatureEntity;
+
 /**
  * 
  * @author $Author$
@@ -41,5 +45,23 @@ package cn.loveapple.client.android.database;
  *
  */
 public interface TemperatureDao {
-
+	/**
+	 * 
+	 * @param start
+	 * @param end
+	 * @return
+	 */
+	public List<TemperatureEntity> findByTerm(String start, String end);
+	/**
+	 * 
+	 * @param date
+	 * @return
+	 */
+	public TemperatureEntity findByDate(String date);
+	/**
+	 * 
+	 * @param source
+	 * @return
+	 */
+	public TemperatureEntity save(TemperatureEntity source);
 }

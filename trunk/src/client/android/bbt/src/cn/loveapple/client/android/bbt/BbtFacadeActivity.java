@@ -34,6 +34,7 @@ package cn.loveapple.client.android.bbt;
 
 import android.app.Activity;
 import android.os.Bundle;
+import android.provider.SyncStateContract.Constants;
 import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -45,6 +46,9 @@ import android.widget.Spinner;
 import android.widget.Toast;
 import cn.loveapple.client.android.bbt.R.id;
 import cn.loveapple.client.android.bbt.listener.TemperatureSelectedListener;
+import cn.loveapple.client.android.database.TemperatureDao;
+import cn.loveapple.client.android.database.entity.TemperatureEntity;
+import cn.loveapple.client.android.database.impl.TemperatureDaoImpl;
 
 /**
  * Loveapple基礎体温(Android版)ファサードアクティビティ
@@ -56,7 +60,7 @@ import cn.loveapple.client.android.bbt.listener.TemperatureSelectedListener;
  *
  */
 public class BbtFacadeActivity extends Activity implements OnClickListener {
-    
+	private TemperatureDao dao;
 	/**
 	 * 
 	 * {@inheritDoc}
@@ -82,6 +86,8 @@ public class BbtFacadeActivity extends Activity implements OnClickListener {
         
         Button submit = (Button) findViewById(id.submit);
         submit.setOnClickListener(this);
+        
+        dao = new TemperatureDaoImpl(this);
     }
 
     /**
@@ -97,14 +103,19 @@ public class BbtFacadeActivity extends Activity implements OnClickListener {
 		CheckBox dysmenorrhea = (CheckBox) findViewById(id.dysmenorrhea);
 		Spinner leukorrhea = (Spinner) findViewById(id.leukorrhea);
 
+		TemperatureEntity entity = new TemperatureEntity();
+		entity.setCoitusFlg(coitus.isChecked()?"1":"0");
+		entity.setDate("testdate");
+		try{
+		dao.save(entity);
+		TemperatureEntity result = dao.findByDate("testdate");
 		
 		Toast.makeText(this, "submit!!" 
-				+ "temperature:" + temperature.getSelectedItem()
-				+ " temperatureText:" + temperatureText.getText().toString()
-				+ " coitus:" + coitus.isChecked() 
-				+ " menstruation:" + menstruation.isChecked() 
-				+ " dysmenorrhea:" + dysmenorrhea.isChecked()
-				+ " leukorrhea:" + leukorrhea.getSelectedItem(), Toast.LENGTH_LONG).show();
+				+ "date:" + result.getDate(), Toast.LENGTH_LONG).show();
+		}catch (Exception e) {
+			Toast.makeText(this, "Exception!!" 
+					+ e.getMessage(), Toast.LENGTH_LONG).show();
+		}
 		
 	}
 }
