@@ -37,7 +37,6 @@ import static cn.loveapple.client.android.database.entity.TemperatureEntity.*;
 import java.util.ArrayList;
 import java.util.List;
 
-import android.R.color;
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
@@ -64,6 +63,7 @@ public class TemperatureDaoImpl implements TemperatureDao {
 		SQLiteDatabase db = helper.getWritableDatabase();
 		TemperatureEntity result = null;
 		try{
+			db.beginTransaction();
 			ContentValues values = new ContentValues();
 			values.put(COLUMN_COITUS_FLG, source.getCoitusFlg());
 			values.put(COLUMN_DATE, source.getDate());
@@ -80,11 +80,11 @@ public class TemperatureDaoImpl implements TemperatureDao {
 				db.insert(TABLE_NAME, null, values);
 			}else{
 				db.update(TABLE_NAME, values, COLUMN_DATE + "=?", new String[]{source.getDate()});
-				result = findByDate(source.getDate());
 			}
-			
+			result = findByDate(source.getDate());
 		}finally{
-			
+			db.endTransaction();
+			db.close();
 		}
 		
 		return result;
@@ -120,7 +120,12 @@ public class TemperatureDaoImpl implements TemperatureDao {
 		return result;
 	}
 	
-	public TemperatureEntity getTemperatureEntity(Cursor cursor){
+	/**
+	 * 
+	 * @param cursor
+	 * @return
+	 */
+	private TemperatureEntity getTemperatureEntity(Cursor cursor){
 		TemperatureEntity result = new TemperatureEntity();
 		result.setDate(cursor.getString(0));
 		result.setTimestamp(cursor.getString(1));
