@@ -41,6 +41,7 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.util.Log;
 import cn.loveapple.client.android.LoveappleHealthDatabaseOpenHelper;
 import cn.loveapple.client.android.database.TemperatureDao;
 import cn.loveapple.client.android.database.entity.TemperatureEntity;
@@ -63,7 +64,6 @@ public class TemperatureDaoImpl implements TemperatureDao {
 		SQLiteDatabase db = helper.getWritableDatabase();
 		TemperatureEntity result = null;
 		try{
-			db.beginTransaction();
 			ContentValues values = new ContentValues();
 			values.put(COLUMN_COITUS_FLG, source.getCoitusFlg());
 			values.put(COLUMN_DATE, source.getDate());
@@ -78,12 +78,12 @@ public class TemperatureDaoImpl implements TemperatureDao {
 			result = findByDate(source.getDate());
 			if(result == null){
 				db.insert(TABLE_NAME, null, values);
+				Log.i("insert", values.toString());
 			}else{
 				db.update(TABLE_NAME, values, COLUMN_DATE + "=?", new String[]{source.getDate()});
 			}
 			result = findByDate(source.getDate());
 		}finally{
-			db.endTransaction();
 			db.close();
 		}
 		

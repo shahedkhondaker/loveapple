@@ -32,10 +32,12 @@
  */
 package cn.loveapple.client.android;
 
+import android.content.ContentValues;
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteDatabase.CursorFactory;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.util.Log;
 
 
 /**
@@ -50,6 +52,8 @@ import android.database.sqlite.SQLiteOpenHelper;
 public class LoveappleHealthDatabaseOpenHelper extends SQLiteOpenHelper {
 	
 	private static final String DB_NAME="LOVEAPPLE_HEALTH";
+	
+	private Context context;
 
 	/**
 	 * 
@@ -59,6 +63,7 @@ public class LoveappleHealthDatabaseOpenHelper extends SQLiteOpenHelper {
 	 */
 	public LoveappleHealthDatabaseOpenHelper(Context context, CursorFactory factory) {
 		super(context, DB_NAME, factory, 1);
+		this.context = context;
 	}
 
 	/**
@@ -67,6 +72,7 @@ public class LoveappleHealthDatabaseOpenHelper extends SQLiteOpenHelper {
 	 */
 	@Override
 	public void onCreate(SQLiteDatabase db) {
+		Log.i("init", "onCreate.");
 		try{
 			StringBuilder createSql = new StringBuilder();
 			createSql.append("create table temperature(");
@@ -82,6 +88,14 @@ public class LoveappleHealthDatabaseOpenHelper extends SQLiteOpenHelper {
 			createSql.append(");");
 			
 			db.execSQL(createSql.toString());
+			System.out.println("!!!!create table.");
+			Log.i("init", "create table.");
+			
+			ContentValues values = new ContentValues();
+			values.put("date", "first");
+			db.insert("temperature", null, values);
+			System.out.println("!!!!insert");
+			Log.i("init", "insert.");
 			db.setTransactionSuccessful();
 		}finally{
 			db.endTransaction();
@@ -94,6 +108,7 @@ public class LoveappleHealthDatabaseOpenHelper extends SQLiteOpenHelper {
 	 */
 	@Override
 	public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
+		Log.i("init", "onUpgrade.");
 		
 	}
 
