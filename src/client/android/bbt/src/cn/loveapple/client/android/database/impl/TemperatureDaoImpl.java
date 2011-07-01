@@ -56,12 +56,16 @@ import cn.loveapple.client.android.database.entity.TemperatureEntity;
  */
 public class TemperatureDaoImpl implements TemperatureDao {
 	private LoveappleHealthDatabaseOpenHelper helper = null;
+	Context context;
 	public TemperatureDaoImpl(Context context){
 		helper = new LoveappleHealthDatabaseOpenHelper(context, null);
+		this.context = context;
 	}
 	
 	public TemperatureEntity save(TemperatureEntity source){
 		SQLiteDatabase db = helper.getWritableDatabase();
+		//TODO http://www.javadrive.jp/android/sqlite_database/index2.html
+		db = db.openDatabase("data/data/" + context.getPackageName() + "/" + LoveappleHealthDatabaseOpenHelper.DB_NAME, null, SQLiteDatabase.OPEN_READWRITE);
 		TemperatureEntity result = null;
 		try{
 			ContentValues values = new ContentValues();
