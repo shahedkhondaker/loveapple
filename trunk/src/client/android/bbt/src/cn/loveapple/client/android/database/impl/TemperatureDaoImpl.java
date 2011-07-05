@@ -65,7 +65,7 @@ public class TemperatureDaoImpl implements TemperatureDao {
 	public TemperatureEntity save(TemperatureEntity source){
 		SQLiteDatabase db = helper.getWritableDatabase();
 		//TODO http://www.javadrive.jp/android/sqlite_database/index2.html
-		db = db.openDatabase("data/data/" + context.getPackageName() + "/" + LoveappleHealthDatabaseOpenHelper.DB_NAME, null, SQLiteDatabase.OPEN_READWRITE);
+		db = db.openDatabase("data/data/" + context.getPackageName() + "/databases/" + LoveappleHealthDatabaseOpenHelper.DB_NAME, null, SQLiteDatabase.OPEN_READWRITE);
 		TemperatureEntity result = null;
 		try{
 			ContentValues values = new ContentValues();
@@ -80,11 +80,13 @@ public class TemperatureDaoImpl implements TemperatureDao {
 			values.put(COLUMN_MENSTRUATION_CYCLE, source.getMenstruation_cycle());
 			
 			result = findByDate(source.getDate());
+			Log.i("BBT", result.toString());
 			if(result == null){
 				db.insert(TABLE_NAME, null, values);
-				Log.i("insert", values.toString());
+				Log.i("BBT", values.toString());
 			}else{
 				db.update(TABLE_NAME, values, COLUMN_DATE + "=?", new String[]{source.getDate()});
+				Log.i("BBT", values.toString());
 			}
 			result = findByDate(source.getDate());
 		}finally{
