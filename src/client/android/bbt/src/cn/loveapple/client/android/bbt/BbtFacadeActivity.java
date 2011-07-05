@@ -105,7 +105,7 @@ public class BbtFacadeActivity extends Activity implements OnClickListener {
 
 		TemperatureEntity entity = new TemperatureEntity();
 		entity.setCoitusFlg(coitus.isChecked()?"1":"0");
-		entity.setDate("first");
+		entity.setDate("testdate2");
 		try{
 			dao.save(entity);
 			TemperatureEntity result = dao.findByDate("testdate2");
