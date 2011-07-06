@@ -121,7 +121,11 @@ public class TemperatureDaoImpl extends BaseDao implements TemperatureDao {
 		
 		TemperatureEntity result = null;
 		try{
-			Cursor cursor = db.query(TABLE_NAME, null, COLUMN_DATE + "=?", new String[]{date}, null, null, null);
+			Cursor cursor = db.query(
+					TABLE_NAME,
+					null, 
+					COLUMN_DATE + " <=? ORDER BY " + COLUMN_DATE + " LIMIT 1",
+					new String[]{date}, null, null, null);
 			cursor.moveToFirst();
 			result = getTemperatureEntity(cursor);
 		}finally{
@@ -136,6 +140,9 @@ public class TemperatureDaoImpl extends BaseDao implements TemperatureDao {
 	 * @return
 	 */
 	private TemperatureEntity getTemperatureEntity(Cursor cursor){
+		if(cursor.getCount() < 1){
+			return null;
+		}
 		TemperatureEntity result = new TemperatureEntity();
 		result.setDate(cursor.getString(0));
 		result.setTimestamp(cursor.getString(1));
