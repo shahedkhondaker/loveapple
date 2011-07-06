@@ -33,12 +33,12 @@
 package cn.loveapple.client.android.database.entity;
 /**
  * 
- * @cn.loveapple.client.android.database.entity1 $
+ * 
  * @date $Date$
  * @id $Id$
  *
  */
-public class TemperatureEntity {
+public class TemperatureEntity implements Entity{
 	public static String TABLE_NAME = "temperature";
 	public static String COLUMN_DATE = "date";
 	public static String COLUMN_TIMESTAMP = "timestamp";

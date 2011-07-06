@@ -43,6 +43,7 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.util.Log;
 import cn.loveapple.client.android.LoveappleHealthDatabaseOpenHelper;
+import cn.loveapple.client.android.database.BaseDao;
 import cn.loveapple.client.android.database.TemperatureDao;
 import cn.loveapple.client.android.database.entity.TemperatureEntity;
 
@@ -54,18 +55,25 @@ import cn.loveapple.client.android.database.entity.TemperatureEntity;
  * @id $Id$
  *
  */
-public class TemperatureDaoImpl implements TemperatureDao {
-	private LoveappleHealthDatabaseOpenHelper helper = null;
-	Context context;
-	public TemperatureDaoImpl(Context context){
-		helper = new LoveappleHealthDatabaseOpenHelper(context, null);
-		this.context = context;
+public class TemperatureDaoImpl extends BaseDao implements TemperatureDao {
+	
+	/**
+	 * 
+	 * @param helper
+	 */
+	public TemperatureDaoImpl(LoveappleHealthDatabaseOpenHelper helper){
+		super(helper);
 	}
 	
+	/**
+	 * 
+	 * {@inheritDoc}
+	 */
+	@Override
 	public TemperatureEntity save(TemperatureEntity source){
 		SQLiteDatabase db = helper.getWritableDatabase();
 		//TODO http://www.javadrive.jp/android/sqlite_database/index2.html
-		db = db.openDatabase("data/data/" + context.getPackageName() + "/databases/" + LoveappleHealthDatabaseOpenHelper.DB_NAME, null, SQLiteDatabase.OPEN_READWRITE);
+		//db = db.openDatabase("data/data/" + context.getPackageName() + "/databases/" + LoveappleHealthDatabaseOpenHelper.DB_NAME, null, SQLiteDatabase.OPEN_READWRITE);
 		TemperatureEntity result = null;
 		try{
 			ContentValues values = new ContentValues();
@@ -79,13 +87,9 @@ public class TemperatureDaoImpl implements TemperatureDao {
 			values.put(COLUMN_DYSMENORRHEA_LEVEL, source.getDysmenorrhea_level());
 			values.put(COLUMN_MENSTRUATION_CYCLE, source.getMenstruation_cycle());
 			
-			result = findByDate(source.getDate());
-			Log.i("BBT", result.toString());
-			if(result == null){
+			int colNum = db.update(TABLE_NAME, values, COLUMN_DATE + "=?", new String[]{source.getDate()});
+			if(colNum < 1) {
 				db.insert(TABLE_NAME, null, values);
-				Log.i("BBT", values.toString());
-			}else{
-				db.update(TABLE_NAME, values, COLUMN_DATE + "=?", new String[]{source.getDate()});
 				Log.i("BBT", values.toString());
 			}
 			result = findByDate(source.getDate());

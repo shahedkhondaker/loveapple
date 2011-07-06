@@ -33,8 +33,10 @@
 package cn.loveapple.client.android.bbt;
 
 import android.app.Activity;
+import android.content.pm.PackageInfo;
+import android.content.pm.PackageManager;
+import android.content.pm.PackageManager.NameNotFoundException;
 import android.os.Bundle;
-import android.provider.SyncStateContract.Constants;
 import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -44,6 +46,7 @@ import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.Toast;
+import cn.loveapple.client.android.LoveappleHealthDatabaseOpenHelper;
 import cn.loveapple.client.android.bbt.R.id;
 import cn.loveapple.client.android.bbt.listener.TemperatureSelectedListener;
 import cn.loveapple.client.android.database.TemperatureDao;
@@ -61,6 +64,23 @@ import cn.loveapple.client.android.database.impl.TemperatureDaoImpl;
  */
 public class BbtFacadeActivity extends Activity implements OnClickListener {
 	private TemperatureDao dao;
+	private PackageInfo packageInfo;
+	private String activityName;
+	
+	/**
+	 * 初期化を行う
+	 */
+	private void init(){
+		activityName = this.getClass().getName();
+		try{
+			packageInfo = getPackageManager().getPackageInfo(getPackageName(), PackageManager.GET_META_DATA);
+		}catch (NameNotFoundException e) {
+			Log.e(activityName, e.getMessage(), e);
+			throw new RuntimeException(e);
+		}
+		dao = new TemperatureDaoImpl(new LoveappleHealthDatabaseOpenHelper(this, null, packageInfo.versionCode));
+	}
+	
 	/**
 	 * 
 	 * {@inheritDoc}
@@ -69,6 +89,9 @@ public class BbtFacadeActivity extends Activity implements OnClickListener {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main);
+        
+        // 初期化
+        init();
         
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
@@ -86,8 +109,6 @@ public class BbtFacadeActivity extends Activity implements OnClickListener {
         
         Button submit = (Button) findViewById(id.submit);
         submit.setOnClickListener(this);
-        
-        dao = new TemperatureDaoImpl(this);
     }
 
     /**
