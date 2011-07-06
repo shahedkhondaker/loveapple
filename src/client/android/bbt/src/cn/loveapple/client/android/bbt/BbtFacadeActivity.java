@@ -52,6 +52,7 @@ import cn.loveapple.client.android.bbt.listener.TemperatureSelectedListener;
 import cn.loveapple.client.android.database.TemperatureDao;
 import cn.loveapple.client.android.database.entity.TemperatureEntity;
 import cn.loveapple.client.android.database.impl.TemperatureDaoImpl;
+import cn.loveapple.client.android.util.DateUtil;
 
 /**
  * Loveapple基礎体温(Android版)ファサードアクティビティ
@@ -66,6 +67,7 @@ public class BbtFacadeActivity extends Activity implements OnClickListener {
 	private TemperatureDao dao;
 	private PackageInfo packageInfo;
 	private String activityName;
+	private String today;
 	
 	/**
 	 * 初期化を行う
@@ -78,9 +80,34 @@ public class BbtFacadeActivity extends Activity implements OnClickListener {
 			Log.e(activityName, e.getMessage(), e);
 			throw new RuntimeException(e);
 		}
+		today = DateUtil.toDateString();
 		dao = new TemperatureDaoImpl(new LoveappleHealthDatabaseOpenHelper(this, null, packageInfo.versionCode));
 	}
 	
+	public void initView(){
+		setContentView(R.layout.main);
+		
+		// 直近の体温情報を取得
+		TemperatureEntity entity = dao.findByDate(today);
+		
+		// 体温セレクトボックスの初期化
+        Spinner temperature = (Spinner) findViewById(id.temperature);
+		ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item);
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        for(int i = 35,j=0; i < 43; i++,j++){
+        	if(entity!= null && entity.getTemperature() != null){
+        		if(Math.abs(entity.getTemperature()) == i){
+        			temperature.setSelection(j);
+        		}
+        	}
+        	adapter.add(String.valueOf(i));
+        }
+        temperature.setAdapter(adapter);
+        
+        // スピナーのアイテムが選択された時に呼び出されるコールバックリスナーを登録します
+        temperature.setOnItemSelectedListener(new TemperatureSelectedListener(this));
+        
+	}
 	/**
 	 * 
 	 * {@inheritDoc}
@@ -88,24 +115,13 @@ public class BbtFacadeActivity extends Activity implements OnClickListener {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.main);
+        
         
         // 初期化
         init();
         
-        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item);
-        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        for(int i = 35; i < 43; i++){
-        	adapter.add(String.valueOf(i));
-        }
-        Spinner temperature = (Spinner) findViewById(id.temperature);
-        temperature.setAdapter(adapter);
-        
-        // デフォルトを設定
-        temperature.setSelection(2);
-        
-        // スピナーのアイテムが選択された時に呼び出されるコールバックリスナーを登録します
-        temperature.setOnItemSelectedListener(new TemperatureSelectedListener(this));
+        // 表示画面の初期化
+        initView();
         
         Button submit = (Button) findViewById(id.submit);
         submit.setOnClickListener(this);
