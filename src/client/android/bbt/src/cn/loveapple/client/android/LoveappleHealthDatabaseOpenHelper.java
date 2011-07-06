@@ -61,8 +61,8 @@ public class LoveappleHealthDatabaseOpenHelper extends SQLiteOpenHelper {
 	 * @param factory
 	 * @param version
 	 */
-	public LoveappleHealthDatabaseOpenHelper(Context context, CursorFactory factory) {
-		super(context, DB_NAME, factory, 1);
+	public LoveappleHealthDatabaseOpenHelper(Context context, CursorFactory factory, int version) {
+		super(context, DB_NAME, factory, version);
 		this.context = context;
 	}
 
