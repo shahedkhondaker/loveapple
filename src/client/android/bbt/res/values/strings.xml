@@ -12,4 +12,6 @@
     <string name="much">多め</string>
     <string name="little">少なめ</string>
     <string name="usually">普通</string>
+    <string name="minTemperature">35</string>
+    <string name="maxTemperature">42</string>
 </resources>
