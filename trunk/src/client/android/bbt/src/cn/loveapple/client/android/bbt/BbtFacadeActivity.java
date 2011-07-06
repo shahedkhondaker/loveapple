@@ -32,12 +32,15 @@
  */
 package cn.loveapple.client.android.bbt;
 
+import java.util.SortedSet;
+
 import android.app.Activity;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.content.pm.PackageManager.NameNotFoundException;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.ArrayAdapter;
@@ -68,6 +71,7 @@ public class BbtFacadeActivity extends Activity implements OnClickListener {
 	private PackageInfo packageInfo;
 	private String activityName;
 	private String today;
+	private SortedSet<String> temperatureList;
 	
 	/**
 	 * 初期化を行う
@@ -82,20 +86,40 @@ public class BbtFacadeActivity extends Activity implements OnClickListener {
 		}
 		today = DateUtil.toDateString();
 		dao = new TemperatureDaoImpl(new LoveappleHealthDatabaseOpenHelper(this, null, packageInfo.versionCode));
+		
 	}
 	
-	public void initView(){
+	private void initView(){
+		
 		setContentView(R.layout.main);
 		
 		// 直近の体温情報を取得
 		TemperatureEntity entity = dao.findByDate(today);
 		
-		// 体温セレクトボックスの初期化
-        Spinner temperature = (Spinner) findViewById(id.temperature);
+		// データ取得できない場合、初期設定を終了
+		if(entity == null){
+			return;
+		}
+		
+		// 体温の初期化
+       initTemperature(entity);
+       
+       
+        
+        
+	}
+	
+	/**
+	 * 体温セレクトボックスを初期化
+	 * @param entity
+	 */
+	private void initTemperature(TemperatureEntity entity){
+		// セレクトボックスの初期化
+		Spinner temperature = (Spinner) findViewById(id.temperature);
 		ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         for(int i = 35,j=0; i < 43; i++,j++){
-        	if(entity!= null && entity.getTemperature() != null){
+        	if(entity.getTemperature() != null){
         		if(Math.abs(entity.getTemperature()) == i){
         			temperature.setSelection(j);
         		}
@@ -107,7 +131,17 @@ public class BbtFacadeActivity extends Activity implements OnClickListener {
         // スピナーのアイテムが選択された時に呼び出されるコールバックリスナーを登録します
         temperature.setOnItemSelectedListener(new TemperatureSelectedListener(this));
         
+        if(entity.getTemperature() != null){
+        	return ;
+        }
+        // 体温テキストを初期化
+        double value = entity.getTemperature();
+        value = Math.round(value*100);
+        EditText temperatureText = (EditText) findViewById(id.temperatureText);
+        String valueStr = String.valueOf(value);
+        temperatureText.setText(valueStr.substring(valueStr.length() - 2));
 	}
+	
 	/**
 	 * 
 	 * {@inheritDoc}
@@ -142,7 +176,7 @@ public class BbtFacadeActivity extends Activity implements OnClickListener {
 
 		TemperatureEntity entity = new TemperatureEntity();
 		entity.setCoitusFlg(coitus.isChecked()?"1":"0");
-		entity.setDate("testdate2");
+		entity.setDate(DateUtil.toDateString());
 		try{
 			dao.save(entity);
 			TemperatureEntity result = dao.findByDate("testdate2");
@@ -154,5 +188,12 @@ public class BbtFacadeActivity extends Activity implements OnClickListener {
 					+ e.getMessage(), Toast.LENGTH_LONG).show();
 		}
 		
+	}
+	
+	@Override
+	public boolean onOptionsItemSelected(MenuItem item){
+		switch (item.getItemId()) {
+		}
+		return false;
 	}
 }

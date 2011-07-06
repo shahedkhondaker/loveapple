@@ -51,9 +51,11 @@ import android.util.Log;
  */
 public class LoveappleHealthDatabaseOpenHelper extends SQLiteOpenHelper {
 	
+	/**
+	 * DB名
+	 */
 	public static final String DB_NAME="LOVEAPPLE_HEALTH";
 	
-	private Context context;
 
 	/**
 	 * 
@@ -63,7 +65,6 @@ public class LoveappleHealthDatabaseOpenHelper extends SQLiteOpenHelper {
 	 */
 	public LoveappleHealthDatabaseOpenHelper(Context context, CursorFactory factory, int version) {
 		super(context, DB_NAME, factory, version);
-		this.context = context;
 	}
 
 	/**
