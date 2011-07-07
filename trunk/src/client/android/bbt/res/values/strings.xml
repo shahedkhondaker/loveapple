@@ -14,4 +14,9 @@
     <string name="usually">普通</string>
     <string name="minTemperature">35</string>
     <string name="maxTemperature">42</string>
+    <string-array name="measureList">
+    	<item>少なめ</item>
+    	<item>普通</item>
+    	<item>多め</item>
+    </string-array>
 </resources>
