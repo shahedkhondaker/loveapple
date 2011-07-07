@@ -32,7 +32,10 @@
  */
 package cn.loveapple.client.android.bbt;
 
-import java.util.SortedSet;
+import static cn.loveapple.client.android.Constant.*;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import android.app.Activity;
 import android.content.pm.PackageInfo;
@@ -71,7 +74,7 @@ public class BbtFacadeActivity extends Activity implements OnClickListener {
 	private PackageInfo packageInfo;
 	private String activityName;
 	private String today;
-	private SortedSet<String> temperatureList;
+	private List<String> temperatureList;
 	
 	/**
 	 * 初期化を行う
@@ -87,6 +90,10 @@ public class BbtFacadeActivity extends Activity implements OnClickListener {
 		today = DateUtil.toDateString();
 		dao = new TemperatureDaoImpl(new LoveappleHealthDatabaseOpenHelper(this, null, packageInfo.versionCode));
 		
+		temperatureList = new ArrayList<String>(8);
+		for(int i = 35; i < 43; i++){
+			temperatureList.add(String.valueOf(i));
+		}
 	}
 	
 	private void initView(){
@@ -114,20 +121,20 @@ public class BbtFacadeActivity extends Activity implements OnClickListener {
 	 * @param entity
 	 */
 	private void initTemperature(TemperatureEntity entity){
-		// セレクトボックスの初期化
+		// 温度セレクトボックスの初期化
 		Spinner temperature = (Spinner) findViewById(id.temperature);
 		ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        for(int i = 35,j=0; i < 43; i++,j++){
+        for(int i = 0; i < temperatureList.size(); i++){
+        	String temperatureValue = temperatureList.get(i);
         	if(entity.getTemperature() != null){
-        		if(Math.abs(entity.getTemperature()) == i){
-        			temperature.setSelection(j);
+        		if(Math.abs(entity.getTemperature()) == Integer.parseInt(temperatureValue)){
+        			temperature.setSelection(i);
         		}
         	}
         	adapter.add(String.valueOf(i));
         }
-        temperature.setAdapter(adapter);
-        
+        temperature.setAdapter(adapter);        
         // スピナーのアイテムが選択された時に呼び出されるコールバックリスナーを登録します
         temperature.setOnItemSelectedListener(new TemperatureSelectedListener(this));
         
@@ -190,10 +197,35 @@ public class BbtFacadeActivity extends Activity implements OnClickListener {
 		
 	}
 	
+	private TemperatureEntity createEntity(){
+		TemperatureEntity entity = new TemperatureEntity();
+		EditText temperatureText = (EditText) findViewById(id.temperatureText);
+		Spinner temperature = (Spinner) findViewById(id.temperature);
+		CheckBox coitus = (CheckBox)findViewById(id.coitus);
+		CheckBox menstruation = (CheckBox)findViewById(id.menstruation);
+		CheckBox dysmenorrhea = (CheckBox) findViewById(id.dysmenorrhea);
+		Spinner leukorrhea = (Spinner) findViewById(id.leukorrhea);
+
+		String today = DateUtil.toDateString();
+		// 温度の選択値
+		StringBuilder temperatureValue = new StringBuilder(10);
+		temperatureValue.append(temperatureList.get(temperature.getSelectedItemPosition()));
+		temperatureValue.append('.');
+		temperatureValue.append(temperatureText.getText());
+	
+		
+		entity.setCoitusFlg(coitus.isChecked()?FLG_ON:FLG_OFF);
+		entity.setTemperature(new Double(temperatureValue.toString()));
+		entity.setDate(today);
+		
+		return entity;
+	}
+	
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item){
+		Toast.makeText(this, "option", Toast.LENGTH_LONG).show();
 		switch (item.getItemId()) {
 		}
-		return false;
+		return true;
 	}
 }
