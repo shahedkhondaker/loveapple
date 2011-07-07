@@ -46,6 +46,7 @@ import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.widget.Adapter;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.CheckBox;
@@ -102,7 +103,7 @@ public class BbtFacadeActivity extends Activity implements OnClickListener {
 		
 		// 直近の体温情報を取得
 		TemperatureEntity entity = dao.findByDate(today);
-		
+
 		// データ取得できない場合、初期設定を終了
 		if(entity == null){
 			return;
@@ -111,7 +112,20 @@ public class BbtFacadeActivity extends Activity implements OnClickListener {
 		// 体温の初期化
        initTemperature(entity);
        
-       
+
+       // 下り物セレクトボックス初期化
+       Spinner leukorrhea = (Spinner) findViewById(id.leukorrhea);
+       ArrayAdapter leukorrheAdapter = ArrayAdapter.createFromResource(this, R.array.measureList, android.R.layout.simple_spinner_item);
+		leukorrheAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+       leukorrhea.setAdapter(leukorrheAdapter);
+		if(entity.getLeukorrhea() != null){
+			for (int i = 0; i < 3; i++) {
+				if(String.valueOf(i + 1).equals(entity.getLeukorrhea())){
+					leukorrhea.setSelection(i);
+					break;
+				}
+			}
+		}
         
         
 	}
@@ -123,8 +137,8 @@ public class BbtFacadeActivity extends Activity implements OnClickListener {
 	private void initTemperature(TemperatureEntity entity){
 		// 温度セレクトボックスの初期化
 		Spinner temperature = (Spinner) findViewById(id.temperature);
-		ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item);
-        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+		ArrayAdapter<String> tempperatureAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item);
+        tempperatureAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         for(int i = 0; i < temperatureList.size(); i++){
         	String temperatureValue = temperatureList.get(i);
         	if(entity.getTemperature() != null){
@@ -132,9 +146,9 @@ public class BbtFacadeActivity extends Activity implements OnClickListener {
         			temperature.setSelection(i);
         		}
         	}
-        	adapter.add(String.valueOf(i));
+        	tempperatureAdapter.add(temperatureValue);
         }
-        temperature.setAdapter(adapter);        
+        temperature.setAdapter(tempperatureAdapter);        
         // スピナーのアイテムが選択された時に呼び出されるコールバックリスナーを登録します
         temperature.setOnItemSelectedListener(new TemperatureSelectedListener(this));
         
@@ -147,7 +161,7 @@ public class BbtFacadeActivity extends Activity implements OnClickListener {
         EditText temperatureText = (EditText) findViewById(id.temperatureText);
         String valueStr = String.valueOf(value);
         temperatureText.setText(valueStr.substring(valueStr.length() - 2));
-	}
+ 	}
 	
 	/**
 	 * 
@@ -181,15 +195,12 @@ public class BbtFacadeActivity extends Activity implements OnClickListener {
 		CheckBox dysmenorrhea = (CheckBox) findViewById(id.dysmenorrhea);
 		Spinner leukorrhea = (Spinner) findViewById(id.leukorrhea);
 
-		TemperatureEntity entity = new TemperatureEntity();
-		entity.setCoitusFlg(coitus.isChecked()?"1":"0");
-		entity.setDate(DateUtil.toDateString());
 		try{
-			dao.save(entity);
-			TemperatureEntity result = dao.findByDate("testdate2");
+			dao.save(createEntity());
+			TemperatureEntity result = dao.findByDate(today);
 		
 			Toast.makeText(this, "submit!!" 
-					+ "date:" + result.getDate(), Toast.LENGTH_LONG).show();
+					+ "date:" + result, Toast.LENGTH_LONG).show();
 		}catch (Exception e) {
 			Toast.makeText(this, "Exception!!" 
 					+ e.getMessage(), Toast.LENGTH_LONG).show();
@@ -206,7 +217,6 @@ public class BbtFacadeActivity extends Activity implements OnClickListener {
 		CheckBox dysmenorrhea = (CheckBox) findViewById(id.dysmenorrhea);
 		Spinner leukorrhea = (Spinner) findViewById(id.leukorrhea);
 
-		String today = DateUtil.toDateString();
 		// 温度の選択値
 		StringBuilder temperatureValue = new StringBuilder(10);
 		temperatureValue.append(temperatureList.get(temperature.getSelectedItemPosition()));
@@ -217,6 +227,10 @@ public class BbtFacadeActivity extends Activity implements OnClickListener {
 		entity.setCoitusFlg(coitus.isChecked()?FLG_ON:FLG_OFF);
 		entity.setTemperature(new Double(temperatureValue.toString()));
 		entity.setDate(today);
+		entity.setMenstruationFlg(menstruation.isChecked()?FLG_ON:FLG_OFF);
+		entity.setDysmenorrheaFlg(dysmenorrhea.isChecked()?FLG_ON:FLG_OFF);
+		entity.setLeukorrhea(String.valueOf(leukorrhea.getSelectedItemPosition() + 1));
+		
 		
 		return entity;
 	}
