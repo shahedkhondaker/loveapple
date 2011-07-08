@@ -46,7 +46,6 @@ import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
-import android.widget.Adapter;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.CheckBox;
@@ -116,17 +115,28 @@ public class BbtFacadeActivity extends Activity implements OnClickListener {
        // 下り物セレクトボックス初期化
        Spinner leukorrhea = (Spinner) findViewById(id.leukorrhea);
        ArrayAdapter leukorrheAdapter = ArrayAdapter.createFromResource(this, R.array.measureList, android.R.layout.simple_spinner_item);
-		leukorrheAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+		leukorrheAdapter.setDropDownViewResource(R.layout.leukorrhea_spinner_item);
        leukorrhea.setAdapter(leukorrheAdapter);
 		if(entity.getLeukorrhea() != null){
 			for (int i = 0; i < 3; i++) {
-				if(String.valueOf(i + 1).equals(entity.getLeukorrhea())){
+				if(String.valueOf(i).equals(entity.getLeukorrhea())){
 					leukorrhea.setSelection(i);
 					break;
 				}
 			}
 		}
         
+		// セックス
+		CheckBox coitus = (CheckBox)findViewById(id.coitus);
+		coitus.setChecked(FLG_ON.equals(entity.getCoitusFlg()));
+		
+		// 生理
+		CheckBox menstruation = (CheckBox)findViewById(id.menstruation);
+		menstruation.setChecked(FLG_ON.equals(entity.getMenstruationFlg()));
+		
+		// 生理痛
+		CheckBox dysmenorrhea = (CheckBox) findViewById(id.dysmenorrhea);
+		dysmenorrhea.setChecked(FLG_ON.equals(entity.getDysmenorrheaFlg()));
         
 	}
 	
@@ -188,13 +198,6 @@ public class BbtFacadeActivity extends Activity implements OnClickListener {
      */
 	@Override
 	public void onClick(View v) {
-		EditText temperatureText = (EditText) findViewById(id.temperatureText);
-		Spinner temperature = (Spinner) findViewById(id.temperature);
-		CheckBox coitus = (CheckBox)findViewById(id.coitus);
-		CheckBox menstruation = (CheckBox)findViewById(id.menstruation);
-		CheckBox dysmenorrhea = (CheckBox) findViewById(id.dysmenorrhea);
-		Spinner leukorrhea = (Spinner) findViewById(id.leukorrhea);
-
 		try{
 			dao.save(createEntity());
 			TemperatureEntity result = dao.findByDate(today);
@@ -229,7 +232,7 @@ public class BbtFacadeActivity extends Activity implements OnClickListener {
 		entity.setDate(today);
 		entity.setMenstruationFlg(menstruation.isChecked()?FLG_ON:FLG_OFF);
 		entity.setDysmenorrheaFlg(dysmenorrhea.isChecked()?FLG_ON:FLG_OFF);
-		entity.setLeukorrhea(String.valueOf(leukorrhea.getSelectedItemPosition() + 1));
+		entity.setLeukorrhea(String.valueOf(leukorrhea.getSelectedItemPosition()));
 		
 		
 		return entity;

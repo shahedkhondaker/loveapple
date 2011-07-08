@@ -9,13 +9,40 @@
 	    android:layout_height="wrap_content" 
 	    android:text="@string/hello"
 	    />
-	<Spinner android:layout_width="100dip" android:layout_height="wrap_content" android:id="@+id/temperature"></Spinner>
-	<EditText android:layout_width="60dip" android:layout_height="wrap_content" android:id="@+id/temperatureText" android:inputType="number">
-		<requestFocus></requestFocus>
+	<Spinner
+		android:layout_width="100dip" 
+		android:layout_height="wrap_content"
+		 android:id="@+id/temperature" />
+	<EditText
+		android:layout_width="60dip"
+		android:layout_height="wrap_content" 
+		android:id="@+id/temperatureText" 
+		android:inputType="number" android:maxLength="2">
+		<requestFocus />
 	</EditText>
-	<CheckBox android:text="@string/coitus" android:id="@+id/coitus" android:layout_width="wrap_content" android:layout_height="wrap_content"></CheckBox>
-	<CheckBox android:text="@string/menstruation" android:id="@+id/menstruation" android:layout_width="wrap_content" android:layout_height="wrap_content"></CheckBox>
-	<CheckBox android:text="@string/dysmenorrhea" android:id="@+id/dysmenorrhea" android:layout_width="wrap_content" android:layout_height="wrap_content"></CheckBox>
-	<Spinner android:layout_height="wrap_content" android:id="@+id/leukorrhea" android:layout_width="100dip"></Spinner>
-	<Button android:text="@string/submit" android:id="@+id/submit" android:layout_width="wrap_content" android:layout_height="wrap_content"></Button>
+	<CheckBox 
+		android:text="@string/coitus" 
+		android:id="@+id/coitus" 
+		android:layout_width="wrap_content" 
+		android:layout_height="wrap_content" />
+	<CheckBox 
+		android:text="@string/menstruation" 
+		android:id="@+id/menstruation" 
+		android:layout_width="wrap_content" 
+		android:layout_height="wrap_content" />
+	<CheckBox 
+		android:text="@string/dysmenorrhea" 
+		android:id="@+id/dysmenorrhea" 
+		android:layout_width="wrap_content" 
+		android:layout_height="wrap_content"/>
+	<Spinner 
+		android:layout_height="wrap_content" 
+		android:id="@+id/leukorrhea" 
+		android:layout_width="100dip" />
+	<Button 
+		android:text="@string/submit" 
+		android:id="@+id/submit" 
+		android:layout_width="wrap_content" 
+		android:layout_height="wrap_content" />
+		
 </LinearLayout>
