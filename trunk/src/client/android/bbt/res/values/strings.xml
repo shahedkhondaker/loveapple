@@ -19,4 +19,5 @@
     	<item>普通</item>
     	<item>多め</item>
     </string-array>
+    <string name="settings">設定</string>
 </resources>
