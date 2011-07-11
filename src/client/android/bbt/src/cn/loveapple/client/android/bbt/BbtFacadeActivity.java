@@ -38,11 +38,14 @@ import java.util.ArrayList;
 import java.util.List;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.content.pm.PackageManager.NameNotFoundException;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -240,9 +243,19 @@ public class BbtFacadeActivity extends Activity implements OnClickListener {
 	
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item){
-		Toast.makeText(this, "option", Toast.LENGTH_LONG).show();
-		switch (item.getItemId()) {
-		}
+		Toast.makeText(this, " Option", Toast.LENGTH_LONG).show();
+		Intent intent = new Intent();
+		intent.setClassName(
+				"cn.loveapple.client.android.bbt", 
+				BbtSetting.class.getName());
+		startActivity(intent);
 		return true;
-	}
+	}/*
+	@Override
+	public boolean onCreateOptionsMenu(Menu menu){
+		super.onCreateOptionsMenu(menu);
+		MenuInflater inflater = getMenuInflater();
+		inflater.inflate(, menu);
+		return;
+	}*/
 }
