@@ -257,7 +257,7 @@ public class BbtFacadeActivity extends Activity implements OnClickListener {
 			Toast.makeText(this, "Option", Toast.LENGTH_LONG).show();
 			
 			Intent intent = new Intent();
-			intent.setClassName(this,BbtSetting.class.getName());
+			intent.setClassName(this, BbtSetting.class.getName());
 			startActivity(intent);
 			return true;
 		}

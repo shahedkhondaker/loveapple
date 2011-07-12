@@ -36,6 +36,7 @@ import android.content.Context;
 import android.os.Bundle;
 import android.preference.PreferenceActivity;
 import android.preference.PreferenceManager;
+import android.widget.Toast;
 
 /**
  * 
@@ -53,6 +54,7 @@ public class BbtSetting extends PreferenceActivity {
 	}
 
 	public static boolean getIsEnglish(Context context) {
+		Toast.makeText(context, "Option", Toast.LENGTH_LONG).show();
 		//languageキーで設定を読み出し
 		return PreferenceManager.getDefaultSharedPreferences(context).getBoolean("language", false);
 	}
