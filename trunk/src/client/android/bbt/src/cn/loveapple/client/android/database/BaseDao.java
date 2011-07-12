@@ -30,10 +30,13 @@
  *
  * @author: loveapple
  */
+ 
 package cn.loveapple.client.android.database;
 
+import static cn.loveapple.client.android.Constant.*;
 import android.content.ContentValues;
 import android.database.sqlite.SQLiteDatabase;
+import android.util.Log;
 import cn.loveapple.client.android.LoveappleHealthDatabaseOpenHelper;
 import cn.loveapple.client.android.database.entity.Entity;
 
@@ -45,7 +48,10 @@ import cn.loveapple.client.android.database.entity.Entity;
  * @id $Id$
  *
  */
-public abstract class BaseDao {
+public abstract class BaseDao implements LoveappleDao{
+	protected SQLiteDatabase writableDb;
+	protected SQLiteDatabase readableDb;
+	
 	/**
 	 * Loveapple健康DBヘルパー
 	 */
@@ -57,12 +63,26 @@ public abstract class BaseDao {
 	 */
 	public BaseDao(LoveappleHealthDatabaseOpenHelper helper){
 		this.helper = helper;
+		writableDb = helper.getWritableDatabase();
+		readableDb = helper.getReadableDatabase();
 	}
 	
 	public <T> T save(Entity entity){
-		SQLiteDatabase db = helper.getWritableDatabase();
 		ContentValues values = new ContentValues();
 		
 		return null;
+	}
+	
+	public void destory(){
+		try{
+			if(writableDb != null){
+				writableDb.close();
+			}
+			if(readableDb != null){
+					readableDb.close();
+			}
+		}catch (Exception e) {
+			Log.i(LOG_TAG, e.getMessage(), e);
+		}
 	}
 }
