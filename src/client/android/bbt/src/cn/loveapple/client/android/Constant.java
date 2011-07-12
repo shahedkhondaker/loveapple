@@ -44,4 +44,5 @@ package cn.loveapple.client.android;
 public class Constant {
 	public static final String FLG_ON = "1";
 	public static final String FLG_OFF = "0";
+	public static final String LOG_TAG = "loveapple";
 }

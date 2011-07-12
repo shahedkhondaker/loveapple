@@ -88,7 +88,7 @@ public class BbtFacadeActivity extends Activity implements OnClickListener {
 		try{
 			packageInfo = getPackageManager().getPackageInfo(getPackageName(), PackageManager.GET_META_DATA);
 		}catch (NameNotFoundException e) {
-			Log.e(activityName, e.getMessage(), e);
+			Log.e(LOG_TAG, e.getMessage(), e);
 			throw new RuntimeException(e);
 		}
 		today = DateUtil.toDateString();
@@ -106,7 +106,7 @@ public class BbtFacadeActivity extends Activity implements OnClickListener {
 		
 		// 直近の体温情報を取得
 		TemperatureEntity entity = dao.findByDate(today);
-
+Log.i(LOG_TAG, String.valueOf(entity));
 		// データ取得できない場合、初期設定を終了
 		if(entity == null){
 			return;
@@ -184,6 +184,7 @@ public class BbtFacadeActivity extends Activity implements OnClickListener {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+		Log.isLoggable(LOG_TAG, Log.DEBUG);
         
         
         // 初期化
@@ -215,6 +216,10 @@ public class BbtFacadeActivity extends Activity implements OnClickListener {
 		
 	}
 	
+	/**
+	 * 
+	 * @return
+	 */
 	private TemperatureEntity createEntity(){
 		TemperatureEntity entity = new TemperatureEntity();
 		EditText temperatureText = (EditText) findViewById(id.temperatureText);
@@ -242,6 +247,10 @@ public class BbtFacadeActivity extends Activity implements OnClickListener {
 		return entity;
 	}
 	
+	/**
+	 * 
+	 * {@inheritDoc}
+	 */
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item){
 		switch (item.getItemId()) {
@@ -261,11 +270,28 @@ public class BbtFacadeActivity extends Activity implements OnClickListener {
 		
 		return true;
 	}
+	
+	/**
+	 * 
+	 * {@inheritDoc}
+	 */
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu){
 		menu.add(0, MENU_OPT, 0, getText(R.string.setting)).setIcon(android.R.drawable.ic_menu_preferences);
 		menu.add(0, MENU_HELP, 0, getText(R.string.help)).setIcon(android.R.drawable.ic_menu_help);
 		
 		return true;
+	}
+	
+	/**
+	 * 
+	 * {@inheritDoc}
+	 */
+	@Override
+	public void onDestroy(){ 
+		super.onDestroy();
+		if(dao != null){
+			dao.destory();
+		}
 	}
 }
