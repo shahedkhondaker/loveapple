@@ -39,6 +39,7 @@ import android.preference.PreferenceManager;
 import android.widget.Toast;
 
 /**
+ * オプションメニューを表示するアクティビティ
  * 
  * @author $Author$
  * @version $Revision$

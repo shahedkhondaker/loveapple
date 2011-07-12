@@ -37,8 +37,6 @@ import static cn.loveapple.client.android.Constant.*;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.apache.http.MethodNotSupportedException;
-
 import android.app.Activity;
 import android.content.Intent;
 import android.content.pm.PackageInfo;
@@ -47,7 +45,6 @@ import android.content.pm.PackageManager.NameNotFoundException;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
-import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
