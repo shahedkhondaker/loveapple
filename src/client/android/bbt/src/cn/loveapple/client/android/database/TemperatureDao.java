@@ -44,7 +44,7 @@ import cn.loveapple.client.android.database.entity.TemperatureEntity;
  * @id $Id$
  *
  */
-public interface TemperatureDao {
+public interface TemperatureDao extends LoveappleDao {
 	/**
 	 * 
 	 * @param start
