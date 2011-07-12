@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="hello">ようこそ、基礎体温管理</string>
     <string name="app_name">Loveapple基礎体温管理</string>
+    <string name="hello">本日の基礎体温を入力してね！</string>
     <string name="input_bbt">基礎体温を入力</string>
     <string name="celsius">℃</string>
     <string name="submit">送信</string>
