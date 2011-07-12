@@ -38,9 +38,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import android.content.ContentValues;
-import android.content.Context;
 import android.database.Cursor;
-import android.database.sqlite.SQLiteDatabase;
 import android.util.Log;
 import cn.loveapple.client.android.LoveappleHealthDatabaseOpenHelper;
 import cn.loveapple.client.android.database.BaseDao;
@@ -71,66 +69,51 @@ public class TemperatureDaoImpl extends BaseDao implements TemperatureDao {
 	 */
 	@Override
 	public TemperatureEntity save(TemperatureEntity source){
-		SQLiteDatabase db = helper.getWritableDatabase();
-		//TODO http://www.javadrive.jp/android/sqlite_database/index2.html
-		//db = db.openDatabase("data/data/" + context.getPackageName() + "/databases/" + LoveappleHealthDatabaseOpenHelper.DB_NAME, null, SQLiteDatabase.OPEN_READWRITE);
 		TemperatureEntity result = null;
-		try{
-			ContentValues values = new ContentValues();
-			values.put(COLUMN_COITUS_FLG, source.getCoitusFlg());
-			values.put(COLUMN_DATE, source.getDate());
-			values.put(COLUMN_TIMESTAMP, source.getTimestamp());
-			values.put(COLUMN_TEMPERATURE, source.getTemperature());
-			values.put(COLUMN_MENSTRUATION_FLG, source.getMenstruationFlg());
-			values.put(COLUMN_DYSMENORRHEA_FLG, source.getDysmenorrheaFlg());
-			values.put(COLUMN_LEUKORRHEA, source.getLeukorrhea());
-			values.put(COLUMN_DYSMENORRHEA_LEVEL, source.getDysmenorrhea_level());
-			values.put(COLUMN_MENSTRUATION_CYCLE, source.getMenstruation_cycle());
-			
-			int colNum = db.update(TABLE_NAME, values, COLUMN_DATE + "=?", new String[]{source.getDate()});
-			if(colNum < 1) {
-				db.insert(TABLE_NAME, null, values);
-				Log.i("BBT", values.toString());
-			}
-			result = findByDate(source.getDate());
-		}finally{
-			db.close();
+
+		ContentValues values = new ContentValues();
+		values.put(COLUMN_COITUS_FLG, source.getCoitusFlg());
+		values.put(COLUMN_DATE, source.getDate());
+		values.put(COLUMN_TIMESTAMP, source.getTimestamp());
+		values.put(COLUMN_TEMPERATURE, source.getTemperature());
+		values.put(COLUMN_MENSTRUATION_FLG, source.getMenstruationFlg());
+		values.put(COLUMN_DYSMENORRHEA_FLG, source.getDysmenorrheaFlg());
+		values.put(COLUMN_LEUKORRHEA, source.getLeukorrhea());
+		values.put(COLUMN_DYSMENORRHEA_LEVEL, source.getDysmenorrhea_level());
+		values.put(COLUMN_MENSTRUATION_CYCLE, source.getMenstruation_cycle());
+		
+		int colNum = writableDb.update(TABLE_NAME, values, COLUMN_DATE + "=?", new String[]{source.getDate()});
+		if(colNum < 1) {
+			writableDb.insert(TABLE_NAME, null, values);
+			Log.i("BBT", values.toString());
 		}
+		result = findByDate(source.getDate());
 		
 		return result;
 	}
 	
 	public List<TemperatureEntity> findByTerm(String start, String end){
-		SQLiteDatabase db = helper.getReadableDatabase();
 		List<TemperatureEntity> result = null;
-		try{
-			Cursor cursor = db.query(TABLE_NAME, null, "?<=" + COLUMN_DATE + " AND ?=" + COLUMN_DATE , new String[]{start, end}, null, null, null);
-			result = new ArrayList<TemperatureEntity>();
-			cursor.moveToFirst();
-			while(!cursor.isAfterLast()){
-				result.add(getTemperatureEntity(cursor));
-				cursor.moveToNext();
-			}
-		}finally{
-			db.close();
+		
+		Cursor cursor = readableDb.query(TABLE_NAME, null, "?<=" + COLUMN_DATE + " AND ?=" + COLUMN_DATE , new String[]{start, end}, null, null, null);
+		result = new ArrayList<TemperatureEntity>();
+		cursor.moveToFirst();
+		while(!cursor.isAfterLast()){
+			result.add(getTemperatureEntity(cursor));
+			cursor.moveToNext();
 		}
 		return result;
 	}
 	public TemperatureEntity findByDate(String date){
-		SQLiteDatabase db = helper.getReadableDatabase();
 		
 		TemperatureEntity result = null;
-		try{
-			Cursor cursor = db.query(
-					TABLE_NAME,
-					null, 
-					COLUMN_DATE + " <=? ORDER BY " + COLUMN_DATE + " LIMIT 1",
-					new String[]{date}, null, null, null);
-			cursor.moveToFirst();
-			result = getTemperatureEntity(cursor);
-		}finally{
-			db.close();
-		}
+		Cursor cursor = readableDb.query(
+				TABLE_NAME,
+				null, 
+				COLUMN_DATE + " <=? ORDER BY " + COLUMN_DATE + " LIMIT 1",
+				new String[]{date}, null, null, null);
+		cursor.moveToFirst();
+		result = getTemperatureEntity(cursor);
 		return result;
 	}
 	
