@@ -263,8 +263,8 @@ public class BbtFacadeActivity extends Activity implements OnClickListener {
 	}
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu){
-		menu.add(0, MENU_OPT, 0, "Option").setIcon(android.R.drawable.ic_menu_preferences);
-		menu.add(0, MENU_HELP, 0, "HELP").setIcon(android.R.drawable.ic_menu_help);
+		menu.add(0, MENU_OPT, 0, getText(R.string.setting)).setIcon(android.R.drawable.ic_menu_preferences);
+		menu.add(0, MENU_HELP, 0, getText(R.string.help)).setIcon(android.R.drawable.ic_menu_help);
 		
 		return true;
 	}

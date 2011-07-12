@@ -20,6 +20,7 @@
     	<item>多め</item>
     </string-array>
     <string name="accountSetting">アカウント設定</string>
+    <string name="setting">設定</string>
     <string name="help">ヘルプ</string>
     <string name="viewItemSetting">表示項目の設定</string>
     <string name="dysmenorrheaViewExplain">生理痛項目の表示設定</string>
