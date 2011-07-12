@@ -37,6 +37,8 @@ import static cn.loveapple.client.android.Constant.*;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.apache.http.MethodNotSupportedException;
+
 import android.app.Activity;
 import android.content.Intent;
 import android.content.pm.PackageInfo;
@@ -78,6 +80,8 @@ public class BbtFacadeActivity extends Activity implements OnClickListener {
 	private String activityName;
 	private String today;
 	private List<String> temperatureList;
+	private static final int MENU_HELP = 0;
+	private static final int MENU_OPT = 1;
 	
 	/**
 	 * 初期化を行う
@@ -243,19 +247,28 @@ public class BbtFacadeActivity extends Activity implements OnClickListener {
 	
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item){
-		Toast.makeText(this, " Option", Toast.LENGTH_LONG).show();
-		Intent intent = new Intent();
-		intent.setClassName(
-				"cn.loveapple.client.android.bbt", 
-				BbtSetting.class.getName());
-		startActivity(intent);
+		switch (item.getItemId()) {
+		case MENU_HELP:
+			Toast.makeText(this, "HELP", Toast.LENGTH_LONG).show();
+
+			
+			return true;
+		case MENU_OPT:
+			Toast.makeText(this, "Option", Toast.LENGTH_LONG).show();
+			
+			Intent intent = new Intent();
+			intent.setClassName(this,BbtSetting.class.getName());
+			startActivity(intent);
+			return true;
+		}
+		
 		return true;
-	}/*
+	}
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu){
-		super.onCreateOptionsMenu(menu);
-		MenuInflater inflater = getMenuInflater();
-		inflater.inflate(, menu);
-		return;
-	}*/
+		menu.add(0, MENU_OPT, 0, "Option").setIcon(android.R.drawable.ic_menu_preferences);
+		menu.add(0, MENU_HELP, 0, "HELP").setIcon(android.R.drawable.ic_menu_help);
+		
+		return true;
+	}
 }
