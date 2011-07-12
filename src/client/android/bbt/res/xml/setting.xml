@@ -1,6 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
-	<PreferenceCategory android:title="@string/settings">
-		<CheckBoxPreference android:key="language" android:title="言語" android:defaultValue="false" android:summary="日本語、英語を切り替える"></CheckBoxPreference>
+	<PreferenceCategory android:title="@string/viewItemSetting">
+		<CheckBoxPreference android:key="dysmenorrhea" android:title="@string/dysmenorrhea" android:defaultValue="true" android:summary="@string/dysmenorrheaViewExplain" />
+		<CheckBoxPreference android:key="leukorrhea" android:title="@string/leukorrhea" android:defaultValue="true" android:summary="@string/leukorrheaViewExplain" />
 	</PreferenceCategory>
+	<PreferenceScreen android:title="@string/accountSetting">
+	</PreferenceScreen>
 </PreferenceScreen>
