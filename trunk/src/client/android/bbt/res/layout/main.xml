@@ -5,6 +5,7 @@
     android:layout_height="fill_parent"
     >
 	<TextView  
+	    android:id="@+id/headMsg"
 	    android:layout_width="fill_parent" 
 	    android:layout_height="wrap_content" 
 	    android:text="@string/hello"
@@ -12,7 +13,7 @@
 	<Spinner
 		android:layout_width="100dip" 
 		android:layout_height="wrap_content"
-		 android:id="@+id/temperature" />
+		android:id="@+id/temperature" />
 	<EditText
 		android:layout_width="60dip"
 		android:layout_height="wrap_content" 

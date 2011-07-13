@@ -31,6 +31,9 @@
  * @author: loveapple
  */
 package cn.loveapple.client.android.database.entity;
+
+import org.apache.commons.lang.builder.ReflectionToStringBuilder;
+
 /**
  * 
  * 
@@ -211,5 +214,14 @@ public class TemperatureEntity implements Entity{
 	 */
 	public void setMenstruation_cycle(Integer menstruation_cycle) {
 	    this.menstruation_cycle = menstruation_cycle;
+	}
+	
+	/**
+	 * 
+	 * {@inheritDoc}
+	 */
+	@Override
+	public String toString(){
+		return ReflectionToStringBuilder.toString(this);
 	}
 }
