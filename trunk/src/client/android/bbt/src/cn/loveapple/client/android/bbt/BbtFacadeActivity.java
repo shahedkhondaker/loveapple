@@ -139,8 +139,8 @@ public class BbtFacadeActivity extends Activity implements OnClickListener {
 		CheckBox dysmenorrhea = (CheckBox) findViewById(id.dysmenorrhea);
 		dysmenorrhea.setChecked(FLG_ON.equals(entity.getDysmenorrheaFlg()));
         
-//		TextView headMsg = (TextView) findViewById(id.headMsg);
-//		headMsg.setText(String.valueOf(entity.getTemperature().intValue()));
+		TextView headMsg = (TextView) findViewById(id.headMsg);
+		headMsg.setText(today);
 	}
 	
 	/**

@@ -95,7 +95,11 @@ public class TemperatureDaoImpl extends BaseDao implements TemperatureDao {
 	public List<TemperatureEntity> findByTerm(String start, String end){
 		List<TemperatureEntity> result = null;
 		
-		Cursor cursor = readableDb.query(TABLE_NAME, null, "?<=" + COLUMN_DATE + " AND ?=" + COLUMN_DATE , new String[]{start, end}, null, null, null);
+		Cursor cursor = readableDb.query(
+				TABLE_NAME, 
+				null, 
+				"?<=" + COLUMN_DATE + " AND ?=" + COLUMN_DATE + " ORDER BY " + COLUMN_DATE ,
+				new String[]{start, end}, null, null, null);
 		result = new ArrayList<TemperatureEntity>();
 		cursor.moveToFirst();
 		while(!cursor.isAfterLast()){
@@ -110,7 +114,7 @@ public class TemperatureDaoImpl extends BaseDao implements TemperatureDao {
 		Cursor cursor = readableDb.query(
 				TABLE_NAME,
 				null, 
-				COLUMN_DATE + " <=? ORDER BY " + COLUMN_DATE + " LIMIT 1",
+				COLUMN_DATE + " <=? ORDER BY " + COLUMN_DATE + " DESC LIMIT 1",
 				new String[]{date}, null, null, null);
 		cursor.moveToFirst();
 		result = getTemperatureEntity(cursor);
