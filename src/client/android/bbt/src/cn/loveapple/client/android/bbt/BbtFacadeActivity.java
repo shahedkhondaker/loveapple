@@ -43,7 +43,6 @@ import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.content.pm.PackageManager.NameNotFoundException;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -53,6 +52,7 @@ import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.Spinner;
+import android.widget.TextView;
 import android.widget.Toast;
 import cn.loveapple.client.android.LoveappleHealthDatabaseOpenHelper;
 import cn.loveapple.client.android.bbt.R.id;
@@ -74,7 +74,6 @@ import cn.loveapple.client.android.util.DateUtil;
 public class BbtFacadeActivity extends Activity implements OnClickListener {
 	private TemperatureDao dao;
 	private PackageInfo packageInfo;
-	private String activityName;
 	private String today;
 	private List<String> temperatureList;
 	private static final int MENU_HELP = 0;
@@ -84,11 +83,9 @@ public class BbtFacadeActivity extends Activity implements OnClickListener {
 	 * 初期化を行う
 	 */
 	private void init(){
-		activityName = this.getClass().getName();
 		try{
 			packageInfo = getPackageManager().getPackageInfo(getPackageName(), PackageManager.GET_META_DATA);
 		}catch (NameNotFoundException e) {
-			Log.e(LOG_TAG, e.getMessage(), e);
 			throw new RuntimeException(e);
 		}
 		today = DateUtil.toDateString();
@@ -106,7 +103,7 @@ public class BbtFacadeActivity extends Activity implements OnClickListener {
 		
 		// 直近の体温情報を取得
 		TemperatureEntity entity = dao.findByDate(today);
-Log.i(LOG_TAG, String.valueOf(entity));
+
 		// データ取得できない場合、初期設定を終了
 		if(entity == null){
 			return;
@@ -119,7 +116,7 @@ Log.i(LOG_TAG, String.valueOf(entity));
        // 下り物セレクトボックス初期化
        Spinner leukorrhea = (Spinner) findViewById(id.leukorrhea);
        ArrayAdapter leukorrheAdapter = ArrayAdapter.createFromResource(this, R.array.measureList, android.R.layout.simple_spinner_item);
-		leukorrheAdapter.setDropDownViewResource(R.layout.leukorrhea_spinner_item);
+       leukorrheAdapter.setDropDownViewResource(R.layout.leukorrhea_spinner_item);
        leukorrhea.setAdapter(leukorrheAdapter);
 		if(entity.getLeukorrhea() != null){
 			for (int i = 0; i < 3; i++) {
@@ -142,6 +139,8 @@ Log.i(LOG_TAG, String.valueOf(entity));
 		CheckBox dysmenorrhea = (CheckBox) findViewById(id.dysmenorrhea);
 		dysmenorrhea.setChecked(FLG_ON.equals(entity.getDysmenorrheaFlg()));
         
+//		TextView headMsg = (TextView) findViewById(id.headMsg);
+//		headMsg.setText(String.valueOf(entity.getTemperature().intValue()));
 	}
 	
 	/**
@@ -153,28 +152,29 @@ Log.i(LOG_TAG, String.valueOf(entity));
 		Spinner temperature = (Spinner) findViewById(id.temperature);
 		ArrayAdapter<String> tempperatureAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item);
         tempperatureAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        int selectionPoint = 0;
         for(int i = 0; i < temperatureList.size(); i++){
         	String temperatureValue = temperatureList.get(i);
+        	tempperatureAdapter.add(temperatureValue);
         	if(entity.getTemperature() != null){
         		if(entity.getTemperature().intValue() == Integer.parseInt(temperatureValue)){
-        			temperature.setSelection(i);
+        			selectionPoint = i;
         		}
         	}
-        	tempperatureAdapter.add(temperatureValue);
         }
         temperature.setAdapter(tempperatureAdapter);        
         // スピナーのアイテムが選択された時に呼び出されるコールバックリスナーを登録します
         temperature.setOnItemSelectedListener(new TemperatureSelectedListener(this));
+        temperature.setSelection(selectionPoint);
         
-        if(entity.getTemperature() != null){
+        if(entity.getTemperature() == null){
         	return ;
-        }
+        }        
         // 体温テキストを初期化
         double value = entity.getTemperature();
-        value = Math.round(value*100);
+        value = (value - entity.getTemperature().intValue())*100;
         EditText temperatureText = (EditText) findViewById(id.temperatureText);
-        String valueStr = String.valueOf(value);
-        temperatureText.setText(valueStr.substring(valueStr.length() - 2));
+        temperatureText.setText(String.valueOf(Math.abs(value)));
  	}
 	
 	/**
@@ -184,7 +184,6 @@ Log.i(LOG_TAG, String.valueOf(entity));
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-		Log.isLoggable(LOG_TAG, Log.DEBUG);
         
         // 初期化
         init();
