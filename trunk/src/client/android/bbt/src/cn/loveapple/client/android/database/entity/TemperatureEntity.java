@@ -50,7 +50,7 @@ public class TemperatureEntity implements Entity{
 	public static String COLUMN_MENSTRUATION_FLG = "menstruation_flg";
 	public static String COLUMN_DYSMENORRHEA_FLG = "dysmenorrhea_flg";
 	public static String COLUMN_LEUKORRHEA = "leukorrhea";
-	public static String COLUMN_DYSMENORRHEA_LEVEL = "dysmenorrhea_level";
+	public static String COLUMN_DYSMENORRHEA_LEVEL = "menstruation_level";
 	public static String COLUMN_MENSTRUATION_CYCLE = "menstruation_cycle";
 	
 	/**
@@ -84,11 +84,11 @@ public class TemperatureEntity implements Entity{
 	/**
 	 * 生理量
 	 */
-	private String dysmenorrhea_level;
+	private String menstruationLevel;
 	/**
 	 * 周期日数
 	 */
-	private Integer menstruation_cycle;
+	private Integer menstruationCycle;
 	/**
 	 * 日付を取得します。
 	 * @return 日付
@@ -187,34 +187,6 @@ public class TemperatureEntity implements Entity{
 	public void setLeukorrhea(String leukorrhea) {
 	    this.leukorrhea = leukorrhea;
 	}
-	/**
-	 * 生理量を取得します。
-	 * @return 生理量
-	 */
-	public String getDysmenorrhea_level() {
-	    return dysmenorrhea_level;
-	}
-	/**
-	 * 生理量を設定します。
-	 * @param dysmenorrhea_level 生理量
-	 */
-	public void setDysmenorrhea_level(String dysmenorrhea_level) {
-	    this.dysmenorrhea_level = dysmenorrhea_level;
-	}
-	/**
-	 * 周期日数を取得します。
-	 * @return 周期日数
-	 */
-	public Integer getMenstruation_cycle() {
-	    return menstruation_cycle;
-	}
-	/**
-	 * 周期日数を設定します。
-	 * @param menstruation_cycle 周期日数
-	 */
-	public void setMenstruation_cycle(Integer menstruation_cycle) {
-	    this.menstruation_cycle = menstruation_cycle;
-	}
 	
 	/**
 	 * 
@@ -223,5 +195,33 @@ public class TemperatureEntity implements Entity{
 	@Override
 	public String toString(){
 		return ReflectionToStringBuilder.toString(this);
+	}
+	/**
+	 * 生理量を取得します。
+	 * @return 生理量
+	 */
+	public String getMenstruationLevel() {
+	    return menstruationLevel;
+	}
+	/**
+	 * 生理量を設定します。
+	 * @param menstruationLevel 生理量
+	 */
+	public void setMenstruationLevel(String menstruationLevel) {
+	    this.menstruationLevel = menstruationLevel;
+	}
+	/**
+	 * 周期日数を取得します。
+	 * @return 周期日数
+	 */
+	public Integer getMenstruationCycle() {
+	    return menstruationCycle;
+	}
+	/**
+	 * 周期日数を設定します。
+	 * @param menstruationCycle 周期日数
+	 */
+	public void setMenstruationCycle(Integer menstruationCycle) {
+	    this.menstruationCycle = menstruationCycle;
 	}
 }

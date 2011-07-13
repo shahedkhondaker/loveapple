@@ -112,11 +112,10 @@ public class BbtFacadeActivity extends Activity implements OnClickListener {
 		// 体温の初期化
        initTemperature(entity);
        
-
        // 下り物セレクトボックス初期化
        Spinner leukorrhea = (Spinner) findViewById(id.leukorrhea);
        ArrayAdapter leukorrheAdapter = ArrayAdapter.createFromResource(this, R.array.measureList, android.R.layout.simple_spinner_item);
-       leukorrheAdapter.setDropDownViewResource(R.layout.leukorrhea_spinner_item);
+//       leukorrheAdapter.setDropDownViewResource(R.layout.leukorrhea_spinner_item);
        leukorrhea.setAdapter(leukorrheAdapter);
 		if(entity.getLeukorrhea() != null){
 			for (int i = 0; i < 3; i++) {
@@ -276,8 +275,10 @@ public class BbtFacadeActivity extends Activity implements OnClickListener {
 	 */
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu){
-		menu.add(0, MENU_OPT, 0, getText(R.string.setting)).setIcon(android.R.drawable.ic_menu_preferences);
-		menu.add(0, MENU_HELP, 0, getText(R.string.help)).setIcon(android.R.drawable.ic_menu_help);
+		menu.add(0, MENU_OPT, 0, getText(R.string.setting))
+			.setIcon(android.R.drawable.ic_menu_preferences);
+		menu.add(0, MENU_HELP, 0, getText(R.string.help))
+			.setIcon(android.R.drawable.ic_menu_help);
 		
 		return true;
 	}
