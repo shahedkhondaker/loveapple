@@ -156,7 +156,7 @@ Log.i(LOG_TAG, String.valueOf(entity));
         for(int i = 0; i < temperatureList.size(); i++){
         	String temperatureValue = temperatureList.get(i);
         	if(entity.getTemperature() != null){
-        		if(Math.abs(entity.getTemperature()) == Integer.parseInt(temperatureValue)){
+        		if(entity.getTemperature().intValue() == Integer.parseInt(temperatureValue)){
         			temperature.setSelection(i);
         		}
         	}
@@ -186,15 +186,8 @@ Log.i(LOG_TAG, String.valueOf(entity));
         super.onCreate(savedInstanceState);
 		Log.isLoggable(LOG_TAG, Log.DEBUG);
         
-        
         // 初期化
         init();
-        
-        // 表示画面の初期化
-        initView();
-        
-        Button submit = (Button) findViewById(id.submit);
-        submit.setOnClickListener(this);
     }
 
     /**
@@ -203,17 +196,24 @@ Log.i(LOG_TAG, String.valueOf(entity));
      */
 	@Override
 	public void onClick(View v) {
+		save();
+	}
+	
+	private TemperatureEntity save(){
+		TemperatureEntity result = null;
 		try{
 			dao.save(createEntity());
-			TemperatureEntity result = dao.findByDate(today);
-		
+			result = dao.findByDate(today);
+			
 			Toast.makeText(this, "submit!!" 
 					+ "date:" + result, Toast.LENGTH_LONG).show();
+			
+			return result;
 		}catch (Exception e) {
 			Toast.makeText(this, "Exception!!" 
 					+ e.getMessage(), Toast.LENGTH_LONG).show();
 		}
-		
+		return result;
 	}
 	
 	/**
@@ -283,6 +283,27 @@ Log.i(LOG_TAG, String.valueOf(entity));
 		return true;
 	}
 	
+	@Override
+	public void onResume(){
+		super.onResume();
+        
+        // 表示画面の初期化
+        initView();
+        
+        Button submit = (Button) findViewById(id.submit);
+        submit.setOnClickListener(this);
+	}
+	
+	@Override
+	protected void onSaveInstanceState(Bundle outState){
+		super.onSaveInstanceState(outState);
+		save();
+	}
+	
+	@Override
+	protected void onRestoreInstanceState(Bundle savedInstanceState){
+		super.onRestoreInstanceState(savedInstanceState);
+	}
 	/**
 	 * 
 	 * {@inheritDoc}
