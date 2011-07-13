@@ -2,44 +2,94 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical"
     android:layout_width="fill_parent"
-    android:layout_height="fill_parent"
-    >
+    android:layout_height="fill_parent">
 	<TextView  
 	    android:id="@+id/headMsg"
 	    android:layout_width="fill_parent" 
 	    android:layout_height="wrap_content" 
 	    android:text="@string/hello"
 	    />
-	<Spinner
-		android:layout_width="100dip" 
-		android:layout_height="wrap_content"
-		android:id="@+id/temperature" />
-	<EditText
-		android:layout_width="60dip"
+	<!-- 体温の入力フ項目 -->
+	<LinearLayout
+		android:orientation="horizontal"
 		android:layout_height="wrap_content" 
-		android:id="@+id/temperatureText" 
-		android:inputType="number" android:maxLength="2">
-		<requestFocus />
-	</EditText>
-	<CheckBox 
-		android:text="@string/coitus" 
-		android:id="@+id/coitus" 
-		android:layout_width="wrap_content" 
-		android:layout_height="wrap_content" />
-	<CheckBox 
-		android:text="@string/menstruation" 
-		android:id="@+id/menstruation" 
-		android:layout_width="wrap_content" 
-		android:layout_height="wrap_content" />
-	<CheckBox 
-		android:text="@string/dysmenorrhea" 
-		android:id="@+id/dysmenorrhea" 
-		android:layout_width="wrap_content" 
-		android:layout_height="wrap_content"/>
-	<Spinner 
+		android:layout_width="match_parent" 
+		android:id="@+id/temperatureHLine">
+		<TextView  
+		    android:id="@+id/temperatureMsg"
+		    android:layout_width="70dip" 
+		    android:layout_height="wrap_content" 
+		    android:text="@string/temperature"
+		    />
+		<Spinner
+			android:layout_width="70dip" 
+			android:layout_height="wrap_content"
+			android:id="@+id/temperature" />
+		<EditText
+			android:layout_width="60dip"
+			android:layout_height="wrap_content" 
+			android:id="@+id/temperatureText" 
+			android:inputType="number" android:maxLength="2">
+			<requestFocus />
+		</EditText>
+	</LinearLayout>
+
+	<!-- 体温以の入力項目 -->
+	<LinearLayout
+		android:orientation="horizontal"
 		android:layout_height="wrap_content" 
-		android:id="@+id/leukorrhea" 
-		android:layout_width="100dip" />
+		android:layout_width="match_parent" 
+		android:id="@+id/otherPropertiesHLine">
+		<CheckBox 
+			android:text="@string/coitus" 
+			android:id="@+id/coitus" 
+			android:layout_width="wrap_content" 
+			android:layout_height="wrap_content" />
+		<CheckBox 
+			android:text="@string/menstruation" 
+			android:id="@+id/menstruation" 
+			android:layout_width="wrap_content" 
+			android:layout_height="wrap_content" />
+		<CheckBox 
+			android:text="@string/dysmenorrhea" 
+			android:id="@+id/dysmenorrhea" 
+			android:layout_width="wrap_content" 
+			android:layout_height="wrap_content"/>
+	</LinearLayout>
+	
+	<!-- 生理痛の入力項目(非必須) -->
+	<LinearLayout
+		android:orientation="horizontal"
+		android:layout_height="wrap_content" 
+		android:layout_width="match_parent" 
+		android:id="@+id/dysmenorrheaHLine">
+		<TextView  
+			    android:id="@+id/menstruationLevelMsg"
+			    android:layout_width="70dip" 
+			    android:layout_height="wrap_content" 
+			    android:text="@string/menstruationLevel"/>
+		<Spinner 
+			android:layout_height="wrap_content" 
+			android:id="@+id/menstruationLevel" 
+			android:layout_width="70dip" />
+	</LinearLayout>
+	
+	<!-- 下り物の入力項目(非必須) -->
+	<LinearLayout
+		android:orientation="horizontal"
+		android:layout_height="wrap_content" 
+		android:layout_width="match_parent" 
+		android:id="@+id/leukorrheaHLine">
+		<TextView  
+			    android:id="@+id/leukorrheaMsg"
+			    android:layout_width="70dip" 
+			    android:layout_height="wrap_content" 
+			    android:text="@string/leukorrhea"/>
+		<Spinner 
+			android:layout_height="wrap_content" 
+			android:id="@+id/leukorrhea" 
+			android:layout_width="70dip" />
+	</LinearLayout>
 	<Button 
 		android:text="@string/submit" 
 		android:id="@+id/submit" 

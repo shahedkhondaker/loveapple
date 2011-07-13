@@ -79,8 +79,8 @@ public class TemperatureDaoImpl extends BaseDao implements TemperatureDao {
 		values.put(COLUMN_MENSTRUATION_FLG, source.getMenstruationFlg());
 		values.put(COLUMN_DYSMENORRHEA_FLG, source.getDysmenorrheaFlg());
 		values.put(COLUMN_LEUKORRHEA, source.getLeukorrhea());
-		values.put(COLUMN_DYSMENORRHEA_LEVEL, source.getDysmenorrhea_level());
-		values.put(COLUMN_MENSTRUATION_CYCLE, source.getMenstruation_cycle());
+		values.put(COLUMN_DYSMENORRHEA_LEVEL, source.getMenstruationLevel());
+		values.put(COLUMN_MENSTRUATION_CYCLE, source.getMenstruationCycle());
 		
 		int colNum = writableDb.update(TABLE_NAME, values, COLUMN_DATE + "=?", new String[]{source.getDate()});
 		if(colNum < 1) {
@@ -138,8 +138,8 @@ public class TemperatureDaoImpl extends BaseDao implements TemperatureDao {
 		result.setMenstruationFlg(cursor.getString(4));
 		result.setDysmenorrheaFlg(cursor.getString(5));
 		result.setLeukorrhea(cursor.getString(6));
-		result.setDysmenorrhea_level(cursor.getString(7));
-		result.setMenstruation_cycle(cursor.getInt(8));
+		result.setMenstruationLevel(cursor.getString(7));
+		result.setMenstruationCycle(cursor.getInt(8));
 		
 		return result;
 	}

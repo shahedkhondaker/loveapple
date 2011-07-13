@@ -84,7 +84,7 @@ public class LoveappleHealthDatabaseOpenHelper extends SQLiteOpenHelper {
 			createSql.append(",menstruation_flg text");
 			createSql.append(",dysmenorrhea_flg text");
 			createSql.append(",leukorrhea text");
-			createSql.append(",dysmenorrhea_level text");
+			createSql.append(",menstruation_level text");
 			createSql.append(",menstruation_cycle integer");
 			createSql.append(");");
 			
