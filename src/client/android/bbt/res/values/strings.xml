@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">Loveapple基礎体温管理</string>
-    <string name="hello">本日の基礎体温を入力してね！</string>
+    <string name="app_name">♀Loveapple♀</string>
+    <string name="hello">%1$tm月%1$td日の体温を入力してください。</string>
     <string name="temperature">体温</string>
     <string name="celsius">℃</string>
     <string name="submit">送信</string>
     <string name="coitus">セックス</string>
     <string name="menstruation">生理</string>
-    <string name="menstruationLevel">生理量</string>
+    <string name="menstruationLevel">出血量</string>
     <string name="dysmenorrhea">生理痛</string>
     <string name="leukorrhea">下り物</string>
     <string name="much">多め</string>

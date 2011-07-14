@@ -35,6 +35,7 @@ package cn.loveapple.client.android.bbt;
 import static cn.loveapple.client.android.Constant.*;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import android.app.Activity;
@@ -75,6 +76,7 @@ public class BbtFacadeActivity extends Activity implements OnClickListener {
 	private TemperatureDao dao;
 	private PackageInfo packageInfo;
 	private String today;
+	private Date todayDate;
 	private List<String> temperatureList;
 	private static final int MENU_HELP = 0;
 	private static final int MENU_OPT = 1;
@@ -88,7 +90,8 @@ public class BbtFacadeActivity extends Activity implements OnClickListener {
 		}catch (NameNotFoundException e) {
 			throw new RuntimeException(e);
 		}
-		today = DateUtil.toDateString();
+		todayDate = new Date();
+		today = DateUtil.toDateString(todayDate);
 		dao = new TemperatureDaoImpl(new LoveappleHealthDatabaseOpenHelper(this, null, packageInfo.versionCode));
 		
 		temperatureList = new ArrayList<String>(8);
@@ -104,9 +107,8 @@ public class BbtFacadeActivity extends Activity implements OnClickListener {
 		// 直近の体温情報を取得
 		TemperatureEntity entity = dao.findByDate(today);
 
-		// データ取得できない場合、初期設定を終了
 		if(entity == null){
-			return;
+			entity = new TemperatureEntity();
 		}
 		
 		// 体温の初期化
@@ -139,7 +141,7 @@ public class BbtFacadeActivity extends Activity implements OnClickListener {
 		dysmenorrhea.setChecked(FLG_ON.equals(entity.getDysmenorrheaFlg()));
         
 		TextView headMsg = (TextView) findViewById(id.headMsg);
-		headMsg.setText(today);
+		headMsg.setText(String.format(getText(R.string.hello).toString(), todayDate));
 	}
 	
 	/**
