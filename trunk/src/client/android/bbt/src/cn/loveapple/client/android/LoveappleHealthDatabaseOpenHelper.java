@@ -73,7 +73,6 @@ public class LoveappleHealthDatabaseOpenHelper extends SQLiteOpenHelper {
 	 */
 	@Override
 	public void onCreate(SQLiteDatabase db) {
-		Log.i("init", "onCreate.");
 		try{
 			StringBuilder createSql = new StringBuilder();
 			createSql.append("create table temperature(");
@@ -89,14 +88,7 @@ public class LoveappleHealthDatabaseOpenHelper extends SQLiteOpenHelper {
 			createSql.append(");");
 			
 			db.execSQL(createSql.toString());
-			System.out.println("!!!!create table.");
-			Log.i("init", "create table.");
 			
-			ContentValues values = new ContentValues();
-			values.put("date", "first");
-			db.insert("temperature", null, values);
-			System.out.println("!!!!insert");
-			Log.i("init", "insert.");
 			db.setTransactionSuccessful();
 		}finally{
 			db.endTransaction();

@@ -4,5 +4,10 @@
 	<classpathentry kind="src" path="gen"/>
 	<classpathentry kind="con" path="com.android.ide.eclipse.adt.ANDROID_FRAMEWORK"/>
 	<classpathentry kind="lib" path="libs/afreechart-0.0.2.jar" sourcepath="libs/afreechart-0.0.2-javadocs.zip"/>
+	<classpathentry kind="lib" path="libs/aspectjrt.jar"/>
+	<classpathentry kind="lib" path="libs/spring-android-auth-1.0.0.M3.jar"/>
+	<classpathentry kind="lib" path="libs/spring-android-core-1.0.0.M3.jar" sourcepath="libs/spring-android-javadocs.zip"/>
+	<classpathentry kind="lib" path="libs/spring-android-rest-template-1.0.0.M3.jar"/>
+	<classpathentry kind="lib" path="libs/commons-lang-2.6.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
