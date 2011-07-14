@@ -54,7 +54,7 @@ public class ComponentUtil {
 	 * @param invisibleList
 	 * @param gonList
 	 */
-	public void setVisibilityList(Activity target, int[] visibleList, int[] invisibleList, int[] gonList){
+	public void setVisibilityList(Activity target, int[] visibleList, int[] invisibleList, int[] goneList){
 		if(ArrayUtils.isNotEmpty(visibleList)){
 			for (int id : visibleList) {
 				target.findViewById(id).setVisibility(View.VISIBLE);
@@ -65,8 +65,8 @@ public class ComponentUtil {
 				target.findViewById(id).setVisibility(View.INVISIBLE);
 			}
 		}
-		if(ArrayUtils.isNotEmpty(gonList)){
-			for (int id : gonList) {
+		if(ArrayUtils.isNotEmpty(goneList)){
+			for (int id : goneList) {
 				target.findViewById(id).setVisibility(View.GONE);
 			}
 		}
@@ -75,10 +75,22 @@ public class ComponentUtil {
 	/**
 	 * 対象{@linkplain Activity}から、非表示({@linkplain View#GONE})の{@linkplain View}を制御する。
 	 * 
+	 * @see #setVisibilityList(Activity, int[], int[], int[])
 	 * @param target　対象{@linkplain Activity}
 	 * @param gonList
 	 */
-	public void setVisibilityList(Activity target, int... gonList){
-		setVisibilityList(target, null, null, gonList);
+	public void setGoneList(Activity target, int... goneList){
+		setVisibilityList(target, null, null, goneList);
 	}
+	
+	/**
+	 * 
+	 * @see #setVisibilityList(Activity, int[], int[], int[])
+	 * @param target
+	 * @param visibleList
+	 */
+	public void setVisibleList(Activity target, int... visibleList){
+		setVisibilityList(target, visibleList, null, null);
+	}
+	
 }

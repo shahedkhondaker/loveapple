@@ -92,6 +92,7 @@ public class LoveappleHealthDatabaseOpenHelper extends SQLiteOpenHelper {
 			db.setTransactionSuccessful();
 		}finally{
 			db.endTransaction();
+			db.close();
 		}
 	}
 

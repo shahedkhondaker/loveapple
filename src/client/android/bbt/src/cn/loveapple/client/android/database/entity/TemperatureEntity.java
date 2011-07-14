@@ -50,7 +50,7 @@ public class TemperatureEntity implements Entity{
 	public static String COLUMN_MENSTRUATION_FLG = "menstruation_flg";
 	public static String COLUMN_DYSMENORRHEA_FLG = "dysmenorrhea_flg";
 	public static String COLUMN_LEUKORRHEA = "leukorrhea";
-	public static String COLUMN_DYSMENORRHEA_LEVEL = "menstruation_level";
+	public static String COLUMN_MENSTRUATION_LEVEL = "menstruation_level";
 	public static String COLUMN_MENSTRUATION_CYCLE = "menstruation_cycle";
 	
 	/**

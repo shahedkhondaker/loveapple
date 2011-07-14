@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">♀Loveapple♀</string>
+    <string name="app_name">♀基礎体温♀</string>
     <string name="hello">%1$tm月%1$td日の体温を入力してください。</string>
     <string name="temperature">体温</string>
     <string name="celsius">℃</string>
