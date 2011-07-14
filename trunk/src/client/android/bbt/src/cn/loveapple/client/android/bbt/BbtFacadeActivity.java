@@ -100,6 +100,9 @@ public class BbtFacadeActivity extends Activity implements OnClickListener {
 		}
 	}
 	
+	/**
+	 * 各コンポーネント表示するための初期化を行う
+	 */
 	private void initView(){
 		
 		setContentView(R.layout.main);
@@ -111,23 +114,36 @@ public class BbtFacadeActivity extends Activity implements OnClickListener {
 			entity = new TemperatureEntity();
 		}
 		
+		// 分量を表すアダプター
+		ArrayAdapter measureListAdapter = ArrayAdapter.createFromResource(this, R.array.measureList, android.R.layout.simple_spinner_item);
+
 		// 体温の初期化
        initTemperature(entity);
        
        // 下り物セレクトボックス初期化
        Spinner leukorrhea = (Spinner) findViewById(id.leukorrhea);
-       ArrayAdapter leukorrheAdapter = ArrayAdapter.createFromResource(this, R.array.measureList, android.R.layout.simple_spinner_item);
-//       leukorrheAdapter.setDropDownViewResource(R.layout.leukorrhea_spinner_item);
-       leukorrhea.setAdapter(leukorrheAdapter);
-		if(entity.getLeukorrhea() != null){
-			for (int i = 0; i < 3; i++) {
+       leukorrhea.setAdapter(measureListAdapter);
+       if(entity.getLeukorrhea() != null){
+    	   for (int i = 0; i < 3; i++) {
 				if(String.valueOf(i).equals(entity.getLeukorrhea())){
 					leukorrhea.setSelection(i);
 					break;
 				}
 			}
 		}
-        
+
+		// 生理出血量
+		Spinner menstruationLevel = (Spinner) findViewById(id.menstruationLevel);
+		menstruationLevel.setAdapter(measureListAdapter);
+		if(entity.getMenstruationLevel() != null){
+			for (int i = 0; i < 3; i++){
+				if(String.valueOf(i).equals(entity.getMenstruationLevel())){
+					menstruationLevel.setSelection(i);
+					break;
+				}
+			}
+		}
+	       
 		// セックス
 		CheckBox coitus = (CheckBox)findViewById(id.coitus);
 		coitus.setChecked(FLG_ON.equals(entity.getCoitusFlg()));
@@ -172,9 +188,13 @@ public class BbtFacadeActivity extends Activity implements OnClickListener {
         	return ;
         }        
         // 体温テキストを初期化
-        double value = entity.getTemperature();
-        value = (value - entity.getTemperature().intValue())*100;
         EditText temperatureText = (EditText) findViewById(id.temperatureText);
+        double value = entity.getTemperature() == null? 0 : entity.getTemperature();
+        if(value == 0.0){
+        	temperatureText.setText("0");
+        	return ;
+        }
+        value = (value - entity.getTemperature().intValue())*100;
         temperatureText.setText(String.valueOf(Math.abs(value)));
  	}
 	
@@ -228,6 +248,7 @@ public class BbtFacadeActivity extends Activity implements OnClickListener {
 		CheckBox menstruation = (CheckBox)findViewById(id.menstruation);
 		CheckBox dysmenorrhea = (CheckBox) findViewById(id.dysmenorrhea);
 		Spinner leukorrhea = (Spinner) findViewById(id.leukorrhea);
+		Spinner menstruationLevel = (Spinner) findViewById(id.menstruationLevel);
 
 		// 温度の選択値
 		StringBuilder temperatureValue = new StringBuilder(10);
@@ -242,6 +263,7 @@ public class BbtFacadeActivity extends Activity implements OnClickListener {
 		entity.setMenstruationFlg(menstruation.isChecked()?FLG_ON:FLG_OFF);
 		entity.setDysmenorrheaFlg(dysmenorrhea.isChecked()?FLG_ON:FLG_OFF);
 		entity.setLeukorrhea(String.valueOf(leukorrhea.getSelectedItemPosition()));
+		entity.setMenstruationLevel(String.valueOf(menstruationLevel.getSelectedItemPosition()));
 		
 		
 		return entity;
@@ -285,12 +307,29 @@ public class BbtFacadeActivity extends Activity implements OnClickListener {
 		return true;
 	}
 	
+	/**
+	 * 表示/非表示の初期化<br>
+	 * <b>ルール：</b><br>
+	 * 1．生理痛、出血量、下り物がオプションで設定される場合のみ表示する。
+	 * 2．オプションで表示設定される場合、生理を選択される場合、生理痛、出血量が表示される。
+	 * 3．生理を選択される場合、下り物が非表示する。
+	 * 
+	 */
+	public void initVisibility(){
+		
+	}
+	/**
+	 * 画面表示の初期化を行う
+	 */
 	@Override
 	public void onResume(){
 		super.onResume();
         
         // 表示画面の初期化
         initView();
+        
+        // 表示/非表示初期化
+        initVisibility();
         
         Button submit = (Button) findViewById(id.submit);
         submit.setOnClickListener(this);

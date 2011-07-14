@@ -20,7 +20,7 @@
 		android:id="@+id/temperatureHLine">
 		<TextView  
 		    android:id="@+id/temperatureMsg"
-		    android:layout_width="60dip" 
+		    android:layout_width="50dip" 
 		    android:layout_height="wrap_content" 
 		    android:text="@string/temperature"
 		    />
@@ -48,17 +48,17 @@
 			android:id="@+id/coitus" 
 			android:layout_width="wrap_content" 
 			android:layout_height="wrap_content" />
+		<CheckBox 
+			android:text="@string/menstruation" 
+			android:id="@+id/menstruation" 
+			android:layout_width="wrap_content" 
+			android:layout_height="wrap_content" />
 	</LinearLayout>
 	<LinearLayout
 		android:orientation="horizontal"
 		android:layout_height="wrap_content" 
 		android:layout_width="match_parent" 
 		android:id="@+id/otherPropertiesHLine">
-		<CheckBox 
-			android:text="@string/menstruation" 
-			android:id="@+id/menstruation" 
-			android:layout_width="wrap_content" 
-			android:layout_height="wrap_content" />
 		<CheckBox 
 			android:text="@string/dysmenorrhea" 
 			android:id="@+id/dysmenorrhea" 
@@ -74,7 +74,7 @@
 		android:id="@+id/dysmenorrheaHLine">
 		<TextView  
 			    android:id="@+id/menstruationLevelMsg"
-			    android:layout_width="70dip" 
+			    android:layout_width="60dip" 
 			    android:layout_height="wrap_content" 
 			    android:text="@string/menstruationLevel"/>
 		<Spinner 
@@ -91,7 +91,7 @@
 		android:id="@+id/leukorrheaHLine">
 		<TextView  
 			    android:id="@+id/leukorrheaMsg"
-			    android:layout_width="70dip" 
+			    android:layout_width="60dip" 
 			    android:layout_height="wrap_content" 
 			    android:text="@string/leukorrhea"/>
 		<Spinner 
