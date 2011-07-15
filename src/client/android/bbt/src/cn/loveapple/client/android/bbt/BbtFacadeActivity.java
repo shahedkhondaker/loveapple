@@ -52,6 +52,7 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
+import android.widget.SeekBar;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -121,28 +122,12 @@ public class BbtFacadeActivity extends Activity implements OnClickListener {
        initTemperature(entity);
        
        // 下り物セレクトボックス初期化
-       Spinner leukorrhea = (Spinner) findViewById(id.leukorrhea);
-       leukorrhea.setAdapter(measureListAdapter);
-       if(entity.getLeukorrhea() != null){
-    	   for (int i = 0; i < 3; i++) {
-				if(String.valueOf(i).equals(entity.getLeukorrhea())){
-					leukorrhea.setSelection(i);
-					break;
-				}
-			}
-		}
+       SeekBar leukorrhea = (SeekBar) findViewById(id.leukorrhea);
+       leukorrhea.setProgress(Integer.parseInt(entity.getLeukorrhea()));
 
 		// 生理出血量
-		Spinner menstruationLevel = (Spinner) findViewById(id.menstruationLevel);
-		menstruationLevel.setAdapter(measureListAdapter);
-		if(entity.getMenstruationLevel() != null){
-			for (int i = 0; i < 3; i++){
-				if(String.valueOf(i).equals(entity.getMenstruationLevel())){
-					menstruationLevel.setSelection(i);
-					break;
-				}
-			}
-		}
+       SeekBar menstruationLevel = (SeekBar) findViewById(id.menstruationLevel);
+       menstruationLevel.setProgress(Integer.parseInt(entity.getMenstruationLevel()));
 	       
 		// セックス
 		CheckBox coitus = (CheckBox)findViewById(id.coitus);
@@ -247,8 +232,8 @@ public class BbtFacadeActivity extends Activity implements OnClickListener {
 		CheckBox coitus = (CheckBox)findViewById(id.coitus);
 		CheckBox menstruation = (CheckBox)findViewById(id.menstruation);
 		CheckBox dysmenorrhea = (CheckBox) findViewById(id.dysmenorrhea);
-		Spinner leukorrhea = (Spinner) findViewById(id.leukorrhea);
-		Spinner menstruationLevel = (Spinner) findViewById(id.menstruationLevel);
+		SeekBar leukorrhea = (SeekBar) findViewById(id.leukorrhea);
+		SeekBar menstruationLevel = (SeekBar) findViewById(id.menstruationLevel);
 
 		// 温度の選択値
 		StringBuilder temperatureValue = new StringBuilder(10);
@@ -262,8 +247,8 @@ public class BbtFacadeActivity extends Activity implements OnClickListener {
 		entity.setDate(today);
 		entity.setMenstruationFlg(menstruation.isChecked()?FLG_ON:FLG_OFF);
 		entity.setDysmenorrheaFlg(dysmenorrhea.isChecked()?FLG_ON:FLG_OFF);
-		entity.setLeukorrhea(String.valueOf(leukorrhea.getSelectedItemPosition()));
-		entity.setMenstruationLevel(String.valueOf(menstruationLevel.getSelectedItemPosition()));
+		entity.setLeukorrhea(String.valueOf(leukorrhea.getProgress()));
+		entity.setMenstruationLevel(String.valueOf(menstruationLevel.getProgress()));
 		
 		
 		return entity;

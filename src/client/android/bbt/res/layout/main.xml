@@ -77,10 +77,18 @@
 			    android:layout_width="60dip" 
 			    android:layout_height="wrap_content" 
 			    android:text="@string/menstruationLevel"/>
-		<Spinner 
-			android:layout_height="wrap_content" 
-			android:id="@+id/menstruationLevel" 
-			android:layout_width="90dip" />
+		<SeekBar
+			android:layout_height="wrap_content"
+			android:layout_weight="1"
+			android:id="@+id/menstruationLevel"
+			android:layout_width="match_parent"
+			android:max="3"
+			android:progress="0" />
+		<TextView  
+			    android:id="@+id/menstruationLevelViewMsg"
+			    android:layout_width="60dip" 
+			    android:layout_height="wrap_content" 
+			    android:text="+++"/>
 	</LinearLayout>
 	
 	<!-- 下り物の入力項目(非必須) -->
@@ -94,13 +102,21 @@
 			    android:layout_width="60dip" 
 			    android:layout_height="wrap_content" 
 			    android:text="@string/leukorrhea"/>
-		<Spinner 
-			android:layout_height="wrap_content" 
-			android:id="@+id/leukorrhea" 
-			android:layout_width="90dip" />
+		<SeekBar
+			android:layout_height="wrap_content"
+			android:layout_weight="1"
+			android:id="@+id/leukorrhea"
+			android:layout_width="match_parent"
+			android:max="3"
+			android:progress="0" />
+		<TextView  
+			    android:id="@+id/leukorrheaViewMsg"
+			    android:layout_width="60dip" 
+			    android:layout_height="wrap_content" 
+			    android:text="+++"/>
 	</LinearLayout>
 	<Button 
-		android:text="@string/submit" 
+		android:text="@string/save" 
 		android:id="@+id/submit" 
 		android:layout_width="wrap_content" 
 		android:layout_height="wrap_content"

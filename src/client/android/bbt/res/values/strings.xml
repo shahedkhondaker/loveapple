@@ -4,6 +4,7 @@
     <string name="hello">%1$tm月%1$td日の体温を入力してください。</string>
     <string name="temperature">体温</string>
     <string name="celsius">℃</string>
+    <string name="save">保存</string>
     <string name="submit">送信</string>
     <string name="coitus">セックス</string>
     <string name="menstruation">生理</string>
