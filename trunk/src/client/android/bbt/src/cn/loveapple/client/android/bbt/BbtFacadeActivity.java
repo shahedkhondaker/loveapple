@@ -115,9 +115,6 @@ public class BbtFacadeActivity extends Activity implements OnClickListener {
 		if(entity == null){
 			entity = new TemperatureEntity();
 		}
-		
-		// 分量を表すアダプター
-		ArrayAdapter measureListAdapter = ArrayAdapter.createFromResource(this, R.array.measureList, android.R.layout.simple_spinner_item);
 
 		String[] measureList = getResources().getStringArray(R.array.measureList);
 		// 体温の初期化
