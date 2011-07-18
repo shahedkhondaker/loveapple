@@ -220,6 +220,7 @@ public class BbtFacadeActivity extends Activity implements OnClickListener {
 	@Override
 	public void onClick(View v) {
 		save();
+		finish();
 	}
 	
 	private TemperatureEntity save(){
