@@ -58,6 +58,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 import cn.loveapple.client.android.LoveappleHealthDatabaseOpenHelper;
 import cn.loveapple.client.android.bbt.R.id;
+import cn.loveapple.client.android.bbt.listener.MessagerOnSeekBarChangeListener;
 import cn.loveapple.client.android.bbt.listener.TemperatureSelectedListener;
 import cn.loveapple.client.android.database.TemperatureDao;
 import cn.loveapple.client.android.database.entity.TemperatureEntity;
@@ -118,16 +119,33 @@ public class BbtFacadeActivity extends Activity implements OnClickListener {
 		// 分量を表すアダプター
 		ArrayAdapter measureListAdapter = ArrayAdapter.createFromResource(this, R.array.measureList, android.R.layout.simple_spinner_item);
 
+		String[] measureList = getResources().getStringArray(R.array.measureList);
 		// 体温の初期化
        initTemperature(entity);
        
        // 下り物セレクトボックス初期化
        SeekBar leukorrhea = (SeekBar) findViewById(id.leukorrhea);
-       leukorrhea.setProgress(Integer.parseInt(entity.getLeukorrhea()));
+       TextView leukorrheaViewMsg = (TextView)findViewById(id.leukorrheaViewMsg);
+       leukorrhea.setOnSeekBarChangeListener(new MessagerOnSeekBarChangeListener(leukorrheaViewMsg, measureList));
+       if(entity.getLeukorrhea() == null){
+    	   leukorrhea.setProgress(0);
+       }else{
+    	   leukorrhea.setProgress(Integer.parseInt(entity.getLeukorrhea()));
+       }
+       leukorrheaViewMsg.setText(measureList[leukorrhea.getProgress()]);
 
+       
 		// 生理出血量
        SeekBar menstruationLevel = (SeekBar) findViewById(id.menstruationLevel);
-       menstruationLevel.setProgress(Integer.parseInt(entity.getMenstruationLevel()));
+       TextView menstruationLevelViewMsg = (TextView)findViewById(id.menstruationLevelViewMsg);
+       menstruationLevel.setOnSeekBarChangeListener(new MessagerOnSeekBarChangeListener(menstruationLevelViewMsg, measureList));
+       if(entity.getMenstruationLevel() == null){
+    	   menstruationLevel.setProgress(0);
+       }else{
+    	   menstruationLevel.setProgress(Integer.parseInt(entity.getMenstruationLevel()));
+       }
+       menstruationLevelViewMsg.setText(measureList[menstruationLevel.getProgress()]);
+       
 	       
 		// セックス
 		CheckBox coitus = (CheckBox)findViewById(id.coitus);
