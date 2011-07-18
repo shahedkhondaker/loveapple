@@ -63,8 +63,8 @@ public abstract class BaseDao implements LoveappleDao{
 	 */
 	public BaseDao(LoveappleHealthDatabaseOpenHelper helper){
 		this.helper = helper;
-		writableDb = helper.getWritableDatabase();
-		readableDb = helper.getReadableDatabase();
+		//writableDb = helper.getWritableDatabase();
+		//readableDb = helper.getReadableDatabase();
 	}
 	
 	public <T> T save(Entity entity){

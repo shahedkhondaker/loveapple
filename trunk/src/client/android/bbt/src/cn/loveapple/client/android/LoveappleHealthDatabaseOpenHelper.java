@@ -32,12 +32,14 @@
  */
 package cn.loveapple.client.android;
 
-import android.content.ContentValues;
+import static cn.loveapple.client.android.Constant.*;
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
-import android.database.sqlite.SQLiteDatabase.CursorFactory;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.database.sqlite.SQLiteDatabase.CursorFactory;
+import android.os.Environment;
 import android.util.Log;
+import cn.loveapple.client.android.database.entity.TemperatureEntity;
 
 
 /**
@@ -55,7 +57,10 @@ public class LoveappleHealthDatabaseOpenHelper extends SQLiteOpenHelper {
 	 * DB名
 	 */
 	public static final String DB_NAME="LOVEAPPLE_HEALTH";
-	
+	/**
+	 * DBパス
+	 */
+	public static String DB_PATH = Environment.getDataDirectory()+"/data/cn.loveapple.client.android.bbt/databases/";
 
 	/**
 	 * 
@@ -68,6 +73,21 @@ public class LoveappleHealthDatabaseOpenHelper extends SQLiteOpenHelper {
 	}
 
 	/**
+	 * 体温テーブルを定義するSQL文
+	 */
+	private static final String DEFINE_TABLE_TEMPERATURE = "create table "
+															+ TemperatureEntity.TABLE_NAME + "("
+															+ TemperatureEntity.COLUMN_DATE + " text primary key,"
+															+ TemperatureEntity.COLUMN_TIMESTAMP + " text,"
+															+ TemperatureEntity.COLUMN_TEMPERATURE + " real,"
+															+ TemperatureEntity.COLUMN_COITUS_FLG + " text,"
+															+ TemperatureEntity.COLUMN_MENSTRUATION_FLG + " text,"
+															+ TemperatureEntity.COLUMN_DYSMENORRHEA_FLG + " text,"
+															+ TemperatureEntity.COLUMN_LEUKORRHEA + " text,"
+															+ TemperatureEntity.COLUMN_MENSTRUATION_LEVEL + " text,"
+															+ TemperatureEntity.COLUMN_MENSTRUATION_CYCLE + " integer);";
+	
+	/**
 	 * 
 	 * {@inheritDoc}
 	 */
@@ -75,23 +95,15 @@ public class LoveappleHealthDatabaseOpenHelper extends SQLiteOpenHelper {
 	public void onCreate(SQLiteDatabase db) {
 		try{
 			StringBuilder createSql = new StringBuilder();
-			createSql.append("create table temperature(");
-			createSql.append("date text primary key");
-			createSql.append(",timestamp text");
-			createSql.append(",temperature real");
-			createSql.append(",coitus_flg text");
-			createSql.append(",menstruation_flg text");
-			createSql.append(",dysmenorrhea_flg text");
-			createSql.append(",leukorrhea text");
-			createSql.append(",menstruation_level text");
-			createSql.append(",menstruation_cycle integer");
-			createSql.append(");");
+			
+			createSql.append(DEFINE_TABLE_TEMPERATURE);
+			
+			Log.i(LOG_TAG, "init DB:" + createSql);
 			
 			db.execSQL(createSql.toString());
 			
 			db.setTransactionSuccessful();
 		}finally{
-			db.endTransaction();
 			db.close();
 		}
 	}
@@ -102,7 +114,7 @@ public class LoveappleHealthDatabaseOpenHelper extends SQLiteOpenHelper {
 	 */
 	@Override
 	public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-		Log.i("init", "onUpgrade.");
+		Log.i(LOG_TAG, "onUpgrade.");
 		
 	}
 

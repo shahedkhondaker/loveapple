@@ -88,7 +88,7 @@
 			    android:id="@+id/menstruationLevelViewMsg"
 			    android:layout_width="60dip" 
 			    android:layout_height="wrap_content" 
-			    android:text="+++"/>
+			    android:text=""/>
 	</LinearLayout>
 	
 	<!-- 下り物の入力項目(非必須) -->
@@ -113,13 +113,19 @@
 			    android:id="@+id/leukorrheaViewMsg"
 			    android:layout_width="60dip" 
 			    android:layout_height="wrap_content" 
-			    android:text="+++"/>
+			    android:text=""/>
 	</LinearLayout>
-	<Button 
-		android:text="@string/save" 
-		android:id="@+id/submit" 
-		android:layout_width="wrap_content" 
-		android:layout_height="wrap_content"
-		android:layout_gravity="center" />
+	<LinearLayout
+		android:orientation="horizontal"
+		android:layout_height="wrap_content" 
+		android:layout_width="match_parent" 
+		android:id="@+id/leukorrheaHLine">
+		<Button 
+			android:text="@string/save" 
+			android:id="@+id/submit" 
+			android:layout_width="wrap_content" 
+			android:layout_height="wrap_content"
+			android:layout_gravity="center" />
+	</LinearLayout>
 		
 </LinearLayout>

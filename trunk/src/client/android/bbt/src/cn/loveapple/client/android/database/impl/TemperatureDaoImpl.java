@@ -39,6 +39,7 @@ import java.util.List;
 
 import android.content.ContentValues;
 import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
 import android.util.Log;
 import cn.loveapple.client.android.LoveappleHealthDatabaseOpenHelper;
 import cn.loveapple.client.android.database.BaseDao;
@@ -81,13 +82,20 @@ public class TemperatureDaoImpl extends BaseDao implements TemperatureDao {
 		values.put(COLUMN_LEUKORRHEA, source.getLeukorrhea());
 		values.put(COLUMN_MENSTRUATION_LEVEL, source.getMenstruationLevel());
 		values.put(COLUMN_MENSTRUATION_CYCLE, source.getMenstruationCycle());
-		
-		int colNum = writableDb.update(TABLE_NAME, values, COLUMN_DATE + "=?", new String[]{source.getDate()});
-		if(colNum < 1) {
-			writableDb.insert(TABLE_NAME, null, values);
-			Log.i("BBT", values.toString());
+		try{
+			//writableDb = helper.getWritableDatabase();
+			writableDb = SQLiteDatabase.openDatabase(LoveappleHealthDatabaseOpenHelper.DB_PATH + LoveappleHealthDatabaseOpenHelper.DB_NAME, null, SQLiteDatabase.OPEN_READWRITE);
+			
+			
+			int colNum = writableDb.update(TABLE_NAME, values, COLUMN_DATE + "=?", new String[]{source.getDate()});
+			if(colNum < 1) {
+				writableDb.insert(TABLE_NAME, null, values);
+				Log.i("BBT", values.toString());
+			}
+			result = findByDate(source.getDate());
+		}finally{
+			writableDb.close();
 		}
-		result = findByDate(source.getDate());
 		
 		return result;
 	}
@@ -95,29 +103,46 @@ public class TemperatureDaoImpl extends BaseDao implements TemperatureDao {
 	public List<TemperatureEntity> findByTerm(String start, String end){
 		List<TemperatureEntity> result = null;
 		
-		Cursor cursor = readableDb.query(
-				TABLE_NAME, 
-				null, 
-				"?<=" + COLUMN_DATE + " AND ?=" + COLUMN_DATE + " ORDER BY " + COLUMN_DATE ,
-				new String[]{start, end}, null, null, null);
-		result = new ArrayList<TemperatureEntity>();
-		cursor.moveToFirst();
-		while(!cursor.isAfterLast()){
-			result.add(getTemperatureEntity(cursor));
-			cursor.moveToNext();
+		try{
+			//readableDb = helper.getReadableDatabase();
+			readableDb = SQLiteDatabase.openDatabase(LoveappleHealthDatabaseOpenHelper.DB_PATH + LoveappleHealthDatabaseOpenHelper.DB_NAME, null, SQLiteDatabase.OPEN_READONLY);
+			
+			
+			Cursor cursor = readableDb.query(
+					TABLE_NAME, 
+					null, 
+					"?<=" + COLUMN_DATE + " AND ?=" + COLUMN_DATE + " ORDER BY " + COLUMN_DATE ,
+					new String[]{start, end}, null, null, null);
+			result = new ArrayList<TemperatureEntity>();
+			cursor.moveToFirst();
+			while(!cursor.isAfterLast()){
+				result.add(getTemperatureEntity(cursor));
+				cursor.moveToNext();
+			}
+		}finally{
+			readableDb.close();
 		}
 		return result;
 	}
 	public TemperatureEntity findByDate(String date){
 		
 		TemperatureEntity result = null;
-		Cursor cursor = readableDb.query(
-				TABLE_NAME,
-				null, 
-				COLUMN_DATE + " <=? ORDER BY " + COLUMN_DATE + " DESC LIMIT 1",
-				new String[]{date}, null, null, null);
-		cursor.moveToFirst();
-		result = getTemperatureEntity(cursor);
+		try{
+			//readableDb = helper.getReadableDatabase();
+			readableDb = SQLiteDatabase.openDatabase(LoveappleHealthDatabaseOpenHelper.DB_PATH + LoveappleHealthDatabaseOpenHelper.DB_NAME, null, SQLiteDatabase.OPEN_READONLY);
+			
+			Cursor cursor = readableDb.query(
+					TABLE_NAME,
+					null, 
+					COLUMN_DATE + " <=? ORDER BY " + COLUMN_DATE + " DESC LIMIT 1",
+					new String[]{date}, null, null, null);
+			cursor.moveToFirst();
+			result = getTemperatureEntity(cursor);
+		}finally{
+			if(readableDb != null){
+				readableDb.close();
+			}
+		}
 		return result;
 	}
 	
