@@ -15,8 +15,8 @@ import android.view.View;
  */
 public class GraphView extends View {
 
-	public static boolean BAR = true;
-	public static boolean LINE = false;
+	public static boolean BAR = false;
+	public static boolean LINE = true;
 
 	private Paint paint;
 	private float[] values;
