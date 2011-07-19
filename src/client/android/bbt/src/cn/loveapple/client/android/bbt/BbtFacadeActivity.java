@@ -74,40 +74,17 @@ import cn.loveapple.client.android.util.DateUtil;
  * @id $Id:$
  *
  */
-public class BbtFacadeActivity extends Activity implements OnClickListener {
-	private TemperatureDao dao;
-	private PackageInfo packageInfo;
-	private String today;
-	private Date todayDate;
-	private List<String> temperatureList;
-	private static final int MENU_HELP = 0;
-	private static final int MENU_OPT = 1;
-	
-	/**
-	 * 初期化を行う
-	 */
-	private void init(){
-		try{
-			packageInfo = getPackageManager().getPackageInfo(getPackageName(), PackageManager.GET_META_DATA);
-		}catch (NameNotFoundException e) {
-			throw new RuntimeException(e);
-		}
-		todayDate = new Date();
-		today = DateUtil.toDateString(todayDate);
-		dao = new TemperatureDaoImpl(new LoveappleHealthDatabaseOpenHelper(this, null, packageInfo.versionCode));
+public class BbtFacadeActivity extends BaseActivity implements OnClickListener {
 		
-		temperatureList = new ArrayList<String>(8);
-		for(int i = 35; i < 43; i++){
-			temperatureList.add(String.valueOf(i));
-		}
-	}
-	
 	/**
 	 * 各コンポーネント表示するための初期化を行う
 	 */
-	private void initView(){
+	@Override
+	protected void initView(){
 		
-		setContentView(R.layout.main);
+		// 送信ボタン
+        Button submit = (Button) findViewById(id.submit);
+        submit.setOnClickListener(this);
 		
 		// 直近の体温情報を取得
 		TemperatureEntity entity = dao.findByDate(today);
@@ -198,17 +175,6 @@ public class BbtFacadeActivity extends Activity implements OnClickListener {
         temperatureText.setText(String.valueOf(Math.abs(value)));
  	}
 	
-	/**
-	 * 
-	 * {@inheritDoc}
-	 */
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        
-        // 初期化
-        init();
-    }
 
     /**
      * 
@@ -320,24 +286,9 @@ public class BbtFacadeActivity extends Activity implements OnClickListener {
 	 * 3．生理を選択される場合、下り物が非表示する。
 	 * 
 	 */
-	public void initVisibility(){
-		
-	}
-	/**
-	 * 画面表示の初期化を行う
-	 */
 	@Override
-	public void onResume(){
-		super.onResume();
-        
-        // 表示画面の初期化
-        initView();
-        
-        // 表示/非表示初期化
-        initVisibility();
-        
-        Button submit = (Button) findViewById(id.submit);
-        submit.setOnClickListener(this);
+	protected void initVisibility(){
+		
 	}
 	
 	@Override
