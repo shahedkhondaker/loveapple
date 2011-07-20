@@ -29,4 +29,5 @@
     <string name="viewItemSetting">表示項目の設定</string>
     <string name="dysmenorrheaViewExplain">生理痛項目の表示設定</string>
     <string name="leukorrheaViewExplain">下り物項目の表示設定</string>
+    <string name="activity_animation_duration">10</string>
 </resources>
