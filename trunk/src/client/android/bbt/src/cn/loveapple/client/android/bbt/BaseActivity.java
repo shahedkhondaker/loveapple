@@ -45,11 +45,14 @@ import cn.loveapple.client.android.database.impl.TemperatureDaoImpl;
 import cn.loveapple.client.android.util.DateUtil;
 import cn.loveapple.client.android.util.StringUtils;
 import android.app.Activity;
+import android.content.Context;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.content.pm.PackageManager.NameNotFoundException;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Display;
+import android.view.WindowManager;
 
 /**
  * アクティビティの基底クラス。
@@ -62,18 +65,56 @@ import android.util.Log;
  *
  */
 public class BaseActivity extends Activity {
+	/**
+	 * 体温DAO
+	 */
 	protected TemperatureDao dao;
+	/**
+	 * 本日を表す文字
+	 * @see DateUtil#DATE_PTTERN_YYYYMMDD
+	 */
 	protected String today;
+	/**
+	 * 本日の日時
+	 */
 	protected Date todayDate;
+	/**
+	 * システムパッケージ情報
+	 */
 	protected PackageInfo packageInfo;
+	/**
+	 * 許容体温リスト
+	 */
 	protected List<String> temperatureList;
+	/**
+	 * ヘルプメニューフラグ値
+	 */
 	protected static final int MENU_HELP = 0;
+	/**
+	 * 設定メニューフラグ値
+	 */
 	protected static final int MENU_OPT = 1;
-
+	/**
+	 * 画面ディスプレ
+	 */
+	protected Display display;
+	/**
+	 * 初期ダウン座標：X
+	 */
+	protected float downX = 0;
+	/**
+	 * 初期ダウン座標：Y
+	 */
+	protected float downY = 0;
+	
 	/**
 	 * 初期化を行う
 	 */
 	protected void init(){
+
+    	WindowManager wm = (WindowManager) getSystemService(Context.WINDOW_SERVICE);
+    	display = wm.getDefaultDisplay();
+    	
 		try{
 			packageInfo = getPackageManager().getPackageInfo(getPackageName(), PackageManager.GET_META_DATA);
 		}catch (NameNotFoundException e) {
@@ -94,7 +135,7 @@ public class BaseActivity extends Activity {
 	 * {@inheritDoc}
 	 */
     @Override
-    public void onCreate(Bundle savedInstanceState) {
+    protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         
         // 初期化
@@ -116,7 +157,7 @@ public class BaseActivity extends Activity {
 	 * 画面表示の初期化を行う
 	 */
 	@Override
-	public void onResume(){
+	protected void onResume(){
 		super.onResume();
         
         initView();

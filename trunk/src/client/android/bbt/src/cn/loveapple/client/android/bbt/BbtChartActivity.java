@@ -41,12 +41,15 @@ import org.afree.data.general.DefaultPieDataset;
 import org.afree.graphics.geom.Font;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.content.pm.PackageManager.NameNotFoundException;
 import android.graphics.Typeface;
 import android.os.Bundle;
+import android.view.Display;
 import android.view.View;
+import android.view.WindowManager;
 import android.view.View.OnClickListener;
 import cn.loveapple.client.android.LoveappleHealthDatabaseOpenHelper;
 import cn.loveapple.client.android.database.TemperatureDao;
@@ -61,16 +64,20 @@ import cn.loveapple.client.android.util.DateUtil;
  *
  */
 public class BbtChartActivity extends BaseActivity implements OnClickListener {
-
+	
 	/**
 	 * 
 	 * {@inheritDoc}
 	 */
     @Override
-    public void onCreate(Bundle savedInstanceState) {
+    protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-     
-        DefaultPieDataset dataset = new DefaultPieDataset();
+        
+        
+
+        /*
+         * Jfree
+         * DefaultPieDataset dataset = new DefaultPieDataset();
         dataset.setValue("Cupcake", new Integer(40));
         dataset.setValue("Donut", new Integer(5));
         dataset.setValue("Eclair", new Integer(10));
@@ -81,14 +88,15 @@ public class BbtChartActivity extends BaseActivity implements OnClickListener {
         PiePlot plot = (PiePlot) chart.getPlot();
         plot.setLabelFont(new Font("SansSerif", Typeface.NORMAL, 8));
         SamplePieChartView spcv = (SamplePieChartView) findViewById(R.id.spcv);
-        spcv.setChart(chart);
-        /*
+        spcv.setChart(chart);*/
+        
+        /* GraphView */
         super.onCreate(savedInstanceState);
 		float[] values = new float[] { 35.79f,36.7f, 42.1f, 36.9f , 36.7f, 39.8f };
 		String[] verlabels = new String[] { "43.0", "42.0", "41.0", "40.0", "39.0", "38.0", "37.0", "36.0", "35.0" };
 		String[] horlabels = new String[] { "today", "tomorrow", "next week", "next month" };
 		GraphView graphView = new GraphView(this, values, "GraphViewDemo",horlabels, verlabels, GraphView.LINE);
-		setContentView(graphView);*/
+		setContentView(graphView);
     }
 
 	/**
@@ -99,5 +107,14 @@ public class BbtChartActivity extends BaseActivity implements OnClickListener {
 		
 
 	}
+    
+    /**
+     * 
+     * {@inheritDoc}
+     */
+    @Override
+    protected void init(){
+    	super.init();
+    }
 
 }
