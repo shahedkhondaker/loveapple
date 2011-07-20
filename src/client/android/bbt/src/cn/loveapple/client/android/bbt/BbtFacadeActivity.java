@@ -307,41 +307,6 @@ public class BbtFacadeActivity extends BaseActivity implements OnClickListener {
 		super.onRestoreInstanceState(savedInstanceState);
 	}
 
-	/**
-	 * 
-	 * {@inheritDoc}
-	 */
-	@Override
-	public boolean onTouchEvent(MotionEvent event) {
-		switch (event.getAction()) {
-		case MotionEvent.ACTION_DOWN:
-			downX = event.getX();
-			downY = event.getY();
-			break;
-		case MotionEvent.ACTION_UP:
-			break;
-		case MotionEvent.ACTION_MOVE:
-			break;
-		case MotionEvent.ACTION_CANCEL:
-			break;
-		}
-		if(event.getAction() == MotionEvent.ACTION_OUTSIDE){
-
-			Log.d(LOG_TAG,
-			        "ouside");
-		}
-		if(event.getAction() == MotionEvent.ACTION_UP && 100 <= Math.abs(downX - event.getX())){
-
-			Log.d(LOG_TAG,
-			        "true: downX = " + downX + ", " +
-			        "downY = " + downY + ", x = " + event.getX());
-			finish();
-			return super.onTouchEvent(event);
-			
-		}
-		return super.onTouchEvent(event);
-
-	}
 
 	/**
 	 * 

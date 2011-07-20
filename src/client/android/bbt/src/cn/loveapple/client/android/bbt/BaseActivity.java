@@ -39,11 +39,6 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-import cn.loveapple.client.android.LoveappleHealthDatabaseOpenHelper;
-import cn.loveapple.client.android.database.TemperatureDao;
-import cn.loveapple.client.android.database.impl.TemperatureDaoImpl;
-import cn.loveapple.client.android.util.DateUtil;
-import cn.loveapple.client.android.util.StringUtils;
 import android.app.Activity;
 import android.content.Context;
 import android.content.pm.PackageInfo;
@@ -52,7 +47,13 @@ import android.content.pm.PackageManager.NameNotFoundException;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Display;
+import android.view.MotionEvent;
 import android.view.WindowManager;
+import cn.loveapple.client.android.LoveappleHealthDatabaseOpenHelper;
+import cn.loveapple.client.android.database.TemperatureDao;
+import cn.loveapple.client.android.database.impl.TemperatureDaoImpl;
+import cn.loveapple.client.android.util.DateUtil;
+import cn.loveapple.client.android.util.StringUtils;
 
 /**
  * アクティビティの基底クラス。
@@ -177,4 +178,24 @@ public class BaseActivity extends Activity {
     protected void initView(){
     	
     }
+    
+
+	/**
+	 * 画面を閉じるボタンを原則的に用意しないので、
+	 * 横にドロップしたら、アプリを終了する。
+	 */
+	@Override
+	public boolean onTouchEvent(MotionEvent event) {
+		if(event.getAction() == MotionEvent.ACTION_DOWN){
+			downX = event.getX();
+			downY = event.getY();
+		}
+		if(event.getAction() == MotionEvent.ACTION_UP && 100 <= Math.abs(downX - event.getX())){
+			finish();
+			return super.onTouchEvent(event);
+			
+		}
+		return super.onTouchEvent(event);
+
+	}
 }
