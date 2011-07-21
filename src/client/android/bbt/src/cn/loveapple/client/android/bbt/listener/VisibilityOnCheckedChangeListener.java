@@ -34,7 +34,12 @@ package cn.loveapple.client.android.bbt.listener;
 
 import static android.view.View.*;
 import static cn.loveapple.client.android.util.ComponentUtil.*;
+
+import org.apache.commons.lang.ArrayUtils;
+
 import android.app.Activity;
+import android.content.SharedPreferences;
+import android.preference.PreferenceManager;
 import android.view.View;
 import android.widget.CompoundButton;
 import android.widget.CompoundButton.OnCheckedChangeListener;
@@ -52,15 +57,15 @@ public class VisibilityOnCheckedChangeListener implements
 		OnCheckedChangeListener {
 	private Activity target;
 	private int visibility;
-	private View[] visibleList;
-	private View[] hiddenList;
+	private ViewVisibilityHelper[] visibleList;
+	private ViewVisibilityHelper[] hiddenList;
 	
 	/**
 	 * @see View#GONE
 	 * @param visibleList
 	 * @param hiddenList
 	 */
-	public VisibilityOnCheckedChangeListener(Activity target, View[] visibleList, View[] hiddenList){
+	public VisibilityOnCheckedChangeListener(Activity target, ViewVisibilityHelper[] visibleList, ViewVisibilityHelper[] hiddenList){
 		this(target, visibleList, hiddenList, GONE);
 	}
 	/**
@@ -69,7 +74,7 @@ public class VisibilityOnCheckedChangeListener implements
 	 * @param hiddenList
 	 * @param visibility
 	 */
-	public VisibilityOnCheckedChangeListener(Activity target, View[] visibleList, View[] hiddenList, int visibility){
+	public VisibilityOnCheckedChangeListener(Activity target, ViewVisibilityHelper[] visibleList, ViewVisibilityHelper[] hiddenList, int visibility){
 		if(visibility != GONE && visibility != INVISIBLE){
 			visibility = GONE;
 		}
@@ -81,20 +86,54 @@ public class VisibilityOnCheckedChangeListener implements
 	 * {@inheritDoc}
 	 */
 	@Override
-	public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+	public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {		
+	//TODO
 		if(isChecked){
 			if(visibility == VISIBLE){
-				setVisibilityList(target, visibleList, hiddenList, null);
+				if(ArrayUtils.isNotEmpty(visibleList)){
+					for (ViewVisibilityHelper helper : visibleList) {
+						
+					}
+				}
+				//setVisibilityList(target, visibleList, hiddenList, null);
 			}else{
-				setVisibilityList(target, visibleList, null, hiddenList);
+				//setVisibilityList(target, visibleList, null, hiddenList);
 			}
 		}else{
 			if(visibility == VISIBLE){
-				setVisibilityList(target, hiddenList, visibleList, null);
+				//setVisibilityList(target, hiddenList, visibleList, null);
 			}else{
-				setVisibilityList(target, hiddenList, null, visibleList);
+				//setVisibilityList(target, hiddenList, null, visibleList);
 			}
 		}
 	}
+	
+	/**
+	 * 
+	 * 
+	 * @author $Author$
+	 * @version $Revision$
+	 * @date $Date$
+	 * @id $Id$
+	 *
+	 */
+	public static class ViewVisibilityHelper {
 
+		private String preferencesKey;
+		private View view;
+		
+		public ViewVisibilityHelper(View view, String preferencesKey) {
+			this.view = view;
+			this.preferencesKey = preferencesKey;
+		}
+		
+		public boolean isView(Activity target){
+			SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(target);
+			return preferences.getBoolean(preferencesKey, false);
+		}
+		
+		public View getView(){
+			return view;
+		}
+	}
 }

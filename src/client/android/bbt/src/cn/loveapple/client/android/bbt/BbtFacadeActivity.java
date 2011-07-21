@@ -55,6 +55,7 @@ import cn.loveapple.client.android.bbt.listener.TemperatureSelectedListener;
 import cn.loveapple.client.android.bbt.listener.VisibilityOnCheckedChangeListener;
 import cn.loveapple.client.android.database.entity.TemperatureEntity;
 import cn.loveapple.client.android.util.ComponentUtil;
+import cn.loveapple.client.android.bbt.listener.VisibilityOnCheckedChangeListener.ViewVisibilityHelper;
 
 /**
  * Loveapple基礎体温(Android版)ファサードアクティビティ
@@ -185,9 +186,16 @@ public class BbtFacadeActivity extends BaseActivity implements OnClickListener {
 
 		// 生理
 		menstruation.setChecked(FLG_ON.equals(entity.getMenstruationFlg()));
+		
 		menstruation.setOnCheckedChangeListener(
 				new VisibilityOnCheckedChangeListener(
-						this, new View[]{dysmenorrhea, dysmenorrheaHLine}, new View[]{leukorrheaHLine}));
+						this,
+						new ViewVisibilityHelper[]{ 
+								new ViewVisibilityHelper(dysmenorrhea, "dysmenorrhea"),
+								new ViewVisibilityHelper(dysmenorrheaHLine, "menstruationLevel")},
+						new ViewVisibilityHelper[]{
+								new ViewVisibilityHelper(leukorrheaHLine,"leukorrhea")}
+						));
 		
 
 		// 生理痛
@@ -307,15 +315,28 @@ public class BbtFacadeActivity extends BaseActivity implements OnClickListener {
 	@Override
 	protected void initVisibility() {
 		SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(this);
-		//TODO
-		Log.d(LOG_TAG, "" +preferences.getBoolean("dysmenorrhea", false));
-		Log.d(LOG_TAG, "" +preferences.getBoolean("leukorrhea", false));
+
+		boolean isViewDysmenorrhea = preferences.getBoolean("dysmenorrhea", false);
+		boolean isViewLeukorrhea = preferences.getBoolean("leukorrhea", false);
+		boolean isViewMenstruationLevel = preferences.getBoolean("menstruationLevel", false);
 		if(menstruation.isChecked()){
-			ComponentUtil.setVisibleList(this, dysmenorrhea);
-			ComponentUtil.setVisibleList(this, dysmenorrheaHLine);
+			if(isViewDysmenorrhea){
+				ComponentUtil.setVisibleList(this, dysmenorrhea);
+			}else{
+				ComponentUtil.setGoneList(this, dysmenorrhea);
+			}
+			if(isViewMenstruationLevel){
+				ComponentUtil.setVisibleList(this, dysmenorrheaHLine);
+			}else{
+				ComponentUtil.setGoneList(this, dysmenorrheaHLine);
+			}
 			ComponentUtil.setGoneList(this, leukorrheaHLine);
 		}else{
-			ComponentUtil.setVisibleList(this, leukorrheaHLine);
+			if(isViewLeukorrhea){
+				ComponentUtil.setVisibleList(this, leukorrheaHLine);
+			}else{
+				ComponentUtil.setGoneList(this, leukorrheaHLine);
+			}
 			ComponentUtil.setGoneList(this, dysmenorrhea);
 			ComponentUtil.setGoneList(this, dysmenorrheaHLine);
 		}
