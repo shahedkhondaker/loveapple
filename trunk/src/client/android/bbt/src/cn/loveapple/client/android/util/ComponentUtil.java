@@ -54,20 +54,29 @@ public class ComponentUtil {
 	 * @param invisibleList
 	 * @param gonList
 	 */
-	public void setVisibilityList(Activity target, int[] visibleList, int[] invisibleList, int[] goneList){
+	public static void setVisibilityList(Activity target, View[] visibleList, View[] invisibleList, View[] goneList){
 		if(ArrayUtils.isNotEmpty(visibleList)){
-			for (int id : visibleList) {
-				target.findViewById(id).setVisibility(View.VISIBLE);
+			for (View v : visibleList) {
+				if(v == null){
+					continue;
+				}
+				v.setVisibility(View.VISIBLE);
 			}
 		}
 		if(ArrayUtils.isNotEmpty(invisibleList)){
-			for (int id : invisibleList) {
-				target.findViewById(id).setVisibility(View.INVISIBLE);
+			for (View v : invisibleList) {
+				if(v == null){
+					continue;
+				}
+				v.setVisibility(View.INVISIBLE);
 			}
 		}
 		if(ArrayUtils.isNotEmpty(goneList)){
-			for (int id : goneList) {
-				target.findViewById(id).setVisibility(View.GONE);
+			for (View v : goneList) {
+				if(v == null){
+					continue;
+				}
+				v.setVisibility(View.GONE);
 			}
 		}
 	}
@@ -79,7 +88,7 @@ public class ComponentUtil {
 	 * @param target　対象{@linkplain Activity}
 	 * @param gonList
 	 */
-	public void setGoneList(Activity target, int... goneList){
+	public static void setGoneList(Activity target, View... goneList){
 		setVisibilityList(target, null, null, goneList);
 	}
 	
@@ -89,7 +98,7 @@ public class ComponentUtil {
 	 * @param target
 	 * @param visibleList
 	 */
-	public void setVisibleList(Activity target, int... visibleList){
+	public static void setVisibleList(Activity target, View... visibleList){
 		setVisibilityList(target, visibleList, null, null);
 	}
 	

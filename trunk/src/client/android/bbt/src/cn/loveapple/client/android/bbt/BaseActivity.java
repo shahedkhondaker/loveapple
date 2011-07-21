@@ -41,14 +41,18 @@ import java.util.List;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.content.pm.PackageManager.NameNotFoundException;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Display;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.WindowManager;
+import android.widget.Toast;
 import cn.loveapple.client.android.LoveappleHealthDatabaseOpenHelper;
 import cn.loveapple.client.android.database.TemperatureDao;
 import cn.loveapple.client.android.database.impl.TemperatureDaoImpl;
@@ -197,5 +201,40 @@ public class BaseActivity extends Activity {
 		}
 		return super.onTouchEvent(event);
 
+	}
+
+	/**
+	 * 全画面共通のオプションメニュー
+	 */
+	@Override
+	public boolean onCreateOptionsMenu(Menu menu) {
+		menu.add(0, MENU_OPT, 0, getText(R.string.setting)).setIcon(
+				android.R.drawable.ic_menu_preferences);
+		menu.add(0, MENU_HELP, 0, getText(R.string.help)).setIcon(
+				android.R.drawable.ic_menu_help);
+
+		return true;
+	}
+	/**
+	 * 
+	 * {@inheritDoc}
+	 */
+	@Override
+	public boolean onOptionsItemSelected(MenuItem item) {
+		switch (item.getItemId()) {
+		case MENU_HELP:
+			Toast.makeText(this, "HELP", Toast.LENGTH_LONG).show();
+
+			return true;
+		case MENU_OPT:
+			Toast.makeText(this, "Option", Toast.LENGTH_LONG).show();
+
+			Intent intent = new Intent();
+			intent.setClassName(this, BbtSetting.class.getName());
+			startActivity(intent);
+			return true;
+		}
+
+		return true;
 	}
 }
