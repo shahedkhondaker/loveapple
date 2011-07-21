@@ -73,26 +73,7 @@ public class BbtChartActivity extends BaseActivity implements OnClickListener {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         
-        
-
-        /*
-         * Jfree
-         * DefaultPieDataset dataset = new DefaultPieDataset();
-        dataset.setValue("Cupcake", new Integer(40));
-        dataset.setValue("Donut", new Integer(5));
-        dataset.setValue("Eclair", new Integer(10));
-        dataset.setValue("Froyo", new Integer(25));
-        dataset.setValue("Gingerbread", new Integer(20));
-        dataset.setValue("Honeycomb", new Integer(50));
-        AFreeChart chart = ChartFactory.createPieChart("サンプル", dataset,true, false, false);
-        PiePlot plot = (PiePlot) chart.getPlot();
-        plot.setLabelFont(new Font("SansSerif", Typeface.NORMAL, 8));
-        SamplePieChartView spcv = (SamplePieChartView) findViewById(R.id.spcv);
-        spcv.setChart(chart);*/
-        
-        /* GraphView */
-        super.onCreate(savedInstanceState);
-		float[] values = new float[] { 35.79f,36.7f, 42.1f, 36.9f , 36.7f, 39.8f };
+        float[] values = new float[] { 35.79f,36.7f, 42.1f, 36.9f , 36.7f, 39.8f };
 		String[] verlabels = new String[] { "43.0", "42.0", "41.0", "40.0", "39.0", "38.0", "37.0", "36.0", "35.0" };
 		String[] horlabels = new String[] { "today", "tomorrow", "next week", "next month" };
 		GraphView graphView = new GraphView(this, values, "GraphViewDemo",horlabels, verlabels, GraphView.LINE);
