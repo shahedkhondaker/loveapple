@@ -34,17 +34,17 @@ package cn.loveapple.client.android.bbt;
 
 import static cn.loveapple.client.android.Constant.*;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.util.Log;
-import android.view.Menu;
-import android.view.MenuItem;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.SeekBar;
 import android.widget.Spinner;
 import android.widget.TextView;
@@ -52,7 +52,9 @@ import android.widget.Toast;
 import cn.loveapple.client.android.bbt.R.id;
 import cn.loveapple.client.android.bbt.listener.MessagerOnSeekBarChangeListener;
 import cn.loveapple.client.android.bbt.listener.TemperatureSelectedListener;
+import cn.loveapple.client.android.bbt.listener.VisibilityOnCheckedChangeListener;
 import cn.loveapple.client.android.database.entity.TemperatureEntity;
+import cn.loveapple.client.android.util.ComponentUtil;
 
 /**
  * Loveapple基礎体温(Android版)ファサードアクティビティ
@@ -66,13 +68,79 @@ import cn.loveapple.client.android.database.entity.TemperatureEntity;
 public class BbtFacadeActivity extends BaseActivity implements OnClickListener {
 
 	/**
+	 * 体温：使用数点以降の入力部分
+	 */
+	private EditText temperatureText;
+	/**
+	 * 体温：整数部
+	 */
+	private Spinner temperature;
+	/**
+	 * セックス
+	 */
+	private CheckBox coitus;
+	/**
+	 * 生理
+	 */
+	private CheckBox menstruation;
+	/**
+	 * 生理痛
+	 */
+	private CheckBox dysmenorrhea;
+	/**
+	 * 下り物
+	 */
+	private SeekBar leukorrhea;
+	/**
+	 * 生理の出血量
+	 */
+	private SeekBar menstruationLevel;
+	/**
+	 * 送信ボタン
+	 */
+	private Button submit;
+	/**
+	 * 下り物を表すラベル
+	 */
+	private TextView leukorrheaViewMsg;
+	/**
+	 * 生理の出血量を表すラベル
+	 */
+	private TextView menstruationLevelViewMsg;
+	/**
+	 * タイトル
+	 */
+	private TextView headMsg;
+	/**
+	 * 生理情報関連項目のブロック
+	 */
+	private LinearLayout dysmenorrheaHLine;
+	/**
+	 * 下り物関連項目のブロック
+	 */
+	private LinearLayout leukorrheaHLine;
+	
+	/**
 	 * 各コンポーネント表示するための初期化を行う
 	 */
 	@Override
 	protected void initView() {
 
+		temperatureText = (EditText) findViewById(id.temperatureText);
+		temperature = (Spinner) findViewById(id.temperature);
+		coitus = (CheckBox) findViewById(id.coitus);
+		menstruation = (CheckBox) findViewById(id.menstruation);
+		dysmenorrhea = (CheckBox) findViewById(id.dysmenorrhea);
+		leukorrhea = (SeekBar) findViewById(id.leukorrhea);
+		menstruationLevel = (SeekBar) findViewById(id.menstruationLevel);
+		submit = (Button) findViewById(id.submit);
+		leukorrheaViewMsg = (TextView) findViewById(id.leukorrheaViewMsg);
+		menstruationLevelViewMsg = (TextView) findViewById(id.menstruationLevelViewMsg);
+		headMsg = (TextView) findViewById(id.headMsg);
+		dysmenorrheaHLine = (LinearLayout) findViewById(R.id.dysmenorrheaHLine);
+		leukorrheaHLine = (LinearLayout) findViewById(R.id.leukorrheaHLine);
+
 		// 送信ボタン
-		Button submit = (Button) findViewById(id.submit);
 		submit.setOnClickListener(this);
 
 		// 直近の体温情報を取得
@@ -88,8 +156,6 @@ public class BbtFacadeActivity extends BaseActivity implements OnClickListener {
 		initTemperature(entity);
 
 		// 下り物セレクトボックス初期化
-		SeekBar leukorrhea = (SeekBar) findViewById(id.leukorrhea);
-		TextView leukorrheaViewMsg = (TextView) findViewById(id.leukorrheaViewMsg);
 		leukorrhea
 				.setOnSeekBarChangeListener(new MessagerOnSeekBarChangeListener(
 						leukorrheaViewMsg, measureList));
@@ -101,8 +167,6 @@ public class BbtFacadeActivity extends BaseActivity implements OnClickListener {
 		leukorrheaViewMsg.setText(measureList[leukorrhea.getProgress()]);
 
 		// 生理出血量
-		SeekBar menstruationLevel = (SeekBar) findViewById(id.menstruationLevel);
-		TextView menstruationLevelViewMsg = (TextView) findViewById(id.menstruationLevelViewMsg);
 		menstruationLevel
 				.setOnSeekBarChangeListener(new MessagerOnSeekBarChangeListener(
 						menstruationLevelViewMsg, measureList));
@@ -116,18 +180,19 @@ public class BbtFacadeActivity extends BaseActivity implements OnClickListener {
 				.getProgress()]);
 
 		// セックス
-		CheckBox coitus = (CheckBox) findViewById(id.coitus);
 		coitus.setChecked(FLG_ON.equals(entity.getCoitusFlg()));
+		
 
 		// 生理
-		CheckBox menstruation = (CheckBox) findViewById(id.menstruation);
 		menstruation.setChecked(FLG_ON.equals(entity.getMenstruationFlg()));
+		menstruation.setOnCheckedChangeListener(
+				new VisibilityOnCheckedChangeListener(
+						this, new View[]{dysmenorrhea, dysmenorrheaHLine}, new View[]{leukorrheaHLine}));
+		
 
 		// 生理痛
-		CheckBox dysmenorrhea = (CheckBox) findViewById(id.dysmenorrhea);
 		dysmenorrhea.setChecked(FLG_ON.equals(entity.getDysmenorrheaFlg()));
 
-		TextView headMsg = (TextView) findViewById(id.headMsg);
 		headMsg.setText(String.format(getText(R.string.hello).toString(),
 				todayDate));
 	}
@@ -139,7 +204,6 @@ public class BbtFacadeActivity extends BaseActivity implements OnClickListener {
 	 */
 	private void initTemperature(TemperatureEntity entity) {
 		// 温度セレクトボックスの初期化
-		Spinner temperature = (Spinner) findViewById(id.temperature);
 		ArrayAdapter<String> tempperatureAdapter = new ArrayAdapter<String>(
 				this, android.R.layout.simple_spinner_item);
 		tempperatureAdapter
@@ -165,7 +229,6 @@ public class BbtFacadeActivity extends BaseActivity implements OnClickListener {
 			return;
 		}
 		// 体温テキストを初期化
-		EditText temperatureText = (EditText) findViewById(id.temperatureText);
 		double value = entity.getTemperature() == null ? 0 : entity
 				.getTemperature();
 		if (value == 0.0) {
@@ -173,7 +236,7 @@ public class BbtFacadeActivity extends BaseActivity implements OnClickListener {
 			return;
 		}
 		value = (value - entity.getTemperature().intValue()) * 100;
-		temperatureText.setText(String.valueOf(Math.abs(value)));
+		temperatureText.setText(String.valueOf((int)value));
 	}
 
 	/**
@@ -212,13 +275,6 @@ public class BbtFacadeActivity extends BaseActivity implements OnClickListener {
 	 */
 	private TemperatureEntity createEntity() {
 		TemperatureEntity entity = new TemperatureEntity();
-		EditText temperatureText = (EditText) findViewById(id.temperatureText);
-		Spinner temperature = (Spinner) findViewById(id.temperature);
-		CheckBox coitus = (CheckBox) findViewById(id.coitus);
-		CheckBox menstruation = (CheckBox) findViewById(id.menstruation);
-		CheckBox dysmenorrhea = (CheckBox) findViewById(id.dysmenorrhea);
-		SeekBar leukorrhea = (SeekBar) findViewById(id.leukorrhea);
-		SeekBar menstruationLevel = (SeekBar) findViewById(id.menstruationLevel);
 
 		// 温度の選択値
 		StringBuilder temperatureValue = new StringBuilder(10);
@@ -239,53 +295,30 @@ public class BbtFacadeActivity extends BaseActivity implements OnClickListener {
 		return entity;
 	}
 
-	/**
-	 * 
-	 * {@inheritDoc}
-	 */
-	@Override
-	public boolean onOptionsItemSelected(MenuItem item) {
-		switch (item.getItemId()) {
-		case MENU_HELP:
-			Toast.makeText(this, "HELP", Toast.LENGTH_LONG).show();
-
-			return true;
-		case MENU_OPT:
-			Toast.makeText(this, "Option", Toast.LENGTH_LONG).show();
-
-			Intent intent = new Intent();
-			intent.setClassName(this, BbtSetting.class.getName());
-			startActivity(intent);
-			return true;
-		}
-
-		return true;
-	}
-
-	/**
-	 * 
-	 * {@inheritDoc}
-	 */
-	@Override
-	public boolean onCreateOptionsMenu(Menu menu) {
-		menu.add(0, MENU_OPT, 0, getText(R.string.setting)).setIcon(
-				android.R.drawable.ic_menu_preferences);
-		menu.add(0, MENU_HELP, 0, getText(R.string.help)).setIcon(
-				android.R.drawable.ic_menu_help);
-
-		return true;
-	}
 
 	/**
 	 * 表示/非表示の初期化<br>
 	 * <b>ルール：</b><br>
-	 * 1．生理痛、出血量、下り物がオプションで設定される場合のみ表示する。
-	 * 2．オプションで表示設定される場合、生理を選択される場合、生理痛、出血量が表示される。 3．生理を選択される場合、下り物が非表示する。
+	 * 1．生理痛、出血量、下り物がオプションで設定される場合のみ表示する。<br>
+	 * 2．オプションで表示設定される場合、生理を選択される場合、生理痛、出血量が表示される。 <br>
+	 * 3．生理を選択される場合、下り物が非表示する。<br>
 	 * 
 	 */
 	@Override
 	protected void initVisibility() {
-
+		SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(this);
+		//TODO
+		Log.d(LOG_TAG, "" +preferences.getBoolean("dysmenorrhea", false));
+		Log.d(LOG_TAG, "" +preferences.getBoolean("leukorrhea", false));
+		if(menstruation.isChecked()){
+			ComponentUtil.setVisibleList(this, dysmenorrhea);
+			ComponentUtil.setVisibleList(this, dysmenorrheaHLine);
+			ComponentUtil.setGoneList(this, leukorrheaHLine);
+		}else{
+			ComponentUtil.setVisibleList(this, leukorrheaHLine);
+			ComponentUtil.setGoneList(this, dysmenorrhea);
+			ComponentUtil.setGoneList(this, dysmenorrheaHLine);
+		}
 	}
 
 	/**
