@@ -93,13 +93,22 @@ public class ComponentUtil {
 	}
 	
 	/**
-	 * 
+	 * 対象{@linkplain Activity}から、表示({@linkplain View#VISIBLE})の{@linkplain View}を制御する。
 	 * @see #setVisibilityList(Activity, int[], int[], int[])
 	 * @param target
 	 * @param visibleList
 	 */
 	public static void setVisibleList(Activity target, View... visibleList){
 		setVisibilityList(target, visibleList, null, null);
+	}
+	
+	/**
+	 * 対象{@linkplain Activity}から、非表示({@linkplain View#INVISIBLE})の{@linkplain View}を制御する。
+	 * @param target
+	 * @param invisibleList
+	 */
+	public static void setInvisibleList(Activity target, View... invisibleList){
+		setVisibilityList(target, null, invisibleList, null);
 	}
 	
 }

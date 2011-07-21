@@ -87,22 +87,73 @@ public class VisibilityOnCheckedChangeListener implements
 	 */
 	@Override
 	public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {		
-	//TODO
+	//TODO 確認待ち
 		if(isChecked){
-			if(visibility == VISIBLE){
+			if(visibility == INVISIBLE){
 				if(ArrayUtils.isNotEmpty(visibleList)){
 					for (ViewVisibilityHelper helper : visibleList) {
-						
+						if(helper.isView(target)){
+							setVisibleList(target, helper.getView());
+						}else{
+							setInvisibleList(target, helper.getView());
+						}
+					}
+				}
+				if(ArrayUtils.isNotEmpty(hiddenList)){
+					for (ViewVisibilityHelper helper : hiddenList) {
+						setInvisibleList(target, helper.getView());
 					}
 				}
 				//setVisibilityList(target, visibleList, hiddenList, null);
 			}else{
+				if(ArrayUtils.isNotEmpty(visibleList)){
+					for (ViewVisibilityHelper helper : visibleList) {
+						if(helper.isView(target)){
+							setVisibleList(target, helper.getView());
+						}else{
+							setGoneList(target, helper.getView());
+						}
+					}
+				}
+				if(ArrayUtils.isNotEmpty(hiddenList)){
+					for (ViewVisibilityHelper helper : hiddenList) {
+						setGoneList(target, helper.getView());
+					}
+				}
 				//setVisibilityList(target, visibleList, null, hiddenList);
 			}
 		}else{
-			if(visibility == VISIBLE){
+			if(visibility == INVISIBLE){
+				if(ArrayUtils.isNotEmpty(visibleList)){
+					for (ViewVisibilityHelper helper : visibleList) {
+						setInvisibleList(target, helper.getView());
+					}
+				}
+				if(ArrayUtils.isNotEmpty(hiddenList)){
+					for (ViewVisibilityHelper helper : hiddenList) {
+						if(helper.isView(target)){
+							setVisibleList(target, helper.getView());
+						}else{
+							setGoneList(target, helper.getView());
+						}
+					}
+				}
 				//setVisibilityList(target, hiddenList, visibleList, null);
 			}else{
+				if(ArrayUtils.isNotEmpty(visibleList)){
+					for (ViewVisibilityHelper helper : visibleList) {
+						setGoneList(target, helper.getView());
+					}
+				}
+				if(ArrayUtils.isNotEmpty(hiddenList)){
+					for (ViewVisibilityHelper helper : hiddenList) {
+						if(helper.isView(target)){
+							setVisibleList(target, helper.getView());
+						}else{
+							setGoneList(target, helper.getView());
+						}
+					}
+				}
 				//setVisibilityList(target, hiddenList, null, visibleList);
 			}
 		}

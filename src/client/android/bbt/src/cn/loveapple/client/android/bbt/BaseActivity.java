@@ -223,12 +223,9 @@ public class BaseActivity extends Activity {
 	public boolean onOptionsItemSelected(MenuItem item) {
 		switch (item.getItemId()) {
 		case MENU_HELP:
-			Toast.makeText(this, "HELP", Toast.LENGTH_LONG).show();
-
+			
 			return true;
 		case MENU_OPT:
-			Toast.makeText(this, "Option", Toast.LENGTH_LONG).show();
-
 			Intent intent = new Intent();
 			intent.setClassName(this, BbtSetting.class.getName());
 			startActivity(intent);
