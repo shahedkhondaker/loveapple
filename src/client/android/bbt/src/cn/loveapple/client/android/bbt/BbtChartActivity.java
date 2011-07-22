@@ -56,8 +56,9 @@ public class BbtChartActivity extends BaseActivity implements OnClickListener {
         float[] values = new float[] { 35.79f,36.7f, 42.1f, 36.9f , 36.7f, 39.8f };
 		String[] verlabels = new String[] { "43.0", "42.0", "41.0", "40.0", "39.0", "38.0", "37.0", "36.0", "35.0" };
 		String[] horlabels = new String[] { "today", "tomorrow", "next week", "next month" };
-		GraphView graphView = new GraphView(this, values, "GraphViewDemo",horlabels, verlabels, GraphView.LINE);
-		setContentView(graphView);
+		TemperatureGraphView graphView = new TemperatureGraphView(this, null, "GraphViewDemo");
+		
+		//setContentView(graphView);
     }
 
 	/**
