@@ -38,8 +38,6 @@ import static cn.loveapple.client.android.util.ComponentUtil.*;
 import org.apache.commons.lang.ArrayUtils;
 
 import android.app.Activity;
-import android.content.SharedPreferences;
-import android.preference.PreferenceManager;
 import android.view.View;
 import android.widget.CompoundButton;
 import android.widget.CompoundButton.OnCheckedChangeListener;
@@ -87,12 +85,11 @@ public class VisibilityOnCheckedChangeListener implements
 	 */
 	@Override
 	public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {		
-	//TODO 確認待ち
 		if(isChecked){
 			if(visibility == INVISIBLE){
 				if(ArrayUtils.isNotEmpty(visibleList)){
 					for (ViewVisibilityHelper helper : visibleList) {
-						if(helper.isView(target)){
+						if(helper.isView()){
 							setVisibleList(target, helper.getView());
 						}else{
 							setInvisibleList(target, helper.getView());
@@ -104,11 +101,10 @@ public class VisibilityOnCheckedChangeListener implements
 						setInvisibleList(target, helper.getView());
 					}
 				}
-				//setVisibilityList(target, visibleList, hiddenList, null);
 			}else{
 				if(ArrayUtils.isNotEmpty(visibleList)){
 					for (ViewVisibilityHelper helper : visibleList) {
-						if(helper.isView(target)){
+						if(helper.isView()){
 							setVisibleList(target, helper.getView());
 						}else{
 							setGoneList(target, helper.getView());
@@ -120,7 +116,6 @@ public class VisibilityOnCheckedChangeListener implements
 						setGoneList(target, helper.getView());
 					}
 				}
-				//setVisibilityList(target, visibleList, null, hiddenList);
 			}
 		}else{
 			if(visibility == INVISIBLE){
@@ -131,14 +126,13 @@ public class VisibilityOnCheckedChangeListener implements
 				}
 				if(ArrayUtils.isNotEmpty(hiddenList)){
 					for (ViewVisibilityHelper helper : hiddenList) {
-						if(helper.isView(target)){
+						if(helper.isView()){
 							setVisibleList(target, helper.getView());
 						}else{
 							setGoneList(target, helper.getView());
 						}
 					}
 				}
-				//setVisibilityList(target, hiddenList, visibleList, null);
 			}else{
 				if(ArrayUtils.isNotEmpty(visibleList)){
 					for (ViewVisibilityHelper helper : visibleList) {
@@ -147,14 +141,13 @@ public class VisibilityOnCheckedChangeListener implements
 				}
 				if(ArrayUtils.isNotEmpty(hiddenList)){
 					for (ViewVisibilityHelper helper : hiddenList) {
-						if(helper.isView(target)){
+						if(helper.isView()){
 							setVisibleList(target, helper.getView());
 						}else{
 							setGoneList(target, helper.getView());
 						}
 					}
 				}
-				//setVisibilityList(target, hiddenList, null, visibleList);
 			}
 		}
 	}
@@ -170,17 +163,16 @@ public class VisibilityOnCheckedChangeListener implements
 	 */
 	public static class ViewVisibilityHelper {
 
-		private String preferencesKey;
+		private boolean isView;
 		private View view;
 		
-		public ViewVisibilityHelper(View view, String preferencesKey) {
+		public ViewVisibilityHelper(View view, boolean isView) {
 			this.view = view;
-			this.preferencesKey = preferencesKey;
+			this.isView = isView;
 		}
 		
-		public boolean isView(Activity target){
-			SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(target);
-			return preferences.getBoolean(preferencesKey, false);
+		public boolean isView(){
+			return isView;
 		}
 		
 		public View getView(){

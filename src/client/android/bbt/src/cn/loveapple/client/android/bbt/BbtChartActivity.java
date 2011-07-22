@@ -32,29 +32,9 @@
  */
 package cn.loveapple.client.android.bbt;
 
-import java.util.Date;
-
-import org.afree.chart.AFreeChart;
-import org.afree.chart.ChartFactory;
-import org.afree.chart.plot.PiePlot;
-import org.afree.data.general.DefaultPieDataset;
-import org.afree.graphics.geom.Font;
-
-import android.app.Activity;
-import android.content.Context;
-import android.content.pm.PackageInfo;
-import android.content.pm.PackageManager;
-import android.content.pm.PackageManager.NameNotFoundException;
-import android.graphics.Typeface;
 import android.os.Bundle;
-import android.view.Display;
 import android.view.View;
-import android.view.WindowManager;
 import android.view.View.OnClickListener;
-import cn.loveapple.client.android.LoveappleHealthDatabaseOpenHelper;
-import cn.loveapple.client.android.database.TemperatureDao;
-import cn.loveapple.client.android.database.impl.TemperatureDaoImpl;
-import cn.loveapple.client.android.util.DateUtil;
 
 /**
  * @author $author:$

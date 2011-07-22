@@ -52,7 +52,6 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.WindowManager;
-import android.widget.Toast;
 import cn.loveapple.client.android.LoveappleHealthDatabaseOpenHelper;
 import cn.loveapple.client.android.database.TemperatureDao;
 import cn.loveapple.client.android.database.impl.TemperatureDaoImpl;
@@ -177,7 +176,7 @@ public class BaseActivity extends Activity {
 		
 	}
     /**
-     * 表示画面の初期化
+     * {@linkplain #onResume()}が実行される際、画面に表示するコンポーネントの初期化を行う
      */
     protected void initView(){
     	
