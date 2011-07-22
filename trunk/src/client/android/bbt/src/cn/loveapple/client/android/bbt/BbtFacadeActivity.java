@@ -37,7 +37,6 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
-import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.ArrayAdapter;
@@ -53,9 +52,9 @@ import cn.loveapple.client.android.bbt.R.id;
 import cn.loveapple.client.android.bbt.listener.MessagerOnSeekBarChangeListener;
 import cn.loveapple.client.android.bbt.listener.TemperatureSelectedListener;
 import cn.loveapple.client.android.bbt.listener.VisibilityOnCheckedChangeListener;
+import cn.loveapple.client.android.bbt.listener.VisibilityOnCheckedChangeListener.ViewVisibilityHelper;
 import cn.loveapple.client.android.database.entity.TemperatureEntity;
 import cn.loveapple.client.android.util.ComponentUtil;
-import cn.loveapple.client.android.bbt.listener.VisibilityOnCheckedChangeListener.ViewVisibilityHelper;
 
 /**
  * Loveapple基礎体温(Android版)ファサードアクティビティ
@@ -120,13 +119,18 @@ public class BbtFacadeActivity extends BaseActivity implements OnClickListener {
 	 * 下り物関連項目のブロック
 	 */
 	private LinearLayout leukorrheaHLine;
+	/**
+	 * 設定情報
+	 */
+	private SharedPreferences preferences;
 	
 	/**
-	 * 各コンポーネント表示するための初期化を行う
+	 * {@inheritDoc}
+	 * 
 	 */
 	@Override
 	protected void initView() {
-
+		preferences = PreferenceManager.getDefaultSharedPreferences(this);
 		temperatureText = (EditText) findViewById(id.temperatureText);
 		temperature = (Spinner) findViewById(id.temperature);
 		coitus = (CheckBox) findViewById(id.coitus);
@@ -186,15 +190,17 @@ public class BbtFacadeActivity extends BaseActivity implements OnClickListener {
 
 		// 生理
 		menstruation.setChecked(FLG_ON.equals(entity.getMenstruationFlg()));
-		
+		boolean isViewDysmenorrhea = preferences.getBoolean("dysmenorrhea", false);
+		boolean isViewLeukorrhea = preferences.getBoolean("leukorrhea", false);
+		boolean isViewMenstruationLevel = preferences.getBoolean("menstruationLevel", false);
 		menstruation.setOnCheckedChangeListener(
 				new VisibilityOnCheckedChangeListener(
 						this,
 						new ViewVisibilityHelper[]{ 
-								new ViewVisibilityHelper(dysmenorrhea, "dysmenorrhea"),
-								new ViewVisibilityHelper(dysmenorrheaHLine, "menstruationLevel")},
+								new ViewVisibilityHelper(dysmenorrhea, isViewDysmenorrhea),
+								new ViewVisibilityHelper(dysmenorrheaHLine, isViewMenstruationLevel)},
 						new ViewVisibilityHelper[]{
-								new ViewVisibilityHelper(leukorrheaHLine,"leukorrhea")}
+								new ViewVisibilityHelper(leukorrheaHLine,isViewLeukorrhea)}
 						));
 		
 
@@ -314,7 +320,6 @@ public class BbtFacadeActivity extends BaseActivity implements OnClickListener {
 	 */
 	@Override
 	protected void initVisibility() {
-		SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(this);
 
 		boolean isViewDysmenorrhea = preferences.getBoolean("dysmenorrhea", false);
 		boolean isViewLeukorrhea = preferences.getBoolean("leukorrhea", false);
