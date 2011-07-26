@@ -22,11 +22,14 @@ public class TemperatureGraphView extends View {
 	public final static int DISPLAY_DIRECTION_W = 2;
 
 	private Paint paint;
+	/**
+	 * 体温の配列
+	 */
 	private TemperatureEntity[] temperatures;
 	private String title;
 	
 	
-	public TemperatureGraphView(Context context, TemperatureEntity[] temperatures, String title) {
+	public TemperatureGraphView(Context context, String title) {
 		super(context);
 		
 		if (title == null){
@@ -34,14 +37,12 @@ public class TemperatureGraphView extends View {
 		} else {
 			this.title = title;
 		}
-		if(temperatures == null){
-			this.temperatures = new TemperatureEntity[]{};
-		}else{
-			this.temperatures = temperatures;
-		}
+		this.temperatures = new TemperatureEntity[]{};
 		
 		paint = new Paint();
 	}
+	
+	
 
 	@Override
 	protected void onDraw(Canvas canvas) {
@@ -56,14 +57,14 @@ public class TemperatureGraphView extends View {
 		float graphwidth = width - (2 * border);
 
 		paint.setTextAlign(Align.LEFT);
-		/*int vers = verlabels.length - 1;
-		for (int i = 0; i < verlabels.length; i++) {
+		int vers = temperatures.length - 1;
+		for (int i = 0; i < temperatures.length; i++) {
 			paint.setColor(Color.DKGRAY);
 			float y = ((graphheight / vers) * i) + border;
 			canvas.drawLine(horstart, y, width, y, paint);
 			paint.setColor(Color.WHITE);
-			canvas.drawText(String.valueOf(verlabels[i]), 0, y, paint);
-		}
+			canvas.drawText(String.valueOf(temperatures[i].getTemperature()), 0, y, paint);
+		}/*
 		int hors = horlabels.length - 1;
 		for (int i = 0; i < horlabels.length; i++) {
 			paint.setColor(Color.DKGRAY);
@@ -117,6 +118,16 @@ public class TemperatureGraphView extends View {
 				smallest = temperature.getTemperature().doubleValue();
 		}
 		return smallest;
+	}
+
+
+
+	/**
+	 * 体温の配列を設定します。
+	 * @param temperatures 体温の配列
+	 */
+	public void setTemperatures(TemperatureEntity[] temperatures) {
+	    this.temperatures = temperatures;
 	}
 
 }
