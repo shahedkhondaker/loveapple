@@ -1,14 +1,13 @@
 package cn.loveapple.client.android.bbt;
 
-import org.apache.commons.lang.ArrayUtils;
-
+import static cn.loveapple.client.android.Constant.*;
 import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Paint.Align;
-import android.view.Display;
 import android.view.View;
+import cn.loveapple.client.android.bbt.R.color;
 import cn.loveapple.client.android.database.entity.TemperatureEntity;
 
 /**
@@ -53,35 +52,43 @@ public class TemperatureGraphView extends View {
 		double max = getMax();
 		double min = getMin();
 		double diff = max - min;
-		float graphheight = height - (2 * border);
+		float graphheight = height - (3 * border);
 		float graphwidth = width - (2 * border);
-
+		
+		setBackgroundColor(Color.WHITE);
+		
+		// 日付軸を描画
 		paint.setTextAlign(Align.LEFT);
-		int vers = temperatures.length - 1;
-		for (int i = 0; i < temperatures.length; i++) {
-			paint.setColor(Color.DKGRAY);
-			float y = ((graphheight / vers) * i) + border;
+		for (int i = 0; i < 31; i++) {
+			paint.setColor(color.line);
+			float y = ((graphheight / 31f) * i) + border;
 			canvas.drawLine(horstart, y, width, y, paint);
-			paint.setColor(Color.WHITE);
-			canvas.drawText(String.valueOf(temperatures[i].getTemperature()), 0, y, paint);
-		}/*
-		int hors = horlabels.length - 1;
-		for (int i = 0; i < horlabels.length; i++) {
+			paint.setColor(Color.BLACK);
+			canvas.drawText(String.valueOf(i), 0, y+1f, paint);
+		}
+		
+		// 温度軸を描画
+		int hors = 28;
+		for (int i = 0; i < 28; i++) {
 			paint.setColor(Color.DKGRAY);
-			float x = ((graphwidth / hors) * i) + horstart;
+			float x = (float) (((graphwidth / hors) * i) + horstart);
 			canvas.drawLine(x, height - border, x, border, paint);
 			paint.setTextAlign(Align.CENTER);
-			if (i==horlabels.length-1)
+			if (i==hors)
 				paint.setTextAlign(Align.RIGHT);
 			if (i==0)
 				paint.setTextAlign(Align.LEFT);
-			paint.setColor(Color.WHITE);
-			canvas.drawText(String.valueOf(horlabels[i]), x, height - 4, paint);
+			paint.setColor(Color.BLACK);
+			if(i%5 == 0){
+				canvas.drawText(String.valueOf(i), x, border, paint);
+			}
 		}
 
+		// タイトルを描画
 		paint.setTextAlign(Align.CENTER);
 		canvas.drawText(title, (graphwidth / 2) + horstart, border - 4, paint);
 
+		// 線チャートを描画
 		if (max != min) {
 			paint.setColor(Color.LTGRAY);
 			
@@ -90,15 +97,15 @@ public class TemperatureGraphView extends View {
 			float halfcol = colwidth / 2;
 			float lasth = 0;
 			for (int i = 0; i < temperatures.length; i++) {
-				float val = temperatures[i] - min;
-				float rat = val / diff;
+				float val = (float) (temperatures[i].getTemperature() - min);
+				float rat = (float) (val / diff);
 				float h = graphheight * rat;
 				if (i > 0)
 					canvas.drawLine(((i - 1) * colwidth) + (horstart + 1) + halfcol, (border - lasth) + graphheight, (i * colwidth) + (horstart + 1) + halfcol, (border - h) + graphheight, paint);
 				lasth = h;
 			}
 			
-		}*/
+		}
 	}
 
 	private double getMax() {
