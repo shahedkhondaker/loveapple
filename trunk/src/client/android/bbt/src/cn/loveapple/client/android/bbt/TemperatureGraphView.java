@@ -1,3 +1,35 @@
+/*
+ * $HeadURL$
+ * $Author$
+ * $Revision$
+ * $Date$
+ *
+ * ====================================================================
+ *
+ * Copyright (C) 2008 by loveapple.cn
+ *
+ * All copyright notices regarding loveapple and loveapple CoreLib
+ * MUST remain intact in the scripts, documents and source code.
+ *
+ * This library is free software; you can redistribute it and/or
+ * modify it under the terms of the GNU Lesser General Public 
+ * License as published by the Free Software Foundation; either
+ * version 3 of the License, or (at your option) any later version.
+ *
+ * This library is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+ * Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public
+ * License along with this library; if not, write to the Free Software
+ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
+ *
+ * Correspondence and Marketing Questions can be sent to:
+ * info at loveapple
+ *
+ * @author: loveapple
+ */
 package cn.loveapple.client.android.bbt;
 
 import static cn.loveapple.client.android.Constant.*;
@@ -11,9 +43,12 @@ import cn.loveapple.client.android.bbt.R.color;
 import cn.loveapple.client.android.database.entity.TemperatureEntity;
 
 /**
- * GraphView creates a scaled line or bar graph with x and y axis labels. 
- * @author Arno den Hond
- *
+ * 基礎体温のチャートを表示するビュー
+ * 
+ * @author $Author$
+ * @version $Revision$
+ * @date $Date$
+ * @id $Id$
  */
 public class TemperatureGraphView extends View {
 
@@ -45,6 +80,8 @@ public class TemperatureGraphView extends View {
 
 	@Override
 	protected void onDraw(Canvas canvas) {
+		
+		
 		float border = 20;
 		float horstart = border * 3;
 		float height = getHeight();
@@ -52,7 +89,7 @@ public class TemperatureGraphView extends View {
 		double max = getMax();
 		double min = getMin();
 		double diff = max - min;
-		float graphheight = height - (3 * border);
+		float graphheight = height - (5 * border);
 		float graphwidth = width - (2 * border);
 		
 		setBackgroundColor(Color.WHITE);
@@ -72,7 +109,7 @@ public class TemperatureGraphView extends View {
 		for (int i = 0; i < hors; i++) {
 			paint.setColor(Color.DKGRAY);
 			float x = (float) (((graphwidth / hors) * i) + horstart);
-			canvas.drawLine(x, height - border, x, border, paint);
+			canvas.drawLine(x, height - (5*border), x, border, paint);
 			paint.setTextAlign(Align.CENTER);
 			if (i==hors)
 				paint.setTextAlign(Align.RIGHT);
@@ -90,21 +127,19 @@ public class TemperatureGraphView extends View {
 
 		// 線チャートを描画
 		if (max != min) {
-			paint.setColor(Color.LTGRAY);
+			paint.setColor(Color.BLUE);
 			
 			float datalength = temperatures.length;
 			float colwidth = (width - (2 * border)) / datalength;
 			float halfcol = colwidth / 2;
 			float lasth = 0;
 			for (int i = 0; i < temperatures.length; i++) {
-				float y = ((graphheight / 31f) * i) + border;
-				float x = (float) (((graphwidth / hors) * i) + horstart);
 				
 				if(i > 0){
 					canvas.drawLine(
-							((graphheight / 31f) * (i-1)) + border,
+							(float)(((graphheight / 31f) * ((temperatures[(i-1)].getTemperature() - 35f)/0.1f)) + border),
 							(((graphwidth / hors) * (i-1)) + horstart), 
-							((graphheight / 31f) * i) + border,
+							(float)(((graphheight / 31f) * ((temperatures[(i)].getTemperature() - 35f)/0.1f)) + border),
 							(((graphwidth / hors) * i) + horstart),
 							paint);		
 				}
