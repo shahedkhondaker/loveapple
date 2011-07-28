@@ -32,6 +32,7 @@
  */
 package cn.loveapple.client.android.bbt;
 
+import cn.loveapple.client.android.bbt.R.string;
 import cn.loveapple.client.android.database.entity.TemperatureEntity;
 import android.os.Bundle;
 import android.view.View;
@@ -54,7 +55,10 @@ public class BbtChartActivity extends BaseActivity implements OnClickListener {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         
-        TemperatureGraphView graphView = new TemperatureGraphView(this, "GraphViewDemo");
+        StringBuilder title = new StringBuilder();
+        title.append(getText(string.temperature));
+        title.append(getText(string.graph));
+        TemperatureGraphView graphView = new TemperatureGraphView(this, title.toString());
 		TemperatureEntity t1 = new TemperatureEntity();
 		t1.setTemperature(36.1);
 		TemperatureEntity t2 = new TemperatureEntity();
