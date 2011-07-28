@@ -46,7 +46,7 @@ public class TemperatureGraphView extends View {
 	@Override
 	protected void onDraw(Canvas canvas) {
 		float border = 20;
-		float horstart = border * 2;
+		float horstart = border * 3;
 		float height = getHeight();
 		float width = getWidth() - 1;
 		double max = getMax();
@@ -68,8 +68,8 @@ public class TemperatureGraphView extends View {
 		}
 		
 		// 温度軸を描画
-		int hors = 28;
-		for (int i = 0; i < 28; i++) {
+		int hors = 40;
+		for (int i = 0; i < hors; i++) {
 			paint.setColor(Color.DKGRAY);
 			float x = (float) (((graphwidth / hors) * i) + horstart);
 			canvas.drawLine(x, height - border, x, border, paint);
@@ -80,7 +80,7 @@ public class TemperatureGraphView extends View {
 				paint.setTextAlign(Align.LEFT);
 			paint.setColor(Color.BLACK);
 			if(i%5 == 0){
-				canvas.drawText(String.valueOf(i), x, border, paint);
+				canvas.drawText(String.valueOf(i*0.1 + 35.0), x, border, paint);
 			}
 		}
 
@@ -97,12 +97,29 @@ public class TemperatureGraphView extends View {
 			float halfcol = colwidth / 2;
 			float lasth = 0;
 			for (int i = 0; i < temperatures.length; i++) {
-				float val = (float) (temperatures[i].getTemperature() - min);
+				float y = ((graphheight / 31f) * i) + border;
+				float x = (float) (((graphwidth / hors) * i) + horstart);
+				
+				if(i > 0){
+					canvas.drawLine(
+							((graphheight / 31f) * (i-1)) + border,
+							(((graphwidth / hors) * (i-1)) + horstart), 
+							((graphheight / 31f) * i) + border,
+							(((graphwidth / hors) * i) + horstart),
+							paint);		
+				}
+				
+				/*float val = (float) (temperatures[i].getTemperature() - min);
 				float rat = (float) (val / diff);
 				float h = graphheight * rat;
 				if (i > 0)
-					canvas.drawLine(((i - 1) * colwidth) + (horstart + 1) + halfcol, (border - lasth) + graphheight, (i * colwidth) + (horstart + 1) + halfcol, (border - h) + graphheight, paint);
-				lasth = h;
+					canvas.drawLine(
+							((i - 1) * colwidth) + (horstart + 1) + halfcol,
+							(border - lasth) + graphheight, 
+							(i * colwidth) + (horstart + 1) + halfcol,
+							(border - h) + graphheight,
+							paint);
+				lasth = h;*/
 			}
 			
 		}
