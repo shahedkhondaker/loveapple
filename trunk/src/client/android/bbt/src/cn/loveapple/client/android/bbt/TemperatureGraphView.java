@@ -83,22 +83,23 @@ public class TemperatureGraphView extends View {
 		
 		
 		float border = 20;
-		float horstart = border * 3;
+		float horstart = border * 4;
 		float height = getHeight();
-		float width = getWidth() - 1;
+		float width = getWidth() - border;
 		double max = getMax();
 		double min = getMin();
 		double diff = max - min;
-		float graphheight = height - (5 * border);
-		float graphwidth = width - (2 * border);
+		float graphTop = 5 * border;
+		float graphheight = height - graphTop- border;
+		float graphwidth = width - (horstart);
 		
 		setBackgroundColor(Color.WHITE);
 		
 		// 日付軸を描画
-		paint.setTextAlign(Align.LEFT);
+		paint.setTextAlign(Align.CENTER);
 		for (int i = 0; i < 31; i++) {
 			paint.setColor(color.line);
-			float y = ((graphheight / 31f) * i) + border;
+			float y = ((graphheight / 31f) * i) + graphTop;
 			canvas.drawLine(horstart, y, width, y, paint);
 			paint.setColor(Color.BLACK);
 			canvas.drawText(String.valueOf(i), 0, y+1f, paint);
@@ -108,8 +109,8 @@ public class TemperatureGraphView extends View {
 		int hors = 40;
 		for (int i = 0; i < hors; i++) {
 			paint.setColor(Color.DKGRAY);
-			float x = (float) (((graphwidth / hors) * i) + horstart);
-			canvas.drawLine(x, height - (5*border), x, border, paint);
+			float x = (float) (((graphwidth-graphTop / 100) * i) + horstart);
+			canvas.drawLine(x, graphTop, x, height, paint);
 			paint.setTextAlign(Align.CENTER);
 			if (i==hors)
 				paint.setTextAlign(Align.RIGHT);
@@ -117,7 +118,8 @@ public class TemperatureGraphView extends View {
 				paint.setTextAlign(Align.LEFT);
 			paint.setColor(Color.BLACK);
 			if(i%5 == 0){
-				canvas.drawText(String.valueOf(i*0.1 + 35.0), x, border, paint);
+				//canvas.drawText(String.valueOf(i*0.1 + 35.0), x, border, paint);
+				canvas.drawText(String.valueOf(x), x-20, graphTop, paint);
 			}
 		}
 
