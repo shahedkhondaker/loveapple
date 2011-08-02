@@ -60,10 +60,12 @@ public class BbtChartActivity extends BaseActivity implements OnClickListener {
         title.append(getText(string.graph));
         TemperatureGraphView graphView = new TemperatureGraphView(this, title.toString());
 		TemperatureEntity t1 = new TemperatureEntity();
-		t1.setTemperature(36.1);
+		t1.setTemperature(36.10);
 		TemperatureEntity t2 = new TemperatureEntity();
-		t2.setTemperature(37.1);
-		graphView.setTemperatures(new TemperatureEntity[]{t1, t2});
+		t2.setTemperature(37.10);
+		TemperatureEntity t3 = new TemperatureEntity();
+		t3.setTemperature(36.33);
+		graphView.setTemperatures(new TemperatureEntity[]{t1, t2, t3});
 		
 		setContentView(graphView);
     }
