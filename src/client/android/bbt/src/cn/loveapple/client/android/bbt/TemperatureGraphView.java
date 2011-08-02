@@ -54,6 +54,8 @@ public class TemperatureGraphView extends View {
 
 	public final static int DISPLAY_DIRECTION_H = 1;
 	public final static int DISPLAY_DIRECTION_W = 2;
+	public final static float VIEW_MIN_LIMIT_TEMPERATURE = 36.00f;
+	public final static float VIEW_MAX_LIMIT_TEMPERATURE = 40.00f;
 
 	private Paint paint;
 	/**
@@ -86,8 +88,8 @@ public class TemperatureGraphView extends View {
 		float horstart = border * 4;
 		float height = getHeight();
 		float width = getWidth();
-		double max = getMax();
-		double min = getMin();
+		double max = maxViewTemperature();
+		double min = minViewTemperature();
 		double diff = max - min;
 		float graphTop = 5 * border;
 		float graphheight = height - graphTop- border;
@@ -189,6 +191,27 @@ public class TemperatureGraphView extends View {
 				smallest = temperature.getTemperature().doubleValue();
 		}
 		return smallest;
+	}
+	
+	private float maxViewTemperature(){
+		double max = getMax();
+		double min = getMin();
+		if(max - min < 4){
+			if(max < VIEW_MAX_LIMIT_TEMPERATURE){
+				return VIEW_MAX_LIMIT_TEMPERATURE;
+			}
+		}
+		return (float)max;
+	}
+	private float minViewTemperature(){
+		double max = getMax();
+		double min = getMin();
+		if(max - min < 4){
+			if(VIEW_MIN_LIMIT_TEMPERATURE < min){
+				return VIEW_MIN_LIMIT_TEMPERATURE;
+			}
+		}
+		return (float)min;
 	}
 
 
