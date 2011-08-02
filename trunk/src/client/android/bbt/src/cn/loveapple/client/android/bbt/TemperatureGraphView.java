@@ -104,7 +104,7 @@ public class TemperatureGraphView extends View {
 		for (int i = 0; i < 31; i++) {
 			paint.setColor(color.line);
 			float y = (sellHeight * i) + graphTop;
-			canvas.drawLine(horstart, y, width-border-0.5f*sellHeight, y, paint);
+			canvas.drawLine(horstart, y, width-border-sellWidth, y, paint);
 			paint.setColor(Color.BLACK);
 			canvas.drawText(String.valueOf(i), horstart-border, y+2f, paint);
 		}
@@ -113,7 +113,7 @@ public class TemperatureGraphView extends View {
 		for (int i = 0; i < hors; i++) {
 			paint.setColor(color.line);
 			float x = (float) ((sellWidth * i) + horstart);
-			canvas.drawLine(x, graphTop, x, height - border-1.5f*sellWidth, paint);
+			canvas.drawLine(x, graphTop, x, height - border-sellHeight, paint);
 			paint.setTextAlign(Align.CENTER);
 			if (i==hors)
 				paint.setTextAlign(Align.RIGHT);
@@ -134,19 +134,26 @@ public class TemperatureGraphView extends View {
 		if (max != min) {
 			paint.setColor(Color.BLUE);
 			
-			float datalength = temperatures.length;
-			float colwidth = (width - (2 * border)) / datalength;
-			float halfcol = colwidth / 2;
+			float halfcol = sellWidth / 2;
 			float lasth = 0;
 			for (int i = 0; i < temperatures.length; i++) {
 				
 				if(i > 0){
 					canvas.drawLine(
-							(float)(((graphheight / 31f) * ((temperatures[(i-1)].getTemperature() - 35f)/0.1f)) + border),
-							(((graphwidth / hors) * (i-1)) + horstart), 
-							(float)(((graphheight / 31f) * ((temperatures[(i)].getTemperature() - 35f)/0.1f)) + border),
-							(((graphwidth / hors) * i) + horstart),
-							paint);		
+							(float)((sellWidth * ((temperatures[(i-1)].getTemperature() - min)/0.1f)) + horstart),
+							((sellHeight * (i-1)) + graphTop), 
+							(float)((sellWidth * ((temperatures[(i)].getTemperature() - min)/0.1f)) + horstart),
+							((sellHeight * i) + graphTop),
+							paint);
+					paint.setTextAlign(Align.RIGHT);
+					canvas.drawText(temperatures[(i-1)].getTemperature().toString(),
+							(float)((sellWidth * ((temperatures[(i-1)].getTemperature() - min)/0.1f)) + horstart),
+							(sellHeight * (i-1)) + graphTop, paint);
+					if(i == temperatures.length -1 ){
+						canvas.drawText(temperatures[(i)].getTemperature().toString(),
+								(float)((sellWidth * ((temperatures[(i)].getTemperature() - min)/0.1f)) + horstart),
+								(sellHeight * (i)) + graphTop, paint);
+					}
 				}
 				
 				/*float val = (float) (temperatures[i].getTemperature() - min);
