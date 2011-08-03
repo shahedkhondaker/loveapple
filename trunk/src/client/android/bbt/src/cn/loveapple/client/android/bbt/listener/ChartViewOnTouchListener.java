@@ -32,6 +32,7 @@
  */
 package cn.loveapple.client.android.bbt.listener;
 
+import cn.loveapple.client.android.bbt.BaseActivity;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.View.OnTouchListener;
@@ -45,14 +46,28 @@ import android.view.View.OnTouchListener;
  * @id $Id$
  */
 public class ChartViewOnTouchListener implements OnTouchListener {
-
+	private BaseActivity activity;
+	
+	private float downX;
+	private float downY;
+	public ChartViewOnTouchListener(BaseActivity activity){
+		this.activity = activity;
+	}
 	/**
 	 * {@inheritDoc}
 	 */
 	@Override
-	public boolean onTouch(View arg0, MotionEvent arg1) {
-		// TODO Auto-generated method stub
-		return false;
+	public boolean onTouch(View view, MotionEvent event) {
+		
+		if(event.getAction() == MotionEvent.ACTION_DOWN){
+			downX = event.getX();
+			downY = event.getY();
+		}
+		if(event.getAction() == MotionEvent.ACTION_UP && 100 <= Math.abs(downY - event.getY())){
+			
+			return true;
+			
+		}
+		return true;
 	}
-
 }

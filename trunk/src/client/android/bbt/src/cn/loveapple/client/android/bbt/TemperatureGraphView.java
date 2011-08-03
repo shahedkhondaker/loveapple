@@ -38,6 +38,7 @@ import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Paint.Align;
+import android.view.MotionEvent;
 import android.view.View;
 import cn.loveapple.client.android.bbt.R.color;
 import cn.loveapple.client.android.database.entity.TemperatureEntity;
@@ -223,5 +224,4 @@ public class TemperatureGraphView extends View {
 	public void setTemperatures(TemperatureEntity[] temperatures) {
 	    this.temperatures = temperatures;
 	}
-
 }
