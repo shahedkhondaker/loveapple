@@ -33,10 +33,13 @@
 package cn.loveapple.client.android.bbt;
 
 import cn.loveapple.client.android.bbt.R.string;
+import cn.loveapple.client.android.bbt.listener.ChartViewOnTouchListener;
 import cn.loveapple.client.android.database.entity.TemperatureEntity;
 import android.os.Bundle;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.widget.Toast;
 
 /**
  * @author $author:$
@@ -66,6 +69,46 @@ public class BbtChartActivity extends BaseActivity implements OnClickListener {
 		TemperatureEntity t3 = new TemperatureEntity();
 		t3.setTemperature(36.33);
 		graphView.setTemperatures(new TemperatureEntity[]{t1, t2, t3});
+		
+		
+		graphView.setOnTouchListener(new View.OnTouchListener() {
+
+			private float downX;
+			private float downY;
+			@Override
+			public boolean onTouch(View v, MotionEvent event) {
+				if(event.getAction() == MotionEvent.ACTION_DOWN){
+					Toast.makeText(v.getContext(), "down", Toast.LENGTH_LONG).show();
+					downX = event.getX();
+					downY = event.getY();
+				}
+				if(event.getAction() == MotionEvent.ACTION_UP){
+					Toast.makeText(
+							v.getContext(),
+							"up" +
+							"  =>downX:" + downX +
+							"  =>downY:" + downY +
+							"  x/y" + event.getX() + "/" + event.getY(),
+							
+							Toast.LENGTH_LONG).show();
+					
+				}
+				Toast.makeText(
+						v.getContext(),
+						event.getAction() +
+						"  =>downX:" + downX +
+						"  =>downY:" + downY +
+						"  x/y" + event.getX() + "/" + event.getY(),
+						
+						Toast.LENGTH_LONG).show();
+				if(100 <= Math.abs(downY - event.getY())){
+					Toast.makeText(v.getContext(), "!!", Toast.LENGTH_LONG).show();
+					return false;
+					
+				}
+				return false;
+			}
+		});
 		
 		setContentView(graphView);
     }
