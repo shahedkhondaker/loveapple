@@ -36,6 +36,7 @@ import cn.loveapple.client.android.bbt.BaseActivity;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.View.OnTouchListener;
+import android.widget.Toast;
 
 /**
  * オプションメニューを表示するアクティビティ
@@ -46,28 +47,22 @@ import android.view.View.OnTouchListener;
  * @id $Id$
  */
 public class ChartViewOnTouchListener implements OnTouchListener {
-	private BaseActivity activity;
 	
 	private float downX;
 	private float downY;
-	public ChartViewOnTouchListener(BaseActivity activity){
-		this.activity = activity;
-	}
 	/**
 	 * {@inheritDoc}
 	 */
 	@Override
 	public boolean onTouch(View view, MotionEvent event) {
 		
-		if(event.getAction() == MotionEvent.ACTION_DOWN){
-			downX = event.getX();
-			downY = event.getY();
-		}
-		if(event.getAction() == MotionEvent.ACTION_UP && 100 <= Math.abs(downY - event.getY())){
-			
-			return true;
-			
-		}
-		return true;
+		Toast.makeText(
+				view.getContext(),
+				event.getAction() +
+				"  =>downX:" + downX +
+				"  =>downY:" + downY +
+				"  x/y" + event.getX() + "/" + event.getY(),
+				Toast.LENGTH_LONG).show();
+		return false;
 	}
 }
