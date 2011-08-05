@@ -32,6 +32,8 @@
  */
 package cn.loveapple.client.android.bbt;
 
+import org.apache.commons.lang.ArrayUtils;
+
 import cn.loveapple.client.android.bbt.R.string;
 import cn.loveapple.client.android.bbt.listener.ChartViewOnTouchListener;
 import cn.loveapple.client.android.database.entity.TemperatureEntity;
@@ -50,6 +52,7 @@ import android.widget.Toast;
  */
 public class BbtChartActivity extends BaseActivity implements OnClickListener {
 	private TemperatureGraphView graphView;
+	private TemperatureEntity[] temperatureEntity;
 	/**
 	 * 
 	 * {@inheritDoc}
@@ -138,7 +141,9 @@ public class BbtChartActivity extends BaseActivity implements OnClickListener {
 		t36.setTemperature(36.50);
 		t37.setTemperature(36.50);
 
-		graphView.setTemperatures(new TemperatureEntity[]{t1, t2, t3,t4,t5,t6,t7,t8,t9,t10,t11,t12,t13,t14,t15,t16,t17,t18,t19,t20,t21,t22,t23,t24,t25,t26,t27,t28,t29,t30,t31,t32,t33,t34,t35,t36,t37});
+		temperatureEntity = new TemperatureEntity[]{t1, t2, t3,t4,t5,t6,t7,t8,t9,t10,t11,t12,t13,t14,t15,t16,t17,t18,t19,t20,t21,t22,t23,t24,t25,t26,t27,t28,t29,t30,t31,t32,t33,t34,t35,t36,t37};
+		
+		graphView.setTemperatures(temperatureEntity);
 		
 		
 		graphView.setOnTouchListener(new ChartViewOnTouchListener());
@@ -163,16 +168,23 @@ public class BbtChartActivity extends BaseActivity implements OnClickListener {
 	@Override
 	public boolean onTouchEvent(MotionEvent event) {
 		if(event.getAction() == MotionEvent.ACTION_DOWN){
-			Toast.makeText(this, "down", Toast.LENGTH_LONG).show();
+//			Toast.makeText(this, "down", Toast.LENGTH_LONG).show();
 			downX = event.getX();
 			downY = event.getY();
 		}
-		if(event.getAction() == MotionEvent.ACTION_UP && 100 <= Math.abs(downY - event.getY())){
-			Toast.makeText(this, "!!", Toast.LENGTH_LONG).show();
-			graphView.setTemperatures(new TemperatureEntity[]{});
-			setContentView(graphView);
-			return super.onTouchEvent(event);
+		if(event.getAction() == MotionEvent.ACTION_MOVE){
+			float diff = Math.abs(downY - event.getY());
+			if( diff >= graphView.getSellHeight()){
+				int count = (int) (diff / graphView.getSellHeight());
+				for(int i = 0; i < count; i++){
+					temperatureEntity = (TemperatureEntity[]) ArrayUtils.remove(temperatureEntity, i);
+				}
+			}
+
+			graphView.setTemperatures(temperatureEntity);
 		}
+
+		setContentView(graphView);
 		return super.onTouchEvent(event);
 	}
     

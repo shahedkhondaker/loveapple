@@ -8,16 +8,83 @@
 package cn.loveapple.client.android.bbt;
 
 public final class R {
+    public static final class anim {
+        public static final int activity_close_enter=0x7f040000;
+        public static final int activity_close_exit=0x7f040001;
+        public static final int activity_open_enter=0x7f040002;
+        public static final int activity_open_exit=0x7f040003;
+    }
+    public static final class array {
+        public static final int measureList=0x7f080000;
+    }
     public static final class attr {
+    }
+    public static final class color {
+        public static final int line=0x7f060000;
     }
     public static final class drawable {
         public static final int icon=0x7f020000;
     }
+    public static final class id {
+        public static final int coitus=0x7f0a0006;
+        public static final int dysmenorrhea=0x7f0a0008;
+        public static final int dysmenorrheaHLine=0x7f0a0009;
+        public static final int headMsg=0x7f0a0000;
+        public static final int leukorrhea=0x7f0a000f;
+        public static final int leukorrheaHLine=0x7f0a000d;
+        public static final int leukorrheaMsg=0x7f0a000e;
+        public static final int leukorrheaViewMsg=0x7f0a0010;
+        public static final int menstruation=0x7f0a0007;
+        public static final int menstruationLevel=0x7f0a000b;
+        public static final int menstruationLevelMsg=0x7f0a000a;
+        public static final int menstruationLevelViewMsg=0x7f0a000c;
+        public static final int otherPropertiesHLine=0x7f0a0005;
+        public static final int submit=0x7f0a0011;
+        public static final int temperature=0x7f0a0003;
+        public static final int temperatureHLine=0x7f0a0001;
+        public static final int temperatureMsg=0x7f0a0002;
+        public static final int temperatureText=0x7f0a0004;
+    }
     public static final class layout {
-        public static final int main=0x7f030000;
+        public static final int bbt_chart_activity=0x7f030000;
+        public static final int bbt_facade_activity=0x7f030001;
+        public static final int leukorrhea_spinner_item=0x7f030002;
     }
     public static final class string {
-        public static final int app_name=0x7f040001;
-        public static final int hello=0x7f040000;
+        public static final int accountSetting=0x7f070012;
+        public static final int activity_animation_duration=0x7f07001a;
+        public static final int app_name=0x7f070000;
+        public static final int baseSetting=0x7f070015;
+        public static final int celsius=0x7f070003;
+        public static final int close=0x7f070004;
+        public static final int coitus=0x7f070007;
+        public static final int dysmenorrhea=0x7f07000a;
+        public static final int dysmenorrheaViewExplain=0x7f070017;
+        public static final int graph=0x7f070011;
+        public static final int hello=0x7f070001;
+        public static final int help=0x7f070014;
+        public static final int leukorrhea=0x7f07000b;
+        public static final int leukorrheaViewExplain=0x7f070018;
+        public static final int little=0x7f07000d;
+        public static final int maxTemperature=0x7f070010;
+        public static final int menstruation=0x7f070008;
+        public static final int menstruationLevel=0x7f070009;
+        public static final int menstruationLevelExplain=0x7f070019;
+        public static final int minTemperature=0x7f07000f;
+        public static final int much=0x7f07000c;
+        public static final int save=0x7f070005;
+        public static final int setting=0x7f070013;
+        public static final int submit=0x7f070006;
+        public static final int temperature=0x7f070002;
+        public static final int usually=0x7f07000e;
+        public static final int viewItemSetting=0x7f070016;
+    }
+    public static final class style {
+        public static final int Animation=0x7f090000;
+        public static final int Animation_Activity=0x7f090001;
+        public static final int Default=0x7f090002;
+    }
+    public static final class xml {
+        public static final int setting=0x7f050000;
     }
 }
