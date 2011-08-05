@@ -38,7 +38,6 @@ import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Paint.Align;
-import android.view.MotionEvent;
 import android.view.View;
 import cn.loveapple.client.android.bbt.R.color;
 import cn.loveapple.client.android.database.entity.TemperatureEntity;
@@ -53,18 +52,38 @@ import cn.loveapple.client.android.database.entity.TemperatureEntity;
  */
 public class TemperatureGraphView extends View {
 
-	public final static int DISPLAY_DIRECTION_H = 1;
-	public final static int DISPLAY_DIRECTION_W = 2;
+//	public final static int DISPLAY_DIRECTION_H = 1;
+//	public final static int DISPLAY_DIRECTION_W = 2;
+	/**
+	 * デフォルト表示最低温度
+	 */
 	public final static float VIEW_MIN_LIMIT_TEMPERATURE = 36.00f;
+	/**
+	 * デフォルト表示最高温度
+	 */
 	public final static float VIEW_MAX_LIMIT_TEMPERATURE = 40.00f;
 
+	/**
+	 * 描画ペイント
+	 */
 	private Paint paint;
 	/**
 	 * 体温の配列
 	 */
 	private TemperatureEntity[] temperatures;
+	/**
+	 * タイトル
+	 */
 	private String title;
-	
+
+	/**
+	 * セル高さ
+	 */
+	float sellHeight;
+	/**
+	 * セル幅
+	 */
+	float sellWidth;
 	
 	public TemperatureGraphView(Context context, String title) {
 		super(context);
@@ -78,29 +97,65 @@ public class TemperatureGraphView extends View {
 		
 		paint = new Paint();
 	}
-	
-	
 
+	/**
+	 * メインの描画処理を行う。
+	 */
 	@Override
 	protected void onDraw(Canvas canvas) {
-		
-		
+
+		/**
+		 * 基準のボーダ
+		 */
 		float border = 20;
+		/**
+		 * グラフ左の開始ポイント
+		 */
 		float horstart = border * 4;
-		float height = getHeight();
-		float width = getWidth();
-		double max = maxViewTemperature();
-		double min = minViewTemperature();
-		double diff = max - min;
+		/**
+		 * グラフTOPの開始ポイント
+		 */
 		float graphTop = 5 * border;
+		/**
+		 * ディスプレの高さ
+		 */
+		float height = getHeight();
+		/**
+		 * ディスプレイの幅
+		 */
+		float width = getWidth();
+		/**
+		 * 最高温度
+		 */
+		double max = maxViewTemperature();
+		/**
+		 * 最低温度
+		 */
+		double min = minViewTemperature();
+		/**
+		 * グラフの高さ
+		 */
 		float graphheight = height - graphTop- border;
+		/**
+		 * グラフの幅
+		 */
 		float graphwidth = width - (horstart)-border;
+		/**
+		 * 温度の表示精度
+		 */
+		int hors = 40;
+		/**
+		 * セル高さ
+		 */
+		sellHeight = graphheight / 31f;
+		/**
+		 * セル幅
+		 */
+		sellWidth = graphwidth / hors;
+		
 		
 		setBackgroundColor(Color.WHITE);
 
-		int hors = 40;
-		float sellHeight = graphheight / 31f;
-		float sellWidth = graphwidth / hors;
 		
 		// 日付軸を描画
 		paint.setTextAlign(Align.CENTER);
@@ -137,8 +192,6 @@ public class TemperatureGraphView extends View {
 		if (max != min) {
 			paint.setColor(Color.BLUE);
 			
-			float halfcol = sellWidth / 2;
-			float lasth = 0;
 			for (int i = 0; i < temperatures.length; i++) {
 				
 				if(i > 0){
@@ -158,18 +211,6 @@ public class TemperatureGraphView extends View {
 								(sellHeight * (i)) + graphTop, paint);
 					}
 				}
-				
-				/*float val = (float) (temperatures[i].getTemperature() - min);
-				float rat = (float) (val / diff);
-				float h = graphheight * rat;
-				if (i > 0)
-					canvas.drawLine(
-							((i - 1) * colwidth) + (horstart + 1) + halfcol,
-							(border - lasth) + graphheight, 
-							(i * colwidth) + (horstart + 1) + halfcol,
-							(border - h) + graphheight,
-							paint);
-				lasth = h;*/
 			}
 			
 		}
@@ -218,10 +259,46 @@ public class TemperatureGraphView extends View {
 
 
 	/**
+	 * paintを取得します。
+	 * @return paint
+	 */
+	public Paint getPaint() {
+	    return paint;
+	}
+
+
+
+	/**
 	 * 体温の配列を設定します。
 	 * @param temperatures 体温の配列
 	 */
 	public void setTemperatures(TemperatureEntity[] temperatures) {
 	    this.temperatures = temperatures;
+	}
+
+
+
+	/**
+	 * 体温の配列を取得します。
+	 * @return 体温の配列
+	 */
+	public TemperatureEntity[] getTemperatures() {
+	    return temperatures;
+	}
+
+	/**
+	 * セル高さを取得します。
+	 * @return セル高さ
+	 */
+	public float getSellHeight() {
+	    return sellHeight;
+	}
+
+	/**
+	 * セル幅を取得します。
+	 * @return セル幅
+	 */
+	public float getSellWidth() {
+	    return sellWidth;
 	}
 }

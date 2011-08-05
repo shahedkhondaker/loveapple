@@ -33,6 +33,7 @@
 package cn.loveapple.client.android.bbt.listener;
 
 import cn.loveapple.client.android.bbt.BaseActivity;
+import cn.loveapple.client.android.bbt.TemperatureGraphView;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.View.OnTouchListener;
@@ -55,14 +56,8 @@ public class ChartViewOnTouchListener implements OnTouchListener {
 	 */
 	@Override
 	public boolean onTouch(View view, MotionEvent event) {
-		
-		Toast.makeText(
-				view.getContext(),
-				event.getAction() +
-				"  =>downX:" + downX +
-				"  =>downY:" + downY +
-				"  x/y" + event.getX() + "/" + event.getY(),
-				Toast.LENGTH_LONG).show();
+		// on touch 押された場合呼び出される
+		TemperatureGraphView graph = (TemperatureGraphView) view;
 		return false;
 	}
 }
