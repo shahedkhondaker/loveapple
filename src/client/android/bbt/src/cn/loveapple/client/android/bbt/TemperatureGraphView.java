@@ -33,6 +33,11 @@
 package cn.loveapple.client.android.bbt;
 
 import static cn.loveapple.client.android.Constant.*;
+
+import java.util.Map;
+
+import org.springframework.util.CollectionUtils;
+
 import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Color;
@@ -195,20 +200,26 @@ public class TemperatureGraphView extends View {
 			for (int i = 0; i < temperatures.length; i++) {
 				
 				if(i > 0){
-					canvas.drawLine(
-							(float)((sellWidth * ((temperatures[(i-1)].getTemperature() - min)/0.1f)) + horstart),
-							((sellHeight * (i-1)) + graphTop), 
-							(float)((sellWidth * ((temperatures[(i)].getTemperature() - min)/0.1f)) + horstart),
-							((sellHeight * i) + graphTop),
-							paint);
+					float x1 = temperatures[(i-1)].getTemperature() == null ? 0 : (float)((sellWidth * ((temperatures[(i-1)].getTemperature() - min)/0.1f)) + horstart);
+					float y1 = ((sellHeight * (i-1)) + graphTop);
+					float x2 = temperatures[(i)].getTemperature() == null ? 0 : (float)((sellWidth * ((temperatures[(i)].getTemperature() - min)/0.1f)) + horstart);
+					float y2 = ((sellHeight * i) + graphTop);
+					
 					paint.setTextAlign(Align.RIGHT);
-					canvas.drawText(temperatures[(i-1)].getTemperature().toString(),
-							(float)((sellWidth * ((temperatures[(i-1)].getTemperature() - min)/0.1f)) + horstart),
-							(sellHeight * (i-1)) + graphTop, paint);
+					if(x1 != 0){
+						canvas.drawText(temperatures[(i-1)].getTemperature().toString(), x1, y1, paint);
+					}
 					if(i == temperatures.length -1 ){
-						canvas.drawText(temperatures[(i)].getTemperature().toString(),
-								(float)((sellWidth * ((temperatures[(i)].getTemperature() - min)/0.1f)) + horstart),
-								(sellHeight * (i)) + graphTop, paint);
+						if(x2 != 0){
+							canvas.drawText(temperatures[(i)].getTemperature().toString(), x2, y2, paint);
+						}
+					}
+					if(x1 == 0){
+						canvas.drawLine(x2, y2, x2, y2, paint);
+					}else if(x2 == 0){
+						canvas.drawLine(x1, y1, x1, y1, paint);
+					}else{
+						canvas.drawLine(x1, y1, x2, y2, paint);
 					}
 				}
 			}
@@ -219,7 +230,8 @@ public class TemperatureGraphView extends View {
 	private double getMax() {
 		double largest = Double.MIN_VALUE;
 		for (TemperatureEntity temperature : temperatures) {
-			if(temperature.getTemperature().doubleValue() > largest){
+			if(temperature.getTemperature() != null
+					&& temperature.getTemperature().doubleValue() > largest){
 				largest = temperature.getTemperature().doubleValue();
 			}
 		}
@@ -229,7 +241,8 @@ public class TemperatureGraphView extends View {
 	private double getMin() {
 		double smallest = Double.MAX_VALUE;
 		for (TemperatureEntity temperature : temperatures) {
-			if (temperature.getTemperature().doubleValue() < smallest)
+			if (temperature.getTemperature() != null 
+					&& temperature.getTemperature().doubleValue() < smallest)
 				smallest = temperature.getTemperature().doubleValue();
 		}
 		return smallest;
@@ -272,8 +285,11 @@ public class TemperatureGraphView extends View {
 	 * 体温の配列を設定します。
 	 * @param temperatures 体温の配列
 	 */
-	public void setTemperatures(TemperatureEntity[] temperatures) {
-	    this.temperatures = temperatures;
+	public void setTemperatures(Map<String, TemperatureEntity> temperatures) {
+		if(CollectionUtils.isEmpty(temperatures)){
+			this.temperatures = new TemperatureEntity[]{};
+		}
+	    this.temperatures = temperatures.values().toArray(new TemperatureEntity[temperatures.size()]);
 	}
 
 
