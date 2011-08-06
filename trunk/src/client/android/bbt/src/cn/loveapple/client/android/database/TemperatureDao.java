@@ -33,6 +33,7 @@
 package cn.loveapple.client.android.database;
 
 import java.util.List;
+import java.util.Map;
 
 import cn.loveapple.client.android.database.entity.TemperatureEntity;
 
@@ -46,22 +47,39 @@ import cn.loveapple.client.android.database.entity.TemperatureEntity;
  */
 public interface TemperatureDao extends LoveappleDao {
 	/**
-	 * 
+	 * 期間から{@linkplain TemperatureEntity 体温}を検索する
 	 * @param start
 	 * @param end
 	 * @return
 	 */
 	public List<TemperatureEntity> findByTerm(String start, String end);
 	/**
-	 * 
+	 * 指定された日付の{@linkplain TemperatureEntity 体温}を取得する
 	 * @param date
 	 * @return
 	 */
 	public TemperatureEntity findByDate(String date);
 	/**
-	 * 
+	 * {@linkplain TemperatureEntity 体温}を保存・更新する
 	 * @param source
 	 * @return
 	 */
 	public TemperatureEntity save(TemperatureEntity source);
+	
+	/**
+	 * 
+	 * 半年分の{@linkplain TemperatureEntity 体温}を取得する
+	 * 
+	 * @param datePoint 時間計算ポイント
+	 * @return
+	 */
+	public Map<String, TemperatureEntity> findTemperatureMap(String datePoint);
+
+	/**
+	 * 
+	 * 半年分の{@linkplain TemperatureEntity 体温}を取得する
+	 * 
+	 * @return
+	 */
+	public Map<String, TemperatureEntity> findTemperatureMap();
 }

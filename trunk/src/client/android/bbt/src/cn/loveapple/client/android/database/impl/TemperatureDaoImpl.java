@@ -35,7 +35,15 @@ package cn.loveapple.client.android.database.impl;
 import static cn.loveapple.client.android.database.entity.TemperatureEntity.*;
 
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
+import java.util.SortedMap;
+import java.util.SortedSet;
+import java.util.TreeMap;
+import java.util.TreeSet;
+
+import org.springframework.util.CollectionUtils;
 
 import android.content.ContentValues;
 import android.database.Cursor;
@@ -45,6 +53,8 @@ import cn.loveapple.client.android.LoveappleHealthDatabaseOpenHelper;
 import cn.loveapple.client.android.database.BaseDao;
 import cn.loveapple.client.android.database.TemperatureDao;
 import cn.loveapple.client.android.database.entity.TemperatureEntity;
+import cn.loveapple.client.android.util.DateUtil;
+import cn.loveapple.client.android.util.StringUtils;
 
 /**
  * 
@@ -56,6 +66,12 @@ import cn.loveapple.client.android.database.entity.TemperatureEntity;
  */
 public class TemperatureDaoImpl extends BaseDao implements TemperatureDao {
 	
+	/**
+	 * 月数の境界
+	 */
+	public static final int LIMIT_MONTH = 6;
+
+	private TemperatureEntity EMPTY_TEMPERATURE_ENTITY = new EmptyTemperatureEntity();
 	/**
 	 * 
 	 * @param helper
@@ -100,13 +116,16 @@ public class TemperatureDaoImpl extends BaseDao implements TemperatureDao {
 		return result;
 	}
 	
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
 	public List<TemperatureEntity> findByTerm(String start, String end){
 		List<TemperatureEntity> result = null;
 		
 		try{
 			//readableDb = helper.getReadableDatabase();
 			readableDb = SQLiteDatabase.openDatabase(LoveappleHealthDatabaseOpenHelper.DB_PATH + LoveappleHealthDatabaseOpenHelper.DB_NAME, null, SQLiteDatabase.OPEN_READONLY);
-			
 			
 			Cursor cursor = readableDb.query(
 					TABLE_NAME, 
@@ -124,6 +143,11 @@ public class TemperatureDaoImpl extends BaseDao implements TemperatureDao {
 		}
 		return result;
 	}
+	
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
 	public TemperatureEntity findByDate(String date){
 		
 		TemperatureEntity result = null;
@@ -168,4 +192,73 @@ public class TemperatureDaoImpl extends BaseDao implements TemperatureDao {
 		
 		return result;
 	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public SortedMap<String, TemperatureEntity> findTemperatureMap() {
+		return findTemperatureMap(null) ;
+	}
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public SortedMap<String, TemperatureEntity> findTemperatureMap(String datePoint) {
+		Calendar current = Calendar.getInstance();
+		Calendar start = Calendar.getInstance();
+		if(StringUtils.isNotEmpty(datePoint)){
+			current.setTime(DateUtil.paseDate(datePoint, DateUtil.DATE_PTTERN_YYYYMMDD));
+		}
+		start.set(
+				current.get(Calendar.YEAR),
+				current.get(Calendar.MONTH) - LIMIT_MONTH,
+				current.get(Calendar.DAY_OF_MONTH));
+		
+		List<TemperatureEntity> tempList = findByTerm(
+												DateUtil.toDateString(start.getTime()),
+												DateUtil.toDateString(current.getTime()));
+		
+		SortedMap<String, TemperatureEntity> result = new TreeMap<String, TemperatureEntity>();
+
+		if(CollectionUtils.isEmpty(tempList)){
+			return result;
+		}
+		
+		// 必要なキー一覧を生成
+		SortedSet<String> dateSet = createDateKey(tempList.get(0).getDate());
+		for(TemperatureEntity temp : tempList){
+			dateSet.remove(temp.getDate());
+			result.put(temp.getDate(), temp);
+		}
+		for(String date : dateSet){
+			result.put(date, EMPTY_TEMPERATURE_ENTITY);
+		}
+		
+		return result;
+	}
+	
+	/**
+	 * 指定された開始日付から現在日付まで、日付文字の一覧を作成
+	 * @param startDate
+	 * @return
+	 */
+	private SortedSet<String> createDateKey(String startDate){
+		SortedSet<String> result = new TreeSet<String>();
+		Date now = new Date();
+		Date start = DateUtil.paseDate(startDate, DateUtil.DATE_PTTERN_YYYYMMDD);
+		
+		Calendar date = Calendar.getInstance();
+		date.setTime(start);
+		for (int i = 0; now.after(date.getTime()); i++){
+			date.set(Calendar.DAY_OF_MONTH, date.get(Calendar.DAY_OF_MONTH) + i);
+			result.add(DateUtil.toDateString(date.getTime()));
+		}
+		
+		return result;
+	}
+
+    public static final class EmptyTemperatureEntity extends TemperatureEntity{
+    	
+    }
 }
