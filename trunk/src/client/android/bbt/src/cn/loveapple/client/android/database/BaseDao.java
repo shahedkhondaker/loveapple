@@ -39,6 +39,7 @@ import android.database.sqlite.SQLiteDatabase;
 import android.util.Log;
 import cn.loveapple.client.android.LoveappleHealthDatabaseOpenHelper;
 import cn.loveapple.client.android.database.entity.Entity;
+import cn.loveapple.client.android.database.entity.TemperatureEntity;
 
 /**
  * 
@@ -49,13 +50,28 @@ import cn.loveapple.client.android.database.entity.Entity;
  *
  */
 public abstract class BaseDao implements LoveappleDao{
+	protected TemperatureEntity EMPTY_TEMPERATURE_ENTITY = new EmptyTemperatureEntity();
 	protected SQLiteDatabase writableDb;
-	protected SQLiteDatabase readableDb;
 	
 	/**
 	 * Loveapple健康DBヘルパー
 	 */
 	protected LoveappleHealthDatabaseOpenHelper helper = null;
+	
+	/**
+	 * 
+	 * @param <T>
+	 * @return
+	 */
+	public SQLiteDatabase getWritableDb(){
+		if(writableDb == null || !writableDb.isOpen()){
+			writableDb = SQLiteDatabase.openDatabase(
+					LoveappleHealthDatabaseOpenHelper.DB_PATH + LoveappleHealthDatabaseOpenHelper.DB_NAME,
+					null,
+					SQLiteDatabase.OPEN_READWRITE);
+		}
+		return writableDb;
+	}
 	
 	/**
 	 * 
@@ -67,6 +83,12 @@ public abstract class BaseDao implements LoveappleDao{
 		//readableDb = helper.getReadableDatabase();
 	}
 	
+	/**
+	 * TODO
+	 * @param <T>
+	 * @param entity
+	 * @return
+	 */
 	public <T> T save(Entity entity){
 		ContentValues values = new ContentValues();
 		
@@ -75,14 +97,70 @@ public abstract class BaseDao implements LoveappleDao{
 	
 	public void destory(){
 		try{
-			if(writableDb != null){
+			if(writableDb != null && writableDb.isOpen()){
 				writableDb.close();
-			}
-			if(readableDb != null){
-					readableDb.close();
 			}
 		}catch (Exception e) {
 			Log.i(LOG_TAG, e.getMessage(), e);
 		}
 	}
+
+	/**
+	 * 属性を設定しない{@linkplain TemperatureEntity}
+	 * 
+	 * @author $author:$
+	 * @version $Revision$
+	 * @date $Date$
+	 * @id $Id$
+	 *
+	 */
+    public static final class EmptyTemperatureEntity extends TemperatureEntity{
+
+    	/**
+    	 * 日付を設定します。
+    	 * @param date 日付
+    	 */
+    	public void setDate(String date) {
+    	}
+    	/**
+    	 * タイムスタンプを設定します。
+    	 * @param timestamp タイムスタンプ
+    	 */
+    	public void setTimestamp(String timestamp) {}
+    	/**
+    	 * 体温を設定します。
+    	 * @param temperature 体温
+    	 */
+    	public void setTemperature(Double temperature) {}
+    	/**
+    	 * セックスを設定します。
+    	 * @param coitusFlg セックス
+    	 */
+    	public void setCoitusFlg(String coitusFlg) {}
+    	/**
+    	 * 生理フラグを設定します。
+    	 * @param menstruationFlg 生理フラグ
+    	 */
+    	public void setMenstruationFlg(String menstruationFlg) {}
+    	/**
+    	 * 生理痛フラグを設定します。
+    	 * @param dysmenorrheaFlg 生理痛フラグ
+    	 */
+    	public void setDysmenorrheaFlg(String dysmenorrheaFlg) {}
+    	/**
+    	 * 下り物を設定します。
+    	 * @param leukorrhea 下り物
+    	 */
+    	public void setLeukorrhea(String leukorrhea) {}
+    	/**
+    	 * 生理量を設定します。
+    	 * @param menstruationLevel 生理量
+    	 */
+    	public void setMenstruationLevel(String menstruationLevel) {}
+    	/**
+    	 * 周期日数を設定します。
+    	 * @param menstruationCycle 周期日数
+    	 */
+    	public void setMenstruationCycle(Integer menstruationCycle) {}
+    }
 }
