@@ -71,7 +71,7 @@ public class TemperatureDaoImpl extends BaseDao implements TemperatureDao {
 	 */
 	public static final int LIMIT_MONTH = 6;
 
-	private TemperatureEntity EMPTY_TEMPERATURE_ENTITY = new EmptyTemperatureEntity();
+	
 	/**
 	 * 
 	 * @param helper
@@ -99,9 +99,7 @@ public class TemperatureDaoImpl extends BaseDao implements TemperatureDao {
 		values.put(COLUMN_MENSTRUATION_LEVEL, source.getMenstruationLevel());
 		values.put(COLUMN_MENSTRUATION_CYCLE, source.getMenstruationCycle());
 		try{
-			//writableDb = helper.getWritableDatabase();
-			writableDb = SQLiteDatabase.openDatabase(LoveappleHealthDatabaseOpenHelper.DB_PATH + LoveappleHealthDatabaseOpenHelper.DB_NAME, null, SQLiteDatabase.OPEN_READWRITE);
-			
+			writableDb = getWritableDb();
 			
 			int colNum = writableDb.update(TABLE_NAME, values, COLUMN_DATE + "=?", new String[]{source.getDate()});
 			if(colNum < 1) {
@@ -125,9 +123,9 @@ public class TemperatureDaoImpl extends BaseDao implements TemperatureDao {
 		
 		try{
 			//readableDb = helper.getReadableDatabase();
-			readableDb = SQLiteDatabase.openDatabase(LoveappleHealthDatabaseOpenHelper.DB_PATH + LoveappleHealthDatabaseOpenHelper.DB_NAME, null, SQLiteDatabase.OPEN_READONLY);
+			writableDb = getWritableDb();
 			
-			Cursor cursor = readableDb.query(
+			Cursor cursor = writableDb.query(
 					TABLE_NAME, 
 					null, 
 					"?<=" + COLUMN_DATE + " AND ?=" + COLUMN_DATE + " ORDER BY " + COLUMN_DATE ,
@@ -139,7 +137,7 @@ public class TemperatureDaoImpl extends BaseDao implements TemperatureDao {
 				cursor.moveToNext();
 			}
 		}finally{
-			readableDb.close();
+			writableDb.close();
 		}
 		return result;
 	}
@@ -153,9 +151,9 @@ public class TemperatureDaoImpl extends BaseDao implements TemperatureDao {
 		TemperatureEntity result = null;
 		try{
 			//readableDb = helper.getReadableDatabase();
-			readableDb = SQLiteDatabase.openDatabase(LoveappleHealthDatabaseOpenHelper.DB_PATH + LoveappleHealthDatabaseOpenHelper.DB_NAME, null, SQLiteDatabase.OPEN_READONLY);
+			writableDb = getWritableDb();
 			
-			Cursor cursor = readableDb.query(
+			Cursor cursor = writableDb.query(
 					TABLE_NAME,
 					null, 
 					COLUMN_DATE + " <=? ORDER BY " + COLUMN_DATE + " DESC LIMIT 1",
@@ -163,8 +161,8 @@ public class TemperatureDaoImpl extends BaseDao implements TemperatureDao {
 			cursor.moveToFirst();
 			result = getTemperatureEntity(cursor);
 		}finally{
-			if(readableDb != null){
-				readableDb.close();
+			if(writableDb != null){
+				writableDb.close();
 			}
 		}
 		return result;
@@ -258,7 +256,4 @@ public class TemperatureDaoImpl extends BaseDao implements TemperatureDao {
 		return result;
 	}
 
-    public static final class EmptyTemperatureEntity extends TemperatureEntity{
-    	
-    }
 }

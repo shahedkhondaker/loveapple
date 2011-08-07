@@ -365,17 +365,4 @@ public class BbtFacadeActivity extends BaseActivity implements OnClickListener {
 	protected void onRestoreInstanceState(Bundle savedInstanceState) {
 		super.onRestoreInstanceState(savedInstanceState);
 	}
-
-
-	/**
-	 * 
-	 * {@inheritDoc}
-	 */
-	@Override
-	protected void onDestroy() {
-		super.onDestroy();
-		if (dao != null) {
-			dao.destory();
-		}
-	}
 }

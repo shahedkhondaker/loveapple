@@ -166,7 +166,18 @@ public class BaseActivity extends Activity {
         
         initView();
         initVisibility();
-        
+	}
+	
+	/**
+	 * 表示しない場合の共通処理：<br>
+	 * 1.リソース開放
+	 */
+	@Override
+	protected void onPause(){
+		super.onPause();
+		if(dao != null){
+			dao.destory();
+		}
 	}
 	
 	/**
