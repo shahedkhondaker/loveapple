@@ -128,7 +128,7 @@ public class TemperatureDaoImpl extends BaseDao implements TemperatureDao {
 			Cursor cursor = writableDb.query(
 					TABLE_NAME, 
 					null, 
-					"?<=" + COLUMN_DATE + " AND ?=" + COLUMN_DATE + " ORDER BY " + COLUMN_DATE ,
+					"?<=" + COLUMN_DATE + " AND ?>=" + COLUMN_DATE + " ORDER BY " + COLUMN_DATE ,
 					new String[]{start, end}, null, null, null);
 			result = new ArrayList<TemperatureEntity>();
 			cursor.moveToFirst();

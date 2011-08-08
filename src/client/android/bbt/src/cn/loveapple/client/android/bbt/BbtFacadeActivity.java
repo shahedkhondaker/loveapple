@@ -259,7 +259,7 @@ public class BbtFacadeActivity extends BaseActivity implements OnClickListener {
 	 */
 	@Override
 	public void onClick(View v) {
-		save();
+	//	save();
 
 		Intent intent = new Intent();
 		intent.setClassName(this, BbtChartActivity.class.getName());
