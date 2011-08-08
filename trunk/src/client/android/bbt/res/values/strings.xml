@@ -32,5 +32,6 @@
     <string name="dysmenorrheaViewExplain">生理痛項目の表示設定</string>
     <string name="leukorrheaViewExplain">下り物項目の表示設定</string>
     <string name="menstruationLevelExplain">出血量項目の表示設定</string>
+    <string name="graphDateString">%1$tm/%1$td</string>
     <string name="activity_animation_duration">10</string>
 </resources>

@@ -34,6 +34,7 @@ package cn.loveapple.client.android.bbt;
 
 import static cn.loveapple.client.android.Constant.*;
 
+import java.util.Calendar;
 import java.util.Map;
 
 import org.springframework.util.CollectionUtils;
@@ -46,6 +47,7 @@ import android.graphics.Paint.Align;
 import android.view.View;
 import cn.loveapple.client.android.bbt.R.color;
 import cn.loveapple.client.android.database.entity.TemperatureEntity;
+import cn.loveapple.client.android.util.DateUtil;
 
 /**
  * 基礎体温のチャートを表示するビュー
@@ -144,7 +146,7 @@ public class TemperatureGraphView extends View {
 		/**
 		 * グラフの幅
 		 */
-		float graphwidth = width - (horstart)-border;
+		float graphwidth = width - horstart - border;
 		/**
 		 * 温度の表示精度
 		 */
@@ -161,15 +163,19 @@ public class TemperatureGraphView extends View {
 		
 		setBackgroundColor(Color.WHITE);
 
+		Calendar firstDate = getFirstDate();
 		
 		// 日付軸を描画
 		paint.setTextAlign(Align.CENTER);
 		for (int i = 0; i < 31; i++) {
+			firstDate.set(Calendar.DAY_OF_MONTH, firstDate.get(Calendar.DAY_OF_MONTH) + i);
 			paint.setColor(color.line);
 			float y = (sellHeight * i) + graphTop;
 			canvas.drawLine(horstart, y, width-border-sellWidth, y, paint);
 			paint.setColor(Color.BLACK);
-			canvas.drawText(String.valueOf(i), horstart-border, y+2f, paint);
+			canvas.drawText(
+					String.format(getContext().getText(R.string.graphDateString).toString(), firstDate.getTime()),
+					horstart-border, y+2f, paint);
 		}
 		
 		// 温度軸を描画
@@ -192,6 +198,8 @@ public class TemperatureGraphView extends View {
 		// タイトルを描画
 		paint.setTextAlign(Align.CENTER);
 		canvas.drawText(title, (graphwidth / 2) + horstart, border - 4, paint);
+		canvas.drawText(String.valueOf(min), horstart + border, 3*border, paint);
+		canvas.drawText(String.valueOf(max), graphwidth + horstart, 3*border, paint);
 
 		// 線チャートを描画
 		if (max != min) {
@@ -293,6 +301,12 @@ public class TemperatureGraphView extends View {
 	}
 
 
+	private Calendar getFirstDate(){
+		TemperatureEntity first = temperatures[0];
+		Calendar firstDate = Calendar.getInstance();
+		firstDate.setTime(DateUtil.paseDate(first.getDate(), DateUtil.DATE_PTTERN_YYYYMMDD));
+		return firstDate;
+	}
 
 	/**
 	 * 体温の配列を取得します。
