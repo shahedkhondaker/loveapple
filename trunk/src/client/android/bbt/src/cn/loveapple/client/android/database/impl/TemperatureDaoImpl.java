@@ -121,11 +121,11 @@ public class TemperatureDaoImpl extends BaseDao implements TemperatureDao {
 	public List<TemperatureEntity> findByTerm(String start, String end){
 		List<TemperatureEntity> result = null;
 		
+		Cursor cursor = null;
 		try{
-			//readableDb = helper.getReadableDatabase();
 			writableDb = getWritableDb();
 			
-			Cursor cursor = writableDb.query(
+			cursor = writableDb.query(
 					TABLE_NAME, 
 					null, 
 					"?<=" + COLUMN_DATE + " AND ?>=" + COLUMN_DATE + " ORDER BY " + COLUMN_DATE ,
@@ -137,7 +137,9 @@ public class TemperatureDaoImpl extends BaseDao implements TemperatureDao {
 				cursor.moveToNext();
 			}
 		}finally{
-			writableDb.close();
+			if(cursor != null){
+				cursor.close();
+			}
 		}
 		return result;
 	}
@@ -149,20 +151,22 @@ public class TemperatureDaoImpl extends BaseDao implements TemperatureDao {
 	public TemperatureEntity findByDate(String date){
 		
 		TemperatureEntity result = null;
+		
+		Cursor cursor = null;
 		try{
-			//readableDb = helper.getReadableDatabase();
 			writableDb = getWritableDb();
 			
-			Cursor cursor = writableDb.query(
+			cursor = writableDb.query(
 					TABLE_NAME,
 					null, 
 					COLUMN_DATE + " <=? ORDER BY " + COLUMN_DATE + " DESC LIMIT 1",
 					new String[]{date}, null, null, null);
 			cursor.moveToFirst();
 			result = getTemperatureEntity(cursor);
+			cursor.close();
 		}finally{
-			if(writableDb != null){
-				writableDb.close();
+			if(cursor != null){
+				cursor.close();
 			}
 		}
 		return result;
