@@ -32,8 +32,6 @@
  */
 package cn.loveapple.client.android.bbt;
 
-import static cn.loveapple.client.android.Constant.*;
-
 import java.util.Calendar;
 import java.util.Map;
 

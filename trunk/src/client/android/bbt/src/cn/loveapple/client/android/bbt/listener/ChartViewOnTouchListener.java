@@ -32,12 +32,10 @@
  */
 package cn.loveapple.client.android.bbt.listener;
 
-import cn.loveapple.client.android.bbt.BaseActivity;
-import cn.loveapple.client.android.bbt.TemperatureGraphView;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.View.OnTouchListener;
-import android.widget.Toast;
+import cn.loveapple.client.android.bbt.TemperatureGraphView;
 
 /**
  * オプションメニューを表示するアクティビティ
