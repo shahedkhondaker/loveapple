@@ -148,7 +148,7 @@ public class TemperatureGraphView extends View {
 		/**
 		 * 温度の表示精度
 		 */
-		int hors = 40;
+		int hors = (int) ((max-min)/0.1);
 		/**
 		 * セル高さ
 		 */
