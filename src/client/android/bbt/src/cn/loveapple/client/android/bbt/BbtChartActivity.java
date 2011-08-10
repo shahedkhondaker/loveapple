@@ -95,20 +95,31 @@ public class BbtChartActivity extends BaseActivity implements OnClickListener {
 	@Override
 	public boolean onTouchEvent(MotionEvent event) {
 		if(event.getAction() == MotionEvent.ACTION_DOWN){
-//			Toast.makeText(this, "down", Toast.LENGTH_LONG).show();
 			downX = event.getX();
 			downY = event.getY();
 		}
+		// グラフをドラックした場合の表示制御
 		if(event.getAction() == MotionEvent.ACTION_MOVE){
 			float diff = Math.abs(downY - event.getY());
 			if( diff >= graphView.getSellHeight()){
 				int count = (int) (diff / graphView.getSellHeight());
 				for(int i = 0; i < count; i++){
-					temperatureEntity = (TemperatureEntity[]) ArrayUtils.remove(temperatureEntity, i);
+					// 下にドラックして、より古い情報を表示させる制御
+					if(!graphView.isFirst() && downY < event.getY()){
+						temperatureEntity = (TemperatureEntity[]) ArrayUtils.remove(temperatureEntity, i);
+					}
+						
+					// 上にドラックして、より新しい情報を表示させる制御
+					if(!graphView.isLast() && event.getY() < downY){
+						
+					}
+					
 				}
+				
+				
 			}
 
-			//TODO graphView.setTemperatures(temperatureEntity);
+			graphView.setTemperatures(temperatureEntity);
 		}
 
 		setContentView(graphView);

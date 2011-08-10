@@ -60,6 +60,14 @@ public class TemperatureGraphView extends View {
 //	public final static int DISPLAY_DIRECTION_H = 1;
 //	public final static int DISPLAY_DIRECTION_W = 2;
 	/**
+	 * 最後の{@linkplain TemperatureEntity 温度}まで表示されていること
+	 */
+	private boolean isLast = false;
+	/**
+	 * 最初の{@linkplain TemperatureEntity 温度}まで表示されていること
+	 */
+	private boolean isFirst = false;
+	/**
 	 * デフォルト表示最低温度
 	 */
 	public final static float VIEW_MIN_LIMIT_TEMPERATURE = 36.00f;
@@ -166,7 +174,7 @@ public class TemperatureGraphView extends View {
 		// 日付軸を描画
 		paint.setTextAlign(Align.CENTER);
 		for (int i = 0; i < 31; i++) {
-			firstDate.set(Calendar.DAY_OF_MONTH, firstDate.get(Calendar.DAY_OF_MONTH) + i);
+			firstDate.set(Calendar.DAY_OF_MONTH, firstDate.get(Calendar.DAY_OF_MONTH) + 1);
 			paint.setColor(color.line);
 			float y = (sellHeight * i) + graphTop;
 			canvas.drawLine(horstart, y, width-border-sellWidth, y, paint);
@@ -278,6 +286,38 @@ public class TemperatureGraphView extends View {
 
 
 	/**
+	 * 最後の{@linkplain TemperatureEntity 温度}まで表示されていることを取得します。
+	 * @return 最後の{@linkplain TemperatureEntity 温度}まで表示されていること
+	 */
+	public boolean isLast() {
+	    return isLast;
+	}
+
+	/**
+	 * 最後の{@linkplain TemperatureEntity 温度}まで表示されていることを設定します。
+	 * @param isLast 最後の{@linkplain TemperatureEntity 温度}まで表示されていること
+	 */
+	public void setLast(boolean isLast) {
+	    this.isLast = isLast;
+	}
+
+	/**
+	 * 最初の{@linkplain TemperatureEntity 温度}まで表示されていることを取得します。
+	 * @return 最初の{@linkplain TemperatureEntity 温度}まで表示されていること
+	 */
+	public boolean isFirst() {
+	    return isFirst;
+	}
+
+	/**
+	 * 最初の{@linkplain TemperatureEntity 温度}まで表示されていることを設定します。
+	 * @param isFirst 最初の{@linkplain TemperatureEntity 温度}まで表示されていること
+	 */
+	public void setFirst(boolean isFirst) {
+	    this.isFirst = isFirst;
+	}
+
+	/**
 	 * paintを取得します。
 	 * @return paint
 	 */
@@ -296,6 +336,13 @@ public class TemperatureGraphView extends View {
 			this.temperatures = new TemperatureEntity[]{};
 		}
 	    this.temperatures = temperatures.values().toArray(new TemperatureEntity[temperatures.size()]);
+	}
+	/**
+	 * 体温の配列を設定します。
+	 * @param temperatures 体温の配列
+	 */
+	public void setTemperatures(TemperatureEntity[] temperatures) {
+	    this.temperatures = temperatures;
 	}
 
 

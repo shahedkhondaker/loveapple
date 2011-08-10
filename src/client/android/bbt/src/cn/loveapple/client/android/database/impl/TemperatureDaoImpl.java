@@ -32,6 +32,7 @@
  */
 package cn.loveapple.client.android.database.impl;
 
+import static cn.loveapple.client.android.Constant.*;
 import static cn.loveapple.client.android.database.entity.TemperatureEntity.*;
 
 import java.util.ArrayList;
@@ -43,11 +44,11 @@ import java.util.SortedSet;
 import java.util.TreeMap;
 import java.util.TreeSet;
 
+import org.apache.commons.lang.builder.ToStringBuilder;
 import org.springframework.util.CollectionUtils;
 
 import android.content.ContentValues;
 import android.database.Cursor;
-import android.database.sqlite.SQLiteDatabase;
 import android.util.Log;
 import cn.loveapple.client.android.LoveappleHealthDatabaseOpenHelper;
 import cn.loveapple.client.android.database.BaseDao;
@@ -104,7 +105,7 @@ public class TemperatureDaoImpl extends BaseDao implements TemperatureDao {
 			int colNum = writableDb.update(TABLE_NAME, values, COLUMN_DATE + "=?", new String[]{source.getDate()});
 			if(colNum < 1) {
 				writableDb.insert(TABLE_NAME, null, values);
-				Log.i("BBT", values.toString());
+				Log.i(LOG_TAG, "update : " + ToStringBuilder.reflectionToString(values));
 			}
 			result = findByDate(source.getDate());
 		}finally{
@@ -253,7 +254,7 @@ public class TemperatureDaoImpl extends BaseDao implements TemperatureDao {
 		Calendar date = Calendar.getInstance();
 		date.setTime(start);
 		for (int i = 0; now.after(date.getTime()); i++){
-			date.set(Calendar.DAY_OF_MONTH, date.get(Calendar.DAY_OF_MONTH) + i);
+			date.set(Calendar.DAY_OF_MONTH, date.get(Calendar.DAY_OF_MONTH) + 1);
 			result.add(DateUtil.toDateString(date.getTime()));
 		}
 		
