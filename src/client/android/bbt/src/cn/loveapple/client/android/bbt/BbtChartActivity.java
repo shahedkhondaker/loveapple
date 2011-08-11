@@ -32,9 +32,11 @@
  */
 package cn.loveapple.client.android.bbt;
 
+import java.util.Calendar;
 import java.util.Map;
 
 import org.apache.commons.lang.ArrayUtils;
+import org.springframework.util.CollectionUtils;
 
 import android.os.Bundle;
 import android.view.MotionEvent;
@@ -43,6 +45,8 @@ import android.view.View.OnClickListener;
 import cn.loveapple.client.android.bbt.R.string;
 import cn.loveapple.client.android.bbt.listener.ChartViewOnTouchListener;
 import cn.loveapple.client.android.database.entity.TemperatureEntity;
+import cn.loveapple.client.android.util.DateUtil;
+import cn.loveapple.client.android.util.StringUtils;
 
 /**
  * @author $author:$
@@ -55,6 +59,7 @@ public class BbtChartActivity extends BaseActivity implements OnClickListener {
 	private TemperatureGraphView graphView;
 	private TemperatureEntity[] temperatureEntity;
 	private Map<String, TemperatureEntity> temperatureMap;
+	private static final int DEFAULT_VIEW_COUNT = 15;
 	/**
 	 * 
 	 * {@inheritDoc}
@@ -70,7 +75,7 @@ public class BbtChartActivity extends BaseActivity implements OnClickListener {
         
 		temperatureMap = dao.findTemperatureMap();
 		
-		graphView.setTemperatures(temperatureMap);
+		graphView.setTemperatures(createViewTempList(null, DEFAULT_VIEW_COUNT));
 		
 		
 		graphView.setOnTouchListener(new ChartViewOnTouchListener());
@@ -133,5 +138,45 @@ public class BbtChartActivity extends BaseActivity implements OnClickListener {
     @Override
     protected void init(){
     	super.init();
+    }
+    
+    /**
+     * 画面に表示する温度リストを生成。<br>
+     * ・{@linkplain #temperatureMap}の件数が表示件数より小さい場合、全件を戻す。<br>
+     * ・表示開始日付を指定する場合、指定日付からの表示件数分のデータを戻す。<br>
+     * ・表示開始日付を指定しない場合、最後の表示件数分のデータを戻す。
+     * 
+     * @param startDate 表示開始日付
+     * @param count 画面に表示する温度データの件数。最大31とすること。
+     * @return
+     */
+    private TemperatureEntity[] createViewTempList(String startDate, int count){
+    	if(31 < count){
+    		count = 31;
+    	}
+    	if(CollectionUtils.isEmpty(temperatureMap)){
+    		return new TemperatureEntity[]{};
+    	}
+    	if(temperatureMap.size() <= count){
+    		return temperatureMap.values().toArray(new TemperatureEntity[temperatureMap.size()]);
+    	}
+		TemperatureEntity[] result = new TemperatureEntity[count];
+    	// 表示開始日付を指定しない場合
+    	if(StringUtils.isEmpty(startDate)){
+    		TemperatureEntity[] temperatures = temperatureMap.values().toArray(new TemperatureEntity[temperatureMap.size()]);
+    		int deleteSize = temperatureMap.size() - count;
+    		for (int i = deleteSize,j=0; i <temperatureMap.size(); i++,j++){
+    			result[j] = temperatures[i];
+    		}
+    	}
+    	// 表示開始日付を指定する場合
+    	else{
+    		Calendar date = Calendar.getInstance();
+    		date.setTime(DateUtil.paseDate(startDate, DateUtil.DATE_PTTERN_YYYYMMDD));
+    		for(int i = 0; i < count; i++,date.set(Calendar.DAY_OF_MONTH, date.get(Calendar.DAY_OF_MONTH) + 1)){
+    			result[i] = temperatureMap.get(DateUtil.toDateString(date.getTime()));
+    		}
+    	}
+		return result;
     }
 }
