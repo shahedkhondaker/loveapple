@@ -35,6 +35,8 @@ package cn.loveapple.client.android.util;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
+import org.apache.commons.lang.time.DateUtils;
+
 /**
  * 
  * @author $Author$
@@ -43,7 +45,7 @@ import java.util.Date;
  * @id $Id$
  *
  */
-public class DateUtil {
+public class DateUtil extends DateUtils{
 	/**
 	 * 日時文字列パターン：YYYYMMDD
 	 */
