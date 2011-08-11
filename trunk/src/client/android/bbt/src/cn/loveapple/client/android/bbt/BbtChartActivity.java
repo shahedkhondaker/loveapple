@@ -33,9 +33,9 @@
 package cn.loveapple.client.android.bbt;
 
 import java.util.Calendar;
+import java.util.Date;
 import java.util.Map;
 
-import org.apache.commons.lang.ArrayUtils;
 import org.springframework.util.CollectionUtils;
 
 import android.os.Bundle;
@@ -57,7 +57,6 @@ import cn.loveapple.client.android.util.StringUtils;
  */
 public class BbtChartActivity extends BaseActivity implements OnClickListener {
 	private TemperatureGraphView graphView;
-	private TemperatureEntity[] temperatureEntity;
 	private Map<String, TemperatureEntity> temperatureMap;
 	private static final int DEFAULT_VIEW_COUNT = 15;
 	/**
@@ -99,24 +98,43 @@ public class BbtChartActivity extends BaseActivity implements OnClickListener {
      */
 	@Override
 	public boolean onTouchEvent(MotionEvent event) {
+		TemperatureEntity[] temperatureEntitys = null;
 		if(event.getAction() == MotionEvent.ACTION_DOWN){
 			downX = event.getX();
 			downY = event.getY();
 		}
 		// グラフをドラックした場合の表示制御
+		// TODO NULL PORが起こっている
 		if(event.getAction() == MotionEvent.ACTION_MOVE){
 			float diff = Math.abs(downY - event.getY());
 			if( diff >= graphView.getSellHeight()){
 				int count = (int) (diff / graphView.getSellHeight());
 				for(int i = 0; i < count; i++){
+					TemperatureEntity limit = null;
 					// 下にドラックして、より古い情報を表示させる制御
 					if(!graphView.isFirst() && downY < event.getY()){
-						temperatureEntity = (TemperatureEntity[]) ArrayUtils.remove(temperatureEntity, i);
+						limit = graphView.getTemperatures()[0];
+						Date preDate = DateUtil.addDays(DateUtil.paseDate(limit.getDate(), DateUtil.DATE_PTTERN_YYYYMMDD), -1);
+						String preDateStr = DateUtil.toDateString(preDate);
+						if(temperatureMap.get(preDateStr) == null){
+							graphView.setFirst(true);
+						}else{
+							temperatureEntitys = createViewTempList(preDateStr, graphView.getTemperatures().length + 1);
+						}
 					}
 						
 					// 上にドラックして、より新しい情報を表示させる制御
 					if(!graphView.isLast() && event.getY() < downY){
-						
+						limit = graphView.getTemperatures()[graphView.getTemperatures().length - 1];
+						Date nextDate = DateUtil.addDays(DateUtil.paseDate(limit.getDate(), DateUtil.DATE_PTTERN_YYYYMMDD), +1);
+						Date startDate = DateUtil.paseDate(graphView.getTemperatures()[0].getDate(), DateUtil.DATE_PTTERN_YYYYMMDD);
+						String nextDateStr = DateUtil.toDateString(nextDate);
+						String startDateStr = DateUtil.toDateString(DateUtil.addDays(startDate, 1));
+						if(temperatureMap.get(nextDateStr) == null){
+							graphView.setLast(true);
+						}else{
+							temperatureEntitys = createViewTempList(startDateStr, graphView.getTemperatures().length + 1);
+						}
 					}
 					
 				}
@@ -124,7 +142,7 @@ public class BbtChartActivity extends BaseActivity implements OnClickListener {
 				
 			}
 
-			graphView.setTemperatures(temperatureEntity);
+			graphView.setTemperatures(temperatureEntitys);
 		}
 
 		setContentView(graphView);
