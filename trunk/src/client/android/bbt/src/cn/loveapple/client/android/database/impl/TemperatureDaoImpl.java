@@ -253,8 +253,7 @@ public class TemperatureDaoImpl extends BaseDao implements TemperatureDao {
 		
 		Calendar date = Calendar.getInstance();
 		date.setTime(start);
-		for (int i = 0; now.after(date.getTime()); i++){
-			date.set(Calendar.DAY_OF_MONTH, date.get(Calendar.DAY_OF_MONTH) + 1);
+		for (int i = 0; now.after(date.getTime()); i++,date.set(Calendar.DAY_OF_MONTH, date.get(Calendar.DAY_OF_MONTH) + 1)){
 			result.add(DateUtil.toDateString(date.getTime()));
 		}
 		
