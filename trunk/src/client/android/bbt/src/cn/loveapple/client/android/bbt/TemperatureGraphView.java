@@ -32,9 +32,11 @@
  */
 package cn.loveapple.client.android.bbt;
 
+import static cn.loveapple.client.android.Constant.*;
 import java.util.Calendar;
 import java.util.Map;
 
+import org.apache.commons.lang.StringUtils;
 import org.springframework.util.CollectionUtils;
 
 import android.content.Context;
@@ -98,6 +100,11 @@ public class TemperatureGraphView extends View {
 	 */
 	float sellWidth;
 	
+	/**
+	 * コンストラクタ
+	 * @param context
+	 * @param title
+	 */
 	public TemperatureGraphView(Context context, String title) {
 		super(context);
 		
@@ -166,7 +173,6 @@ public class TemperatureGraphView extends View {
 		 */
 		sellWidth = graphwidth / hors;
 		
-		
 		setBackgroundColor(Color.WHITE);
 
 		Calendar firstDate = getFirstDate();
@@ -221,10 +227,12 @@ public class TemperatureGraphView extends View {
 					paint.setTextAlign(Align.RIGHT);
 					if(x1 != 0){
 						canvas.drawText(temperatures[(i-1)].getTemperature().toString(), x1, y1, paint);
+						canvas.drawText(getDetailInfo(temperatures[(i-1)]), 2*border, y1, paint);
 					}
 					if(i == temperatures.length -1 ){
 						if(x2 != 0){
 							canvas.drawText(temperatures[(i)].getTemperature().toString(), x2, y2, paint);
+							canvas.drawText(getDetailInfo(temperatures[(i)]), border, y2, paint);
 						}
 					}
 					if(x1 == 0){
@@ -240,6 +248,10 @@ public class TemperatureGraphView extends View {
 		}
 	}
 
+	/**
+	 * 最高温度を取得する
+	 * @return
+	 */
 	private double getMax() {
 		double largest = Double.MIN_VALUE;
 		for (TemperatureEntity temperature : temperatures) {
@@ -251,6 +263,11 @@ public class TemperatureGraphView extends View {
 		return largest;
 	}
 
+	/**
+	 * 最低温度値を取得する
+	 * 
+	 * @return
+	 */
 	private double getMin() {
 		double smallest = Double.MAX_VALUE;
 		for (TemperatureEntity temperature : temperatures) {
@@ -261,6 +278,42 @@ public class TemperatureGraphView extends View {
 		return smallest;
 	}
 	
+	/**
+	 * 詳細情報表示文字を取得
+	 * @param entity
+	 * @return
+	 */
+	private String getDetailInfo(TemperatureEntity entity){
+		if(entity == null){
+			return StringUtils.EMPTY;
+		}
+		StringBuilder sb = new StringBuilder();
+		if(FLG_ON.equals(entity.getCoitusFlg())){
+			sb.append('○');
+		}
+		if(FLG_ON.equals(entity.getMenstruationFlg())){
+			sb.append('×');
+			if(FLG_ON.equals(entity.getDysmenorrheaFlg())){
+				sb.append('△');
+			}
+			if(entity.getMenstruationLevel() != null){
+				int i = Integer.parseInt(entity.getMenstruationLevel());
+				sb.append(getContext().getResources().getStringArray(R.array.measureList)[i]);
+			}
+		}else{
+			if(entity.getLeukorrhea() != null){
+				int i = Integer.parseInt(entity.getLeukorrhea());
+				sb.append(getContext().getResources().getStringArray(R.array.measureList)[i]);
+			}
+		}
+		
+		return sb.toString();
+	}
+	
+	/**
+	 * 表示する最高温度
+	 * @return
+	 */
 	private float maxViewTemperature(){
 		double max = getMax();
 		double min = getMin();
@@ -271,6 +324,10 @@ public class TemperatureGraphView extends View {
 		}
 		return (float)max;
 	}
+	/**
+	 * 表示する最低温度
+	 * @return
+	 */
 	private float minViewTemperature(){
 		double max = getMax();
 		double min = getMin();
@@ -281,8 +338,6 @@ public class TemperatureGraphView extends View {
 		}
 		return (float)min;
 	}
-
-
 
 	/**
 	 * 最後の{@linkplain TemperatureEntity 温度}まで表示されていることを取得します。
@@ -344,7 +399,10 @@ public class TemperatureGraphView extends View {
 	    this.temperatures = temperatures;
 	}
 
-
+	/**
+	 * はじめに表示する温度
+	 * @return
+	 */
 	private Calendar getFirstDate(){
 		TemperatureEntity first = temperatures[0];
 		Calendar firstDate = Calendar.getInstance();
