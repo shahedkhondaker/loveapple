@@ -196,7 +196,6 @@ public class TemperatureGraphView extends View {
 				paint.setTextAlign(Align.LEFT);
 			paint.setColor(Color.BLACK);
 			if(i%5 == 0){
-				//canvas.drawText(String.valueOf(i*0.1 + 35.0), x, border, paint);
 				canvas.drawText(String.valueOf(i), x, graphTop, paint);
 			}
 		}

@@ -50,7 +50,6 @@ import cn.loveapple.client.android.database.entity.TemperatureEntity;
  *
  */
 public abstract class BaseDao implements LoveappleDao{
-	protected TemperatureEntity EMPTY_TEMPERATURE_ENTITY = new EmptyTemperatureEntity();
 	protected SQLiteDatabase writableDb;
 	
 	/**

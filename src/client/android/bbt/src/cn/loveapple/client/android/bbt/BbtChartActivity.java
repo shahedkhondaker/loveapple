@@ -108,41 +108,41 @@ public class BbtChartActivity extends BaseActivity implements OnClickListener {
 		if(event.getAction() == MotionEvent.ACTION_MOVE){
 			float diff = Math.abs(downY - event.getY());
 			if( diff >= graphView.getSellHeight()){
-				int count = (int) (diff / graphView.getSellHeight());
+				int count = (int) (diff / graphView.getSellHeight())*2;
 				for(int i = 0; i < count; i++){
-					TemperatureEntity limit = null;
+					TemperatureEntity first = graphView.getTemperatures()[0];
+					TemperatureEntity last = graphView.getTemperatures()[graphView.getTemperatures().length - 1];
+					Date preDate = DateUtil.addDays(DateUtil.paseDate(first.getDate(), DateUtil.DATE_PTTERN_YYYYMMDD), -1);
+					Date nextDate = DateUtil.addDays(DateUtil.paseDate(last.getDate(), DateUtil.DATE_PTTERN_YYYYMMDD), +1);
+					Date startDate = DateUtil.paseDate(graphView.getTemperatures()[0].getDate(), DateUtil.DATE_PTTERN_YYYYMMDD);
 					// 下にドラックして、より古い情報を表示させる制御
 					if(!graphView.isFirst() && downY < event.getY()){
-						limit = graphView.getTemperatures()[0];
-						Date preDate = DateUtil.addDays(DateUtil.paseDate(limit.getDate(), DateUtil.DATE_PTTERN_YYYYMMDD), -1);
 						String preDateStr = DateUtil.toDateString(preDate);
 						if(temperatureMap.get(preDateStr) == null){
 							graphView.setFirst(true);
 						}else{
+							graphView.setLast(false);
 							temperatureEntitys = createViewTempList(preDateStr, graphView.getTemperatures().length + 1);
+							graphView.setTemperatures(temperatureEntitys);
 						}
 					}
 						
 					// 上にドラックして、より新しい情報を表示させる制御
 					if(!graphView.isLast() && event.getY() < downY){
-						limit = graphView.getTemperatures()[graphView.getTemperatures().length - 1];
-						Date nextDate = DateUtil.addDays(DateUtil.paseDate(limit.getDate(), DateUtil.DATE_PTTERN_YYYYMMDD), +1);
-						Date startDate = DateUtil.paseDate(graphView.getTemperatures()[0].getDate(), DateUtil.DATE_PTTERN_YYYYMMDD);
 						String nextDateStr = DateUtil.toDateString(nextDate);
 						String startDateStr = DateUtil.toDateString(DateUtil.addDays(startDate, 1));
 						if(temperatureMap.get(nextDateStr) == null){
 							graphView.setLast(true);
 						}else{
+							graphView.setFirst(false);
 							temperatureEntitys = createViewTempList(startDateStr, graphView.getTemperatures().length + 1);
+							graphView.setTemperatures(temperatureEntitys);
 						}
 					}
 					
 				}
-				
-				
 			}
 
-			graphView.setTemperatures(temperatureEntitys);
 		}
 
 		setContentView(graphView);
