@@ -94,11 +94,11 @@ public class TemperatureGraphView extends View {
 	/**
 	 * セル高さ
 	 */
-	float sellHeight;
+	private float sellHeight;
 	/**
 	 * セル幅
 	 */
-	float sellWidth;
+	private float sellWidth;
 	
 	/**
 	 * コンストラクタ
