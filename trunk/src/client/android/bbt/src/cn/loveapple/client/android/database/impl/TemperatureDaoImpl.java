@@ -235,7 +235,9 @@ public class TemperatureDaoImpl extends BaseDao implements TemperatureDao {
 			result.put(temp.getDate(), temp);
 		}
 		for(String date : dateSet){
-			result.put(date, EMPTY_TEMPERATURE_ENTITY);
+			TemperatureEntity temperature = new TemperatureEntity();
+			temperature.setDate(date);
+			result.put(date, temperature);
 		}
 		
 		return result;
