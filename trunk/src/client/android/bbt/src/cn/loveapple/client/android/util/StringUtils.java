@@ -32,6 +32,9 @@
  */
 package cn.loveapple.client.android.util;
 
+import java.text.DecimalFormat;
+import java.text.NumberFormat;
+
 /**
  * 
  * @author $Author$
@@ -41,7 +44,23 @@ package cn.loveapple.client.android.util;
  *
  */
 public class StringUtils extends org.apache.commons.lang.StringUtils {
-	
+	/**
+	 * 体温表示フォーマット
+	 */
+	private static final DecimalFormat TEMPERATURE_VIEW_FORMAT;
+	static {
+		TEMPERATURE_VIEW_FORMAT = (DecimalFormat) NumberFormat.getInstance();
+		TEMPERATURE_VIEW_FORMAT.applyPattern("#.00");
+	}
+	/**
+	 * 温度表示用の文字列を戻す
+	 * 
+	 * @param src
+	 * @return
+	 */
+	public static String temperatureViewStr(double src){
+		return TEMPERATURE_VIEW_FORMAT.format(src);
+	}
 	/**
 	 * 
 	 * @param src
