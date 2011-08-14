@@ -1,4 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="line">#cea4ae</color>
+    <color name="line">#FF99BB</color>
+    <color name="graphText">#7F0099</color>
 </resources>
