@@ -35,7 +35,11 @@ package cn.loveapple.client.android.bbt.listener;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.View.OnTouchListener;
+import android.widget.Toast;
 import cn.loveapple.client.android.bbt.TemperatureGraphView;
+import cn.loveapple.client.android.bbt.TemperatureGraphView.TemperaturePointsBean;
+import cn.loveapple.client.android.database.entity.TemperatureEntity;
+import cn.loveapple.client.android.util.StringUtils;
 
 /**
  * オプションメニューを表示するアクティビティ
@@ -46,9 +50,6 @@ import cn.loveapple.client.android.bbt.TemperatureGraphView;
  * @id $Id$
  */
 public class ChartViewOnTouchListener implements OnTouchListener {
-	
-	private float downX;
-	private float downY;
 	/**
 	 * {@inheritDoc}
 	 */
@@ -56,6 +57,14 @@ public class ChartViewOnTouchListener implements OnTouchListener {
 	public boolean onTouch(View view, MotionEvent event) {
 		// on touch 押された場合呼び出される
 		TemperatureGraphView graph = (TemperatureGraphView) view;
+		TemperaturePointsBean points = graph.getPoints();
+		TemperatureEntity entity = points.getPoint(event.getX(), event.getY());
+		if(entity != null){
+			Toast.makeText(
+					view.getContext(),
+					StringUtils.temperatureViewStr(entity.getTemperature()),
+					Toast.LENGTH_LONG).show();
+		}
 		return false;
 	}
 }
