@@ -34,7 +34,9 @@ package cn.loveapple.client.android.bbt;
 
 import static cn.loveapple.client.android.Constant.*;
 
+import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.List;
 import java.util.Map;
 import java.util.SortedMap;
 import java.util.TreeMap;
@@ -220,7 +222,7 @@ public class TemperatureGraphView extends View {
 			
 			double temp = VIEW_MIN_LIMIT_TEMPERATURE + (0.1*i);
 			if(((int)(temp*100))%100 == 0){
-				canvas.drawText(StringUtils.temperatureViewStr(temp), x, graphTop, paint);
+				canvas.drawText(StringUtils.temperatureViewStr(temp), x, graphTop - border, paint);
 			}
 
 			if(temp == 37.0){
@@ -243,8 +245,8 @@ public class TemperatureGraphView extends View {
 		paint.setColor(getResources().getColor(color.graphText));
 		paint.setTextAlign(Align.CENTER);
 		canvas.drawText(title, (graphwidth / 2) + horstart, border - 4, paint);
-		canvas.drawText(StringUtils.temperatureViewStr(VIEW_MIN_LIMIT_TEMPERATURE), horstart + border, 3*border, paint);
-		canvas.drawText(StringUtils.temperatureViewStr(max), graphwidth + horstart, 3*border, paint);
+		//canvas.drawText(StringUtils.temperatureViewStr(VIEW_MIN_LIMIT_TEMPERATURE), horstart + border, 3*border, paint);
+		//canvas.drawText(StringUtils.temperatureViewStr(max), graphwidth + horstart, 3*border, paint);
 
 		// 線チャートを描画
 		if (max != min) {
@@ -259,16 +261,17 @@ public class TemperatureGraphView extends View {
 					float y2 = ((sellHeight * i) + graphTop);
 					
 					paint.setTextAlign(Align.RIGHT);
+					float halfSellHeight = sellHeight/2;
 					if(x1 != 0){
 						//canvas.drawText(StringUtils.temperatureViewStr(temperatures[(i-1)].getTemperature()), x1, y1, paint);
 						canvas.drawText(getDetailInfo(temperatures[(i-1)]), 2*border, y1, paint);
-						points.setPoint(x1, y1, temperatures[i-1]);
+						points.setPoint(y1 - halfSellHeight, y1 + halfSellHeight, temperatures[i-1]);
 					}
 					if(i == temperatures.length -1 ){
 						if(x2 != 0){
 						//	canvas.drawText(StringUtils.temperatureViewStr(temperatures[(i)].getTemperature()), x2, y2, paint);
 							canvas.drawText(getDetailInfo(temperatures[(i)]), border, y2, paint);
-							points.setPoint(x2, y2, temperatures[i]);
+							points.setPoint(y2 - halfSellHeight, y2 + halfSellHeight, temperatures[i]);
 						}
 					}
 					if(x1 == 0){
@@ -484,37 +487,39 @@ public class TemperatureGraphView extends View {
 		 */
 		private SortedMap<String, TemperatureEntity> temperaturePoints;
 		
+		private List<PointTerm> poinTerms;
+		
 		/**
 		 * 
 		 */
 		public TemperaturePointsBean (){
 			temperaturePoints = new TreeMap<String, TemperatureEntity>();
+			poinTerms = new ArrayList<PointTerm>();
 		}
 		
 		/**
-		 * 座標の文字を生成
-		 * @param x
-		 * @param y
+		 * 座標範囲
+		 * 
+		 * @param start
+		 * @param end
 		 * @return
 		 */
-		private String createPointStr(float x, float y){
-			int xValue = (int)(x*100);
-			int yValue = (int)(y*100);
-			StringBuilder sb = new StringBuilder(8);
-			sb.append(xValue);
-			sb.append(yValue);
-			return sb.toString();
+		private String createPointStr(float start, float end){
+			PointTerm term = new PointTerm(start, end);
+			poinTerms.add(term);
+			return term.toString();
 		}
 		
 		/**
 		 * 座標で温度を設定する
 		 * 
-		 * @param x
-		 * @param y
+		 * @param start
+		 * @param end
 		 * @param entity
 		 */
-		public void setPoint(float x, float y, TemperatureEntity entity){
-			temperaturePoints.put(createPointStr(x, y), entity);
+		public void setPoint(float start, float end, TemperatureEntity entity){
+			String key = createPointStr(start, end);
+			temperaturePoints.put(key, entity);
 		}
 		
 		/**
@@ -524,8 +529,54 @@ public class TemperatureGraphView extends View {
 		 * @param y
 		 * @return
 		 */
-		public TemperatureEntity getPoint(float x, float y){
-			return temperaturePoints.get(createPointStr(x, y));
+		public TemperatureEntity getTemperature(float x, float y){
+			// y軸の値で検索
+			for(PointTerm term: poinTerms){
+				if(term.getStart() <= y && y <= term.getEnd()){
+					return temperaturePoints.get(term.toString());
+				}
+			}
+			return null;
+		}
+		/**
+		 * 範囲をあらわす
+		 * @author $author:$
+		 * @version $Revision$
+		 * @date $Date$
+		 * @id $Id$
+		 *
+		 */
+		private class PointTerm{
+			
+			/**
+			 * @param start
+			 * @param end
+			 */
+			public PointTerm(float start, float end) {
+				super();
+				this.start = start;
+				this.end = end;
+			}
+			/**
+			 * 開始ポイント
+			 */
+			private float start;
+			/**
+			 * 終了ポイント
+			 */
+			private float end;
+			/**
+			 * @return the start
+			 */
+			public float getStart() {
+				return start;
+			}
+			/**
+			 * @return the end
+			 */
+			public float getEnd() {
+				return end;
+			}
 		}
 	}
 
