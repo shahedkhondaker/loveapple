@@ -68,7 +68,7 @@ public class BbtChartActivity extends BaseActivity implements OnClickListener {
         super.onCreate(savedInstanceState);
         
         StringBuilder title = new StringBuilder();
-        title.append(getText(string.temperature));
+        title.append(getText(string.app_name));
         title.append(getText(string.graph));
         graphView = new TemperatureGraphView(this, title.toString());
         
