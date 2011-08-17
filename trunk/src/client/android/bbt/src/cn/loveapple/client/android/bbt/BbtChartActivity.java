@@ -104,7 +104,6 @@ public class BbtChartActivity extends BaseActivity implements OnClickListener {
 			downY = event.getY();
 		}
 		// グラフをドラックした場合の表示制御
-		// TODO NULL PORが起こっている
 		if(event.getAction() == MotionEvent.ACTION_MOVE){
 			float diff = Math.abs(downY - event.getY());
 			if( diff >= graphView.getSellHeight()){

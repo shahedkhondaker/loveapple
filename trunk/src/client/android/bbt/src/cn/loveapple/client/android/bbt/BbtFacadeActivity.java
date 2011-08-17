@@ -37,6 +37,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
+import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.ArrayAdapter;
@@ -251,6 +252,8 @@ public class BbtFacadeActivity extends BaseActivity implements OnClickListener {
 		}
 		value = (value - entity.getTemperature().intValue()) * 100;
 		temperatureText.setText(String.valueOf((int)value));
+		
+		Log.d(LOG_TAG, "init temp:" + entity.getTemperature());
 	}
 
 	/**
@@ -272,13 +275,13 @@ public class BbtFacadeActivity extends BaseActivity implements OnClickListener {
 			dao.save(createEntity());
 			result = dao.findByDate(today);
 
-			Toast.makeText(this, "submit!!" + "date:" + result,
-					Toast.LENGTH_LONG).show();
+//			Toast.makeText(this, "submit!!" + "date:" + result,
+//					Toast.LENGTH_LONG).show();
 
 			return result;
 		} catch (Exception e) {
-			Toast.makeText(this, "Exception!!" + e.getMessage(),
-					Toast.LENGTH_LONG).show();
+//			Toast.makeText(this, "Exception!!" + e.getMessage(),
+//					Toast.LENGTH_LONG).show();
 		}
 		return result;
 	}
