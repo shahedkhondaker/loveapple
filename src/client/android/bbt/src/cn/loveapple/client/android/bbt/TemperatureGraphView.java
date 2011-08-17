@@ -262,18 +262,24 @@ public class TemperatureGraphView extends View {
 					
 					paint.setTextAlign(Align.RIGHT);
 					float halfSellHeight = sellHeight/2;
+					float strokeWidth = paint.getStrokeWidth();
 					if(x1 != 0){
 						//canvas.drawText(StringUtils.temperatureViewStr(temperatures[(i-1)].getTemperature()), x1, y1, paint);
 						canvas.drawText(getDetailInfo(temperatures[(i-1)]), 2*border, y1, paint);
+						paint.setStrokeWidth(3);
+						canvas.drawPoint(x1, y1, paint);
 						points.setPoint(y1 - halfSellHeight, y1 + halfSellHeight, temperatures[i-1]);
 					}
 					if(i == temperatures.length -1 ){
 						if(x2 != 0){
 						//	canvas.drawText(StringUtils.temperatureViewStr(temperatures[(i)].getTemperature()), x2, y2, paint);
 							canvas.drawText(getDetailInfo(temperatures[(i)]), border, y2, paint);
+							paint.setStrokeWidth(3);
+							canvas.drawPoint(x2, y2, paint);
 							points.setPoint(y2 - halfSellHeight, y2 + halfSellHeight, temperatures[i]);
 						}
 					}
+					paint.setStrokeWidth(strokeWidth);
 					if(x1 == 0){
 						canvas.drawLine(x2, y2, x2, y2, paint);
 					}else if(x2 == 0){
