@@ -30,39 +30,62 @@
  *
  * @author: loveapple
  */
-package cn.loveapple.client.android.bbt.service;
+package cn.loveapple.client.android.bbt.view;
 
-import android.app.Service;
-import android.content.Intent;
-import android.os.IBinder;
+import static cn.loveapple.client.android.Constant.*;
+import android.app.Dialog;
+import android.graphics.Bitmap;
+import android.util.Log;
+import android.webkit.WebView;
+import android.webkit.WebViewClient;
 
 /**
- * 基礎体温をサーバに送信するサービス
- * 
- * TODO UIより優先度低
+ * WEBページを表示するビュー
  * 
  * @author $Author$
  * @version $Revision$
  * @date $Date$
  * @id $Id$
  */
-public class PostTemperature extends Service {
+public class LoveappleWebViewClient extends WebViewClient {
+	private Dialog dialog_;
+
+	public LoveappleWebViewClient() {
+		super();
+		dialog_ = null;
+	}
 
 	/**
-	 * {@inheritDoc}
+	 * ページ読み込み開始時の動作
 	 */
 	@Override
-	public IBinder onBind(Intent intent) {
-		return null;
+	public void onPageStarted(WebView view, String url, Bitmap favicon) {
+		super.onPageStarted(view, url, favicon);
+		// ダイアログを作成して表示
+		dialog_ = new Dialog(view.getContext());
+		dialog_.setTitle("待て、しかして希望せよ");
+		dialog_.show();
 	}
-	
+
 	/**
 	 * 
 	 * {@inheritDoc}
 	 */
 	@Override
-	public int onStartCommand (Intent intent, int flags, int startId){
-		return super.onStartCommand(intent, flags, startId);
+	public void onLoadResource(WebView view, String url){
+		super.onLoadResource(view, url);
+		Log.d(LOG_TAG, "Access URL:" + url);
 	}
-
+	/**
+	 *  ページ読み込み終了時の動作
+	 */
+	@Override
+	public void onPageFinished(WebView view, String url) {
+		super.onPageFinished(view, url);
+		// ダイアログを削除
+		if(dialog_ != null){
+			dialog_.dismiss();
+		}
+		dialog_ = null;
+	}
 }

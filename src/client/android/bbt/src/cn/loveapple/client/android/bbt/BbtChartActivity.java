@@ -44,6 +44,7 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import cn.loveapple.client.android.bbt.R.string;
 import cn.loveapple.client.android.bbt.listener.ChartViewOnTouchListener;
+import cn.loveapple.client.android.bbt.view.TemperatureGraphView;
 import cn.loveapple.client.android.database.entity.TemperatureEntity;
 import cn.loveapple.client.android.util.DateUtil;
 import cn.loveapple.client.android.util.StringUtils;

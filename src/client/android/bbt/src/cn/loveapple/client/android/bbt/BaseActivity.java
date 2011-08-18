@@ -231,12 +231,13 @@ public class BaseActivity extends Activity {
 	 */
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
+		Intent intent = new Intent();
 		switch (item.getItemId()) {
 		case MENU_HELP:
-			
+			intent.setClassName(this, HelpInfoActivity.class.getName());
+			startActivity(intent);
 			return true;
 		case MENU_OPT:
-			Intent intent = new Intent();
 			intent.setClassName(this, BbtSetting.class.getName());
 			startActivity(intent);
 			return true;

@@ -30,39 +30,45 @@
  *
  * @author: loveapple
  */
-package cn.loveapple.client.android.bbt.service;
+package cn.loveapple.client.android.bbt;
 
-import android.app.Service;
-import android.content.Intent;
-import android.os.IBinder;
+import cn.loveapple.client.android.bbt.view.LoveappleWebViewClient;
+import android.app.Dialog;
+import android.graphics.Bitmap;
+import android.os.Bundle;
+import android.view.View;
+import android.view.View.OnClickListener;
+import android.webkit.WebView;
+import android.webkit.WebViewClient;
+import android.widget.Button;
+import android.widget.EditText;
 
 /**
- * 基礎体温をサーバに送信するサービス
- * 
- * TODO UIより優先度低
+ * ヘルプ情報
  * 
  * @author $Author$
  * @version $Revision$
  * @date $Date$
  * @id $Id$
+ * 
  */
-public class PostTemperature extends Service {
+public class HelpInfoActivity extends BaseActivity {
+	private WebView web_;
+	public void onCreate(Bundle savedInstanceState) {
+		super.onCreate(savedInstanceState);
+		web_ = (WebView) findViewById(R.id.web);
+		final Button button = (Button) findViewById(R.id.GoButton);
+		final OnClickListener listener = new OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				final EditText edit = (EditText) findViewById(R.id.UriText);
+				final String uriString = edit.getText().toString();
+				web_.loadUrl(uriString);
+				web_.requestFocus();
+			}
+		};
+		button.setOnClickListener(listener);
 
-	/**
-	 * {@inheritDoc}
-	 */
-	@Override
-	public IBinder onBind(Intent intent) {
-		return null;
+		web_.setWebViewClient(new LoveappleWebViewClient());
 	}
-	
-	/**
-	 * 
-	 * {@inheritDoc}
-	 */
-	@Override
-	public int onStartCommand (Intent intent, int flags, int startId){
-		return super.onStartCommand(intent, flags, startId);
-	}
-
 }
