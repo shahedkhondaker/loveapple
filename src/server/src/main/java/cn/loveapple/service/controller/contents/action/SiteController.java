@@ -34,6 +34,8 @@ package cn.loveapple.service.controller.contents.action;
 
 import java.util.Locale;
 
+import javax.mail.internet.MimeMessage;
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 
@@ -41,16 +43,20 @@ import org.apache.commons.lang.builder.ToStringBuilder;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.context.support.ReloadableResourceBundleMessageSource;
+import org.springframework.http.converter.HttpMessageNotWritableException;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.servlet.mvc.multiaction.NoSuchRequestHandlingMethodException;
 
 import cn.loveapple.service.controller.SessionLabel;
 import cn.loveapple.service.controller.contents.form.SiteForm;
+import cn.loveapple.service.cool.model.LoveappleMemberModel;
 import cn.loveapple.service.cool.model.SiteModel;
 import cn.loveapple.service.cool.service.SiteContentsService;
+import cn.loveapple.service.cool.service.exception.MailException;
 
 /**
  * サイト操作コントローラ
@@ -91,7 +97,7 @@ public class SiteController implements SessionLabel {
 		session.removeAttribute(FORM);
 		SiteForm form = new SiteForm();		
 		model.addAttribute(form);
-		return "site/regist";
+		return "core/regist";
 	}
 
 	/**
@@ -109,20 +115,56 @@ public class SiteController implements SessionLabel {
 			if(log.isDebugEnabled()){
 				log.debug(ToStringBuilder.reflectionToString(result.getAllErrors()));
 			}
-			return "member/regist";
+			return "core/regist";
 		}
 		
 		SiteModel siteModel = siteContentsService.findSite(form.getUnixName());
 		
 		if(siteModel != null){
-			result.reject("loveappleErrors.beRegisted", validator.createArgs("msg.member"), "");
-			return "member/regist"; 
+			result.reject("loveappleErrors.beRegisted", validator.createArgs("msg.site"), "");
+			return "core/regist"; 
 		}
-		
-		//TODO
 		
 		session.setAttribute(FORM, form);
 		
-		return "member/registConfirm";
+		return "core/registConfirm";
+	}
+	@RequestMapping(value = "core/registComplete", method=RequestMethod.POST)
+	public String registComplete(HttpSession session, HttpServletRequest request, Model model, Locale locale) {
+		
+		SiteForm siteForm = (SiteForm) session.getAttribute(FORM);
+		if(siteForm == null){
+			try {
+				throw new NoSuchRequestHandlingMethodException(request);
+			} catch (NoSuchRequestHandlingMethodException e) {
+				throw new HttpMessageNotWritableException(e.getMessage(), e);
+			}
+		}
+		/*LoveappleMemberModel member = (LoveappleMemberModel) session.getAttribute(LOVEAPPLE_MEMBER_TMP);
+		
+		if(member == null){
+			try {
+				throw new NoSuchRequestHandlingMethodException(request);
+			} catch (NoSuchRequestHandlingMethodException e) {
+				throw new HttpMessageNotWritableException(e.getMessage(), e);
+			}
+		}
+		member = memberCoreService.insertLoveappleMember(member);
+		if(member == null){
+			throw new HttpMessageNotWritableException("can not regist member. "
+					+ ToStringBuilder.reflectionToString(session.getAttribute(LOVEAPPLE_MEMBER_TMP)));
+		}
+		session.removeAttribute(FORM);
+		session.removeAttribute(LOVEAPPLE_MEMBER_TMP);
+		
+		// 承認メールを送信
+		try {
+			MimeMessage message = memberCoreService.sendRegistCertificationMail(member);
+			log.info("Send mail: " + ToStringBuilder.reflectionToString(message));
+		} catch (MailException e) {
+			log.warn("メール送信失敗。", e);
+		}*/
+		
+		return "redirect:/member/certification";
 	}
 }
