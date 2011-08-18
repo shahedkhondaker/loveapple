@@ -57,17 +57,19 @@ public class HelpInfoActivity extends BaseActivity {
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		web_ = (WebView) findViewById(R.id.web);
-		final Button button = (Button) findViewById(R.id.GoButton);
-		final OnClickListener listener = new OnClickListener() {
-			@Override
-			public void onClick(View v) {
-				final EditText edit = (EditText) findViewById(R.id.UriText);
-				final String uriString = edit.getText().toString();
-				web_.loadUrl(uriString);
-				web_.requestFocus();
-			}
-		};
-		button.setOnClickListener(listener);
+//		final Button button = (Button) findViewById(R.id.GoButton);
+//		final OnClickListener listener = new OnClickListener() {
+//			@Override
+//			public void onClick(View v) {
+//				final EditText edit = (EditText) findViewById(R.id.UriText);
+//				final String uriString = edit.getText().toString();
+//				web_.loadUrl(uriString);
+//				web_.requestFocus();
+//			}
+//		};
+//		button.setOnClickListener(listener);
+		web_.loadUrl("http://loveapple-facade.appspot.com/bbtHelp.html");
+		web_.requestFocus();
 
 		web_.setWebViewClient(new LoveappleWebViewClient());
 	}
