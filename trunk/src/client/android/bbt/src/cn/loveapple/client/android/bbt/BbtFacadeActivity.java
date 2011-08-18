@@ -357,6 +357,15 @@ public class BbtFacadeActivity extends BaseActivity implements OnClickListener {
 	@Override
 	protected void onSaveInstanceState(Bundle outState) {
 		super.onSaveInstanceState(outState);
+	}
+	
+	/**
+	 * 
+	 * {@inheritDoc}
+	 */
+	@Override
+	protected void onPause(){
+		super.onPause();
 		save();
 	}
 

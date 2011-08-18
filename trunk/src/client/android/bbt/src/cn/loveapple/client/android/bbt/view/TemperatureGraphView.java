@@ -30,7 +30,7 @@
  *
  * @author: loveapple
  */
-package cn.loveapple.client.android.bbt;
+package cn.loveapple.client.android.bbt.view;
 
 import static cn.loveapple.client.android.Constant.*;
 
@@ -49,6 +49,7 @@ import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Paint.Align;
 import android.view.View;
+import cn.loveapple.client.android.bbt.R;
 import cn.loveapple.client.android.bbt.R.color;
 import cn.loveapple.client.android.database.entity.TemperatureEntity;
 import cn.loveapple.client.android.util.DateUtil;

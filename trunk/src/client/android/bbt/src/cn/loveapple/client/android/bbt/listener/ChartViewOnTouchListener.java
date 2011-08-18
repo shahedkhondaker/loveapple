@@ -36,9 +36,9 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.view.View.OnTouchListener;
 import android.widget.Toast;
-import cn.loveapple.client.android.bbt.TemperatureGraphView;
 import cn.loveapple.client.android.bbt.R.string;
-import cn.loveapple.client.android.bbt.TemperatureGraphView.TemperaturePointsBean;
+import cn.loveapple.client.android.bbt.view.TemperatureGraphView;
+import cn.loveapple.client.android.bbt.view.TemperatureGraphView.TemperaturePointsBean;
 import cn.loveapple.client.android.database.entity.TemperatureEntity;
 import cn.loveapple.client.android.util.StringUtils;
 
