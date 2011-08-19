@@ -48,7 +48,6 @@ import android.view.Display;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.MotionEvent;
-import cn.loveapple.client.android.bbt.R;
 import cn.loveapple.client.android.util.DateUtil;
 import cn.loveapple.client.android.util.StringUtils;
 
