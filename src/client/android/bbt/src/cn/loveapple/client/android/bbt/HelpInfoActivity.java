@@ -69,6 +69,7 @@ public class HelpInfoActivity extends BaseActivity {
 //		};
 //		button.setOnClickListener(listener);
 		web_.loadUrl("http://loveapple-facade.appspot.com/bbtHelp.html");
+		//web_.loadDataWithBaseURL("http://loveapple-facade.appspot.com/bbtHelp.html", null, "text/html", "UTF-8", null);
 		web_.requestFocus();
 
 		web_.setWebViewClient(new LoveappleWebViewClient());
