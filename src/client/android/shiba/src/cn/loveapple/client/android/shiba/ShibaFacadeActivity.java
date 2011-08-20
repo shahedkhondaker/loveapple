@@ -1,32 +1,74 @@
 package cn.loveapple.client.android.shiba;
 
 import android.os.Bundle;
+import android.view.KeyEvent;
 import android.view.View;
+import android.view.Window;
 import android.view.View.OnClickListener;
+import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.widget.Button;
 import android.widget.EditText;
 import cn.loveapple.client.android.bbt.view.LoveappleWebViewClient;
 
+/**
+ * 柴犬ブラウザファーサード
+ * 
+ * @author $author:$
+ * @version $Revision$
+ * @date $Date$
+ * @id $Id$
+ *
+ */
 public class ShibaFacadeActivity extends BaseActivity {
-	private WebView web_;
-    /** Called when the activity is first created. */
+	/**
+	 * WEBビュー
+	 */
+	private WebView webView;
+    
+    /**
+	 * 初期化を行う
+	 */
     @Override
-    public void onCreate(Bundle savedInstanceState) {
-    	super.onCreate(savedInstanceState);
-		web_ = (WebView) findViewById(R.id.web);
+	protected void init(){
+    	requestWindowFeature(Window.FEATURE_INDETERMINATE_PROGRESS);
+	}
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    protected void initView(){
+    	
+    	webView = (WebView) findViewById(R.id.web);
+		
+		WebSettings webSettings = webView.getSettings();
+		webSettings.setJavaScriptEnabled(true);
+		
 		final Button button = (Button) findViewById(R.id.GoButton);
 		final OnClickListener listener = new OnClickListener() {
 			@Override
 			public void onClick(View v) {
 				final EditText edit = (EditText) findViewById(R.id.UriText);
 				final String uriString = edit.getText().toString();
-				web_.loadUrl(uriString);
-				web_.requestFocus();
+				webView.loadUrl(uriString);
+				webView.requestFocus();
 			}
 		};
 		button.setOnClickListener(listener);
 
-		web_.setWebViewClient(new LoveappleWebViewClient());
+		webView.setWebViewClient(new LoveappleWebViewClient(this));
+    }
+    
+    /**
+     * ブラウザバック
+     */
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event){
+    	if((keyCode == KeyEvent.KEYCODE_BACK) && webView.canGoBack()){
+    		webView.goBack();
+    		return true;
+    	}
+    	
+    	return super.onKeyDown(keyCode, event);
     }
 }
