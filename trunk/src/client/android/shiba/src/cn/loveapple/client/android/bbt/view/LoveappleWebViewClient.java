@@ -33,7 +33,7 @@
 package cn.loveapple.client.android.bbt.view;
 
 import static cn.loveapple.client.android.Constant.*;
-import android.app.Dialog;
+import android.app.Activity;
 import android.graphics.Bitmap;
 import android.util.Log;
 import android.webkit.WebView;
@@ -48,11 +48,10 @@ import android.webkit.WebViewClient;
  * @id $Id$
  */
 public class LoveappleWebViewClient extends WebViewClient {
-	private Dialog dialog_;
-
-	public LoveappleWebViewClient() {
+	public Activity activity;
+	public LoveappleWebViewClient(Activity activity) {
 		super();
-		dialog_ = null;
+		this.activity = activity;
 	}
 
 	/**
@@ -61,10 +60,7 @@ public class LoveappleWebViewClient extends WebViewClient {
 	@Override
 	public void onPageStarted(WebView view, String url, Bitmap favicon) {
 		super.onPageStarted(view, url, favicon);
-		// ダイアログを作成して表示
-//		dialog_ = new Dialog(view.getContext());
-//		dialog_.setTitle("待て、しかして希望せよ");
-//		dialog_.show();
+		activity.setProgressBarIndeterminateVisibility(true);
 	}
 
 	/**
@@ -73,10 +69,13 @@ public class LoveappleWebViewClient extends WebViewClient {
 	 */
 	@Override
 	public void onLoadResource(WebView view, String url){
-		String baseUrl = "http://atgapps.appspot.com";
+		String baseUrl = "http://atgapps.appspot.com/";
 		if(!url.startsWith(baseUrl)){
 			if(url.startsWith("http://")){
-				url.replace("http://", baseUrl);
+				StringBuilder sb = new StringBuilder(url.length() + baseUrl.length());
+				sb.append(baseUrl);
+				sb.append(url.substring("http://".length()));
+				url = sb.toString();
 			}
 		}
 		super.onLoadResource(view, url);
@@ -88,10 +87,6 @@ public class LoveappleWebViewClient extends WebViewClient {
 	@Override
 	public void onPageFinished(WebView view, String url) {
 		super.onPageFinished(view, url);
-		// ダイアログを削除
-//		if(dialog_ != null){
-//			dialog_.dismiss();
-//		}
-//		dialog_ = null;
+		activity.setProgressBarIndeterminateVisibility(false);
 	}
 }
