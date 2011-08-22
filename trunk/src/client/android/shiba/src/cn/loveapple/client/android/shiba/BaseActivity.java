@@ -49,7 +49,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.MotionEvent;
 import cn.loveapple.client.android.LoveappleShibaDatabaseOpenHelper;
-import cn.loveapple.client.android.shiba.database.UrlHistoryDao;
+import cn.loveapple.client.android.shiba.database.BookMarkDao;
 import cn.loveapple.client.android.shiba.database.impl.UrlHistoryDaoImpl;
 import cn.loveapple.client.android.util.DateUtil;
 import cn.loveapple.client.android.util.StringUtils;
@@ -68,7 +68,7 @@ public class BaseActivity extends Activity {
 	/**
 	 * 
 	 */
-	protected UrlHistoryDao urlHistoryDao;
+	protected BookMarkDao urlHistoryDao;
 	
 	protected LoveappleShibaDatabaseOpenHelper helper;
 	/**
@@ -222,7 +222,7 @@ public class BaseActivity extends Activity {
 	 * 
 	 * @return
 	 */
-	public UrlHistoryDao getUrlHistoryDao(){
+	public BookMarkDao getUrlHistoryDao(){
 		return urlHistoryDao;
 	}
 }

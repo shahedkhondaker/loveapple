@@ -34,18 +34,17 @@ package cn.loveapple.client.android.shiba.database.entity;
 
 import java.util.Date;
 
-/**
- * アクセスされたURLのヒストリを格納するエンティティ
- * TODO ※cacheテーブルに変更
+/** 
+ * 
  * @author loveapple
  * @version $Revision$
  * @date $Date$
  * @id $Id$
  *
  */
-public class UrlHistoryEntity {
+public class BookMarkEntity {
 	
-	public static final String TABLE_NAME = "URL_HISTORY";
+	public static final String TABLE_NAME = "BOOK_MARK";
 	public static final String COLUMN_URL = "URL";
 	public static final String COLUMN_TIMESTAMP = "TIMESTAMP";
 	public static final String COLUMN_TITLE = "TITLE";

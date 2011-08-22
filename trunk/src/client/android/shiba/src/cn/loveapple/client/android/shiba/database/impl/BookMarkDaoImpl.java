@@ -13,8 +13,8 @@
 $* ------------------------------------------------------------------------*/
 package cn.loveapple.client.android.shiba.database.impl;
 
+import static cn.loveapple.client.android.shiba.database.entity.BookMarkEntity.*;
 import static cn.loveapple.client.android.Constant.*;
-import static cn.loveapple.client.android.shiba.database.entity.UrlHistoryEntity.*;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -27,8 +27,8 @@ import android.database.Cursor;
 import android.util.Log;
 import cn.loveapple.client.android.LoveappleShibaDatabaseOpenHelper;
 import cn.loveapple.client.android.shiba.database.BaseDao;
-import cn.loveapple.client.android.shiba.database.UrlHistoryDao;
-import cn.loveapple.client.android.shiba.database.entity.UrlHistoryEntity;
+import cn.loveapple.client.android.shiba.database.BookMarkDao;
+import cn.loveapple.client.android.shiba.database.entity.BookMarkEntity;
 import cn.loveapple.client.android.util.StringUtils;
 
 /**
@@ -37,9 +37,9 @@ import cn.loveapple.client.android.util.StringUtils;
  * @since 2011/08/22
  * @version $Revision$
  */
-public class UrlHistoryDaoImpl extends BaseDao implements UrlHistoryDao {
+public class BookMarkDaoImpl extends BaseDao implements BookMarkDao {
 
-	public UrlHistoryDaoImpl(LoveappleShibaDatabaseOpenHelper helper) {
+	public BookMarkDaoImpl(LoveappleShibaDatabaseOpenHelper helper) {
 		super(helper);
 	}
 
@@ -47,10 +47,10 @@ public class UrlHistoryDaoImpl extends BaseDao implements UrlHistoryDao {
 	 * {@inheritDoc}
 	 */
 	@Override
-	public List<UrlHistoryEntity> getUrlHistory(String url, String title,
+	public List<BookMarkEntity> getUrlHistory(String url, String title,
 			int limit) {
 		Cursor cursor = null;
-		List<UrlHistoryEntity> result = null;
+		List<BookMarkEntity> result = null;
 		StringBuilder condition = new StringBuilder();
 		List<String> params = new ArrayList<String>();
 		if(StringUtils.isNotEmpty(url)){
@@ -73,7 +73,7 @@ public class UrlHistoryDaoImpl extends BaseDao implements UrlHistoryDao {
 					null, 
 					condition.toString() + " ORDER BY " + COLUMN_TIMESTAMP + " DESC" ,
 					params.toArray(new String[]{}), null, null, null);
-			result = new ArrayList<UrlHistoryEntity>();
+			result = new ArrayList<BookMarkEntity>();
 			cursor.moveToFirst();
 			while(!cursor.isAfterLast()){
 				result.add(getUrlHistoryEntity(cursor));
@@ -92,8 +92,8 @@ public class UrlHistoryDaoImpl extends BaseDao implements UrlHistoryDao {
 	 * {@inheritDoc}
 	 */
 	@Override
-	public UrlHistoryEntity getUrlHistory(String url, String title) {
-		List<UrlHistoryEntity> result = getUrlHistory(url, title, 1);
+	public BookMarkEntity getUrlHistory(String url, String title) {
+		List<BookMarkEntity> result = getUrlHistory(url, title, 1);
 		if(result != null && 0 < result.size()){
 			return result.get(0);
 		}
@@ -104,7 +104,7 @@ public class UrlHistoryDaoImpl extends BaseDao implements UrlHistoryDao {
 	 * {@inheritDoc}
 	 */
 	@Override
-	public UrlHistoryEntity save(UrlHistoryEntity entity) {
+	public BookMarkEntity save(BookMarkEntity entity) {
 		if(entity == null){
 			throw new IllegalArgumentException("history entity is null.");
 		}
@@ -121,7 +121,7 @@ public class UrlHistoryDaoImpl extends BaseDao implements UrlHistoryDao {
 			values.put(COLUMN_TIMESTAMP, entity.getTimestamp().getTime());
 		}
 		
-		UrlHistoryEntity result = null;
+		BookMarkEntity result = null;
 		
 		try{
 			writableDb = getWritableDb();
@@ -139,16 +139,16 @@ public class UrlHistoryDaoImpl extends BaseDao implements UrlHistoryDao {
 	}
 	
 	/**
-	 * {@linkplain Cursor カーソル}から{@linkplain UrlHistoryEntity URL履歴}に変換する
+	 * {@linkplain Cursor カーソル}から{@linkplain BookMarkEntity URL履歴}に変換する
 	 * 
 	 * @param cursor
 	 * @return
 	 */
-	private UrlHistoryEntity getUrlHistoryEntity(Cursor cursor) {
+	private BookMarkEntity getUrlHistoryEntity(Cursor cursor) {
 		if(cursor == null || cursor.getCount() < 1){
 			return null;
 		}
-		UrlHistoryEntity entity = new UrlHistoryEntity();
+		BookMarkEntity entity = new BookMarkEntity();
 		entity.setUrl(cursor.getString(0));
 		entity.setTitle(cursor.getString(1));
 		entity.setTimestamp(new Date(cursor.getLong(2)));

@@ -12,7 +12,7 @@ import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import cn.loveapple.client.android.bbt.view.LoveappleWebViewClient;
-import cn.loveapple.client.android.shiba.database.entity.UrlHistoryEntity;
+import cn.loveapple.client.android.shiba.database.entity.BookMarkEntity;
 import cn.loveapple.client.android.util.StringUtils;
 
 /**
@@ -64,9 +64,7 @@ public class ShibaFacadeActivity extends BaseActivity {
 				
 				final String uriString = edit.getText().toString();
 				webView.loadUrl(uriString);
-				if(webView.requestFocus()){
-					saveHistory(uriString, webView.getTitle(), new Date());
-				}
+				webView.requestFocus();
 			}
 		};
 		button.setOnClickListener(listener);
@@ -81,7 +79,7 @@ public class ShibaFacadeActivity extends BaseActivity {
      * @param timestamp
      */
     private void saveHistory(String url, String tile, Date timestamp){
-    	UrlHistoryEntity history = new UrlHistoryEntity();
+    	BookMarkEntity history = new BookMarkEntity();
     	history.setUrl(url);
     	history.setTitle(tile);
     	history.setTimestamp(timestamp);

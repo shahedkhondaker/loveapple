@@ -34,7 +34,7 @@ package cn.loveapple.client.android;
 
 import static cn.loveapple.client.android.Constant.*;
 import cn.loveapple.client.android.shiba.database.entity.ProxyServerEntity;
-import cn.loveapple.client.android.shiba.database.entity.UrlHistoryEntity;
+import cn.loveapple.client.android.shiba.database.entity.BookMarkEntity;
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
@@ -57,7 +57,7 @@ public class LoveappleShibaDatabaseOpenHelper extends SQLiteOpenHelper {
 	/**
 	 * DB名
 	 */
-	public static final String DB_NAME="LOVEAPPLE_HEALTH";
+	public static final String DB_NAME="LOVEAPPLE_SHIBA";
 	/**
 	 * DBパス
 	 */
@@ -83,10 +83,10 @@ public class LoveappleShibaDatabaseOpenHelper extends SQLiteOpenHelper {
 															+ ProxyServerEntity.COLUMN_STATUS + " integer,"
 															+ ProxyServerEntity.COLUMN_TITLE + " text); "
 															+ "create table "
-															+ UrlHistoryEntity.TABLE_NAME + " ("
-															+ UrlHistoryEntity.COLUMN_URL + " text primary key,"
-															+ UrlHistoryEntity.COLUMN_TITLE + " text,"
-															+ UrlHistoryEntity.COLUMN_TIMESTAMP + " integer);";
+															+ BookMarkEntity.TABLE_NAME + " ("
+															+ BookMarkEntity.COLUMN_URL + " text primary key,"
+															+ BookMarkEntity.COLUMN_TITLE + " text,"
+															+ BookMarkEntity.COLUMN_TIMESTAMP + " integer);";
 	
 	/**
 	 * 
