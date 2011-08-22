@@ -40,7 +40,6 @@ import java.util.Date;
 import java.util.List;
 
 import android.app.Activity;
-import android.content.Intent;
 import android.content.pm.PackageInfo;
 import android.os.Bundle;
 import android.util.Log;
@@ -50,7 +49,7 @@ import android.view.MenuItem;
 import android.view.MotionEvent;
 import cn.loveapple.client.android.LoveappleShibaDatabaseOpenHelper;
 import cn.loveapple.client.android.shiba.database.BookMarkDao;
-import cn.loveapple.client.android.shiba.database.impl.UrlHistoryDaoImpl;
+import cn.loveapple.client.android.shiba.database.impl.BookMarkDaoImpl;
 import cn.loveapple.client.android.util.DateUtil;
 import cn.loveapple.client.android.util.StringUtils;
 
@@ -115,7 +114,7 @@ public class BaseActivity extends Activity {
 	protected void init(){
 
 		helper = new LoveappleShibaDatabaseOpenHelper(this, null, packageInfo.versionCode);
-		urlHistoryDao = new UrlHistoryDaoImpl(helper);
+		urlHistoryDao = new BookMarkDaoImpl(helper);
 	}
 
 	/**
@@ -203,7 +202,7 @@ public class BaseActivity extends Activity {
 	 */
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
-		Intent intent = new Intent();
+//		Intent intent = new Intent();
 //		switch (item.getItemId()) {
 //		case MENU_HELP:
 //			intent.setClassName(this, HelpInfoActivity.class.getName());
