@@ -35,6 +35,7 @@ package cn.loveapple.client.android.shiba.database.entity;
 /**
  * プロキシサーバーエンティティ
  * 
+ * @see http://code.google.com/intl/ja/appengine/docs/quotas.html  GAE割り当て
  * @author loveapple
  * @version $Revision$
  * @date $Date$
