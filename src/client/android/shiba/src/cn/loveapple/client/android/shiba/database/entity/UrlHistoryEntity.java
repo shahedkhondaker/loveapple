@@ -36,7 +36,7 @@ import java.util.Date;
 
 /**
  * アクセスされたURLのヒストリを格納するエンティティ
- * 
+ * TODO ※cacheテーブルに変更
  * @author loveapple
  * @version $Revision$
  * @date $Date$

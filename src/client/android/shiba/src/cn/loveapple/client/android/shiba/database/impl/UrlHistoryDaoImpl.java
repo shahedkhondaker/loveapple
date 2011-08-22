@@ -106,16 +106,20 @@ public class UrlHistoryDaoImpl extends BaseDao implements UrlHistoryDao {
 	@Override
 	public UrlHistoryEntity save(UrlHistoryEntity entity) {
 		if(entity == null){
-			throw new IllegalArgumentException("entity is null.");
+			throw new IllegalArgumentException("history entity is null.");
+		}
+		if(StringUtils.isEmpty(entity.getUrl())){
+			throw new IllegalArgumentException("history url is null.");
 		}
 
 		ContentValues values = new ContentValues();
 		values.put(COLUMN_URL, entity.getUrl());
-		values.put(COLUMN_TITLE, entity.getTitle());
-		if(entity.getTimestamp() == null){
-			entity.setTimestamp(new Date());
+		if(StringUtils.isNotEmpty(entity.getTitle())){
+			values.put(COLUMN_TITLE, entity.getTitle());
 		}
-		values.put(COLUMN_TIMESTAMP, entity.getTimestamp().getTime());
+		if(entity.getTimestamp() != null){
+			values.put(COLUMN_TIMESTAMP, entity.getTimestamp().getTime());
+		}
 		
 		UrlHistoryEntity result = null;
 		

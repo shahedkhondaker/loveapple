@@ -48,6 +48,9 @@ import android.view.Display;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.MotionEvent;
+import cn.loveapple.client.android.LoveappleShibaDatabaseOpenHelper;
+import cn.loveapple.client.android.shiba.database.UrlHistoryDao;
+import cn.loveapple.client.android.shiba.database.impl.UrlHistoryDaoImpl;
 import cn.loveapple.client.android.util.DateUtil;
 import cn.loveapple.client.android.util.StringUtils;
 
@@ -62,6 +65,12 @@ import cn.loveapple.client.android.util.StringUtils;
  *
  */
 public class BaseActivity extends Activity {
+	/**
+	 * 
+	 */
+	protected UrlHistoryDao urlHistoryDao;
+	
+	protected LoveappleShibaDatabaseOpenHelper helper;
 	/**
 	 * 本日を表す文字
 	 * @see DateUtil#DATE_PTTERN_YYYYMMDD
@@ -105,7 +114,8 @@ public class BaseActivity extends Activity {
 	 */
 	protected void init(){
 
-    	
+		helper = new LoveappleShibaDatabaseOpenHelper(this, null, packageInfo.versionCode);
+		urlHistoryDao = new UrlHistoryDaoImpl(helper);
 	}
 
 	/**
@@ -206,5 +216,13 @@ public class BaseActivity extends Activity {
 //		}
 
 		return true;
+	}
+	
+	/**
+	 * 
+	 * @return
+	 */
+	public UrlHistoryDao getUrlHistoryDao(){
+		return urlHistoryDao;
 	}
 }
