@@ -55,6 +55,7 @@ public class ShibaFacadeActivity extends BaseActivity {
 		final OnClickListener listener = new OnClickListener() {
 			@Override
 			public void onClick(View v) {
+				// TODO http://d.hatena.ne.jp/sardine/20061017
 				final AutoCompleteTextView edit = (AutoCompleteTextView) findViewById(R.id.UriText);
 				final String uriString = edit.getText().toString();
 				webView.loadUrl(uriString);
