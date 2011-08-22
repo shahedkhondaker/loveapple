@@ -1,14 +1,18 @@
 package cn.loveapple.client.android.shiba;
 
+import java.util.Date;
+
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.Window;
 import android.view.View.OnClickListener;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
+import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import cn.loveapple.client.android.bbt.view.LoveappleWebViewClient;
+import cn.loveapple.client.android.shiba.database.entity.UrlHistoryEntity;
 import cn.loveapple.client.android.util.StringUtils;
 
 /**
@@ -57,14 +61,32 @@ public class ShibaFacadeActivity extends BaseActivity {
 			public void onClick(View v) {
 				// TODO http://www.adamrocker.com/blog/195/practical_way_of_autocompletetextview_with_sqlite.html
 				final AutoCompleteTextView edit = (AutoCompleteTextView) findViewById(R.id.UriText);
+				
 				final String uriString = edit.getText().toString();
 				webView.loadUrl(uriString);
-				webView.requestFocus();
+				if(webView.requestFocus()){
+					saveHistory(uriString, webView.getTitle(), new Date());
+				}
 			}
 		};
 		button.setOnClickListener(listener);
 
 		webView.setWebViewClient(new LoveappleWebViewClient(this));
+    }
+    
+    /**
+     * 
+     * @param url
+     * @param tile
+     * @param timestamp
+     */
+    private void saveHistory(String url, String tile, Date timestamp){
+    	UrlHistoryEntity history = new UrlHistoryEntity();
+    	history.setUrl(url);
+    	history.setTitle(tile);
+    	history.setTimestamp(timestamp);
+    	
+    	urlHistoryDao.save(history);
     }
     
     /**
