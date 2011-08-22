@@ -34,7 +34,8 @@ package cn.loveapple.client.android.shiba.database;
 
 import java.util.List;
 
-import cn.loveapple.client.android.shiba.database.entity.UrlHistoryEntity;
+import cn.loveapple.client.android.shiba.database.entity.BookMarkEntity;
+
 
 /**
  * 
@@ -44,25 +45,27 @@ import cn.loveapple.client.android.shiba.database.entity.UrlHistoryEntity;
  * @id $Id$
  *
  */
-public interface UrlHistoryDao {
+public interface BookMarkDao {
 	/**
 	 * URL、又は、タイトルから、最新のURL履歴を検索します。
 	 * @param url
 	 * @param title
 	 * @return
 	 */
-	public UrlHistoryEntity getUrlHistory(String url, String title);
+	@Deprecated
+	public BookMarkEntity getUrlHistory(String url, String title);
 	/**
 	 * URL、又は、タイトルから、最新のURL履歴を検索します。
 	 * @param url
 	 * @param title
 	 * @return
 	 */
-	public List<UrlHistoryEntity> getUrlHistory(String url, String title, int limit);
+	@Deprecated
+	public List<BookMarkEntity> getUrlHistory(String url, String title, int limit);
 	/**
 	 * URL履歴を登録・保存します。
 	 * @param entity
 	 * @return
 	 */
-	public UrlHistoryEntity save(UrlHistoryEntity entity);
+	public BookMarkEntity save(BookMarkEntity entity);
 }
