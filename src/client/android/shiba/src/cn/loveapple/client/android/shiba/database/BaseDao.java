@@ -77,7 +77,6 @@ public abstract class BaseDao implements LoveappleDao{
 		this.helper = helper;
 	}
 	
-	
 	public void destory(){
 		try{
 			if(writableDb != null && writableDb.isOpen()){
