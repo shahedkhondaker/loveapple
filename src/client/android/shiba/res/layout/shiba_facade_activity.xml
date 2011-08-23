@@ -11,7 +11,8 @@
         	android:layout_height="wrap_content"
         	android:layout_marginLeft="5dp"
         	android:inputType="text" />
-		<Button android:text="Go" android:id="@+id/GoButton" android:layout_width="wrap_content" android:layout_height="wrap_content"></Button>
+		<Button android:text="Go"  android:id="@+id/GoButton" android:layout_width="wrap_content" android:layout_height="wrap_content"></Button>
+	<!-- ic_menu_back.png  ic_menu_forward.png ic_menu_play_clip.png ic_menu_refresh.png-->
 	</LinearLayout>
     <WebView android:id="@+id/web" android:layout_width="fill_parent" android:layout_height="fill_parent" />
 </LinearLayout>
