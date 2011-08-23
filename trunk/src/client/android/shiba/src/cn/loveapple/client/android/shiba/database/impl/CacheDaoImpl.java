@@ -78,6 +78,20 @@ public class CacheDaoImpl implements CacheDao {
 			Log.i(LOG_TAG, e.getMessage(), e);
 		}
 	}
+	
+	/**
+	 * 
+	 * {@inheritDoc}
+	 */
+	@Override
+	public List<String> findCacheHttpUrl(String url, int limit){
+		List<CacheEntity> result = findCache("http://" + url, limit);
+		List<String> urls = new ArrayList<String>(result.size());
+		for (CacheEntity cacheEntity : result) {
+			urls.add(cacheEntity.getUrl());
+		}
+		return urls;
+	}
 
 	/**
 	 * 
@@ -87,6 +101,7 @@ public class CacheDaoImpl implements CacheDao {
 		StringBuilder condition = new StringBuilder();
 		List<String> params = new ArrayList<String>();
 		if(StringUtils.isNotEmpty(url)){
+			condition.append(" AND ");
 			condition.append(COLUMN_URL);
 			condition.append(" LIKE '?%' ");
 			params.add(url);
@@ -98,9 +113,9 @@ public class CacheDaoImpl implements CacheDao {
 			readableDatabase = getReadableDatabase();
 			cursor = readableDatabase.query(
 					TABLE_NAME, 
-					null, 
-					condition.toString() + " ORDER BY " + COLUMN_ID + " DESC" ,
-					params.toArray(new String[]{}), null, null, null);
+					BIND_COLUMN, 
+					COLUMN_MIMETYPE + "='text/html' " + " ORDER BY " + COLUMN_ID + " DESC LIMIT " + limit ,
+					null, null, null, null);
 			result = new ArrayList<CacheEntity>();
 			cursor.moveToFirst();
 			while(!cursor.isAfterLast()){

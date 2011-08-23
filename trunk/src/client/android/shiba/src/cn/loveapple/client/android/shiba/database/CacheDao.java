@@ -32,6 +32,8 @@
  */
 package cn.loveapple.client.android.shiba.database;
 
+import static cn.loveapple.client.android.shiba.database.entity.CacheEntity.*;
+
 import java.util.List;
 
 import cn.loveapple.client.android.shiba.database.entity.CacheEntity;
@@ -45,6 +47,10 @@ import cn.loveapple.client.android.shiba.database.entity.CacheEntity;
  *
  */
 public interface CacheDao {
+
+	public static final String[] BIND_COLUMN = new String[]{COLUMN_ID, COLUMN_URL, COLUMN_LAST_MODIFY,COLUMN_ETAG,COLUMN_EXPIRES,
+				COLUMN_EXPIRES_STRING, COLUMN_MIMETYPE,COLUMN_ENCODING,COLUMN_HTTP_STATUS,COLUMN_LOCATION,
+				COLUMN_CONTENT_LENGTH,COLUMN_CONTENT_DISPOSITION,COLUMN_CROSSD_OMAIN};
 	/**
 	 * 
 	 * @param url
@@ -52,4 +58,12 @@ public interface CacheDao {
 	 * @return
 	 */
 	public List<CacheEntity> findCache(String url, int limit);
+	
+	/**
+	 * 
+	 * @param url
+	 * @param limit
+	 * @return
+	 */
+	public List<String> findCacheHttpUrl(String url, int limit);
 }

@@ -1,7 +1,11 @@
 package cn.loveapple.client.android.shiba;
 
-import java.util.Date;
+import static cn.loveapple.client.android.Constant.*;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View.OnClickListener;
 import android.view.Window;
@@ -11,7 +15,8 @@ import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import cn.loveapple.client.android.bbt.view.LoveappleWebViewClient;
-import cn.loveapple.client.android.shiba.database.entity.BookMarkEntity;
+import cn.loveapple.client.android.shiba.database.CacheDao;
+import cn.loveapple.client.android.shiba.database.impl.CacheDaoImpl;
 import cn.loveapple.client.android.shiba.listener.RequestListener;
 import cn.loveapple.client.android.util.StringUtils;
 
@@ -25,16 +30,20 @@ import cn.loveapple.client.android.util.StringUtils;
  *
  */
 public class ShibaFacadeActivity extends BaseActivity {
+	private CacheDao cacheDao;
 	/**
 	 * WEBビュー
 	 */
 	private WebView webView;
+	
+	public static final int VIEW_URL_LIMIT = 100;
     
     /**
 	 * 初期化を行う
 	 */
     @Override
 	protected void init(){
+    	cacheDao = new CacheDaoImpl();
     	requestWindowFeature(Window.FEATURE_INDETERMINATE_PROGRESS);
 	}
     /**
@@ -44,12 +53,17 @@ public class ShibaFacadeActivity extends BaseActivity {
     protected void initView(){
     	
     	webView = (WebView) findViewById(R.id.web);
+    	
+    	// アドレスバーを初期化
+    	List<String> urlList = cacheDao.findCacheHttpUrl(null, VIEW_URL_LIMIT);
     	AutoCompleteTextView address = (AutoCompleteTextView) findViewById(R.id.address);
-		ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, R.layout.list_address, new String[]{"a","b"});
+		ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, R.layout.list_address, urlList);
 		address.setAdapter(adapter);
     	address.setWidth(this.getWindowManager().getDefaultDisplay().getWidth()/2);
     	address.setCompletionHint("choose address");
     	address.setThreshold(0);
+    	
+    	
     	
     	if(StringUtils.isNotEmpty(webView.getUrl())){
     		address.setText(webView.getUrl());
@@ -57,6 +71,7 @@ public class ShibaFacadeActivity extends BaseActivity {
     		address.setText("");
     	}
 		
+    	
 		WebSettings webSettings = webView.getSettings();
 		webSettings.setJavaScriptEnabled(true);
 		
