@@ -9,7 +9,8 @@
         	android:id="@+id/address" 
         	android:layout_width="wrap_content" 
         	android:layout_height="wrap_content"
-        	android:layout_marginLeft="5dp" />
+        	android:layout_marginLeft="5dp"
+        	android:inputType="text" />
 		<Button android:text="Go" android:id="@+id/GoButton" android:layout_width="wrap_content" android:layout_height="wrap_content"></Button>
 	</LinearLayout>
     <WebView android:id="@+id/web" android:layout_width="fill_parent" android:layout_height="fill_parent" />
