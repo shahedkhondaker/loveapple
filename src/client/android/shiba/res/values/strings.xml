@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 	<string name="app_name">柴犬浏览器</string>
-	<string name="choose_address">选择访问地址</string>
+	<string name="choose_address">选择地址</string>
 	<string name="request">访问</string>
 </resources>

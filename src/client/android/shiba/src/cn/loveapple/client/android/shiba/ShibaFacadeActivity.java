@@ -8,6 +8,7 @@ import java.util.List;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View.OnClickListener;
+import android.view.View.OnKeyListener;
 import android.view.Window;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
@@ -60,7 +61,7 @@ public class ShibaFacadeActivity extends BaseActivity {
 		ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, R.layout.list_address, urlList);
 		address.setAdapter(adapter);
     	address.setWidth(this.getWindowManager().getDefaultDisplay().getWidth()/2);
-    	address.setCompletionHint("choose address");
+    	address.setCompletionHint(getResources().getText(R.string.choose_address));
     	address.setThreshold(0);
     	
 		WebSettings webSettings = webView.getSettings();
@@ -71,10 +72,8 @@ public class ShibaFacadeActivity extends BaseActivity {
     		address.setText(urlList.get(0));
     		webView.requestFocus();
     	}
-    	
-		final Button button = (Button) findViewById(R.id.GoButton);
-		final OnClickListener listener = new RequestListener(webView, (AutoCompleteTextView) findViewById(R.id.address));
-		button.setOnClickListener(listener);
+		final OnKeyListener listener = new RequestListener(webView, (AutoCompleteTextView) findViewById(R.id.address));
+		address.setOnKeyListener(listener);
 
 		webView.setWebViewClient(new LoveappleWebViewClient(this));
     }
