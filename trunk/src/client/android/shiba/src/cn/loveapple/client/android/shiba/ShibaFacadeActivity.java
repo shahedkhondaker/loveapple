@@ -63,18 +63,15 @@ public class ShibaFacadeActivity extends BaseActivity {
     	address.setCompletionHint("choose address");
     	address.setThreshold(0);
     	
-    	
-    	
-    	if(StringUtils.isNotEmpty(webView.getUrl())){
-    		address.setText(webView.getUrl());
-    	}else{
-    		address.setText("");
-    	}
-		
-    	
 		WebSettings webSettings = webView.getSettings();
 		webSettings.setJavaScriptEnabled(true);
-		
+
+    	if(urlList != null && 0 < urlList.size()){
+    		webView.loadUrl(urlList.get(0));
+    		address.setText(urlList.get(0));
+    		webView.requestFocus();
+    	}
+    	
 		final Button button = (Button) findViewById(R.id.GoButton);
 		final OnClickListener listener = new RequestListener(webView, (AutoCompleteTextView) findViewById(R.id.address));
 		button.setOnClickListener(listener);
