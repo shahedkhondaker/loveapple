@@ -3,9 +3,8 @@ package cn.loveapple.client.android.shiba;
 import java.util.Date;
 
 import android.view.KeyEvent;
-import android.view.View;
-import android.view.Window;
 import android.view.View.OnClickListener;
+import android.view.Window;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.widget.ArrayAdapter;
@@ -13,6 +12,7 @@ import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import cn.loveapple.client.android.bbt.view.LoveappleWebViewClient;
 import cn.loveapple.client.android.shiba.database.entity.BookMarkEntity;
+import cn.loveapple.client.android.shiba.listener.RequestListener;
 import cn.loveapple.client.android.util.StringUtils;
 
 /**
@@ -44,49 +44,29 @@ public class ShibaFacadeActivity extends BaseActivity {
     protected void initView(){
     	
     	webView = (WebView) findViewById(R.id.web);
-    	AutoCompleteTextView edit = (AutoCompleteTextView) findViewById(R.id.UriText);
-    	edit.setWidth(this.getWindowManager().getDefaultDisplay().getWidth()/2);
+    	AutoCompleteTextView address = (AutoCompleteTextView) findViewById(R.id.address);
+		ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, R.layout.list_address, new String[]{"a","b"});
+		address.setAdapter(adapter);
+    	address.setWidth(this.getWindowManager().getDefaultDisplay().getWidth()/2);
+    	address.setCompletionHint("choose address");
+    	address.setThreshold(0);
+    	
     	if(StringUtils.isNotEmpty(webView.getUrl())){
-    		edit.setText(webView.getUrl());
+    		address.setText(webView.getUrl());
     	}else{
-    		edit.setText("");
+    		address.setText("");
     	}
 		
 		WebSettings webSettings = webView.getSettings();
 		webSettings.setJavaScriptEnabled(true);
 		
 		final Button button = (Button) findViewById(R.id.GoButton);
-		final OnClickListener listener = new OnClickListener() {
-			@Override
-			public void onClick(View v) {
-				// TODO http://www.adamrocker.com/blog/195/practical_way_of_autocompletetextview_with_sqlite.html
-				final AutoCompleteTextView edit = (AutoCompleteTextView) findViewById(R.id.UriText);
-				
-				final String uriString = edit.getText().toString();
-				webView.loadUrl(uriString);
-				webView.requestFocus();
-			}
-		};
+		final OnClickListener listener = new RequestListener(webView, (AutoCompleteTextView) findViewById(R.id.address));
 		button.setOnClickListener(listener);
 
 		webView.setWebViewClient(new LoveappleWebViewClient(this));
     }
-    
-    /**
-     * 
-     * @param url
-     * @param tile
-     * @param timestamp
-     */
-    private void saveHistory(String url, String tile, Date timestamp){
-    	BookMarkEntity history = new BookMarkEntity();
-    	history.setUrl(url);
-    	history.setTitle(tile);
-    	history.setTimestamp(timestamp);
-    	
-    	urlHistoryDao.save(history);
-    }
-    
+        
     /**
      * ブラウザバック
      */
