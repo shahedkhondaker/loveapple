@@ -10,7 +10,6 @@ import android.webkit.WebView;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.ImageButton;
-import android.widget.LinearLayout;
 import cn.loveapple.client.android.bbt.view.LoveappleWebViewClient;
 import cn.loveapple.client.android.shiba.database.CacheDao;
 import cn.loveapple.client.android.shiba.database.impl.CacheDaoImpl;
