@@ -1,23 +1,22 @@
 package cn.loveapple.client.android.shiba;
 
-import static cn.loveapple.client.android.Constant.*;
-
-import java.util.ArrayList;
 import java.util.List;
 
-import android.util.Log;
 import android.view.KeyEvent;
-import android.view.View.OnClickListener;
 import android.view.View.OnKeyListener;
 import android.view.Window;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
-import android.widget.Button;
+import android.widget.ImageButton;
+import android.widget.LinearLayout;
 import cn.loveapple.client.android.bbt.view.LoveappleWebViewClient;
 import cn.loveapple.client.android.shiba.database.CacheDao;
 import cn.loveapple.client.android.shiba.database.impl.CacheDaoImpl;
+import cn.loveapple.client.android.shiba.listener.BackListener;
+import cn.loveapple.client.android.shiba.listener.ForwardListener;
+import cn.loveapple.client.android.shiba.listener.ReloadListener;
 import cn.loveapple.client.android.shiba.listener.RequestListener;
 import cn.loveapple.client.android.util.StringUtils;
 
@@ -32,6 +31,9 @@ import cn.loveapple.client.android.util.StringUtils;
  */
 public class ShibaFacadeActivity extends BaseActivity {
 	private CacheDao cacheDao;
+	private ImageButton back;
+	private ImageButton forward;
+	private ImageButton refresh;
 	/**
 	 * WEBビュー
 	 */
@@ -76,8 +78,23 @@ public class ShibaFacadeActivity extends BaseActivity {
 		address.setOnKeyListener(listener);
 
 		webView.setWebViewClient(new LoveappleWebViewClient(this));
+		
+		// ボタンの初期化
+		back = (ImageButton) findViewById(R.id.back);
+		back.setOnClickListener(new BackListener(webView));
+		forward = (ImageButton) findViewById(R.id.forward);
+		forward.setOnClickListener(new ForwardListener(webView));
+		refresh = (ImageButton) findViewById(R.id.refresh);
+		refresh.setOnClickListener(new ReloadListener(webView));
+		setButtonEnabled();
     }
-        
+    
+    
+    public void setButtonEnabled(){
+		back.setEnabled(webView.canGoBack());
+		forward.setEnabled(webView.canGoForward());
+		refresh.setEnabled(StringUtils.isNotEmpty(webView.getUrl()));
+    }
     /**
      * ブラウザバック
      */

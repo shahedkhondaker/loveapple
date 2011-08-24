@@ -4,8 +4,8 @@
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
     >
-    <LinearLayout android:orientation="horizontal" android:layout_width="fill_parent" android:layout_height="wrap_content">
-      <!--   <ImageButton
+    <LinearLayout android:id="@+id/addressBar" android:orientation="horizontal" android:layout_width="fill_parent" android:layout_height="wrap_content">
+         <ImageButton
         	android:id="@+id/back"
         	android:layout_width="wrap_content"
         	android:layout_height="wrap_content"
@@ -17,18 +17,18 @@
         	android:layout_height="wrap_content"
         	android:src="@drawable/ic_menu_forward"
         	/>
-        <ImageButton
-        	android:id="@+id/refresh"
-        	android:layout_width="wrap_content"
-        	android:layout_height="wrap_content"
-        	android:src="@drawable/ic_menu_refresh"
-        	/> -->
         <AutoCompleteTextView 
         	android:id="@+id/address" 
         	android:layout_width="wrap_content" 
         	android:layout_height="wrap_content"
         	android:layout_marginLeft="5dp"
         	android:inputType="text" />
+        <ImageButton
+        	android:id="@+id/refresh"
+        	android:layout_width="wrap_content"
+        	android:layout_height="wrap_content"
+        	android:src="@drawable/ic_menu_refresh"
+        	/> 
 	</LinearLayout>
     <WebView android:id="@+id/web" android:layout_width="fill_parent" android:layout_height="fill_parent" />
 </LinearLayout>
