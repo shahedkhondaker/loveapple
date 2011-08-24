@@ -1,13 +1,12 @@
 package cn.loveapple.client.android.shiba.listener;
 
-import cn.loveapple.client.android.shiba.ShibaFacadeActivity;
-import android.inputmethodservice.Keyboard.Key;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.View.OnKeyListener;
 import android.webkit.WebView;
 import android.widget.AutoCompleteTextView;
+import cn.loveapple.client.android.shiba.ShibaFacadeActivity;
 
 public class RequestListener implements OnClickListener, OnKeyListener {
 	private WebView webView;
