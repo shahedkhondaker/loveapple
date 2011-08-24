@@ -1,5 +1,6 @@
 package cn.loveapple.client.android.shiba.listener;
 
+import cn.loveapple.client.android.shiba.ShibaFacadeActivity;
 import android.inputmethodservice.Keyboard.Key;
 import android.view.KeyEvent;
 import android.view.View;
@@ -37,6 +38,7 @@ public class RequestListener implements OnClickListener, OnKeyListener {
 			webView.loadUrl(uriString);
 			webView.requestFocus();
 		}
+		((ShibaFacadeActivity)view.getContext()).setButtonEnabled();
 		return false;
 	}
 }
