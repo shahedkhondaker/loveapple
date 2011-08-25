@@ -68,11 +68,14 @@ public class ShibaFacadeActivity extends BaseActivity {
 		WebSettings webSettings = webView.getSettings();
 		webSettings.setJavaScriptEnabled(true);
 
-    	if(urlList != null && 0 < urlList.size()){
+    	/*
+    	 * 初期には開始ページに設定
+    	 * if(urlList != null && 0 < urlList.size()){
     		webView.loadUrl(urlList.get(0));
     		address.setText(urlList.get(0));
     		webView.requestFocus();
-    	}
+    	}*/
+		webView.loadUrl("http://loveapple-facade.appspot.com/shiba.html");
 		final OnKeyListener listener = new RequestListener(webView, (AutoCompleteTextView) findViewById(R.id.address));
 		address.setOnKeyListener(listener);
 
