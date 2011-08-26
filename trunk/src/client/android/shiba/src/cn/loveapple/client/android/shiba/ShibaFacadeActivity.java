@@ -8,6 +8,7 @@ import android.util.Log;
 import android.view.KeyEvent;
 import android.view.Window;
 import android.view.View.OnKeyListener;
+import android.view.WindowManager;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.widget.ArrayAdapter;
@@ -77,17 +78,21 @@ public class ShibaFacadeActivity extends BaseActivity {
 
 		WebSettings webSettings = webView.getSettings();
 		webSettings.setJavaScriptEnabled(true);
-		webSettings.setJavaScriptCanOpenWindowsAutomatically(true);
-		webSettings.setLightTouchEnabled(true);
-		webSettings.setLoadsImagesAutomatically(true);
-		webSettings.setBuiltInZoomControls(true);
-		webSettings.setGeolocationEnabled(true);
-		webSettings.setLightTouchEnabled(true);
-		webSettings.setLoadWithOverviewMode(true);
-		webSettings.setPluginState(WebSettings.PluginState.ON);
-		webSettings.setSupportMultipleWindows(true);
 		webSettings.setAllowFileAccess(true);
-
+		webSettings.setPluginState(WebSettings.PluginState.ON);
+		webSettings.setJavaScriptCanOpenWindowsAutomatically(true);
+//		webSettings.setLightTouchEnabled(true);
+//		webSettings.setLoadsImagesAutomatically(true);
+//		webSettings.setBuiltInZoomControls(true);
+//		webSettings.setGeolocationEnabled(true);
+//		webSettings.setLightTouchEnabled(true);
+//		webSettings.setLoadWithOverviewMode(true);
+//		webSettings.setSupportMultipleWindows(true);
+		
+		// FLASH
+		webView.setScrollBarStyle(WebView.SCROLLBARS_INSIDE_OVERLAY);
+		
+		
 
 		/*
 		 * 初期には開始ページに設定 if(urlList != null && 0 < urlList.size()){
@@ -129,11 +134,11 @@ public class ShibaFacadeActivity extends BaseActivity {
 
 		return super.onKeyDown(keyCode, event);
 	}
-
-	/**
+/*
+	*//**
 	 * TODO FLASH
 	 * @param name
-	 */
+	 *//*
 	private void callHiddenWebViewMethod(String name) {
 		if (webView != null) {
 			try {
@@ -148,20 +153,13 @@ public class ShibaFacadeActivity extends BaseActivity {
 			}
 		}
 	}
-
+*/
 	/**
 	 * TODO Flash
 	 */
 	@Override
 	protected void onPause() {
 		super.onPause();
-		webView.pauseTimers();
-
-		if (isFinishing()) {
-			webView.loadUrl("about:blank");
-			setContentView(new FrameLayout(this));
-		}
-		callHiddenWebViewMethod("onPause");
 	}
 
 	/**
@@ -170,7 +168,12 @@ public class ShibaFacadeActivity extends BaseActivity {
 	@Override
 	protected void onResume() {
 		super.onResume();
-		callHiddenWebViewMethod("onResume");
+//		getWindow().setBackgroundDrawable(null);
+//		WindowManager.LayoutParams lp = 
+//			(WindowManager.LayoutParams) getWindow().getDecorView().getLayoutParams();
+//	    lp.type = WindowManager.LayoutParams.TYPE_APPLICATION;
+//	    getWindowManager().removeView(getWindow().getDecorView());
+//	    getWindowManager().addView(getWindow().getDecorView(), lp);
 	}
 
 }
