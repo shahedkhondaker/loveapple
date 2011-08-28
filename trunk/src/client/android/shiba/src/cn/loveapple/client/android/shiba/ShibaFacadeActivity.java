@@ -81,13 +81,13 @@ public class ShibaFacadeActivity extends BaseActivity {
 		webSettings.setAllowFileAccess(true);
 		webSettings.setPluginState(WebSettings.PluginState.ON);
 		webSettings.setJavaScriptCanOpenWindowsAutomatically(true);
-//		webSettings.setLightTouchEnabled(true);
-//		webSettings.setLoadsImagesAutomatically(true);
-//		webSettings.setBuiltInZoomControls(true);
-//		webSettings.setGeolocationEnabled(true);
-//		webSettings.setLightTouchEnabled(true);
-//		webSettings.setLoadWithOverviewMode(true);
-//		webSettings.setSupportMultipleWindows(true);
+		webSettings.setLightTouchEnabled(true);
+		webSettings.setLoadsImagesAutomatically(true);
+		webSettings.setBuiltInZoomControls(true);
+		webSettings.setGeolocationEnabled(true);
+		webSettings.setLightTouchEnabled(true);
+		webSettings.setLoadWithOverviewMode(true);
+		webSettings.setSupportMultipleWindows(true);
 		
 		// FLASH
 		webView.setScrollBarStyle(WebView.SCROLLBARS_INSIDE_OVERLAY);
