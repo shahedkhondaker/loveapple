@@ -8,8 +8,8 @@
 	<version>0.0.1</version>
 	<inceptionYear>2010</inceptionYear>
 	<properties>
-		<slim3.version>1.0.5</slim3.version>
-		<appengine.version>1.4.2</appengine.version>
+		<slim3.version>1.0.13</slim3.version>
+		<appengine.version>1.5.3</appengine.version>
 		<generated.war>war</generated.war>
 		<eclipse.lib>eclipse.lib</eclipse.lib>
 		<generated.src>target/apt_generated</generated.src>
@@ -98,12 +98,12 @@
 				<enabled>false</enabled>
 			</snapshots>
 		</repository>
-		<!-- GAEライブラリ用リポジトリ -->
+		<!-- GAEライブラリ用リポジトリ
 		<repository>
 			<id>maven-gae-plugin-repo</id>
 			<name>Maven Google App Engine Repository</name>
 			<url>http://maven-gae-plugin.googlecode.com/svn/repository/</url>
-		</repository>
+		</repository> -->
 	</repositories>
 	<pluginRepositories>
 		<!-- GAEのプラグイン用リポジトリ -->
@@ -292,16 +292,6 @@
 			<version>3.1</version>
 		</dependency>
 		<dependency>
-			<groupId>velocity-tools</groupId>
-			<artifactId>velocity-tools</artifactId>
-			<version>1.4</version>
-		</dependency>
-		<dependency>
-			<groupId>velocity</groupId>
-			<artifactId>velocity</artifactId>
-			<version>1.5-beta2</version>
-		</dependency>
-		<dependency>
 			<groupId>org.springframework.webflow</groupId>
 			<artifactId>spring-webflow</artifactId>
 			<version>2.3.0.RELEASE</version>
@@ -310,6 +300,11 @@
 			<groupId>ognl</groupId>
 			<artifactId>ognl</artifactId>
 			<version>3.0</version>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.velocity</groupId>
+			<artifactId>velocity</artifactId>
+			<version>1.7</version>
 		</dependency>
 	</dependencies>
 	<build>

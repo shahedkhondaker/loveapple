@@ -1,4 +1,4 @@
-#Thu Jun 23 09:45:42 JST 2011
+#Fri Aug 19 12:01:11 JST 2011
 eclipse.preferences.version=1
 encoding//src/main/webapp/WEB-INF/tags/util/setLocaleList.tag=UTF-8
 encoding//src/main/webapp/WEB-INF/views/common/footer.jsp=UTF-8
@@ -12,7 +12,5 @@ encoding//src/main/webapp/WEB-INF/views/layout.jsp=UTF-8
 encoding//src/main/webapp/WEB-INF/views/member/index.jsp=UTF-8
 encoding//src/main/webapp/WEB-INF/views/sample/createForm.jsp=UTF-8
 encoding//src/main/webapp/WEB-INF/views/site/regist.jsp=UTF-8
-encoding//war/WEB-INF/tags/member/loginLink.tag=UTF-8
-encoding//war/WEB-INF/views/common/header.jsp=UTF-8
-encoding//war/WEB-INF/views/health/bbt/smart/list.jsp=UTF-8
+encoding//src/main/webapp/bbtHelp.html=UTF-8
 encoding/<project>=UTF-8
