@@ -1,0 +1,304 @@
+<project name="loveapple.android.damtomo" basedir="." default="all">
+  <property file="${basedir}/build.properties"/>
+  <target name="clean">
+    <delete dir="${dest.dir}"/>
+  </target>
+  <target name="mergesrc">
+    <copy todir="${all.src.dir}">
+      <fileset dir="C:/work/loveapple/workspace/loveapple.android.damtomo/src" excludes=""/>
+      <fileset dir="C:/work/loveapple/workspace/loveapple.android.damtomo/gen" excludes=""/>
+    </copy>
+  </target>
+  <path id="all.classpath">
+    <pathelement location="C:/work/loveapple/workspace/loveapple.android.damtomo/bin"/>
+    <pathelement location="C:/Android/android-sdk/platforms/android-11/android.jar"/>
+  </path>
+  <path id="test.all.classpath">
+    <pathelement location="${dest.dir}/instrumented"/>
+    <pathelement location="C:/work/loveapple/workspace/loveapple.android.damtomo/bin"/>
+  </path>
+  <taskdef name="vmstyle" classname="org.limy.velocity.task.VmStyleTask">
+    <classpath>
+      <pathelement location="C:\work\eclipse\configuration\org.eclipse.osgi\bundles\1192\1\.cp"/>
+      <pathelement location="C:\work\eclipse\configuration\org.eclipse.osgi\bundles\1192\1\.cp\bin"/>
+      <pathelement location="C:\work\eclipse\configuration\org.eclipse.osgi\bundles\1192\1\.cp\resource\lib\commons-logging-1.0.4.jar"/>
+      <pathelement location="C:\work\eclipse\configuration\org.eclipse.osgi\bundles\1190\1\.cp"/>
+      <pathelement location="C:\work\eclipse\configuration\org.eclipse.osgi\bundles\1190\1\.cp\bin"/>
+      <pathelement location="C:\work\eclipse\configuration\org.eclipse.osgi\bundles\1190\1\.cp\resource\lib\velocity-dep-1.5.jar"/>
+    </classpath>
+  </taskdef>
+  <target name="init" depends="mergesrc">
+    <mkdir dir="${dest.dir}"/>
+    <copy todir="${dest.dir}">
+      <fileset dir="C:\work\eclipse\configuration\org.eclipse.osgi\bundles\1192\1\.cp\resource" includes="css/**,images/**,js/**"/>
+    </copy>
+  </target>
+  <taskdef name="project-support" classname="org.limy.eclipse.qalab.task.ProjectSupportTask">
+    <classpath>
+      <pathelement location="C:\work\eclipse\configuration\org.eclipse.osgi\bundles\1192\1\.cp"/>
+      <pathelement location="C:\work\eclipse\configuration\org.eclipse.osgi\bundles\1192\1\.cp\bin"/>
+      <pathelement location="C:\work\eclipse\configuration\org.eclipse.osgi\bundles\1190\1\.cp"/>
+      <pathelement location="C:\work\eclipse\configuration\org.eclipse.osgi\bundles\1190\1\.cp\bin"/>
+      <pathelement location="C:\work\eclipse\configuration\org.eclipse.osgi\bundles\1190\1\.cp\resource\lib\velocity-dep-1.5.jar"/>
+      <pathelement location="C:\work\eclipse\configuration\org.eclipse.osgi\bundles\1192\1\.cp\resource\lib\commons-logging-1.0.4.jar"/>
+    </classpath>
+  </taskdef>
+  <taskdef resource="checkstyletask.properties" classpath="C:\work\eclipse\configuration\org.eclipse.osgi\bundles\1192\1\.cp\resource\external-lib\checkstyle-all-4.4.jar"/>
+  <taskdef name="checkstyle-support" classname="org.limy.eclipse.qalab.task.CheckStyleSupportTask">
+    <classpath>
+      <pathelement location="C:\work\eclipse\configuration\org.eclipse.osgi\bundles\1192\1\.cp"/>
+      <pathelement location="C:\work\eclipse\configuration\org.eclipse.osgi\bundles\1192\1\.cp\bin"/>
+      <pathelement location="C:\work\eclipse\configuration\org.eclipse.osgi\bundles\1190\1\.cp"/>
+      <pathelement location="C:\work\eclipse\configuration\org.eclipse.osgi\bundles\1190\1\.cp\bin"/>
+      <pathelement location="C:\work\eclipse\configuration\org.eclipse.osgi\bundles\1190\1\.cp\resource\lib\velocity-dep-1.5.jar"/>
+      <pathelement location="C:\work\eclipse\configuration\org.eclipse.osgi\bundles\1192\1\.cp\resource\lib\commons-logging-1.0.4.jar"/>
+    </classpath>
+  </taskdef>
+  <target name="checkstyle" depends="init">
+    <checkstyle-support configFile="${checkstyle.config}" destDir="${dest.dir}" encoding="${src.encoding}"/>
+    <checkstyle config="${dest.dir}/checkstyle.xml" failureProperty="checkstyle.failure" failOnViolation="false" classpathref="all.classpath" properties="${dest.dir}/checkstyle.properties">
+      <formatter type="xml" tofile="${dest.dir}/checkstyle_report.xml"/>
+      <fileset dir="${all.src.dir}" includes="**/*.java"/>
+    </checkstyle>
+  </target>
+  <target name="checkstyle-report-only" depends="init">
+    <vmstyle out="${dest.dir}/checkstyle_report.html" style="C:\work\eclipse\configuration\org.eclipse.osgi\bundles\1192\1\.cp\resource\checkstyle\index.vm" toolClass="org.limy.eclipse.qalab.tool.CheckstyleTool">
+      <infile value="${dest.dir}/checkstyle_report.xml"/>
+    </vmstyle>
+  </target>
+  <taskdef name="findbugs" classname="edu.umd.cs.findbugs.anttask.FindBugsTask">
+    <classpath>
+      <pathelement location="C:\work\eclipse\configuration\org.eclipse.osgi\bundles\1192\1\.cp\resource\external-lib\findbugs\lib\findbugs.jar"/>
+      <pathelement location="C:\work\eclipse\configuration\org.eclipse.osgi\bundles\1192\1\.cp\resource\external-lib\findbugs-ant.jar"/>
+      <pathelement location="C:\work\eclipse\configuration\org.eclipse.osgi\bundles\1192\1\.cp\resource\external-lib\findbugs\lib\jsr305.jar"/>
+      <pathelement location="C:\work\eclipse\configuration\org.eclipse.osgi\bundles\1192\1\.cp\resource\external-lib\findbugs\plugin\coreplugin.jar"/>
+      <pathelement location="C:\work\eclipse\configuration\org.eclipse.osgi\bundles\1192\1\.cp\resource\external-lib\findbugs\lib\asm-commons-3.0.jar"/>
+    </classpath>
+  </taskdef>
+  <target name="findbugs" depends="init">
+    <findbugs home="${findbugs.home}" output="xdocs" outputFile="${dest.dir}/findbugs_report.xml" jvmargs="-Xmx256M">
+      <sourcePath path="${all.src.dir}"/>
+      <class location="C:/work/loveapple/workspace/loveapple.android.damtomo/bin"/>
+    </findbugs>
+  </target>
+  <target name="findbugs-report-only" depends="init">
+    <vmstyle out="${dest.dir}/findbugs_report.html" style="C:\work\eclipse\configuration\org.eclipse.osgi\bundles\1192\1\.cp\resource\findbugs\index.vm">
+      <infile value="${dest.dir}/findbugs_report.xml"/>
+      <param name="version" expression="${findbugs.version}"/>
+    </vmstyle>
+  </target>
+  <path id="pmd.classpath">
+    <pathelement location="C:\work\eclipse\configuration\org.eclipse.osgi\bundles\1192\1\.cp"/>
+    <pathelement location="C:\work\eclipse\configuration\org.eclipse.osgi\bundles\1192\1\.cp\bin"/>
+    <pathelement location="C:\work\eclipse\configuration\org.eclipse.osgi\bundles\1192\1\.cp\resource"/>
+    <pathelement location="C:\work\eclipse\configuration\org.eclipse.osgi\bundles\1192\1\.cp\resource\lib\jaxen-1.1.1.modified.jar"/>
+    <pathelement location="C:\work\eclipse\configuration\org.eclipse.osgi\bundles\1192\1\.cp\resource\external-lib\jakarta-oro-2.0.8.jar"/>
+    <pathelement location="C:\work\eclipse\configuration\org.eclipse.osgi\bundles\1192\1\.cp\resource\external-lib\asm-3.0.jar"/>
+    <pathelement location="C:\work\eclipse\configuration\org.eclipse.osgi\bundles\1192\1\.cp\resource\external-lib\backport-util-concurrent.jar"/>
+    <pathelement location="C:\work\eclipse\configuration\org.eclipse.osgi\bundles\1192\1\.cp\resource\external-lib\pmd-4.2.1.jar"/>
+    <pathelement location="C:\work\eclipse\configuration\org.eclipse.osgi\bundles\1192\1\.cp\resource\external-lib\crimson.jar"/>
+  </path>
+  <taskdef name="cpd" classname="net.sourceforge.pmd.cpd.CPDTask" classpathref="pmd.classpath"/>
+  <taskdef name="pmd" classname="org.limy.eclipse.qalab.ant.pmd.LimyPmdTask" classpathref="pmd.classpath"/>
+  <target name="pmd" depends="init">
+    <copy tofile="${dest.dir}/pmd.xml" file="${pmd.config}"/>
+    <pmd shortFilenames="true" targetjdk="${jdk.version}" encoding="${src.encoding}" rulesetfiles="${pmd.config}" supportUTF8="true">
+      <formatter type="xml" toFile="${dest.dir}/pmd_report.xml"/>
+      <fileset dir="${all.src.dir}" includes="**/*.java"/>
+    </pmd>
+    <cpd minimumTokenCount="50" outputFile="${dest.dir}/pmd_cpd_report.xml" format="xml" encoding="${src.encoding}">
+      <fileset dir="${all.src.dir}" includes="**/*.java"/>
+    </cpd>
+  </target>
+  <target name="pmd-report-only" depends="init">
+    <vmstyle out="${dest.dir}/pmd_report.html" style="C:\work\eclipse\configuration\org.eclipse.osgi\bundles\1192\1\.cp\resource\pmd\index.vm">
+      <infile value="${dest.dir}/pmd_report.xml"/>
+    </vmstyle>
+    <vmstyle out="${dest.dir}/pmd_cpd_report.html" style="C:\work\eclipse\configuration\org.eclipse.osgi\bundles\1192\1\.cp\resource\pmd_cpd\index.vm">
+      <infile value="${dest.dir}/pmd_cpd_report.xml"/>
+      <param name="minimumTokenCount" expression="50"/>
+    </vmstyle>
+  </target>
+  <path id="cobertura.classpath">
+    <pathelement location="C:\work\eclipse\configuration\org.eclipse.osgi\bundles\1192\1\.cp\resource\lib\cobertura.jar"/>
+    <pathelement location="C:\work\eclipse\configuration\org.eclipse.osgi\bundles\1192\1\.cp\resource\external-lib\log4j-1.2.9.jar"/>
+    <pathelement location="C:\work\eclipse\configuration\org.eclipse.osgi\bundles\1192\1\.cp\resource\external-lib\jakarta-oro-2.0.8.jar"/>
+    <pathelement location="C:\work\eclipse\configuration\org.eclipse.osgi\bundles\1192\1\.cp\resource\external-lib\asm-3.0.jar"/>
+    <pathelement location="C:\work\eclipse\configuration\org.eclipse.osgi\bundles\1192\1\.cp\resource\external-lib\asm-tree-3.0.jar"/>
+  </path>
+  <taskdef resource="tasks.properties" classpathref="cobertura.classpath"/>
+  <target name="cobertura" depends="init">
+    <delete file="${dest.dir}/instrumented"/>
+    <delete file="${dest.dir}/cobertura.ser"/>
+    <cobertura-instrument todir="${dest.dir}/instrumented" datafile ="${dest.dir}/cobertura.ser">
+      <fileset dir="C:/work/loveapple/workspace/loveapple.android.damtomo/bin" includes="**/*.class" excludes="**/*Test.class"/>
+    </cobertura-instrument>
+    <mkdir dir="${dest.dir}/coverage/xml"/>
+    <junit fork="yes" forkmode="once" dir="${basedir}" failureProperty="test.failed" showoutput="yes">
+      <sysproperty key="net.sourceforge.cobertura.datafile" value="${dest.dir}/cobertura.ser"/>
+      <classpath refid="test.all.classpath"/>
+      <classpath refid="cobertura.classpath"/>
+      <classpath refid="all.classpath"/>
+      <formatter type="xml"/>
+      <batchtest todir="${dest.dir}/coverage/xml"/>
+    </junit>
+    <cobertura-report format="xml" destdir="${dest.dir}" datafile="${dest.dir}/cobertura.ser" charset="${src.encoding}">
+      <fileset dir="${all.src.dir}" includes="**/*.java"/>
+    </cobertura-report>
+    <mkdir dir="${dest.dir}/junit"/>
+    <junitreport todir="${dest.dir}/junit">
+      <fileset dir="${dest.dir}/coverage/xml" includes="TEST-*.xml"/>
+      <report format="frames" todir="${dest.dir}/junit/html"/>
+    </junitreport>
+  </target>
+  <target name="cobertura-report-only" depends="init">
+    <cobertura-report format="html" destdir="${dest.dir}/coverage/html" datafile="${dest.dir}/cobertura.ser" charset="${src.encoding}">
+      <fileset dir="${all.src.dir}" includes="**/*.java"/>
+    </cobertura-report>
+  </target>
+  <target name="javadoc" depends="init">
+    <javadoc destdir="${dest.dir}/javadoc" encoding="${src.encoding}" charset="${src.encoding}" docencoding="${src.encoding}" classpathref="all.classpath" useexternalfile="true">
+      <fileset dir="${all.src.dir}" includes="**/*.java"/>
+    </javadoc>
+  </target>
+  <taskdef name="javancss" classname="javancss.JavancssAntTask">
+    <classpath>
+      <pathelement location="C:\work\eclipse\configuration\org.eclipse.osgi\bundles\1192\1\.cp\resource\lib\javancss.jar"/>
+      <pathelement location="C:\work\eclipse\configuration\org.eclipse.osgi\bundles\1192\1\.cp\resource\external-lib\ccl.jar"/>
+      <pathelement location="C:\work\eclipse\configuration\org.eclipse.osgi\bundles\1192\1\.cp\resource\external-lib\jhbasic.jar"/>
+    </classpath>
+  </taskdef>
+  <target name="javancss" depends="init">
+    <javancss srcdir="${all.src.dir}" includes="**/*.java" generateReport="true" outputfile="${dest.dir}/javancss_report.xml" format="xml" charset="${src.encoding}"/>
+  </target>
+  <target name="javancss-report-only" depends="init">
+    <vmstyle out="${dest.dir}/javancss_report.html" style="C:\work\eclipse\configuration\org.eclipse.osgi\bundles\1192\1\.cp\resource\javancss\index.vm">
+      <infile value="${dest.dir}/javancss_report.xml"/>
+    </vmstyle>
+  </target>
+  <taskdef name="todo" classname="org.limy.eclipse.qalab.task.TodoReportTask">
+    <classpath>
+      <pathelement location="C:\work\eclipse\configuration\org.eclipse.osgi\bundles\1192\1\.cp"/>
+      <pathelement location="C:\work\eclipse\configuration\org.eclipse.osgi\bundles\1192\1\.cp\bin"/>
+      <pathelement location="C:\work\eclipse\configuration\org.eclipse.osgi\bundles\1190\1\.cp"/>
+      <pathelement location="C:\work\eclipse\configuration\org.eclipse.osgi\bundles\1190\1\.cp\bin"/>
+      <pathelement location="C:\work\eclipse\configuration\org.eclipse.osgi\bundles\1190\1\.cp\resource\lib\velocity-dep-1.5.jar"/>
+      <pathelement location="C:\work\eclipse\configuration\org.eclipse.osgi\bundles\1192\1\.cp\resource\lib\commons-io-1.2.jar"/>
+    </classpath>
+  </taskdef>
+  <target name="todo" depends="init">
+    <todo outputFile="${dest.dir}/todo_report.xml" inputCharset="${src.encoding}">
+      <fileset dir="C:/work/loveapple/workspace/loveapple.android.damtomo/src" includes="**/*.java"/>
+      <fileset dir="C:/work/loveapple/workspace/loveapple.android.damtomo/gen" includes="**/*.java"/>
+    </todo>
+  </target>
+  <target name="todo-report-only" depends="init">
+    <vmstyle in="${dest.dir}/todo_report.xml" out="${dest.dir}/todo_report.html" style="C:\work\eclipse\configuration\org.eclipse.osgi\bundles\1192\1\.cp\resource\todo\index.vm"/>
+  </target>
+  <taskdef name="java2html" classname="org.limy.eclipse.qalab.task.Java2HtmlTask">
+    <classpath>
+      <pathelement location="C:\work\eclipse\configuration\org.eclipse.osgi\bundles\1192\1\.cp"/>
+      <pathelement location="C:\work\eclipse\configuration\org.eclipse.osgi\bundles\1192\1\.cp\bin"/>
+      <pathelement location="C:\work\eclipse\configuration\org.eclipse.osgi\bundles\1192\1\.cp\resource\lib\cobertura.jar"/>
+      <pathelement location="C:\work\eclipse\configuration\org.eclipse.osgi\bundles\1192\1\.cp\resource\lib\commons-io-1.2.jar"/>
+    </classpath>
+  </taskdef>
+  <target name="java2html" depends="init">
+    <java2html destdir="${dest.dir}/javasrc" enableLineAnchor="true" inputCharset="${src.encoding}">
+      <fileset dir="C:/work/loveapple/workspace/loveapple.android.damtomo/src" includes="**/*.java"/>
+      <fileset dir="C:/work/loveapple/workspace/loveapple.android.damtomo/gen" includes="**/*.java"/>
+    </java2html>
+  </target>
+  <path id="qalab.classpath">
+    <pathelement location="C:\work\eclipse\configuration\org.eclipse.osgi\bundles\1192\1\.cp"/>
+    <pathelement location="C:\work\eclipse\configuration\org.eclipse.osgi\bundles\1192\1\.cp\bin"/>
+    <pathelement location="C:\work\eclipse\configuration\org.eclipse.osgi\bundles\1192\1\.cp\resource\external-lib\jcommon-1.0.8.jar"/>
+    <pathelement location="C:\work\eclipse\configuration\org.eclipse.osgi\bundles\1192\1\.cp\resource\external-lib\jfreechart-1.0.3.jar"/>
+    <pathelement location="C:\work\eclipse\configuration\org.eclipse.osgi\bundles\1192\1\.cp\resource\lib\qalab.jar"/>
+  </path>
+  <taskdef name="mergestat" classname="net.objectlab.qalab.ant.BuildStatMergeTask" classpathref="qalab.classpath"/>
+  <taskdef name="buildchart" classname="net.objectlab.qalab.ant.BuildStatChartTask" classpathref="qalab.classpath"/>
+  <taskdef name="QALabMover" classname="net.objectlab.qalab.ant.BuildStatMoverTask" classpathref="qalab.classpath"/>
+  <target name="qalab" depends="init">
+    <tstamp>
+      <format property="TIME" pattern="yyyy-MM-dd HH:mm:ss"/>
+    </tstamp>
+    <mergestat inputFile="${dest.dir}/checkstyle_report.xml" outputFile="${qalab.xml}" srcDir="${all.src.dir}" handler="net.objectlab.qalab.parser.CheckstyleStatMerge" mergerTimeStamp="${TIME}" propertiesFile="C:\work\eclipse\configuration\org.eclipse.osgi\bundles\1192\1\.cp\resource\qalab.properties" quiet="true"/>
+    <mergestat inputFile="${dest.dir}/findbugs_report.xml" outputFile="${qalab.xml}" srcDir="${all.src.dir}" handler="net.objectlab.qalab.parser.FindBugsStatMerge" mergerTimeStamp="${TIME}" propertiesFile="C:\work\eclipse\configuration\org.eclipse.osgi\bundles\1192\1\.cp\resource\qalab.properties" quiet="true"/>
+    <mergestat inputFile="${dest.dir}/pmd_report.xml" outputFile="${qalab.xml}" srcDir="${all.src.dir}" handler="net.objectlab.qalab.parser.PMDStatMerge" mergerTimeStamp="${TIME}" propertiesFile="C:\work\eclipse\configuration\org.eclipse.osgi\bundles\1192\1\.cp\resource\qalab.properties" quiet="true"/>
+    <mergestat inputFile="${dest.dir}/pmd_cpd_report.xml" outputFile="${qalab.xml}" srcDir="${all.src.dir}" handler="org.limy.eclipse.qalab.parser.PmdCpdStatMerge" mergerTimeStamp="${TIME}" propertiesFile="C:\work\eclipse\configuration\org.eclipse.osgi\bundles\1192\1\.cp\resource\qalab.properties" quiet="true"/>
+    <mergestat inputFile="${dest.dir}/coverage.xml" outputFile="${qalab.xml}" srcDir="${all.src.dir}" handler="net.objectlab.qalab.parser.CoberturaLineStatMerge" mergerTimeStamp="${TIME}" propertiesFile="C:\work\eclipse\configuration\org.eclipse.osgi\bundles\1192\1\.cp\resource\qalab.properties" quiet="true"/>
+    <mergestat inputFile="${dest.dir}/coverage.xml" outputFile="${qalab.xml}" srcDir="${all.src.dir}" handler="net.objectlab.qalab.parser.CoberturaBranchStatMerge" mergerTimeStamp="${TIME}" propertiesFile="C:\work\eclipse\configuration\org.eclipse.osgi\bundles\1192\1\.cp\resource\qalab.properties" quiet="true"/>
+    <mergestat inputFile="${dest.dir}/junit/TESTS-TestSuites.xml" outputFile="${qalab.xml}" srcDir="${all.src.dir}" handler="org.limy.eclipse.qalab.parser.JUnitStatMerge" mergerTimeStamp="${TIME}" propertiesFile="C:\work\eclipse\configuration\org.eclipse.osgi\bundles\1192\1\.cp\resource\qalab.properties" quiet="true"/>
+    <mergestat inputFile="${dest.dir}/javancss_report.xml" outputFile="${qalab.xml}" srcDir="${all.src.dir}" handler="org.limy.eclipse.qalab.parser.JavaNCSSStatMerge" mergerTimeStamp="${TIME}" propertiesFile="C:\work\eclipse\configuration\org.eclipse.osgi\bundles\1192\1\.cp\resource\qalab.properties" quiet="true"/>
+    <mergestat inputFile="${dest.dir}/todo_report.xml" outputFile="${qalab.xml}" srcDir="${all.src.dir}" handler="org.limy.eclipse.qalab.parser.TodoStatMerge" mergerTimeStamp="${TIME}" propertiesFile="C:\work\eclipse\configuration\org.eclipse.osgi\bundles\1192\1\.cp\resource\qalab.properties" quiet="true"/>
+  </target>
+  <target name="qalab-chart" depends="init">
+    <mkdir dir="${dest.dir}/qalab"/>
+    <buildchart inputFile="${qalab.xml}" toDir="${dest.dir}/qalab" quiet="true" type="checkstyle,findbugs,pmd,pmd-cpd,todo" summaryType="checkstyle,findbugs,pmd,pmd-cpd,todo" summaryOnly="false" width="480" height="340"/>
+    <buildchart inputFile="${qalab.xml}" toDir="${dest.dir}/qalab" width="680" height="453" quiet="true" summaryOnly="true" type="checkstyle,findbugs,pmd,pmd-cpd,todo" summaryType="checkstyle,findbugs,pmd,pmd-cpd,todo"/>
+  </target>
+  <target name="qalab-chart-coverage" depends="init">
+    <mkdir dir="${dest.dir}/qalab/coverage"/>
+    <buildchart inputFile="${qalab.xml}" toDir="${dest.dir}/qalab/coverage" type="cobertura-line,cobertura-branch,junit" summaryType="cobertura-line,cobertura-branch,junit" summaryOnly="false" width="480" height="340"/>
+    <buildchart inputFile="${qalab.xml}" toDir="${dest.dir}/qalab/coverage" width="680" height="453" summaryOnly="true" type="cobertura-line,cobertura-branch,junit" summaryType="cobertura-line,cobertura-branch,junit"/>
+  </target>
+  <target name="qalab-report-only" depends="init">
+    <mkdir dir="${dest.dir}/qalab"/>
+    <vmstyle out="${dest.dir}/qalab/index.html" style="C:\work\eclipse\configuration\org.eclipse.osgi\bundles\1192\1\.cp\resource\qalab\index.vm">
+      <param name="projectName" expression="loveapple.android.damtomo"/>
+      <param name="qalab" expression="on"/>
+    </vmstyle>
+    <vmstyle out="${dest.dir}/qalab/menu.html" style="C:\work\eclipse\configuration\org.eclipse.osgi\bundles\1192\1\.cp\resource\qalab\menu.vm">
+      <param name="checkstyle" expression="on"/>
+      <param name="findbugs" expression="on"/>
+      <param name="pmd" expression="on"/>
+      <param name="cobertura" expression="on"/>
+      <param name="javadoc" expression="on"/>
+      <param name="javancss" expression="on"/>
+      <param name="todo" expression="on"/>
+      <param name="java2html" expression="on"/>
+      <param name="qalab" expression="on"/>
+    </vmstyle>
+    <vmstyle out="${dest.dir}/qalab/qalab.html" style="C:\work\eclipse\configuration\org.eclipse.osgi\bundles\1192\1\.cp\resource\qalab\qalab.vm">
+      <infile value="${qalab.xml}"/>
+      <param name="pluginVersion" expression="${plugin.version}"/>
+      <param name="enable_indivisual" expression="on"/>
+      <param name="checkstyle" expression="on"/>
+      <param name="findbugs" expression="on"/>
+      <param name="pmd" expression="on"/>
+      <param name="cobertura" expression="on"/>
+      <param name="javadoc" expression="on"/>
+      <param name="javancss" expression="on"/>
+      <param name="todo" expression="on"/>
+      <param name="java2html" expression="on"/>
+      <param name="enable_qalab" expression="on"/>
+    </vmstyle>
+    <vmstyle out="${dest.dir}/qalab/all-packages.html" style="C:\work\eclipse\configuration\org.eclipse.osgi\bundles\1192\1\.cp\resource\qalab\all_packages.vm">
+      <infile value="${qalab.xml}"/>
+    </vmstyle>
+    <vmstyle out="${dest.dir}/qalab/dummy.html" style="C:\work\eclipse\configuration\org.eclipse.osgi\bundles\1192\1\.cp\resource\qalab\per_file_main.vm">
+      <infile value="${qalab.xml}"/>
+      <param name="checkstyle" expression="on"/>
+      <param name="findbugs" expression="on"/>
+      <param name="pmd" expression="on"/>
+      <param name="cobertura" expression="on"/>
+      <param name="javadoc" expression="on"/>
+      <param name="javancss" expression="on"/>
+      <param name="todo" expression="on"/>
+      <param name="java2html" expression="on"/>
+    </vmstyle>
+    <QALabMover inputFile="${qalab.xml}" types="checkstyle,findbugs,pmd,pmd-cpd,cobertura-line,cobertura-branch,junit,todo" startTimeHoursOffset="720" weekendAdjustment="true" quiet="true" outputXMLfile="${dest.dir}/qalab-mover.xml"/>
+    <vmstyle out="${dest.dir}/qalab-mover.html" style="C:\work\eclipse\configuration\org.eclipse.osgi\bundles\1192\1\.cp\resource\qalab-mover\index.vm">
+      <infile value="${dest.dir}/qalab-mover.xml"/>
+      <param name="enable_indivisual" expression="on"/>
+    </vmstyle>
+  </target>
+  <target name="a1-prepare" depends="checkstyle,findbugs,pmd,cobertura,javancss,todo"/>
+  <target name="a2-calc" depends="qalab"/>
+  <target name="a3-report" depends="javadoc,java2html,checkstyle-report-only,findbugs-report-only,pmd-report-only,cobertura-report-only,javancss-report-only,todo-report-only,qalab-report-only,qalab-chart,qalab-chart-coverage"/>
+  <target name="all" depends="clean, a1-prepare, a2-calc, a3-report"/>
+  <target name="finish">
+    <touch file="${dest.dir}/.finish"/>
+  </target>
+</project>
