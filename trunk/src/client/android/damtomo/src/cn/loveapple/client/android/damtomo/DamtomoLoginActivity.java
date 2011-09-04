@@ -32,7 +32,9 @@
  */
 package cn.loveapple.client.android.damtomo;
 
+import android.widget.Button;
 import cn.loveapple.client.android.BaseActivity;
+import cn.loveapple.client.android.damtomo.listener.FinishActivityListener;
 
 /**
  * @author $author:$
@@ -42,5 +44,13 @@ import cn.loveapple.client.android.BaseActivity;
  *
  */
 public class DamtomoLoginActivity extends BaseActivity {
-
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	protected void initView(){
+		super.initView();
+		Button cancele = (Button) findViewById(R.id.cancele);
+		cancele.setOnClickListener(new FinishActivityListener());
+	}
 }
