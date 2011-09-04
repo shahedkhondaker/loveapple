@@ -56,6 +56,7 @@ import android.view.WindowManager;
 import android.view.View.OnClickListener;
 import android.widget.Button;
 import cn.loveapple.client.android.damtomo.DamtomoLoginActivity;
+import cn.loveapple.client.android.damtomo.R;
 import cn.loveapple.client.android.damtomo.listener.OpenLoginListener;
 import cn.loveapple.client.android.util.DateUtil;
 import cn.loveapple.client.android.util.StringUtils;

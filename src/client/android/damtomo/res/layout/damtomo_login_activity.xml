@@ -11,50 +11,40 @@
 	    android:layout_height="wrap_content" 
 	    android:text="@string/damtomo_login"
 	    />
-	<LinearLayout android:orientation="vertical">
-		<TextView  
-		    android:id="@+id/headMsg"
-		    android:layout_width="fill_parent" 
-		    android:layout_height="wrap_content" 
-		    android:text="@string/damtomo_id"
-		    />
-		<EditText
-			android:layout_width="50dip"
-			android:layout_height="wrap_content" 
-			android:id="@+id/loginIdText" 
-			android:inputType="text" >
-		</EditText>
-	</LinearLayout>
-	<LinearLayout android:orientation="vertical">
-		<TextView  
-		    android:id="@+id/headMsg"
-		    android:layout_width="fill_parent" 
-		    android:layout_height="wrap_content" 
-		    android:text="@string/password"
-		    />
-		<EditText
-			android:layout_width="50dip"
-			android:layout_height="wrap_content" 
-			android:id="@+id/passwordText" 
-			android:inputType="textPassword" >
-		</EditText>
-	</LinearLayout>
-	<LinearLayout
-		android:orientation="horizontal"
+	<TextView  
+	    android:id="@+id/headMsg"
+	    android:layout_width="fill_parent" 
+	    android:layout_height="wrap_content" 
+	    android:text="@string/damtomo_id"
+	    />
+	<EditText
+		android:layout_width="50dip"
 		android:layout_height="wrap_content" 
-		android:layout_width="match_parent" 
-		android:id="@+id/leukorrheaHLine">
-		<Button 
-			android:text="@string/login" 
-			android:id="@+id/login" 
-			android:layout_width="wrap_content" 
-			android:layout_height="wrap_content"
-			 />
-		<Button 
-			android:text="@string/cancele" 
-			android:id="@+id/cancele" 
-			android:layout_width="wrap_content" 
-			android:layout_height="wrap_content"
-			 />
-	</LinearLayout>
+		android:id="@+id/loginIdText" 
+		android:inputType="text" >
+	</EditText>
+	<TextView  
+	    android:id="@+id/headMsg"
+	    android:layout_width="fill_parent" 
+	    android:layout_height="wrap_content" 
+	    android:text="@string/password"
+	    />
+	<EditText
+		android:layout_width="50dip"
+		android:layout_height="wrap_content" 
+		android:id="@+id/passwordText" 
+		android:inputType="textPassword" >
+	</EditText>
+	<Button 
+		android:text="@string/login" 
+		android:id="@+id/login" 
+		android:layout_width="wrap_content" 
+		android:layout_height="wrap_content"
+		 />
+	<Button 
+		android:text="@string/cancele" 
+		android:id="@+id/cancele" 
+		android:layout_width="wrap_content" 
+		android:layout_height="wrap_content"
+		 />
 </LinearLayout>
