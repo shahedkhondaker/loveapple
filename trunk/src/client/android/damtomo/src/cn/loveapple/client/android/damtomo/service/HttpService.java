@@ -30,34 +30,55 @@
  *
  * @author: loveapple
  */
-package cn.loveapple.client.android.damtomo.listener;
+package cn.loveapple.client.android.damtomo.service;
 
-import android.app.Activity;
-import android.view.View;
-import android.view.View.OnClickListener;
-import cn.loveapple.client.android.damtomo.DamtomoLoginActivity;
+import java.util.Map;
+import java.util.Random;
+
+import org.springframework.web.client.RestTemplate;
+
+import cn.loveapple.client.android.damtomo.service.binder.HttpBinder;
+import android.app.Service;
+import android.content.Intent;
+import android.os.IBinder;
 
 /**
- * @author $author:$
+ * @author loveapple
  * @version $Revision$
  * @date $Date$
- * @id $Id$
- *
+ * @id $Id: FinishActivityListener.java 289 2011-09-04 09:00:33Z
+ *     hao0323@gmail.com $
+ * 
  */
-public class FinishActivityListener implements OnClickListener {
+public class HttpService extends Service {
 
+	private final HttpBinder httpBinder;
+	private final Random mGenerator;
+	public HttpService(){
+		httpBinder = new HttpBinder(this);
+		mGenerator = new Random();
+	}
 	/**
+	 * 
 	 * {@inheritDoc}
 	 */
 	@Override
-	public void onClick(View view) {
-		if(view.getContext() instanceof Activity){
-			Activity activity = (Activity) view.getContext();
-			activity.finish();
-			
-			((DamtomoLoginActivity)activity).onButtonClick(view);
-			
-		}
+	public IBinder onBind(Intent intent) {
+		return httpBinder;
+	}
+	
+	/**
+	 * 
+	 * @param url
+	 * @param params
+	 * @return
+	 */
+	public String basicRequest(String url, Map<String, Object> params){
+		RestTemplate restTemplate = new RestTemplate();
+		return restTemplate.getForObject(url, String.class);
 	}
 
+	public int getRandomNumber() {
+		return mGenerator.nextInt(100);
+	}
 }

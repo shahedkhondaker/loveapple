@@ -1,9 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">DAMとも(非公式)</string>
+    <string name="app_name">DAM★とも(非公式)</string>
     <string name="damtomo_login">DAM★とも会員ログイン</string>
     <string name="damtomo_id">DAM★ともID</string>
     <string name="password">パスワード</string>
     <string name="cancele">キャンセル</string>
     <string name="login">ログイン</string>
+    <string name="service_name_http">HTTP通信サービス</string>
 </resources>

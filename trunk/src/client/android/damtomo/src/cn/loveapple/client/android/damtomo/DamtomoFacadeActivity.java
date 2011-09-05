@@ -32,7 +32,6 @@
  */
 package cn.loveapple.client.android.damtomo;
 
-import android.content.Intent;
 import cn.loveapple.client.android.BaseActivity;
 
 /**

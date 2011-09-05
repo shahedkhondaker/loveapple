@@ -30,34 +30,38 @@
  *
  * @author: loveapple
  */
-package cn.loveapple.client.android.damtomo.listener;
+package cn.loveapple.client.android.damtomo.service.binder;
 
-import android.app.Activity;
-import android.view.View;
-import android.view.View.OnClickListener;
-import cn.loveapple.client.android.damtomo.DamtomoLoginActivity;
+import android.app.Service;
+import android.os.Binder;
 
 /**
- * @author $author:$
+ * @author loveapple
  * @version $Revision$
  * @date $Date$
  * @id $Id$
  *
  */
-public class FinishActivityListener implements OnClickListener {
-
+public class HttpBinder extends Binder {
 	/**
-	 * {@inheritDoc}
+	 * バインドされるサービス
 	 */
-	@Override
-	public void onClick(View view) {
-		if(view.getContext() instanceof Activity){
-			Activity activity = (Activity) view.getContext();
-			activity.finish();
-			
-			((DamtomoLoginActivity)activity).onButtonClick(view);
-			
-		}
+	private Service service;
+	/**
+	 * バインドされるサービスを設定してインスタンスを生成
+	 * 
+	 * @param service
+	 */
+	public HttpBinder(Service service){
+		this.service = service;
 	}
-
+	
+	/**
+	 * バインドされるサービスを取得
+	 * 
+	 * @return
+	 */
+	public Service getService(){
+		return service;
+	}
 }
