@@ -4,8 +4,13 @@
 	<classpathentry kind="src" path="gen"/>
 	<classpathentry kind="con" path="com.android.ide.eclipse.adt.ANDROID_FRAMEWORK"/>
 	<classpathentry kind="lib" path="libs/commons-lang-2.6.jar"/>
+	<classpathentry kind="lib" path="libs/commons-collections-3.2.1.jar"/>
+	<classpathentry kind="lib" path="libs/android-rome-feed-reader-1.0.0-r2.jar"/>
 	<classpathentry kind="lib" path="libs/spring-android-core-1.0.0.M3.jar"/>
 	<classpathentry kind="lib" path="libs/spring-android-rest-template-1.0.0.M3.jar"/>
 	<classpathentry kind="lib" path="libs/stax-1.2.0.jar"/>
+	<classpathentry kind="lib" path="libs/stax-api-1.0.1.jar"/>
+	<classpathentry kind="lib" path="libs/spring-android-auth-1.0.0.M3.jar"/>
+	<classpathentry kind="lib" path="libs/simple-xml-2.6.1.jar"/>
 	<classpathentry kind="output" path="target/classes"/>
 </classpath>

@@ -35,12 +35,10 @@ package cn.loveapple.client.android.damtomo.service;
 import java.util.Map;
 import java.util.Random;
 
-import org.springframework.web.client.RestTemplate;
-
-import cn.loveapple.client.android.damtomo.service.binder.HttpBinder;
 import android.app.Service;
 import android.content.Intent;
 import android.os.IBinder;
+import cn.loveapple.client.android.damtomo.service.binder.HttpBinder;
 
 /**
  * @author loveapple
@@ -74,8 +72,7 @@ public class HttpService extends Service {
 	 * @return
 	 */
 	public String basicRequest(String url, Map<String, Object> params){
-		RestTemplate restTemplate = new RestTemplate();
-		return restTemplate.getForObject(url, String.class);
+		return null;
 	}
 
 	public int getRandomNumber() {
