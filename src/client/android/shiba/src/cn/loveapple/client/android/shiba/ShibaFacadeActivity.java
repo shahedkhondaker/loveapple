@@ -4,6 +4,7 @@ import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.List;
 
+import android.provider.Browser;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.Window;
@@ -39,6 +40,7 @@ public class ShibaFacadeActivity extends BaseActivity {
 	private ImageButton back;
 	private ImageButton forward;
 	private ImageButton refresh;
+	private String pluginsPath = null;
 	/**
 	 * WEBビュー
 	 */
@@ -51,6 +53,7 @@ public class ShibaFacadeActivity extends BaseActivity {
 	 */
 	@Override
 	protected void init() {
+		pluginsPath = getDir("plugins", 0).getPath();
 		cacheDao = new CacheDaoImpl();
 		requestWindowFeature(Window.FEATURE_INDETERMINATE_PROGRESS);
 	}
@@ -79,6 +82,7 @@ public class ShibaFacadeActivity extends BaseActivity {
 		WebSettings webSettings = webView.getSettings();
 		webSettings.setJavaScriptEnabled(true);
 		webSettings.setAllowFileAccess(true);
+		webSettings.setPluginsPath(pluginsPath);
 		webSettings.setPluginState(WebSettings.PluginState.ON);
 		webSettings.setJavaScriptCanOpenWindowsAutomatically(true);
 		webSettings.setLightTouchEnabled(true);
