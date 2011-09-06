@@ -251,4 +251,6 @@ public class BaseActivity extends Activity implements ActivityLabel {
 	protected boolean isLogin(){
 		return false;
 	}
+	
+	
 }

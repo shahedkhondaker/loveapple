@@ -32,6 +32,14 @@
  */
 package cn.loveapple.client.android.damtomo;
 
+import java.io.IOException;
+
+import org.apache.http.HttpRequest;
+import org.apache.http.client.methods.HttpPost;
+import org.apache.http.client.methods.HttpUriRequest;
+import org.apache.http.params.BasicHttpParams;
+import org.apache.http.params.HttpParams;
+
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
@@ -96,7 +104,18 @@ public class DamtomoLoginActivity extends BaseActivity {
 			// request should
 			// occur in a separate thread to avoid slowing down the activity
 			// performance.
-			Toast.makeText(this, damtomoLoginService.basicRequest("http://www.clubdam.com/app/damtomo/auth/LoginXML.do?loginId=loveapple&password=&procKbn=1", null), Toast.LENGTH_SHORT).show();
+			HttpUriRequest request = new HttpPost("http://www.clubdam.com/app/damtomo/auth/LoginXML.do");
+			HttpParams params = new BasicHttpParams();
+			params.setParameter("loginId", "loveapple");
+			params.setParameter("password", "");
+			params.setParameter("procKbn", "1");
+			request.setParams(params);
+			try {
+				//Toast.makeText(this, damtomoLoginService.basicRequest(request, null).toString(), Toast.LENGTH_SHORT).show();
+			} catch (IOException e) {
+				Toast.makeText(this, e.getMessage(), Toast.LENGTH_SHORT).show();
+			}
+			
 		}
 	}
 
