@@ -32,6 +32,7 @@
  */
 package cn.loveapple.client.android.damtomo.listener;
 
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -71,58 +72,5 @@ public class FinishActivityListener implements OnClickListener {
 			((DamtomoLoginActivity)activity).onButtonClick(view);
 			
 		}
-	}
-
-	//Spring
-	private class DownloadStatesTask extends AsyncTask<Void, Void, List<State>> {
-
-		@Override
-		protected void onPreExecute() {
-			// before the network request begins, show a progress indicator
-			showLoadingProgressDialog();
-		}
-
-		@Override
-		protected List<State> doInBackground(Void... params) {
-			try {
-				// The URL for making the GET request
-				final String url = "" + "/states";
-
-				// Set the Accept header for "application/xml"
-				HttpHeaders requestHeaders = new HttpHeaders();
-				List<MediaType> acceptableMediaTypes = new ArrayList<MediaType>();
-				acceptableMediaTypes.add(MediaType.APPLICATION_XML);
-				requestHeaders.setAccept(acceptableMediaTypes);
-
-				// Populate the headers in an HttpEntity object to use for the
-				// request
-				HttpEntity<?> requestEntity = new HttpEntity<Object>(requestHeaders);
-
-				// Create a new RestTemplate instance
-				RestTemplate restTemplate = new RestTemplate();
-
-				// Perform the HTTP GET request
-				ResponseEntity<StateList> responseEntity = restTemplate.exchange(url, HttpMethod.GET, requestEntity, StateList.class);
-
-				// Return the list of states
-				StateList stateList = responseEntity.getBody();
-
-				return stateList.getStates();
-			} catch (Exception e) {
-				Log.e(TAG, e.getMessage(), e);
-			}
-
-			return null;
-		}
-
-		@Override
-		protected void onPostExecute(List<State> result) {
-			// hide the progress indicator when the network request is complete
-			dismissProgressDialog();
-
-			// return the list of states
-			refreshStates(result);
-		}
-
 	}
 }
