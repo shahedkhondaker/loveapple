@@ -19,7 +19,12 @@ import org.simpleframework.xml.Element;
 import org.simpleframework.xml.Root;
 
 /**
- * @author Roy Clarkson
+ * 
+ * @author $author:$
+ * @version $Revision$
+ * @date $Date$
+ * @id $Id$
+ *
  */
 @Root(name = "result")
 public class Result {

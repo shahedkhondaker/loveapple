@@ -63,7 +63,7 @@ public class HttpGetXmlActivity extends AbstractAsyncListActivity {
 	//***************************************
     // Private methods
     //*************************************** 
-	private void refreshStates(List<Result> states) {	
+	private void refreshStates(List<Document> states) {	
 		if (states == null) {
 			return;
 		}
@@ -76,7 +76,7 @@ public class HttpGetXmlActivity extends AbstractAsyncListActivity {
 	//***************************************
     // Private classes
     //***************************************
-	private class DownloadStatesTask extends AsyncTask<Void, Void, List<Result>> {
+	private class DownloadStatesTask extends AsyncTask<Void, Void, List<Document>> {
 		
 		@Override
 		protected void onPreExecute() {
@@ -85,7 +85,7 @@ public class HttpGetXmlActivity extends AbstractAsyncListActivity {
 		}
 		
 		@Override
-		protected List<Result> doInBackground(Void... params) {
+		protected List<Document> doInBackground(Void... params) {
 			try {
 				// The URL for making the GET request
 				final String url = "http://www.clubdam.com/app/damtomo/auth/LoginXML.do";
@@ -110,16 +110,18 @@ public class HttpGetXmlActivity extends AbstractAsyncListActivity {
 				RestTemplate restTemplate = new RestTemplate();
 
 				// Perform the HTTP GET request
-				//ResponseEntity<StateList> responseEntity = restTemplate.exchange(url, HttpMethod.GET, requestEntity, StateList.class, reqParams);
+				//ResponseEntity<Document> responseEntity = restTemplate.exchange(url, HttpMethod.GET, requestEntity, Document.class, reqParams);
 				
 				Log.d(Constant.LOG_TAG, restTemplate.exchange(url, HttpMethod.GET, requestEntity, String.class, reqParams).toString());
 				
-				ResponseEntity<StateList> responseEntity = restTemplate.exchange(url, HttpMethod.GET, requestEntity, StateList.class, reqParams);
+				ResponseEntity<Document> responseEntity = restTemplate.exchange(url, HttpMethod.GET, requestEntity, Document.class, reqParams);
 				
 				// Return the list of states
-				StateList stateList = responseEntity.getBody();
+				Document document = responseEntity.getBody();
 
-				return stateList.getStates();
+				List<Document> list = new ArrayList<Document>();
+				list.add(document);
+				return list;
 			} catch (Exception e) {
 				Log.e(TAG, e.getMessage(), e);
 			}
@@ -128,7 +130,7 @@ public class HttpGetXmlActivity extends AbstractAsyncListActivity {
 		}
 		
 		@Override
-		protected void onPostExecute(List<Result> result) {
+		protected void onPostExecute(List<Document> result) {
 			// hide the progress indicator when the network request is complete
 			dismissProgressDialog();
 
