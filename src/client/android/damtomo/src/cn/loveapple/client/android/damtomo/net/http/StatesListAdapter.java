@@ -31,10 +31,10 @@ import cn.loveapple.client.android.damtomo.R;
  */
 public class StatesListAdapter extends BaseAdapter {
 	
-	private List<Result> states;
+	private List<Document> states;
 	private final LayoutInflater layoutInflater;
 
-	public StatesListAdapter(Context context, List<Result> states) {
+	public StatesListAdapter(Context context, List<Document> states) {
 		this.states = states;
 		this.layoutInflater = LayoutInflater.from(context);
 	}
@@ -43,7 +43,7 @@ public class StatesListAdapter extends BaseAdapter {
 		return states != null ? states.size() : 0;
 	}
 
-	public Result getItem(int position) {
+	public Document getItem(int position) {
 		return states.get(position);
 	}
 
@@ -56,7 +56,7 @@ public class StatesListAdapter extends BaseAdapter {
 			convertView = layoutInflater.inflate(R.layout.states_list_item, parent, false);
 		}
 
-		Result state = getItem(position);
+		Document state = getItem(position);
 		if (state != null) {
 			TextView t = (TextView) convertView.findViewById(R.id.state_name);
 			t.setText(state.getFormattedName());
