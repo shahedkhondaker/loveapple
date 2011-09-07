@@ -45,4 +45,5 @@ public class Constant {
 	public static final String FLG_ON = "1";
 	public static final String FLG_OFF = "0";
 	public static final String LOG_TAG = "loveapple";
+	public static final String HTTP_USER_AGENT = "Android client by loveapple";
 }

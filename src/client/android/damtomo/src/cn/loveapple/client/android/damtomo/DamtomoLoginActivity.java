@@ -32,14 +32,6 @@
  */
 package cn.loveapple.client.android.damtomo;
 
-import java.io.IOException;
-
-import org.apache.http.HttpRequest;
-import org.apache.http.client.methods.HttpPost;
-import org.apache.http.client.methods.HttpUriRequest;
-import org.apache.http.params.BasicHttpParams;
-import org.apache.http.params.HttpParams;
-
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
@@ -47,9 +39,9 @@ import android.content.ServiceConnection;
 import android.os.IBinder;
 import android.view.View;
 import android.widget.Button;
-import android.widget.Toast;
 import cn.loveapple.client.android.BaseActivity;
 import cn.loveapple.client.android.damtomo.listener.FinishActivityListener;
+import cn.loveapple.client.android.damtomo.net.http.HttpGetXmlActivity;
 import cn.loveapple.client.android.damtomo.service.HttpService;
 import cn.loveapple.client.android.damtomo.service.binder.HttpBinder;
 
@@ -57,8 +49,7 @@ import cn.loveapple.client.android.damtomo.service.binder.HttpBinder;
  * @author $author:$
  * @version $Revision$
  * @date $Date$
- * @id $Id: DamtomoLoginActivity.java 289 2011-09-04 09:00:33Z hao0323@gmail.com
- *     $
+ * @id $Id$
  * 
  */
 public class DamtomoLoginActivity extends BaseActivity {
@@ -104,19 +95,10 @@ public class DamtomoLoginActivity extends BaseActivity {
 			// request should
 			// occur in a separate thread to avoid slowing down the activity
 			// performance.
-			HttpUriRequest request = new HttpPost("http://www.clubdam.com/app/damtomo/auth/LoginXML.do");
-			HttpParams params = new BasicHttpParams();
-			params.setParameter("loginId", "loveapple");
-			params.setParameter("password", "");
-			params.setParameter("procKbn", "1");
-			request.setParams(params);
-			try {
-				//Toast.makeText(this, damtomoLoginService.basicRequest(request, null).toString(), Toast.LENGTH_SHORT).show();
-			} catch (IOException e) {
-				Toast.makeText(this, e.getMessage(), Toast.LENGTH_SHORT).show();
-			}
-			
 		}
+		Intent intent = new Intent();
+		intent.setClassName(this, HttpGetXmlActivity.class.getName());
+		startActivity(intent);
 	}
 
 	public HttpService getService() {
