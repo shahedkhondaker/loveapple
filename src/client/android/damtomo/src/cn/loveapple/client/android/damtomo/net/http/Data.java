@@ -36,7 +36,7 @@ import org.simpleframework.xml.Element;
 import org.simpleframework.xml.Root;
 
 /**
- * @author $author:$
+ * @author loveapple
  * @version $Revision$
  * @date $Date$
  * @id $Id$
