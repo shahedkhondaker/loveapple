@@ -26,8 +26,12 @@ import android.widget.TextView;
 import cn.loveapple.client.android.damtomo.R;
 
 /**
- * @author Roy Clarkson
- * @author Pierre-Yves Ricau
+ * 
+ * @author loveapple
+ * @version $Revision$
+ * @date $Date$
+ * @id $Id$
+ *
  */
 public class StatesListAdapter extends BaseAdapter {
 	

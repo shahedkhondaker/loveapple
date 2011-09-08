@@ -20,7 +20,7 @@ import org.simpleframework.xml.Root;
 
 /**
  * 
- * @author $author:$
+ * @author loveapple
  * @version $Revision$
  * @date $Date$
  * @id $Id$
