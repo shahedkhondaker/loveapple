@@ -24,6 +24,7 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.TextView;
 import cn.loveapple.client.android.damtomo.R;
+import cn.loveapple.client.android.damtomo.net.bean.Document;
 
 /**
  * 

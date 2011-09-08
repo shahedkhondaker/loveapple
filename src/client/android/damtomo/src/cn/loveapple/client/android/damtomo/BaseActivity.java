@@ -30,65 +30,71 @@
  *
  * @author: loveapple
  */
-package cn.loveapple.client.android;
+package cn.loveapple.client.android.damtomo;
 
 import static cn.loveapple.client.android.Constant.*;
 
 import java.lang.reflect.Field;
 import java.util.ArrayList;
-import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+
+import org.apache.commons.lang.builder.ToStringBuilder;
+import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpMethod;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.client.RestTemplate;
 
 import android.app.Activity;
+import android.app.ProgressDialog;
 import android.content.Context;
-import android.content.Intent;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.content.pm.PackageManager.NameNotFoundException;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Display;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.MotionEvent;
-import android.view.View;
 import android.view.WindowManager;
-import android.view.View.OnClickListener;
 import android.widget.Button;
-import cn.loveapple.client.android.damtomo.DamtomoLoginActivity;
-import cn.loveapple.client.android.damtomo.R;
+import cn.loveapple.client.android.ActivityLabel;
 import cn.loveapple.client.android.damtomo.listener.OpenLoginListener;
-import cn.loveapple.client.android.util.DateUtil;
+import cn.loveapple.client.android.damtomo.net.bean.Document;
+import cn.loveapple.client.android.damtomo.net.http.StatesListAdapter;
 import cn.loveapple.client.android.util.StringUtils;
 
 /**
  * アクティビティの基底クラス。
  * 共通な初期化処理などを行う。
  * 
- * @author $author:$
+ * @author loveapple
  * @version $Revision$
  * @date $Date$
  * @id $Id$
  *
  */
-public class BaseActivity extends Activity implements ActivityLabel {
+public class BaseActivity extends Activity implements AsyncActivity, ActivityLabel {
+
 	/**
-	 * 本日を表す文字
-	 * @see DateUtil#DATE_PTTERN_YYYYMMDD
+	 * 処理中プロセス
 	 */
-	protected String today;
+	private ProgressDialog progressDialog;
+	
 	/**
-	 * 本日の日時
+	 * 処理が破棄されたかどうかを表すフラグ
 	 */
-	protected Date todayDate;
+	private boolean destroyed = false;
+	
 	/**
 	 * システムパッケージ情報
 	 */
 	protected PackageInfo packageInfo;
-	/**
-	 * 許容体温リスト
-	 */
-	protected List<String> temperatureList;
 	/**
 	 * ヘルプメニューフラグ値
 	 */
@@ -122,13 +128,6 @@ public class BaseActivity extends Activity implements ActivityLabel {
 			packageInfo = getPackageManager().getPackageInfo(getPackageName(), PackageManager.GET_META_DATA);
 		}catch (NameNotFoundException e) {
 			throw new RuntimeException(e);
-		}
-		todayDate = new Date();
-		today = DateUtil.toDateString(todayDate);
-		
-		temperatureList = new ArrayList<String>(8);
-		for(int i = 35; i < 43; i++){
-			temperatureList.add(String.valueOf(i));
 		}
 	}
 
@@ -229,7 +228,7 @@ public class BaseActivity extends Activity implements ActivityLabel {
 	 */
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
-		Intent intent = new Intent();
+//		Intent intent = new Intent();
 //		switch (item.getItemId()) {
 //		case MENU_HELP:
 //			intent.setClassName(this, HelpInfoActivity.class.getName());
@@ -252,5 +251,138 @@ public class BaseActivity extends Activity implements ActivityLabel {
 		return false;
 	}
 	
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public MainApplication getApplicationContext() {
+		return (MainApplication) super.getApplicationContext();
+	}
 	
+	/**
+	 * 
+	 * {@inheritDoc}
+	 */
+	@Override
+	protected void onDestroy() {
+		super.onDestroy();
+		destroyed = true;
+	}
+	
+	/**
+	 * 
+	 * {@inheritDoc}
+	 */
+	@Override
+	public void showLoadingProgressDialog() {
+		this.showProgressDialog(getText(R.string.loading));
+	}
+
+	/**
+	 * 
+	 * {@inheritDoc}
+	 */
+	@Override
+	public void showProgressDialog(CharSequence message) {
+		if (progressDialog == null) {
+			progressDialog = new ProgressDialog(this);
+			progressDialog.setIndeterminate(true);
+		}
+		
+		progressDialog.setMessage(message);
+		progressDialog.show();
+	}
+
+	/**
+	 * 
+	 * {@inheritDoc}
+	 */
+	@Override
+	public void dismissProgressDialog() {
+		if (progressDialog != null && !destroyed) {
+			progressDialog.dismiss();
+		}
+	}
+	
+	/**
+	 * 
+	 * 
+	 * @author loveapple
+	 * @version $Revision$
+	 * @date $Date$
+	 * @id $Id$
+	 */
+	public class DownloadStatesTask extends AsyncTask<Void, Void, List<Document>> {
+		
+		private String url;
+		private Map<String, Object> params;
+		
+		public DownloadStatesTask(String url, Map<String, Object> params){
+			this.url = url;
+			this.params = params;
+		}
+		
+		@Override
+		protected void onPreExecute() {
+			// before the network request begins, show a progress indicator
+			showLoadingProgressDialog();
+		}
+		
+		@Override
+		protected List<Document> doInBackground(Void... params) {
+			try {
+				
+				// Set the Accept header for "application/xml"
+				HttpHeaders requestHeaders = new HttpHeaders();
+				List<MediaType> acceptableMediaTypes = new ArrayList<MediaType>();
+				acceptableMediaTypes.add(MediaType.APPLICATION_XML);
+				requestHeaders.setAccept(acceptableMediaTypes);
+
+				// Populate the headers in an HttpEntity object to use for the
+				// request
+//				HttpEntity<?> requestEntity = new HttpEntity<Object>("loginId=loveapple&password=03232046&procKbn=1", requestHeaders);
+				HttpEntity<?> requestEntity = new HttpEntity<Object>(requestHeaders);
+
+				// Create a new RestTemplate instance
+				RestTemplate restTemplate = new RestTemplate();
+				// Perform the HTTP POST request
+				ResponseEntity<Document> responseEntity = restTemplate.exchange(url, HttpMethod.POST, requestEntity, Document.class, params);
+
+				Log.d(LOG_TAG, ToStringBuilder.reflectionToString(responseEntity.getBody()));
+				
+				// Return the list of states
+				Document document = responseEntity.getBody();
+
+				List<Document> list = new ArrayList<Document>();
+				list.add(document);
+				return list;
+			} catch (Exception e) {
+				Log.e(LOG_TAG, e.getMessage(), e);
+			}
+
+			return null;
+		}
+		
+		@Override
+		protected void onPostExecute(List<Document> result) {
+			// hide the progress indicator when the network request is complete
+			dismissProgressDialog();
+
+			// return the list of states
+			refreshStates(result);
+		}
+		
+	}
+
+	//***************************************
+    // Private methods
+    //*************************************** 
+	private void refreshStates(List<Document> states) {	
+		if (states == null) {
+			return;
+		}
+		
+		StatesListAdapter adapter = new StatesListAdapter(this, states);
+		//setListAdapter(adapter);
+	}
 }

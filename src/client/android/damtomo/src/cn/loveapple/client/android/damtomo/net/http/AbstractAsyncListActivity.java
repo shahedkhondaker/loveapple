@@ -32,10 +32,12 @@
  */
 package cn.loveapple.client.android.damtomo.net.http;
 
-import cn.loveapple.client.android.Constant;
-import cn.loveapple.client.android.damtomo.R;
 import android.app.ListActivity;
 import android.app.ProgressDialog;
+import cn.loveapple.client.android.Constant;
+import cn.loveapple.client.android.damtomo.AsyncActivity;
+import cn.loveapple.client.android.damtomo.MainApplication;
+import cn.loveapple.client.android.damtomo.R;
 
 /**
  * @author loveapple

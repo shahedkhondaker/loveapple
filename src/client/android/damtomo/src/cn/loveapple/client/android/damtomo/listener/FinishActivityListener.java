@@ -33,26 +33,13 @@
 package cn.loveapple.client.android.damtomo.listener;
 
 
-import java.util.ArrayList;
-import java.util.List;
-
-import org.springframework.http.HttpEntity;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.HttpMethod;
-import org.springframework.http.MediaType;
-import org.springframework.http.ResponseEntity;
-import org.springframework.web.client.RestTemplate;
-
 import android.app.Activity;
-import android.os.AsyncTask;
-import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
 import cn.loveapple.client.android.damtomo.DamtomoLoginActivity;
-import cn.loveapple.client.android.damtomo.R;
 
 /**
- * @author $author:$
+ * @author loveapple
  * @version $Revision$
  * @date $Date$
  * @id $Id$

@@ -46,6 +46,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.client.RestTemplate;
 
 import cn.loveapple.client.android.Constant;
+import cn.loveapple.client.android.damtomo.net.bean.Document;
 
 import android.os.AsyncTask;
 import android.os.Bundle;

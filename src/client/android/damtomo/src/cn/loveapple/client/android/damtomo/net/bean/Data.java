@@ -30,8 +30,10 @@
  *
  * @author: loveapple
  */
-package cn.loveapple.client.android.damtomo.net.http;
+package cn.loveapple.client.android.damtomo.net.bean;
 
+import org.simpleframework.xml.Element;
+import org.simpleframework.xml.Root;
 
 /**
  * 
@@ -41,14 +43,41 @@ package cn.loveapple.client.android.damtomo.net.http;
  * @id $Id$
  *
  */
-public interface AsyncActivity {
-	
-	public MainApplication getApplicationContext();
-	
-	public void showLoadingProgressDialog();
-	
-	public void showProgressDialog(CharSequence message);
-		
-	public void dismissProgressDialog();
-	
+@Root(name = "result")
+public class Data {
+
+	/**
+	 * ログイン後遷移URL
+	 */
+	@Element
+	private String afterLoginUrl;
+
+	/**
+	 * @param afterLoginUrl
+	 */
+	public Data() {
+	}
+	/**
+	 * @param afterLoginUrl
+	 */
+	public Data(String afterLoginUrl) {
+		super();
+		this.afterLoginUrl = afterLoginUrl;
+	}
+
+	/**
+	 * ログイン後遷移URLを取得します。
+	 * @return ログイン後遷移URL
+	 */
+	public String getAfterLoginUrl() {
+	    return afterLoginUrl;
+	}
+
+	/**
+	 * ログイン後遷移URLを設定します。
+	 * @param afterLoginUrl ログイン後遷移URL
+	 */
+	public void setAfterLoginUrl(String afterLoginUrl) {
+	    this.afterLoginUrl = afterLoginUrl;
+	}
 }

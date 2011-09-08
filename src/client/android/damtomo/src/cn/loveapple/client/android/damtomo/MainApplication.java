@@ -30,7 +30,7 @@
  *
  * @author: loveapple
  */
-package cn.loveapple.client.android.damtomo.net.http;
+package cn.loveapple.client.android.damtomo;
 
 import org.springframework.security.crypto.encrypt.AndroidEncryptors;
 import org.springframework.social.connect.ConnectionRepository;
@@ -44,7 +44,6 @@ import org.springframework.social.twitter.connect.TwitterConnectionFactory;
 
 import android.app.Application;
 import android.database.sqlite.SQLiteOpenHelper;
-import cn.loveapple.client.android.damtomo.R;
 
 /**
  * @author loveapple

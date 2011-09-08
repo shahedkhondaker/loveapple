@@ -8,11 +8,4 @@
     <string name="login">ログイン</string>
     <string name="service_name_http">HTTP通信サービス</string>
     <string name="loading">取り込み中のため、少々お待ち下さい......</string>
-    
-    
-    <string name="facebook_app_id">FacebookアプリID</string>
-    <string name="facebook_app_secret">Facebookアプリ秘密キー</string>
-    <string name="twitter_consumer_key">Twitterキー</string>
-    <string name="twitter_consumer_key_secret">Twitter秘密キー</string>
-    <string name="base_uri">http://10.0.2.2:8080/spring-android-showcase-server</string>
 </resources>

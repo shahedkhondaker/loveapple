@@ -32,14 +32,18 @@
  */
 package cn.loveapple.client.android.damtomo;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.content.ServiceConnection;
+import android.os.AsyncTask;
 import android.os.IBinder;
 import android.view.View;
 import android.widget.Button;
-import cn.loveapple.client.android.BaseActivity;
+import android.widget.TextView;
 import cn.loveapple.client.android.damtomo.listener.FinishActivityListener;
 import cn.loveapple.client.android.damtomo.net.http.HttpGetXmlActivity;
 import cn.loveapple.client.android.damtomo.service.HttpService;
@@ -88,7 +92,7 @@ public class DamtomoLoginActivity extends BaseActivity {
 	 * Called when a button is clicked (the button in the layout file attaches
 	 * to this method with the android:onClick attribute)
 	 */
-	public void onButtonClick(View v) {
+	public void onLoginButtonClick(View v) {
 		if (mBound) {
 			// Call a method from the LocalService.
 			// However, if this call were something that might hang, then this
@@ -96,9 +100,11 @@ public class DamtomoLoginActivity extends BaseActivity {
 			// occur in a separate thread to avoid slowing down the activity
 			// performance.
 		}
-		Intent intent = new Intent();
-		intent.setClassName(this, HttpGetXmlActivity.class.getName());
-		startActivity(intent);
+		Map<String, Object> params = new HashMap<String, Object>(2);
+		params.put("loginId", ((TextView)findViewById(R.id.loginIdText)).getText());
+		params.put("password", ((TextView)findViewById(R.id.passwordText)).getText());
+		DownloadStatesTask task = new DownloadStatesTask(getText(R.string.damtomo_login_uri).toString(), params);
+		task.execute();
 	}
 
 	public HttpService getService() {
