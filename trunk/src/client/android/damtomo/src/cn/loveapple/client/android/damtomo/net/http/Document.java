@@ -15,15 +15,26 @@
  */
 package cn.loveapple.client.android.damtomo.net.http;
 
+import org.simpleframework.xml.Attribute;
 import org.simpleframework.xml.Element;
 import org.simpleframework.xml.Root;
 
 /**
- * @author Roy Clarkson
+ * 
+ * @author $author:$
+ * @version $Revision$
+ * @date $Date$
+ * @id $Id$
+ *
  */
 @Root(name = "document")
 public class Document {
 
+	/**
+	 * XMLタイプ
+	 */
+	@Attribute
+	private String type;
 	/**
 	 * レスポンス結果
 	 */
@@ -33,7 +44,7 @@ public class Document {
 	/**
 	 * レスポンスデータ
 	 */
-	@Element
+	@Element(name="data", required=false)
 	private Data data;
 	/**
 	 * @param result
@@ -45,6 +56,20 @@ public class Document {
 		this.data = data;
 	}
 	public Document() {
+	}
+	/**
+	 * XMLタイプを取得します。
+	 * @return XMLタイプ
+	 */
+	public String getType() {
+	    return type;
+	}
+	/**
+	 * XMLタイプを設定します。
+	 * @param type XMLタイプ
+	 */
+	public void setType(String type) {
+	    this.type = type;
 	}
 	/**
 	 * レスポンス結果を取得します。
@@ -76,6 +101,6 @@ public class Document {
 	}
 
 	public String getFormattedName(){
-		return result.getStatusCode() + " -- " + result.getStatus();
+		return result.getStatusCode() + " -- " + result.getStatus() + " : " +result.getMessage();
 	}
 }
