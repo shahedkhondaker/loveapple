@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="damtomo_login_uri"><![CDATA[http://www.clubdam.com/app/damtomo/auth/LoginXML.do?loginId={loginId}&password={password}&procKbn=1]]></string>
+    <string name="facebook_app_id">FacebookアプリID</string>
+    <string name="facebook_app_secret">Facebookアプリ秘密キー</string>
+    <string name="twitter_consumer_key">Twitterキー</string>
+    <string name="twitter_consumer_key_secret">Twitter秘密キー</string>
+</resources>

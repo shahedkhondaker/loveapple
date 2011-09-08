@@ -13,10 +13,11 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package cn.loveapple.client.android.damtomo.net.http;
+package cn.loveapple.client.android.damtomo.net.bean;
 
 import org.simpleframework.xml.Attribute;
 import org.simpleframework.xml.Element;
+import org.simpleframework.xml.ElementList;
 import org.simpleframework.xml.Root;
 
 /**
@@ -40,20 +41,28 @@ public class Document {
 	 */
 	@Element
 	private Result result;
-	
+		
 	/**
 	 * レスポンスデータ
 	 */
 	@Element(name="data", required=false)
 	private Data data;
+	
+	/**
+	 * リスト
+	 */
+	@ElementList(name="list", required=false)
+	private DataList<Data> list;
+	
 	/**
 	 * @param result
 	 * @param data
 	 */
-	public Document(Result result, Data data) {
+	public Document(Result result, Data data, DataList<Data> list) {
 		super();
 		this.result = result;
 		this.data = data;
+		this.list = list;
 	}
 	public Document() {
 	}
@@ -102,5 +111,19 @@ public class Document {
 
 	public String getFormattedName(){
 		return result.getStatusCode() + " -- " + result.getStatus() + " : " +result.getMessage();
+	}
+	/**
+	 * リストを取得します。
+	 * @return リスト
+	 */
+	public DataList<Data> getList() {
+	    return list;
+	}
+	/**
+	 * リストを設定します。
+	 * @param list リスト
+	 */
+	public void setList(DataList<Data> list) {
+	    this.list = list;
 	}
 }

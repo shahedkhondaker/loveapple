@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package cn.loveapple.client.android.damtomo.net.http;
+package cn.loveapple.client.android.damtomo.net.bean;
 
 import org.simpleframework.xml.Element;
 import org.simpleframework.xml.Root;
