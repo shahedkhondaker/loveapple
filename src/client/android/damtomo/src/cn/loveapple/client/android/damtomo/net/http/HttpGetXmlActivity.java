@@ -20,6 +20,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.commons.lang.builder.ToStringBuilder;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
@@ -88,12 +89,12 @@ public class HttpGetXmlActivity extends AbstractAsyncListActivity {
 		protected List<Document> doInBackground(Void... params) {
 			try {
 				// The URL for making the GET request
-				final String url = "http://www.clubdam.com/app/damtomo/auth/LoginXML.do";
+				final String url = "http://www.clubdam.com/app/damtomo/auth/LoginXML.do?loginId={loginId}&password={password}&procKbn={procKbn}";
 
 				Map<String, String> reqParams = new HashMap<String, String>();
 				reqParams.put("loginId", "loveapple");
-				reqParams.put("procKbn", "");
-				reqParams.put("password", "1");
+				reqParams.put("password", "03232046");
+				reqParams.put("procKbn", "1");
 				
 				
 				// Set the Accept header for "application/xml"
@@ -104,17 +105,15 @@ public class HttpGetXmlActivity extends AbstractAsyncListActivity {
 
 				// Populate the headers in an HttpEntity object to use for the
 				// request
+//				HttpEntity<?> requestEntity = new HttpEntity<Object>("loginId=loveapple&password=03232046&procKbn=1", requestHeaders);
 				HttpEntity<?> requestEntity = new HttpEntity<Object>(requestHeaders);
 
 				// Create a new RestTemplate instance
 				RestTemplate restTemplate = new RestTemplate();
+				// Perform the HTTP POST request
+				ResponseEntity<Document> responseEntity = restTemplate.exchange(url, HttpMethod.POST, requestEntity, Document.class, reqParams);
 
-				// Perform the HTTP GET request
-				//ResponseEntity<Document> responseEntity = restTemplate.exchange(url, HttpMethod.GET, requestEntity, Document.class, reqParams);
-				
-				Log.d(Constant.LOG_TAG, restTemplate.exchange(url, HttpMethod.GET, requestEntity, String.class, reqParams).toString());
-				
-				ResponseEntity<Document> responseEntity = restTemplate.exchange(url, HttpMethod.GET, requestEntity, Document.class, reqParams);
+				Log.d(Constant.LOG_TAG, ToStringBuilder.reflectionToString(responseEntity.getBody()));
 				
 				// Return the list of states
 				Document document = responseEntity.getBody();

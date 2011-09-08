@@ -54,6 +54,11 @@ public class Data {
 	/**
 	 * @param afterLoginUrl
 	 */
+	public Data() {
+	}
+	/**
+	 * @param afterLoginUrl
+	 */
 	public Data(String afterLoginUrl) {
 		super();
 		this.afterLoginUrl = afterLoginUrl;

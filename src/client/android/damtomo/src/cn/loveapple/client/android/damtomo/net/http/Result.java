@@ -35,7 +35,7 @@ public class Result {
 	@Element
 	private String statusCode;
 	
-	@Element
+	@Element(required=false)
 	private String message;
 
 	public Result() {
