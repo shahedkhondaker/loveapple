@@ -1,0 +1,30 @@
+#summary One-sentence summary of this page.
+
+= プロダクトバージョン番号について =
+
+リリースされるプロダクトのバージョン番号について記載します。
+
+
+== レビュー ==
+開発中、機能追加を検討中のバージョン。<br>
+命名規則：<br>
+0.0.0
+
+== アルファ ==
+開発中、機能内容は確定だが、テストケースしきれていない。<br>
+命名規則：<br>
+0.0
+
+== ベータ ==
+開発ほぼ完了、テストケースもほぼ完了で、ユーザのフィードバックを受け付け中の状態。<br>
+命名規則：<br>
+0beta0
+== 正式 ==
+開発は正式に完了の状態。<br>
+命名規則：<br>
+0
+
+Add your content here.  Format your content with:
+  * Text in *bold* or _italic_
+  * Headings, paragraphs, and lists
+  * Automatic links to other wiki pages
