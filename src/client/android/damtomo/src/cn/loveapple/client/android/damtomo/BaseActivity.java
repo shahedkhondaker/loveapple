@@ -36,7 +36,6 @@ import static cn.loveapple.client.android.Constant.*;
 
 import java.lang.reflect.Field;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -66,7 +65,6 @@ import android.widget.Button;
 import cn.loveapple.client.android.ActivityLabel;
 import cn.loveapple.client.android.damtomo.listener.OpenLoginListener;
 import cn.loveapple.client.android.damtomo.net.bean.Document;
-import cn.loveapple.client.android.damtomo.net.http.StatesListAdapter;
 import cn.loveapple.client.android.util.StringUtils;
 
 /**
@@ -312,7 +310,7 @@ public class BaseActivity extends Activity implements AsyncActivity, ActivityLab
 	 * @date $Date$
 	 * @id $Id$
 	 */
-	public class DownloadStatesTask extends AsyncTask<Void, Void, List<Document>> {
+	public class DownloadStatesTask extends AsyncTask<Map.Entry<String, Object>, Void, Document> {
 		
 		private String url;
 		private Map<String, Object> params;
@@ -329,7 +327,7 @@ public class BaseActivity extends Activity implements AsyncActivity, ActivityLab
 		}
 		
 		@Override
-		protected List<Document> doInBackground(Void... params) {
+		protected Document doInBackground(Map.Entry<String, Object>... params) {
 			try {
 				
 				// Set the Accept header for "application/xml"
@@ -353,9 +351,7 @@ public class BaseActivity extends Activity implements AsyncActivity, ActivityLab
 				// Return the list of states
 				Document document = responseEntity.getBody();
 
-				List<Document> list = new ArrayList<Document>();
-				list.add(document);
-				return list;
+				return document;
 			} catch (Exception e) {
 				Log.e(LOG_TAG, e.getMessage(), e);
 			}
@@ -364,7 +360,7 @@ public class BaseActivity extends Activity implements AsyncActivity, ActivityLab
 		}
 		
 		@Override
-		protected void onPostExecute(List<Document> result) {
+		protected void onPostExecute(Document result) {
 			// hide the progress indicator when the network request is complete
 			dismissProgressDialog();
 
@@ -377,12 +373,12 @@ public class BaseActivity extends Activity implements AsyncActivity, ActivityLab
 	//***************************************
     // Private methods
     //*************************************** 
-	private void refreshStates(List<Document> states) {	
+	private void refreshStates(Document states) {	
 		if (states == null) {
 			return;
 		}
 		
-		StatesListAdapter adapter = new StatesListAdapter(this, states);
+		//StatesListAdapter adapter = new StatesListAdapter(this, states);
 		//setListAdapter(adapter);
 	}
 }

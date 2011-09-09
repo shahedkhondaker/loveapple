@@ -55,9 +55,6 @@ public class FinishActivityListener implements OnClickListener {
 		if(view.getContext() instanceof Activity){
 			Activity activity = (Activity) view.getContext();
 			activity.finish();
-			
-			((DamtomoLoginActivity)activity).onButtonClick(view);
-			
 		}
 	}
 }

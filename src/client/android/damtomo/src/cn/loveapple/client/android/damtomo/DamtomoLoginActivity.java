@@ -45,6 +45,8 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 import cn.loveapple.client.android.damtomo.listener.FinishActivityListener;
+import cn.loveapple.client.android.damtomo.net.DamtomoApiAsyncTask;
+import cn.loveapple.client.android.damtomo.net.bean.Document;
 import cn.loveapple.client.android.damtomo.net.http.HttpGetXmlActivity;
 import cn.loveapple.client.android.damtomo.service.HttpService;
 import cn.loveapple.client.android.damtomo.service.binder.HttpBinder;
@@ -92,6 +94,7 @@ public class DamtomoLoginActivity extends BaseActivity {
 	 * Called when a button is clicked (the button in the layout file attaches
 	 * to this method with the android:onClick attribute)
 	 */
+	@SuppressWarnings("unchecked")
 	public void onLoginButtonClick(View v) {
 		if (mBound) {
 			// Call a method from the LocalService.
@@ -103,8 +106,10 @@ public class DamtomoLoginActivity extends BaseActivity {
 		Map<String, Object> params = new HashMap<String, Object>(2);
 		params.put("loginId", ((TextView)findViewById(R.id.loginIdText)).getText());
 		params.put("password", ((TextView)findViewById(R.id.passwordText)).getText());
-		DownloadStatesTask task = new DownloadStatesTask(getText(R.string.damtomo_login_uri).toString(), params);
-		task.execute();
+		DamtomoApiAsyncTask task = new DamtomoApiAsyncTask(this);
+		Map<String, Object> url = new HashMap<String, Object>(1);
+		url.put(DamtomoApiAsyncTask.URL_KEY, getText(R.string.damtomo_login_uri));
+		task.execute(url, params);
 	}
 
 	public HttpService getService() {
