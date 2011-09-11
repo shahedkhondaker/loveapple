@@ -13,7 +13,7 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name="DamtomoLoginActivity" android:label="@string/app_name" android:theme="@android:style/Theme.Dialog" />
+        <activity android:name="DamtomoLoginActivity" android:label="@string/damtomo_login" android:theme="@android:style/Theme.Dialog" />
     	<service android:name=".service.HttpService" android:label="@string/service_name_http" />
     	<activity android:name="cn.loveapple.client.android.damtomo.net.http.HttpGetXmlActivity" android:label="@string/app_name" />
     </application>

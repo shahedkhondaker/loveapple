@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.commons.lang.builder.ReflectionToStringBuilder;
 import org.apache.commons.lang.builder.ToStringBuilder;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
@@ -71,7 +72,7 @@ public class DamtomoApiAsyncTask extends AsyncTask<Map<String, Object>, Integer,
 			ResponseEntity<Document> responseEntity = restTemplate.postForEntity(params[0].get(URL_KEY).toString(), requestEntity, Document.class, params[1]);
 			//ResponseEntity<Document> responseEntity = restTemplate.exchange(params[0].toString(), HttpMethod.POST, requestEntity, Document.class, params[1]);
 
-			Log.d(LOG_TAG, ToStringBuilder.reflectionToString(responseEntity.getBody()));
+			Log.d(LOG_TAG, ReflectionToStringBuilder.toString(responseEntity.getBody()));
 			
 			// Return the list of states
 			Document document = responseEntity.getBody();
@@ -101,7 +102,7 @@ public class DamtomoApiAsyncTask extends AsyncTask<Map<String, Object>, Integer,
 	@Override
 	protected void onPostExecute(Document result) {
 		progressDialog.dismiss();
-		Log.d(LOG_TAG, "Document:" + ToStringBuilder.reflectionToString(result));
+		Log.d(LOG_TAG, "Document:" + ReflectionToStringBuilder.toString(result));
 	}
 	
 	/**
