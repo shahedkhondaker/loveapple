@@ -39,6 +39,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.commons.lang.builder.ReflectionToStringBuilder;
 import org.apache.commons.lang.builder.ToStringBuilder;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
@@ -346,7 +347,7 @@ public class BaseActivity extends Activity implements AsyncActivity, ActivityLab
 				// Perform the HTTP POST request
 				ResponseEntity<Document> responseEntity = restTemplate.exchange(url, HttpMethod.POST, requestEntity, Document.class, params);
 
-				Log.d(LOG_TAG, ToStringBuilder.reflectionToString(responseEntity.getBody()));
+				Log.d(LOG_TAG, ReflectionToStringBuilder.toString(responseEntity.getBody()));
 				
 				// Return the list of states
 				Document document = responseEntity.getBody();
