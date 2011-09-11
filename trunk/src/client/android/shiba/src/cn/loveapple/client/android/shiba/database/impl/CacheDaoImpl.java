@@ -48,7 +48,9 @@ import cn.loveapple.client.android.shiba.database.entity.CacheEntity;
 import cn.loveapple.client.android.util.StringUtils;
 
 /**
- * @author $author:$
+ * キャッシュを操作するDAO
+ * 
+ * @author loveapple
  * @version $Revision$
  * @date $Date$
  * @id $Id$

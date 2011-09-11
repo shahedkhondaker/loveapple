@@ -30,15 +30,21 @@
  *
  * @author: loveapple
  */
-package cn.loveapple.client.android.shiba.listener;
+package cn.loveapple.client.android.shiba;
 
-import cn.loveapple.client.android.shiba.ShibaFacadeActivity;
+import java.util.ArrayList;
+
+import cn.loveapple.client.android.shiba.database.entity.CacheEntity;
+
+import android.content.Context;
 import android.view.View;
-import android.view.View.OnClickListener;
-import android.webkit.WebView;
+import android.view.ViewGroup;
+import android.widget.BaseAdapter;
+import android.widget.Filter;
+import android.widget.Filterable;
 
 /**
- * ブラウザ次へ進むリスナー
+ * URL
  * 
  * @author loveapple
  * @version $Revision$
@@ -46,21 +52,59 @@ import android.webkit.WebView;
  * @id $Id$
  *
  */
-public class ForwardListener implements OnClickListener {
-	private WebView webView;
+public class UrlAdapter extends BaseAdapter implements Filterable {
+
+	private Context context;
+	private ArrayList<CacheEntity> showUrlList;
+	private ArrayList<CacheEntity> tempUrlList;
 	
-	public ForwardListener(WebView webView){
-		this.webView = webView;
+	public UrlAdapter(Context context, ArrayList<CacheEntity> urlList){
+		super();
+		this.context = context;
+		this.showUrlList = urlList;
+		this.tempUrlList = (ArrayList<CacheEntity>) urlList.clone();
 	}
-	
 	/**
 	 * {@inheritDoc}
 	 */
 	@Override
-	public void onClick(View view) {
-		if(webView.canGoForward()){
-    		webView.goForward();
-    	}
-		((ShibaFacadeActivity)view.getContext()).setButtonEnabled();
+	public Filter getFilter() {
+		// TODO Auto-generated method stub
+		return null;
 	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public int getCount() {
+		return showUrlList.size();
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public Object getItem(int position) {
+		return showUrlList.get(position);
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public long getItemId(int position) {
+		return position;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public View getView(int position, View view, ViewGroup parent) {
+		CacheEntity entity = showUrlList.get(position);
+		//TODO
+		return null;
+	}
+
 }
