@@ -33,11 +33,11 @@
 package cn.loveapple.client.android.bbt.view;
 
 import static cn.loveapple.client.android.Constant.*;
-import android.app.Activity;
 import android.graphics.Bitmap;
 import android.util.Log;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
+import cn.loveapple.client.android.shiba.ShibaFacadeActivity;
 
 /**
  * WEBページを表示するビュー
@@ -48,8 +48,8 @@ import android.webkit.WebViewClient;
  * @id $Id$
  */
 public class LoveappleWebViewClient extends WebViewClient {
-	public Activity activity;
-	public LoveappleWebViewClient(Activity activity) {
+	public ShibaFacadeActivity activity;
+	public LoveappleWebViewClient(ShibaFacadeActivity activity) {
 		super();
 		this.activity = activity;
 	}
@@ -69,7 +69,8 @@ public class LoveappleWebViewClient extends WebViewClient {
 	 */
 	@Override
 	public void onLoadResource(WebView view, String url){
-		String baseUrl = "http://atgapps.appspot.com/";
+		String baseUrl = activity.getProxyUrl();
+		
 		if(!url.startsWith(baseUrl)){
 			if(url.startsWith("http://")){
 				StringBuilder sb = new StringBuilder(url.length() + baseUrl.length());

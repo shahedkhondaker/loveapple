@@ -1,20 +1,15 @@
 package cn.loveapple.client.android.shiba;
 
-import java.lang.reflect.InvocationTargetException;
-import java.lang.reflect.Method;
 import java.util.List;
 
-import android.provider.Browser;
-import android.util.Log;
+import android.os.Bundle;
 import android.view.KeyEvent;
 import android.view.Window;
 import android.view.View.OnKeyListener;
-import android.view.WindowManager;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
-import android.widget.FrameLayout;
 import android.widget.ImageButton;
 import cn.loveapple.client.android.bbt.view.LoveappleWebViewClient;
 import cn.loveapple.client.android.shiba.database.CacheDao;
@@ -40,7 +35,6 @@ public class ShibaFacadeActivity extends BaseActivity {
 	private ImageButton back;
 	private ImageButton forward;
 	private ImageButton refresh;
-	private String pluginsPath = null;
 	/**
 	 * WEBビュー
 	 */
@@ -53,7 +47,6 @@ public class ShibaFacadeActivity extends BaseActivity {
 	 */
 	@Override
 	protected void init() {
-		pluginsPath = getDir("plugins", 0).getPath();
 		cacheDao = new CacheDaoImpl();
 		requestWindowFeature(Window.FEATURE_INDETERMINATE_PROGRESS);
 	}
@@ -82,7 +75,6 @@ public class ShibaFacadeActivity extends BaseActivity {
 		WebSettings webSettings = webView.getSettings();
 		webSettings.setJavaScriptEnabled(true);
 		webSettings.setAllowFileAccess(true);
-		webSettings.setPluginsPath(pluginsPath);
 		webSettings.setPluginState(WebSettings.PluginState.ON);
 		webSettings.setJavaScriptCanOpenWindowsAutomatically(true);
 		webSettings.setLightTouchEnabled(true);
@@ -103,9 +95,13 @@ public class ShibaFacadeActivity extends BaseActivity {
 		 * webView.loadUrl(urlList.get(0)); address.setText(urlList.get(0));
 		 * webView.requestFocus(); }
 		 */
-		webView.loadUrl("http://loveapple-facade.appspot.com/shiba.html");
-		final OnKeyListener listener = new RequestListener(webView,
-				(AutoCompleteTextView) findViewById(R.id.address));
+		String url = address.getText().toString();
+		if(StringUtils.isEmpty(url)){
+			webView.loadUrl("http://loveapple-facade.appspot.com/shiba.html");
+		}else{
+			webView.loadUrl(url);
+		}
+		final OnKeyListener listener = new RequestListener(webView, address);
 		address.setOnKeyListener(listener);
 
 		webView.setWebViewClient(new LoveappleWebViewClient(this));
@@ -180,4 +176,16 @@ public class ShibaFacadeActivity extends BaseActivity {
 //	    getWindowManager().addView(getWindow().getDecorView(), lp);
 	}
 
+	@Override
+	protected void onSaveInstanceState(Bundle outState) {
+		super.onSaveInstanceState(outState);
+	}
+	
+	/**
+	 * プロキシーを取得
+	 * @return
+	 */
+	public String getProxyUrl(){
+		return "http://atgapps.appspot.com/";
+	}
 }
