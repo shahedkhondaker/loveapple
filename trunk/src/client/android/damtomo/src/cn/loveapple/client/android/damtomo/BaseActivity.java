@@ -35,18 +35,6 @@ package cn.loveapple.client.android.damtomo;
 import static cn.loveapple.client.android.Constant.*;
 
 import java.lang.reflect.Field;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
-
-import org.apache.commons.lang.builder.ReflectionToStringBuilder;
-import org.apache.commons.lang.builder.ToStringBuilder;
-import org.springframework.http.HttpEntity;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.HttpMethod;
-import org.springframework.http.MediaType;
-import org.springframework.http.ResponseEntity;
-import org.springframework.web.client.RestTemplate;
 
 import android.app.Activity;
 import android.app.ProgressDialog;
@@ -54,7 +42,6 @@ import android.content.Context;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.content.pm.PackageManager.NameNotFoundException;
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Display;
@@ -65,7 +52,6 @@ import android.view.WindowManager;
 import android.widget.Button;
 import cn.loveapple.client.android.ActivityLabel;
 import cn.loveapple.client.android.damtomo.listener.OpenLoginListener;
-import cn.loveapple.client.android.damtomo.net.bean.Document;
 import cn.loveapple.client.android.util.StringUtils;
 
 /**
@@ -183,10 +169,11 @@ public class BaseActivity extends Activity implements AsyncActivity, ActivityLab
      * {@linkplain #onResume()}が実行される際、画面に表示するコンポーネントの初期化を行う
      */
     protected void initView(){
-    	Button openLogin = (Button) findViewById(R.id.openLogin);
-    	if(openLogin != null){
-    		openLogin.setOnClickListener(new OpenLoginListener());
-    	}
+    	// TODO 後ほど復活
+    	//Button openLogin = (Button) findViewById(R.id.openLogin);
+    	//if(openLogin != null){
+    	//	openLogin.setOnClickListener(new OpenLoginListener());
+    	//}
     }
     
 
@@ -301,85 +288,5 @@ public class BaseActivity extends Activity implements AsyncActivity, ActivityLab
 		if (progressDialog != null && !destroyed) {
 			progressDialog.dismiss();
 		}
-	}
-	
-	/**
-	 * 
-	 * 
-	 * @author loveapple
-	 * @version $Revision$
-	 * @date $Date$
-	 * @id $Id$
-	 */
-	public class DownloadStatesTask extends AsyncTask<Map.Entry<String, Object>, Void, Document> {
-		
-		private String url;
-		private Map<String, Object> params;
-		
-		public DownloadStatesTask(String url, Map<String, Object> params){
-			this.url = url;
-			this.params = params;
-		}
-		
-		@Override
-		protected void onPreExecute() {
-			// before the network request begins, show a progress indicator
-			showLoadingProgressDialog();
-		}
-		
-		@Override
-		protected Document doInBackground(Map.Entry<String, Object>... params) {
-			try {
-				
-				// Set the Accept header for "application/xml"
-				HttpHeaders requestHeaders = new HttpHeaders();
-				List<MediaType> acceptableMediaTypes = new ArrayList<MediaType>();
-				acceptableMediaTypes.add(MediaType.APPLICATION_XML);
-				requestHeaders.setAccept(acceptableMediaTypes);
-
-				// Populate the headers in an HttpEntity object to use for the
-				// request
-//				HttpEntity<?> requestEntity = new HttpEntity<Object>("loginId=loveapple&password=03232046&procKbn=1", requestHeaders);
-				HttpEntity<?> requestEntity = new HttpEntity<Object>(requestHeaders);
-
-				// Create a new RestTemplate instance
-				RestTemplate restTemplate = new RestTemplate();
-				// Perform the HTTP POST request
-				ResponseEntity<Document> responseEntity = restTemplate.exchange(url, HttpMethod.POST, requestEntity, Document.class, params);
-
-				Log.d(LOG_TAG, ReflectionToStringBuilder.toString(responseEntity.getBody()));
-				
-				// Return the list of states
-				Document document = responseEntity.getBody();
-
-				return document;
-			} catch (Exception e) {
-				Log.e(LOG_TAG, e.getMessage(), e);
-			}
-
-			return null;
-		}
-		
-		@Override
-		protected void onPostExecute(Document result) {
-			// hide the progress indicator when the network request is complete
-			dismissProgressDialog();
-
-			// return the list of states
-			refreshStates(result);
-		}
-		
-	}
-
-	//***************************************
-    // Private methods
-    //*************************************** 
-	private void refreshStates(Document states) {	
-		if (states == null) {
-			return;
-		}
-		
-		//StatesListAdapter adapter = new StatesListAdapter(this, states);
-		//setListAdapter(adapter);
 	}
 }
