@@ -39,15 +39,12 @@ import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.content.ServiceConnection;
-import android.os.AsyncTask;
 import android.os.IBinder;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 import cn.loveapple.client.android.damtomo.listener.FinishActivityListener;
 import cn.loveapple.client.android.damtomo.net.DamtomoApiAsyncTask;
-import cn.loveapple.client.android.damtomo.net.bean.Document;
-import cn.loveapple.client.android.damtomo.net.http.HttpGetXmlActivity;
 import cn.loveapple.client.android.damtomo.service.HttpService;
 import cn.loveapple.client.android.damtomo.service.binder.HttpBinder;
 
