@@ -169,11 +169,10 @@ public class BaseActivity extends Activity implements AsyncActivity, ActivityLab
      * {@linkplain #onResume()}が実行される際、画面に表示するコンポーネントの初期化を行う
      */
     protected void initView(){
-    	// TODO 後ほど復活
-    	//Button openLogin = (Button) findViewById(R.id.openLogin);
-    	//if(openLogin != null){
-    	//	openLogin.setOnClickListener(new OpenLoginListener());
-    	//}
+    	Button openLogin = (Button) findViewById(R.id.openLogin);
+    	if(openLogin != null){
+    		openLogin.setOnClickListener(new OpenLoginListener());
+    	}
     }
     
 
