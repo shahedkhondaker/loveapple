@@ -6,6 +6,7 @@
     <string name="password">パスワード</string>
     <string name="cancele">キャンセル</string>
     <string name="login">ログイン</string>
+    <string name="logout">ログアウト</string>
     <string name="service_name_http">HTTP通信サービス</string>
     <string name="loading">取り込み中のため、少々お待ち下さい......</string>
 </resources>
