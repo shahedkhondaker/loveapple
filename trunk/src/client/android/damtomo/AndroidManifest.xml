@@ -16,6 +16,6 @@
         <activity android:name="DamtomoLoginActivity" android:label="@string/damtomo_login" android:theme="@android:style/Theme.Dialog" />
     	<service android:name=".service.HttpService" android:label="@string/service_name_http" />
     	<activity android:name="cn.loveapple.client.android.damtomo.net.http.HttpGetXmlActivity" android:label="@string/app_name" />
-        <activity android:name="DamtomoFacadeActivity$DetailsActivity"  />
+        <activity android:name="cn.loveapple.client.android.damtomo.component.DetailsActivity"  />
     </application>
 </manifest>
