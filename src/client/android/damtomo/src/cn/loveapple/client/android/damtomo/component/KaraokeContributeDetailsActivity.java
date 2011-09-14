@@ -4,7 +4,7 @@ import android.content.res.Configuration;
 import android.os.Bundle;
 import cn.loveapple.client.android.damtomo.BaseActivity;
 
-public class DetailsActivity extends BaseActivity {
+public class KaraokeContributeDetailsActivity extends BaseActivity {
 	@Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -19,7 +19,7 @@ public class DetailsActivity extends BaseActivity {
 
         if (savedInstanceState == null) {
             // During initial setup, plug in the details fragment.
-            DetailsFragment details = new DetailsFragment();
+            KaraokeContributeDetailFragment details = new KaraokeContributeDetailFragment();
             details.setArguments(getIntent().getExtras());
             getFragmentManager().beginTransaction().add(android.R.id.content, details).commit();
         }

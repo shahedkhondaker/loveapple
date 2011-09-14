@@ -10,13 +10,13 @@ import android.widget.ScrollView;
 import android.widget.TextView;
 import cn.loveapple.client.android.damtomo.example.Shakespeare;
 
-public class DetailsFragment extends Fragment {
+public class KaraokeContributeDetailFragment extends Fragment {
 	/**
-     * Create a new instance of DetailsFragment, initialized to
+     * Create a new instance of KaraokeContributeDetailFragment, initialized to
      * show the text at 'index'.
      */
-    public static DetailsFragment newInstance(int index) {
-        DetailsFragment f = new DetailsFragment();
+    public static KaraokeContributeDetailFragment newInstance(int index) {
+        KaraokeContributeDetailFragment f = new KaraokeContributeDetailFragment();
 
         // Supply index input as an argument.
         Bundle args = new Bundle();
