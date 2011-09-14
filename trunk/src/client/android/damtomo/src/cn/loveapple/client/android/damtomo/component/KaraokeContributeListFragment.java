@@ -10,7 +10,7 @@ import android.widget.ListView;
 import cn.loveapple.client.android.damtomo.R;
 import cn.loveapple.client.android.damtomo.example.Shakespeare;
 
-public class TitlesFragment extends ListFragment {
+public class KaraokeContributeListFragment extends ListFragment {
 	boolean mDualPane;
     int mCurCheckPosition = 0;
 
@@ -65,11 +65,11 @@ public class TitlesFragment extends ListFragment {
             getListView().setItemChecked(index, true);
 
             // Check what fragment is currently shown, replace if needed.
-            DetailsFragment details = (DetailsFragment)
+            KaraokeContributeDetailFragment details = (KaraokeContributeDetailFragment)
                     getFragmentManager().findFragmentById(R.id.details);
             if (details == null || details.getShownIndex() != index) {
                 // Make new fragment to show this selection.
-                details = DetailsFragment.newInstance(index);
+                details = KaraokeContributeDetailFragment.newInstance(index);
 
                 // Execute a transaction, replacing any existing fragment
                 // with this one inside the frame.
@@ -83,7 +83,7 @@ public class TitlesFragment extends ListFragment {
             // Otherwise we need to launch a new activity to display
             // the dialog fragment with selected text.
             Intent intent = new Intent();
-            intent.setClass(getActivity(), DetailsActivity.class);
+            intent.setClass(getActivity(), KaraokeContributeDetailsActivity.class);
             intent.putExtra("index", index);
             startActivity(intent);
         }
