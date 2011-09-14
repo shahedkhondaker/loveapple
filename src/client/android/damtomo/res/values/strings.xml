@@ -9,4 +9,7 @@
     <string name="logout">ログアウト</string>
     <string name="service_name_http">HTTP通信サービス</string>
     <string name="loading">取り込み中のため、少々お待ち下さい......</string>
+    <string name="newKaraokeMovie">新着カラオケ動画</string>
+    <string name="pickupKaraokeMovie">ランダムピックアップ</string>
+    <string name="weeklyLankingKaraokeMovie">週刊視聴ランキング</string>
 </resources>
