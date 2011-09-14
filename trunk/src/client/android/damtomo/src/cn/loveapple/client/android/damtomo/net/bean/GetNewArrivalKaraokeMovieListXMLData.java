@@ -32,17 +32,13 @@
  */
 package cn.loveapple.client.android.damtomo.net.bean;
 
-import org.simpleframework.xml.Root;
-
 /**
- * 
  * @author loveapple
  * @version $Revision$
  * @date $Date$
  * @id $Id$
  *
  */
-@Root(name = "date")
-public class Data<E> {
-
+public class GetNewArrivalKaraokeMovieListXMLData extends Data {
+	
 }
