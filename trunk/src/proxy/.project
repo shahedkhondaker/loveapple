@@ -1,7 +1,7 @@
 <projectDescription>
   <name>loveapple.service</name>
   <comment>loveapple
-	$Revision: 160 $. NO_M2ECLIPSE_SUPPORT: Project files created with the maven-eclipse-plugin are not supported in M2Eclipse.</comment>
+	$Revision: 326 $. NO_M2ECLIPSE_SUPPORT: Project files created with the maven-eclipse-plugin are not supported in M2Eclipse.</comment>
   <projects/>
   <buildSpec>
     <buildCommand>
