@@ -26,6 +26,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @Controller
 @RequestMapping(value="/proxy")
 public class ProxyController {
+	public static final String URL_PARAM_NAME = "____request_url";
 	/**
 	 * ログ
 	 */
@@ -129,8 +130,8 @@ public class ProxyController {
 	 * @param outputStream
 	 * @throws IOException
 	 */
-	@RequestMapping(value="/{url}")
-	public void binaryView(@PathVariable String url,HttpServletRequest request, HttpServletResponse response, HttpSession session, OutputStream outputStream) throws IOException{
+	@RequestMapping()
+	public void binaryView(HttpServletRequest request, HttpServletResponse response, HttpSession session, OutputStream outputStream) throws IOException{
 		response.setContentType("text/plain");
 		
 		for (
@@ -139,7 +140,6 @@ public class ProxyController {
 			String headerName = (String) headers.nextElement();
 			String header = request.getHeader(headerName);
 			outputStream.write((headerName + ":" + header + "\n").getBytes());
-			
 		}
 	}
 }
