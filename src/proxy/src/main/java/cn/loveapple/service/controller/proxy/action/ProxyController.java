@@ -2,7 +2,10 @@ package cn.loveapple.service.controller.proxy.action;
 
 import java.io.IOException;
 import java.io.OutputStream;
+import java.io.UnsupportedEncodingException;
+import java.net.MalformedURLException;
 import java.net.URL;
+import java.net.URLDecoder;
 import java.util.Enumeration;
 import java.util.Map.Entry;
 
@@ -14,17 +17,13 @@ import org.apache.commons.lang.StringUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-import com.google.appengine.api.urlfetch.FetchOptions;
 import com.google.appengine.api.urlfetch.HTTPHeader;
 import com.google.appengine.api.urlfetch.HTTPMethod;
 import com.google.appengine.api.urlfetch.HTTPRequest;
 import com.google.appengine.api.urlfetch.URLFetchService;
 import com.google.appengine.api.urlfetch.URLFetchServiceFactory;
-import com.google.appengine.repackaged.org.apache.commons.httpclient.HttpMethod;
-import com.google.appengine.repackaged.org.apache.http.HttpResponse;
 
 /**
  * プロキシーサーバコントローラ
@@ -38,8 +37,11 @@ import com.google.appengine.repackaged.org.apache.http.HttpResponse;
 @Controller
 @RequestMapping(value="/proxy")
 public class ProxyController {
+
 	public static final String URL_PARAM_NAME = "____request_url";
+	URLFetchService fetchService;
 	public ProxyController(){
+		fetchService = URLFetchServiceFactory.getURLFetchService();
 	}
 	/**
 	 * ログ
@@ -148,17 +150,18 @@ public class ProxyController {
 	public void binaryView(HttpServletRequest request, HttpServletResponse response, HttpSession session, OutputStream outputStream) throws IOException{
 		response.setContentType("text/plain");
 		
-		String urlStr = request.getParameter(URL_PARAM_NAME);
-		if(StringUtils.isEmpty(urlStr)){
+		String queryStr = request.getQueryString();
+		if(StringUtils.isEmpty(queryStr) || !queryStr.startsWith(URL_PARAM_NAME)){
 			response.setStatus(HttpServletResponse.SC_NOT_FOUND);
 			response.setContentType(request.getContentType());
 			return;
 		}
-		
-		URLFetchService fetchService = URLFetchServiceFactory.getURLFetchService();
-		URL url = new URL(urlStr);
+
+		URL url = getUrl(queryStr);
+
 		HTTPRequest clientRequest = new HTTPRequest(url, getMethode(request.getMethod()));
 
+		outputStream.write((url.getProtocol() + ":" + url.getHost() + ":" + url.getFile() + "\n").getBytes());
 //		outputStream.write((request.getMethod() + "\n").getBytes());
 		
 		for (
@@ -173,6 +176,43 @@ public class ProxyController {
 			Entry<String, Object> entry = (Entry<String, Object>) paramEntry;
 			outputStream.write((entry.getKey() + ":" + entry.getValue() + "\n").getBytes());
 		}
+	}
+	private URL getUrl(String queryStr) throws UnsupportedEncodingException, MalformedURLException{
+		String urlStr = URLDecoder.decode(queryStr.substring(URL_PARAM_NAME.length() + 1), "UTF-8");
+
+		String protocol;
+		String host;
+		String file;
+		int port = 80;
+		int protocolLength = 0;
+		if(urlStr.startsWith("https")){
+			protocol = "https";
+			protocolLength = "https://".length();
+			port = 443;
+		}else if(urlStr.startsWith("http")){
+			protocol = "http";
+			protocolLength = "http://".length();
+		}else{
+			protocol = "http";
+		}
+		host = urlStr.substring(protocolLength, urlStr.indexOf('/', protocolLength));
+		file = urlStr.substring(protocolLength + host.length());
+		
+		int portPoint = host.indexOf(':');
+		if(1 < portPoint){
+			host = host.substring(0, portPoint);
+			if(log.isDebugEnabled()){
+				log.debug("portPoint:" + portPoint + " host:" + host + " port:" + port + " file:" + file);
+				log.debug(host.substring(portPoint));
+			}
+			port = Integer.parseInt(host.substring(portPoint));
+		}
+		
+		if(log.isDebugEnabled()){
+			log.debug("protocol:" + protocol + " host:" + host + " port:" + port + " file:" + file);
+		}
+
+		return new URL(protocol, host, port, file);
 	}
 	private HTTPMethod getMethode(String src){
 		if("GET".equals(src.toUpperCase())){
