@@ -9,6 +9,7 @@ import java.net.URLDecoder;
 import java.util.Enumeration;
 import java.util.Map.Entry;
 
+import javax.servlet.ServletInputStream;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -148,6 +149,17 @@ public class ProxyController {
 	 */
 	@RequestMapping()
 	public void binaryView(HttpServletRequest request, HttpServletResponse response, HttpSession session, OutputStream outputStream) throws IOException{
+
+		outputStream.write(("!!").getBytes());
+		ServletInputStream is = request.getInputStream();
+		byte[] bytes = new byte[1024];
+		for (int i = 0;i != -1 ; i = is.read(bytes, i, bytes.length)) {
+			if(0 < i){
+				outputStream.write(bytes);
+			}
+		}
+		outputStream.write(("!!").getBytes());
+		
 		response.setContentType("text/plain");
 		
 		String queryStr = request.getQueryString();
@@ -161,9 +173,7 @@ public class ProxyController {
 
 		HTTPRequest clientRequest = new HTTPRequest(url, getMethode(request.getMethod()));
 
-		outputStream.write((url.getProtocol() + ":" + url.getHost() + ":" + url.getFile() + "\n").getBytes());
-//		outputStream.write((request.getMethod() + "\n").getBytes());
-		
+		// ヘッダー情報を設定
 		for (
 			@SuppressWarnings("unchecked")
 			Enumeration<String> headers = request.getHeaderNames();headers.hasMoreElements();) {
@@ -172,9 +182,12 @@ public class ProxyController {
 			HTTPHeader header = new HTTPHeader(headerName, request.getHeader(headerName));
 			clientRequest.setHeader(header);
 		}
-		for (Object paramEntry : request.getParameterMap().entrySet()) {
-			Entry<String, Object> entry = (Entry<String, Object>) paramEntry;
-			outputStream.write((entry.getKey() + ":" + entry.getValue() + "\n").getBytes());
+		if(HTTPMethod.POST == clientRequest.getMethod()){
+			
+			for (Object paramEntry : request.getParameterMap().entrySet()) {
+				Entry<String, Object> entry = (Entry<String, Object>) paramEntry;
+				outputStream.write((entry.getKey() + ":" + entry.getValue() + "\n").getBytes());
+			}
 		}
 	}
 	private URL getUrl(String queryStr) throws UnsupportedEncodingException, MalformedURLException{
@@ -200,12 +213,8 @@ public class ProxyController {
 		
 		int portPoint = host.indexOf(':');
 		if(1 < portPoint){
+			port = Integer.parseInt(host.substring(portPoint + 1));
 			host = host.substring(0, portPoint);
-			if(log.isDebugEnabled()){
-				log.debug("portPoint:" + portPoint + " host:" + host + " port:" + port + " file:" + file);
-				log.debug(host.substring(portPoint));
-			}
-			port = Integer.parseInt(host.substring(portPoint));
 		}
 		
 		if(log.isDebugEnabled()){
