@@ -7,7 +7,6 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLDecoder;
 import java.util.Enumeration;
-import java.util.Map.Entry;
 
 import javax.servlet.ServletInputStream;
 import javax.servlet.http.HttpServletRequest;
@@ -23,6 +22,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import com.google.appengine.api.urlfetch.HTTPHeader;
 import com.google.appengine.api.urlfetch.HTTPMethod;
 import com.google.appengine.api.urlfetch.HTTPRequest;
+import com.google.appengine.api.urlfetch.HTTPResponse;
 import com.google.appengine.api.urlfetch.URLFetchService;
 import com.google.appengine.api.urlfetch.URLFetchServiceFactory;
 
@@ -160,8 +160,6 @@ public class ProxyController {
 		}
 		outputStream.write(("!!").getBytes());
 		
-		response.setContentType("text/plain");
-		
 		String queryStr = request.getQueryString();
 		if(StringUtils.isEmpty(queryStr) || !queryStr.startsWith(URL_PARAM_NAME)){
 			response.setStatus(HttpServletResponse.SC_NOT_FOUND);
@@ -177,18 +175,24 @@ public class ProxyController {
 		for (
 			@SuppressWarnings("unchecked")
 			Enumeration<String> headers = request.getHeaderNames();headers.hasMoreElements();) {
-			
 			String headerName = (String) headers.nextElement();
 			HTTPHeader header = new HTTPHeader(headerName, request.getHeader(headerName));
 			clientRequest.setHeader(header);
+			
 		}
 		if(HTTPMethod.POST == clientRequest.getMethod()){
 			
-			for (Object paramEntry : request.getParameterMap().entrySet()) {
-				Entry<String, Object> entry = (Entry<String, Object>) paramEntry;
-				outputStream.write((entry.getKey() + ":" + entry.getValue() + "\n").getBytes());
-			}
+//			for (Object paramEntry : request.getParameterMap().entrySet()) {
+//				Entry<String, Object> entry = (Entry<String, Object>) paramEntry;
+//				outputStream.write((entry.getKey() + ":" + entry.getValue() + "\n").getBytes());
+//			}
 		}
+		HTTPResponse fetchResponse = fetchService.fetch(clientRequest);
+		
+		for (HTTPHeader httpHeader : fetchResponse.getHeaders()) {
+			response.setHeader(httpHeader.getName(), httpHeader.getValue());
+		}
+		outputStream.write(fetchResponse.getContent());
 	}
 	private URL getUrl(String queryStr) throws UnsupportedEncodingException, MalformedURLException{
 		String urlStr = URLDecoder.decode(queryStr.substring(URL_PARAM_NAME.length() + 1), "UTF-8");
