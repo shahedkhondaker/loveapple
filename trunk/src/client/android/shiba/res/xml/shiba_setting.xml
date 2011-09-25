@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+	<ListPreference android:key="proxy_server"
+					android:title="@string/proxy_server"
+					android:dialogTitle="@string/choose_proxy_server"
+					android:entries="@array/proxy_server_names"
+					android:entryValues="@array/proxy_server_adds"
+					></ListPreference>
+</PreferenceScreen>

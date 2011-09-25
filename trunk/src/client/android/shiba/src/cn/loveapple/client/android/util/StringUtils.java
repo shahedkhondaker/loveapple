@@ -85,4 +85,14 @@ public class StringUtils extends org.apache.commons.lang.StringUtils {
 		}
 		return result.toString();
 	}
+	
+	public static String getUrlWhitchSchema(String url){
+		if(isEmpty(url)){
+			return url;
+		}
+		if(url.startsWith("http://") || url.startsWith("https://")){
+			return url;
+		}
+		return "http://" + url;
+	}
 }

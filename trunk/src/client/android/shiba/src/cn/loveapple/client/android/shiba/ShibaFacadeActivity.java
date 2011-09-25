@@ -99,7 +99,7 @@ public class ShibaFacadeActivity extends BaseActivity {
 		if(StringUtils.isEmpty(url)){
 			webView.loadUrl("http://loveapple-facade.appspot.com/shiba.html");
 		}else{
-			webView.loadUrl(url);
+			webView.loadUrl(StringUtils.getUrlWhitchSchema(url));
 		}
 		final OnKeyListener listener = new RequestListener(webView, address);
 		address.setOnKeyListener(listener);
@@ -186,6 +186,6 @@ public class ShibaFacadeActivity extends BaseActivity {
 	 * @return
 	 */
 	public String getProxyUrl(){
-		return "http://atgapps.appspot.com/";
+		return ShibaSetting.getProxyServerHost(this);
 	}
 }

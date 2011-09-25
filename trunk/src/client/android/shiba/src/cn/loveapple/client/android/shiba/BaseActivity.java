@@ -40,6 +40,7 @@ import java.util.Date;
 import java.util.List;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.content.pm.PackageInfo;
 import android.os.Bundle;
 import android.util.Log;
@@ -189,8 +190,8 @@ public class BaseActivity extends Activity {
 	 */
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
-//		menu.add(0, MENU_OPT, 0, getText(R.string.setting)).setIcon(
-//				android.R.drawable.ic_menu_preferences);
+		menu.add(0, MENU_OPT, 0, getText(R.string.setting)).setIcon(
+				android.R.drawable.ic_menu_preferences);
 //		menu.add(0, MENU_HELP, 0, getText(R.string.help)).setIcon(
 //				android.R.drawable.ic_menu_help);
 
@@ -202,18 +203,17 @@ public class BaseActivity extends Activity {
 	 */
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
-//		Intent intent = new Intent();
-//		switch (item.getItemId()) {
+		Intent intent = new Intent();
+		switch (item.getItemId()) {
 //		case MENU_HELP:
 //			intent.setClassName(this, HelpInfoActivity.class.getName());
 //			startActivity(intent);
 //			return true;
-//		case MENU_OPT:
-//			intent.setClassName(this, BbtSetting.class.getName());
-//			startActivity(intent);
-//			return true;
-//		}
-
+		case MENU_OPT:
+			intent.setClassName(this, ShibaSetting.class.getName());
+			startActivity(intent);
+			return true;
+		}
 		return true;
 	}
 	
