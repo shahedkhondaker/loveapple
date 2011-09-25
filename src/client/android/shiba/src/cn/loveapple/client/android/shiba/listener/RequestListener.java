@@ -39,6 +39,7 @@ import android.view.View.OnKeyListener;
 import android.webkit.WebView;
 import android.widget.AutoCompleteTextView;
 import cn.loveapple.client.android.shiba.ShibaFacadeActivity;
+import cn.loveapple.client.android.util.StringUtils;
 
 /**
  * 入力されたアドレスをリクエストするリスナー
@@ -75,7 +76,7 @@ public class RequestListener implements OnClickListener, OnKeyListener {
 	public boolean onKey(View view, int keyCode, KeyEvent event) {
 		final String uriString = address.getText().toString();
 		if(keyCode == KeyEvent.KEYCODE_ENTER){
-			webView.loadUrl(uriString);
+			webView.loadUrl(StringUtils.getUrlWhitchSchema(uriString));
 			webView.requestFocus();
 		}
 		((ShibaFacadeActivity)view.getContext()).setButtonEnabled();

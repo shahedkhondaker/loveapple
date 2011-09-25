@@ -3,4 +3,8 @@
 	<string name="app_name">柴犬浏览器</string>
 	<string name="choose_address">选择地址</string>
 	<string name="request">访问</string>
+	<string name="proxy_server">代理服务器</string>
+	<string name="choose_proxy_server">选择代理服务器</string>
+	<string name="default_proxy_server">默认理服务器</string>
+	<string name="setting">设定</string>
 </resources>
