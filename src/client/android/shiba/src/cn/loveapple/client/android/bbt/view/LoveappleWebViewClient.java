@@ -48,6 +48,7 @@ import cn.loveapple.client.android.shiba.ShibaFacadeActivity;
  * @id $Id$
  */
 public class LoveappleWebViewClient extends WebViewClient {
+	public static final String FACADE_HOST = "loveapple-facade.appspot.com";
 	public ShibaFacadeActivity activity;
 	public LoveappleWebViewClient(ShibaFacadeActivity activity) {
 		super();
@@ -70,18 +71,27 @@ public class LoveappleWebViewClient extends WebViewClient {
 	@Override
 	public void onLoadResource(WebView view, String url){
 		String baseUrl = activity.getProxyUrl();
-		
+
+		if(url.startsWith("http://" + FACADE_HOST) || url.startsWith("https://" + FACADE_HOST)){
+			super.onLoadResource(view, url);
+			Log.d(LOG_TAG, "Access URL:" + url);
+			return ;
+		}
 		if(!url.startsWith(baseUrl)){
+			StringBuilder sb = new StringBuilder(url.length() + baseUrl.length());
+			sb.append(baseUrl);
+			sb.append('/');
 			if(url.startsWith("http://")){
-				StringBuilder sb = new StringBuilder(url.length() + baseUrl.length());
-				sb.append(baseUrl);
 				sb.append(url.substring("http://".length()));
-				url = sb.toString();
+			}else if(url.startsWith("https://")){
+				sb.append(url.substring("https://".length()));
 			}
+			url = sb.toString();
 		}
 		super.onLoadResource(view, url);
 		Log.d(LOG_TAG, "Access URL:" + url);
 	}
+	
 	/**
 	 *  ページ読み込み終了時の動作
 	 */
