@@ -33,15 +33,13 @@
 package cn.loveapple.client.android.shiba;
 
 import java.util.ArrayList;
-
-import cn.loveapple.client.android.shiba.database.entity.CacheEntity;
+import java.util.List;
 
 import android.content.Context;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.BaseAdapter;
+import android.widget.ArrayAdapter;
 import android.widget.Filter;
 import android.widget.Filterable;
+import cn.loveapple.client.android.shiba.database.CacheDao;
 
 /**
  * URL
@@ -50,27 +48,18 @@ import android.widget.Filterable;
  * @version $Revision$
  * @date $Date$
  * @id $Id$
- *
+ * 
  */
-public class UrlAdapter extends BaseAdapter implements Filterable {
+public class UrlAdapter extends ArrayAdapter<String> implements Filterable {
 
 	private Context context;
-	private ArrayList<CacheEntity> showUrlList;
-	private ArrayList<CacheEntity> tempUrlList;
-	
-	public UrlAdapter(Context context, ArrayList<CacheEntity> urlList){
-		super();
-		this.context = context;
-		this.showUrlList = urlList;
-		this.tempUrlList = (ArrayList<CacheEntity>) urlList.clone();
-	}
-	/**
-	 * {@inheritDoc}
-	 */
-	@Override
-	public Filter getFilter() {
-		// TODO Auto-generated method stub
-		return null;
+	private List<String> urlList;
+	private CacheDao cacheDao;
+
+	public UrlAdapter(Context context, int textViewResourceId, CacheDao cacheDao) {
+		super(context, textViewResourceId);
+		urlList = new ArrayList<String>();
+		this.cacheDao = cacheDao;
 	}
 
 	/**
@@ -78,33 +67,53 @@ public class UrlAdapter extends BaseAdapter implements Filterable {
 	 */
 	@Override
 	public int getCount() {
-		return showUrlList.size();
+		return urlList.size();
 	}
 
 	/**
 	 * {@inheritDoc}
 	 */
 	@Override
-	public Object getItem(int position) {
-		return showUrlList.get(position);
+	public String getItem(int position) {
+		return urlList.get(position);
 	}
 
 	/**
 	 * {@inheritDoc}
 	 */
 	@Override
-	public long getItemId(int position) {
-		return position;
-	}
+	public Filter getFilter() {
+		Filter urlFilter = new Filter() {
+			@Override
+			protected FilterResults performFiltering(CharSequence constraint) {
+				FilterResults filterResults = new FilterResults();
+				if (constraint != null) {
+					// A class that queries a web API, parses the data and
+					// returns an ArrayList<Style>
+					try {
+						urlList = cacheDao.findCacheHttpUrl(constraint.toString(), ShibaFacadeActivity.VIEW_URL_LIMIT);
+					} catch (Exception e) {
+					}
+					// Now assign the values and count to the FilterResults
+					// object
+					filterResults.values = urlList;
+					filterResults.count = urlList.size();
+				}
+				return filterResults;
+			}
 
-	/**
-	 * {@inheritDoc}
-	 */
-	@Override
-	public View getView(int position, View view, ViewGroup parent) {
-		CacheEntity entity = showUrlList.get(position);
-		//TODO
-		return null;
+			@Override
+			protected void publishResults(CharSequence constraint,
+					FilterResults results) {
+				if (results != null && results.count > 0) {
+					notifyDataSetChanged();
+				} else {
+					notifyDataSetInvalidated();
+				}
+			}
+		};
+
+		return urlFilter;
 	}
 
 }
