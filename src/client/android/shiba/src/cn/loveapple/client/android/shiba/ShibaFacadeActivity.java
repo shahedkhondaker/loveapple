@@ -62,8 +62,7 @@ public class ShibaFacadeActivity extends BaseActivity {
 		// アドレスバーを初期化
 		List<String> urlList = cacheDao.findCacheHttpUrl(null, VIEW_URL_LIMIT);
 		AutoCompleteTextView address = (AutoCompleteTextView) findViewById(R.id.address);
-		ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,
-				R.layout.list_address, urlList);
+		UrlAdapter adapter = new UrlAdapter(this, R.layout.list_address, cacheDao);
 		address.setAdapter(adapter);
 		address
 				.setWidth(this.getWindowManager().getDefaultDisplay()
