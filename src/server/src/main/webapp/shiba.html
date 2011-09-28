@@ -2,6 +2,7 @@
 <html>
 <head>
 <link rel="stylesheet" href="http://code.jquery.com/mobile/1.0b3/jquery.mobile-1.0b3.min.css" />
+<link href="css/shiba/inettuts.css" rel="stylesheet" type="text/css" />
 <script src="http://code.jquery.com/jquery-1.6.2.min.js"></script>
 <script src="http://code.jquery.com/mobile/1.0b3/jquery.mobile-1.0b3.min.js"></script>
 <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
@@ -9,17 +10,45 @@
 <title>柴犬浏览器 起点</title>
 </head>
 <body>
+<script type="text/javascript" src="javascript/shiba/inettuts.js"></script>
 <div data-role="page">
 	<div data-role="header">
 		<h4><img alt="" width="16" border="0" src="images/shiba/icon.png" style="float:left;" />一款免费的翻墙浏览器</h4>	
 	</div>
 	<div data-role="content">
-		<div id="news">
-			<div>新闻</div>
-			<div><a href="http://ｗｗｗ.cnn.com/" rel="external">CNN</a></div>
+		<div id="columns">
+			<ul id="column1" class="column">
+				<li class="widget color-green" id="intro">
+					<div class="widget-head">
+						<h3>新闻/门户</h3>
+					</div>
+					<div class="widget-content">
+						<p><img src="http://edition.cnn.com/favicon.ico"  border="0" width="16" style="background-color:#FFF;margin:0px;float:left;" />CNN　<a href="http://ｗｗｗ.cnn.com/" rel="external">English</a>　<a href="http://www.cnn.co.jp/" rel="external">日本語</a>　<a href="http://cnn.joinsmsn.com/" rel="external">한국어</a></p>
+						<p><img src="http://www.yahoo.com/favicon.ico"  border="0" width="16" style="background-color:#FFF;margin:0px;float:left;" />Yahoo　<a href="http://www.yahoo.com/" rel="external">English</a>　<a href="http://www.yahoo.co.jp/" rel="external">日本語</a> <a href="http://kr.yahoo.com/" rel="external">한국어</a></p>
+						<p><img src="http://jp.reuters.com/resources/images/favicon.ico"  border="0" width="16" style="background-color:#FFF;margin:0px;float:left;" />Reuters　<a href="http://www.reuters.com/" rel="external">English</a>　<a href="http://jp.reuters.com/" rel="external">日本語</a> <a href="http://cn.reuters.com/" rel="external">中文</a></p>
+					</div>
+				</li>
+				<li class="widget color-green" id="intro">
+					<div class="widget-head">
+						<h3>搜索引擎</h3>
+					</div>
+					<div class="widget-content">
+						<p><img src="http://www.google.com/favicon.ico"  border="0" width="16" style="background-color:#FFF;margin:0px;float:left;" />Google　<a href="http://www.google.com/" rel="external">English</a>　<a href="http://www.google.co.jp/" rel="external">日本語</a>　<a href="http://www.google.co.kr/" rel="external">한글뉴스</a></p>
+						<p><img src="http://search.yahoo.co.jp/favicon.ico"  border="0" width="16" style="background-color:#FFF;margin:0px;float:left;" />Yahoo　<a href="http://search.yahoo.com/" rel="external">English</a>　<a href="http://search.yahoo.co.jp/" rel="external">日本語</a>　<a href="http://kr.searchcenter.yahoo.com/" rel="external">한글뉴스</a></p>
+						<p><img src="http://www.baidu.com/favicon.ico"  border="0" width="16" style="background-color:#FFF;margin:0px;float:left;" />Baidu　<a href="http://www.baidu.jp/" rel="external">日本語</a>　<a href="http://ｗｗｗ.cnn.com/" rel="external">中文</a></p>
+					</div>
+				</li>
+				<li class="widget color-green" id="intro">
+					<div class="widget-head">
+						<h3>其他常用网站</h3>
+					</div>
+					<div class="widget-content">
+						<p><img src="http://www.youtube.com/favicon.ico"  border="0" width="16" style="background-color:#FFF;margin:0px;float:left;" />Youtube　<a href="http://www.youtube.com" rel="external">English</a>　<a href="http://www.youtube.co.jp" rel="external">日本語</a></p>
+						<p><img src="http://www.facebook.com/favicon.ico"  border="0" width="16" style="background-color:#FFF;margin:0px;float:left;" /><a href="http://www.facebook.com" rel="external">Facebook</a>(多国语言)</p>
+					</div>
+				</li>
+			</ul>
 		</div>
-		<div id="sns"></div>
-		<div id="other"></div>
 	</div> 
 	<div data-role="footer">
 		powered by loveapple.cn
