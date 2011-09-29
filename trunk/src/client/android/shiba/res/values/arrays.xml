@@ -1,9 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 	<string-array name="proxy_server_names">
+		<item>@string/not_use_proxy</item>
 		<item>@string/default_proxy_server</item>
 	</string-array>
 	<string-array name="proxy_server_adds">
-		<item>loveapple-proxy.appspot.com</item>
+		<item></item>
+		<item>@string/default_proxy_server_add</item>
 	</string-array>
+	<string name="default_proxy_server_add">loveapple-proxy.appspot.com</string>
 </resources>

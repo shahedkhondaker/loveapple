@@ -38,6 +38,7 @@ import android.util.Log;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import cn.loveapple.client.android.shiba.ShibaFacadeActivity;
+import cn.loveapple.client.android.util.StringUtils;
 
 /**
  * WEBページを表示するビュー
@@ -71,8 +72,8 @@ public class LoveappleWebViewClient extends WebViewClient {
 	@Override
 	public void onLoadResource(WebView view, String url){
 		String baseUrl = activity.getProxyUrl();
-
-		if(url.startsWith("http://" + FACADE_HOST) || url.startsWith("https://" + FACADE_HOST)){
+		
+		if(StringUtils.isEmpty(baseUrl) || url.startsWith("http://" + FACADE_HOST) || url.startsWith("https://" + FACADE_HOST)){
 			super.onLoadResource(view, url);
 			Log.d(LOG_TAG, "Access URL:" + url);
 			return ;
