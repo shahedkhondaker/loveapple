@@ -6,5 +6,6 @@
 	<string name="proxy_server">代理服务器</string>
 	<string name="choose_proxy_server">选择代理服务器</string>
 	<string name="default_proxy_server">默认理服务器</string>
+	<string name="not_use_proxy">不使用代理服务器</string>
 	<string name="setting">设定</string>
 </resources>
