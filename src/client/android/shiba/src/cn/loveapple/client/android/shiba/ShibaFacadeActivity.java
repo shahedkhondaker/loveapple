@@ -1,15 +1,17 @@
 package cn.loveapple.client.android.shiba;
 
-import java.util.List;
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.KeyEvent;
-import android.view.Window;
 import android.view.View.OnKeyListener;
+import android.view.Window;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
-import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
+import android.widget.FrameLayout;
 import android.widget.ImageButton;
 import cn.loveapple.client.android.bbt.view.LoveappleWebViewClient;
 import cn.loveapple.client.android.shiba.database.CacheDao;
@@ -60,7 +62,6 @@ public class ShibaFacadeActivity extends BaseActivity {
 		webView = (WebView) findViewById(R.id.web);
 
 		// アドレスバーを初期化
-		List<String> urlList = cacheDao.findCacheHttpUrl(null, VIEW_URL_LIMIT);
 		AutoCompleteTextView address = (AutoCompleteTextView) findViewById(R.id.address);
 		UrlAdapter adapter = new UrlAdapter(this, R.layout.list_address, cacheDao);
 		address.setAdapter(adapter);
@@ -133,46 +134,28 @@ public class ShibaFacadeActivity extends BaseActivity {
 
 		return super.onKeyDown(keyCode, event);
 	}
-/*
-	*//**
-	 * TODO FLASH
-	 * @param name
-	 *//*
-	private void callHiddenWebViewMethod(String name) {
-		if (webView != null) {
-			try {
-				Method method = WebView.class.getMethod(name);
-				method.invoke(webView);
-			} catch (NoSuchMethodException e) {
-				Log.i("No such method: " + name, e.toString());
-			} catch (IllegalAccessException e) {
-				Log.i("Illegal Access: " + name, e.toString());
-			} catch (InvocationTargetException e) {
-				Log.d("Invocation Target Exception: " + name, e.toString());
-			}
-		}
-	}
-*/
-	/**
-	 * TODO Flash
-	 */
+	
 	@Override
 	protected void onPause() {
 		super.onPause();
+		
+		// For Flash Start
+		webView.pauseTimers();
+		if (isFinishing()) {
+			webView.loadUrl("about:blank");
+			setContentView(new FrameLayout(this));
+		}
+		callHiddenWebViewMethod("onPause");
+		// For Flash End
 	}
 
-	/**
-	 * TODO Flash
-	 */
 	@Override
 	protected void onResume() {
 		super.onResume();
-//		getWindow().setBackgroundDrawable(null);
-//		WindowManager.LayoutParams lp = 
-//			(WindowManager.LayoutParams) getWindow().getDecorView().getLayoutParams();
-//	    lp.type = WindowManager.LayoutParams.TYPE_APPLICATION;
-//	    getWindowManager().removeView(getWindow().getDecorView());
-//	    getWindowManager().addView(getWindow().getDecorView(), lp);
+		
+		// For Flash Start
+		callHiddenWebViewMethod("onResume");
+		// For Flash End
 	}
 
 	@Override
@@ -186,5 +169,24 @@ public class ShibaFacadeActivity extends BaseActivity {
 	 */
 	public String getProxyUrl(){
 		return ShibaSetting.getProxyServerHost(this);
+	}
+	
+	/**
+	 * Flash を制御
+	 * @param name
+	 */
+	private void callHiddenWebViewMethod(String name) {
+		if (webView != null) {
+			try {
+				Method method = WebView.class.getMethod(name);
+				method.invoke(webView);
+			} catch (NoSuchMethodException e) {
+				Log.i("No such method: " + name, e.toString());
+			} catch (IllegalAccessException e) {
+				Log.i("Illegal Access: " + name, e.toString());
+			} catch (InvocationTargetException e) {
+				Log.d("Invocation Target Exception: " + name, e.toString());
+			}
+		}
 	}
 }
