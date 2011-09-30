@@ -9,4 +9,13 @@
 		<item>@string/default_proxy_server_add</item>
 	</string-array>
 	<string name="default_proxy_server_add">loveapple-proxy.appspot.com</string>
+	<string-array name="host_whilt_list">
+		<item>appspot.com</item>
+		<item>clubdam.com</item>
+		<item>baidu.com</item>
+		<item>qq.com</item>
+	</string-array>
+	<string-array name="schema_whilt_list">
+		<item>file:///</item>
+	</string-array>
 </resources>
