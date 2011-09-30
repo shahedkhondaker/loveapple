@@ -37,6 +37,7 @@ public class ShibaFacadeActivity extends BaseActivity {
 	private ImageButton back;
 	private ImageButton forward;
 	private ImageButton refresh;
+	
 	/**
 	 * WEBビュー
 	 */
@@ -104,7 +105,10 @@ public class ShibaFacadeActivity extends BaseActivity {
 		final OnKeyListener listener = new RequestListener(webView, address);
 		address.setOnKeyListener(listener);
 
-		webView.setWebViewClient(new LoveappleWebViewClient(this));
+		LoveappleWebViewClient client = new LoveappleWebViewClient(this);
+		client.setHostWhiteList(getResources().getStringArray(R.array.host_white_list));
+		client.setSchemaWhiteList(getResources().getStringArray(R.array.schema_white_list));
+		webView.setWebViewClient(client);
 
 		// ボタンの初期化
 		back = (ImageButton) findViewById(R.id.back);

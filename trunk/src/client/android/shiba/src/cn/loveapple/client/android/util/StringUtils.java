@@ -32,6 +32,7 @@
  */
 package cn.loveapple.client.android.util;
 
+import static cn.loveapple.client.android.Constant.*;
 import java.text.DecimalFormat;
 import java.text.NumberFormat;
 
@@ -90,9 +91,28 @@ public class StringUtils extends org.apache.commons.lang.StringUtils {
 		if(isEmpty(url)){
 			return url;
 		}
-		if(url.startsWith("http://") || url.startsWith("https://")){
+		if(url.startsWith(SCHEMA_HTTP_STR) || url.startsWith(SCHEMA_HTTPS_STR)){
 			return url;
 		}
-		return "http://" + url;
+		return SCHEMA_HTTP_STR + url;
+	}
+	
+	public static String getHost(String url){
+		if(isEmpty(url)){
+			return url;
+		}
+		String host = null;
+		if(url.startsWith(SCHEMA_HTTP_STR)){
+			host = url.substring(SCHEMA_HTTP_STR.length());
+		}else if(url.startsWith(SCHEMA_HTTPS_STR)){
+			host = url.substring(SCHEMA_HTTPS_STR.length());
+		}else{
+			host = url;
+		}
+		int endPoint = host.indexOf('/');
+		if(endPoint < 0){
+			return host;
+		}
+		return host.substring(0, endPoint);
 	}
 }
