@@ -73,7 +73,7 @@ public class LoveappleWebViewClient extends WebViewClient {
 	public void onLoadResource(WebView view, String url){
 		String baseUrl = activity.getProxyUrl();
 		
-		if(StringUtils.isEmpty(baseUrl) || url.startsWith("http://" + FACADE_HOST) || url.startsWith("https://" + FACADE_HOST)){
+		if(StringUtils.isEmpty(baseUrl) || url.startsWith("http://" + FACADE_HOST) || url.startsWith("https://" + FACADE_HOST) || url.startsWith("file:///")){
 			super.onLoadResource(view, url);
 			Log.d(LOG_TAG, "Access URL:" + url);
 			return ;
@@ -84,8 +84,13 @@ public class LoveappleWebViewClient extends WebViewClient {
 			sb.append('/');
 			if(url.startsWith("http://")){
 				sb.append(url.substring("http://".length()));
+				sb.insert(0, "http://");
 			}else if(url.startsWith("https://")){
 				sb.append(url.substring("https://".length()));
+				sb.insert(0, "https://");
+			}else{
+				sb.append(url);
+				sb.insert(0, "http://");
 			}
 			url = sb.toString();
 		}
