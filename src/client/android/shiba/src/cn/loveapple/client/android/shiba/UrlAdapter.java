@@ -52,7 +52,6 @@ import cn.loveapple.client.android.shiba.database.CacheDao;
  */
 public class UrlAdapter extends ArrayAdapter<String> implements Filterable {
 
-	private Context context;
 	private List<String> urlList;
 	private CacheDao cacheDao;
 
