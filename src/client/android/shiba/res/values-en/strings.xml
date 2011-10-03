@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+	<string name="app_name">Shiba Browser</string>
+	<string name="choose_address">Choose Address</string>
+	<string name="request">Request</string>
+	<string name="proxy_server">Proxy Server</string>
+	<string name="choose_proxy_server">Choose the proxy server</string>
+	<string name="default_proxy_server">Default proxy server</string>
+	<string name="not_use_proxy">No user proxy server</string>
+	<string name="setting">Setting</string>
+</resources>
