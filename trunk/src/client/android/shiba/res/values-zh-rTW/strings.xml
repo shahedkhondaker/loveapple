@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+	<string name="app_name">柴犬瀏覽器</string>
+	<string name="choose_address">選擇地阯</string>
+	<string name="request">訪問</string>
+	<string name="proxy_server">代理服務器</string>
+	<string name="choose_proxy_server">選擇代理服務器</string>
+	<string name="default_proxy_server">默認理服務器</string>
+	<string name="not_use_proxy">不使用代理服務器</string>
+	<string name="setting">設定</string>
+</resources>
