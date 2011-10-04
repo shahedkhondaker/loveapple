@@ -2,6 +2,7 @@ package cn.loveapple.client.android.shiba;
 
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
+import java.util.Timer;
 
 import android.os.Bundle;
 import android.util.Log;
@@ -13,6 +14,7 @@ import android.webkit.WebView;
 import android.widget.AutoCompleteTextView;
 import android.widget.FrameLayout;
 import android.widget.ImageButton;
+import cn.loveapple.client.android.bbt.view.BannerTimerTask;
 import cn.loveapple.client.android.bbt.view.LoveappleWebViewClient;
 import cn.loveapple.client.android.shiba.database.CacheDao;
 import cn.loveapple.client.android.shiba.database.impl.CacheDaoImpl;
@@ -37,6 +39,7 @@ public class ShibaFacadeActivity extends BaseActivity {
 	private ImageButton back;
 	private ImageButton forward;
 	private ImageButton refresh;
+	private Timer bannerTimer;
 	
 	/**
 	 * WEBビュー
@@ -50,8 +53,13 @@ public class ShibaFacadeActivity extends BaseActivity {
 	 */
 	@Override
 	protected void init() {
+		super.init();
 		cacheDao = new CacheDaoImpl();
 		requestWindowFeature(Window.FEATURE_INDETERMINATE_PROGRESS);
+		
+		//Timmer
+		bannerTimer = new Timer();
+		bannerTimer.schedule(new BannerTimerTask(this), 10000, 10000);
 	}
 
 	/**

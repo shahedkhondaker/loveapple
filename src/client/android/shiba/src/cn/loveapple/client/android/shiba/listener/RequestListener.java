@@ -32,12 +32,15 @@
  */
 package cn.loveapple.client.android.shiba.listener;
 
+import java.util.Timer;
+
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.View.OnKeyListener;
 import android.webkit.WebView;
 import android.widget.AutoCompleteTextView;
+import cn.loveapple.client.android.bbt.view.BannerTimerTask;
 import cn.loveapple.client.android.shiba.ShibaFacadeActivity;
 import cn.loveapple.client.android.util.StringUtils;
 
