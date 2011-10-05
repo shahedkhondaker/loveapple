@@ -53,7 +53,7 @@ public class ShibaFacadeActivity extends BaseActivity {
 	 */
 	@Override
 	protected void init() {
-		super.init();
+		
 		cacheDao = new CacheDaoImpl();
 		requestWindowFeature(Window.FEATURE_INDETERMINATE_PROGRESS);
 		
