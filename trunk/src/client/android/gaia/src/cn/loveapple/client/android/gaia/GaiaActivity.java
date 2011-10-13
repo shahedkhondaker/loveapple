@@ -1,13 +1,26 @@
 package cn.loveapple.client.android.gaia;
 
-import android.app.Activity;
 import android.os.Bundle;
 
-public class GaiaActivity extends Activity {
-    /** Called when the activity is first created. */
+import com.google.android.maps.MapActivity;
+
+public class GaiaActivity extends MapActivity {
+    /**
+     * 
+     * {@inheritDoc}
+     */
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main);
     }
+
+    /**
+     * 
+     * {@inheritDoc}
+     */
+	@Override
+	protected boolean isRouteDisplayed() {
+		return false;
+	}
 }
