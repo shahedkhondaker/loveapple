@@ -30,9 +30,9 @@
  *
  * @author: loveapple
  */
-package cn.loveapple.android.utils;
+package cn.loveapple.clinet.android.utils;
 
-import static cn.loveapple.android.Constant.*;
+import static cn.loveapple.client.android.Constant.*;
 
 import java.text.DecimalFormat;
 import java.text.NumberFormat;

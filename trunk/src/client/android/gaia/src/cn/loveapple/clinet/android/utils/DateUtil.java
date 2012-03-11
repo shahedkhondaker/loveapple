@@ -30,7 +30,7 @@
  *
  * @author: loveapple
  */
-package cn.loveapple.android.utils;
+package cn.loveapple.clinet.android.utils;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
