@@ -47,6 +47,7 @@ import android.view.Display;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.MotionEvent;
+import cn.loveapple.android.client.gaia.activitys.GaiaSetting;
 import cn.loveapple.android.utils.DateUtil;
 import cn.loveapple.android.utils.StringUtils;
 
@@ -193,16 +194,16 @@ public class BaseActivity extends Activity {
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
 		Intent intent = new Intent();
-//		switch (item.getItemId()) {
+		switch (item.getItemId()) {
 //		case MENU_HELP:
 //			intent.setClassName(this, HelpInfoActivity.class.getName());
 //			startActivity(intent);
 //			return true;
-//		case MENU_OPT:
-//			intent.setClassName(this, ShibaSetting.class.getName());
-//			startActivity(intent);
-//			return true;
-//		}
+		case MENU_OPT:
+			intent.setClassName(this, GaiaSetting.class.getName());
+			startActivity(intent);
+			return true;
+		}
 		return true;
 	}
 }
