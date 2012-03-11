@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+	<!-- 
+    <PreferenceCategory android:title="@string/baseSetting">
+		<CheckBoxPreference android:key="leukorrhea" android:title="@string/leukorrhea" android:defaultValue="true" android:summary="@string/leukorrheaViewExplain" />
+		<CheckBoxPreference android:key="dysmenorrhea" android:title="@string/dysmenorrhea" android:defaultValue="true" android:summary="@string/dysmenorrheaViewExplain" />
+		<CheckBoxPreference android:key="menstruationLevel" android:title="@string/menstruationLevel" android:defaultValue="true" android:summary="@string/menstruationLevelExplain" />
+	</PreferenceCategory>
+	<SeekBarPreference android:key="finishLevel" android:title="@string/leukorrhea"
+			android:max="100"
+			android:progress="0" />
+	 -->
+	<PreferenceCategory  android:title="@string/accountSetting">
+		<EditTextPreference android:key="qqNo" android:title="@string/qqId" android:defaultValue="true" />
+		
+	</PreferenceCategory>
+</PreferenceScreen>

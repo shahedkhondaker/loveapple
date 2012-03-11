@@ -8,4 +8,7 @@
 	<string name="default_proxy_server">默认理服务器</string>
 	<string name="not_use_proxy">不使用代理服务器</string>
 	<string name="setting">设定</string>
+	<string name="accountSetting">アカウント設定</string>
+	<string name="qqId">QQ号</string>
+	<string name="password">密码</string>
 </resources>
