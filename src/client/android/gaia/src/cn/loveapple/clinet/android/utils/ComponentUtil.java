@@ -30,7 +30,7 @@
  *
  * @author: loveapple
  */
-package cn.loveapple.android.utils;
+package cn.loveapple.clinet.android.utils;
 
 import org.apache.commons.lang.ArrayUtils;
 
