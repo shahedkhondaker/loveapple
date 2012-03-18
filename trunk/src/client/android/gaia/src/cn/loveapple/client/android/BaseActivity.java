@@ -49,6 +49,7 @@ import android.view.MenuItem;
 import android.view.MotionEvent;
 import cn.loveapple.client.android.gaia.R;
 import cn.loveapple.client.android.gaia.activitys.GaiaSetting;
+import cn.loveapple.client.android.gaia.logic.EventLogic;
 import cn.loveapple.client.android.utils.DateUtil;
 import cn.loveapple.client.android.utils.StringUtils;
 
@@ -65,22 +66,9 @@ import cn.loveapple.client.android.utils.StringUtils;
 public class BaseActivity extends Activity {
 	
 	/**
-	 * 本日を表す文字
-	 * @see DateUtil#DATE_PTTERN_YYYYMMDD
-	 */
-	protected String today;
-	/**
-	 * 本日の日時
-	 */
-	protected Date todayDate;
-	/**
 	 * システムパッケージ情報
 	 */
 	protected PackageInfo packageInfo;
-	/**
-	 * 許容体温リスト
-	 */
-	protected List<String> temperatureList;
 	/**
 	 * ヘルプメニューフラグ値
 	 */
@@ -101,12 +89,15 @@ public class BaseActivity extends Activity {
 	 * 初期ダウン座標：Y
 	 */
 	protected float downY = 0;
-	
+	/**
+	 * イベントロジック
+	 */
+	protected EventLogic eventLogic;
 	/**
 	 * 初期化を行う
 	 */
 	protected void init(){
-
+		eventLogic = new EventLogic();
 	}
 
 	/**
