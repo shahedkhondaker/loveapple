@@ -56,7 +56,6 @@ public class ReloadListener implements OnClickListener {
 	/**
 	 * {@inheritDoc}
 	 */
-	@Override
 	public void onClick(View view) {
 		webView.reload();
 		((ShibaFacadeActivity)view.getContext()).setButtonEnabled();

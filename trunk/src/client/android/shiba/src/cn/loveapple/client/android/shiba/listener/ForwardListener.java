@@ -56,7 +56,6 @@ public class ForwardListener implements OnClickListener {
 	/**
 	 * {@inheritDoc}
 	 */
-	@Override
 	public void onClick(View view) {
 		if(webView.canGoForward()){
     		webView.goForward();

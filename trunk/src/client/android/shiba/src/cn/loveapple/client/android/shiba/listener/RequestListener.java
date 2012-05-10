@@ -65,7 +65,6 @@ public class RequestListener implements OnClickListener, OnKeyListener {
 	/**
 	 * {@inheritDoc}
 	 */
-	@Override
 	public void onClick(View v) {
 		final String uriString = address.getText().toString();
 		webView.loadUrl(uriString);
@@ -75,7 +74,6 @@ public class RequestListener implements OnClickListener, OnKeyListener {
 	/**
 	 * Enterキーを押下する場合、WEBアクセスを行う
 	 */
-	@Override
 	public boolean onKey(View view, int keyCode, KeyEvent event) {
 		final String uriString = address.getText().toString();
 		if(keyCode == KeyEvent.KEYCODE_ENTER){
