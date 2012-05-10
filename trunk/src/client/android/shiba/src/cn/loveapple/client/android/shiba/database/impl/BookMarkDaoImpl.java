@@ -67,7 +67,6 @@ public class BookMarkDaoImpl extends BaseDao implements BookMarkDao {
 	/**
 	 * {@inheritDoc}
 	 */
-	@Override
 	public List<BookMarkEntity> getUrlHistory(String url, String title,
 			int limit) {
 		Cursor cursor = null;
@@ -112,7 +111,6 @@ public class BookMarkDaoImpl extends BaseDao implements BookMarkDao {
 	 * 
 	 * {@inheritDoc}
 	 */
-	@Override
 	public BookMarkEntity getUrlHistory(String url, String title) {
 		List<BookMarkEntity> result = getUrlHistory(url, title, 1);
 		if(result != null && 0 < result.size()){
@@ -124,7 +122,6 @@ public class BookMarkDaoImpl extends BaseDao implements BookMarkDao {
 	/**
 	 * {@inheritDoc}
 	 */
-	@Override
 	public BookMarkEntity save(BookMarkEntity entity) {
 		if(entity == null){
 			throw new IllegalArgumentException("history entity is null.");
