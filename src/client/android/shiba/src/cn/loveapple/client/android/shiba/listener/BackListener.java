@@ -56,7 +56,6 @@ public class BackListener implements OnClickListener {
 	/**
 	 * {@inheritDoc}
 	 */
-	@Override
 	public void onClick(View view) {
 		if(webView.canGoBack()){
     		webView.goBack();

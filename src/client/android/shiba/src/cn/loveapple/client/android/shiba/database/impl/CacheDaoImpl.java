@@ -85,7 +85,6 @@ public class CacheDaoImpl implements CacheDao {
 	 * 
 	 * {@inheritDoc}
 	 */
-	@Override
 	public List<String> findCacheHttpUrl(String url, int limit){
 		List<CacheEntity> result = findCache("http://" + url, limit);
 		List<String> urls = new ArrayList<String>(result.size());
@@ -98,7 +97,6 @@ public class CacheDaoImpl implements CacheDao {
 	/**
 	 * 
 	 */
-	@Override
 	public List<CacheEntity> findCache(String url, int limit) {
 		StringBuilder condition = new StringBuilder();
 		List<String> params = new ArrayList<String>();
