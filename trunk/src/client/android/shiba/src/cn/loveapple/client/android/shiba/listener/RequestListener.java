@@ -32,7 +32,8 @@
  */
 package cn.loveapple.client.android.shiba.listener;
 
-import java.util.Timer;
+import java.util.Calendar;
+import java.util.Date;
 
 import android.view.KeyEvent;
 import android.view.View;
@@ -40,7 +41,6 @@ import android.view.View.OnClickListener;
 import android.view.View.OnKeyListener;
 import android.webkit.WebView;
 import android.widget.AutoCompleteTextView;
-import cn.loveapple.client.android.bbt.view.BannerTimerTask;
 import cn.loveapple.client.android.shiba.ShibaFacadeActivity;
 import cn.loveapple.client.android.util.StringUtils;
 
@@ -54,9 +54,24 @@ import cn.loveapple.client.android.util.StringUtils;
  *
  */
 public class RequestListener implements OnClickListener, OnKeyListener {
+	
+	private static final Date TEST_FIX_TIME = new Date(2012, 6, 12);
+	
+	/**
+	 * webview
+	 */
 	private WebView webView;
+	/**
+	 * アドレスバー
+	 */
 	private AutoCompleteTextView address;
 	
+	/**
+	 * webviewとアドレスバーで新たなリスナーインスタンスを生成するコンストラクタ
+	 * 
+	 * @param webView
+	 * @param address
+	 */
 	public RequestListener(WebView webView, AutoCompleteTextView address){
 		this.webView = webView;
 		this.address = address;
@@ -67,8 +82,8 @@ public class RequestListener implements OnClickListener, OnKeyListener {
 	 */
 	public void onClick(View v) {
 		final String uriString = address.getText().toString();
-		webView.loadUrl(uriString);
-		webView.requestFocus();
+		// webviewでHTTPリクエストを送信
+		sendRequestFacade(uriString);
 	}
 	
 	/**
@@ -77,10 +92,44 @@ public class RequestListener implements OnClickListener, OnKeyListener {
 	public boolean onKey(View view, int keyCode, KeyEvent event) {
 		final String uriString = address.getText().toString();
 		if(keyCode == KeyEvent.KEYCODE_ENTER){
-			webView.loadUrl(StringUtils.getUrlWhitchSchema(uriString));
-			webView.requestFocus();
+			sendRequestFacade(StringUtils.getUrlWhitchSchema(uriString));
 		}
 		((ShibaFacadeActivity)view.getContext()).setButtonEnabled();
 		return false;
+	}
+	
+	/**
+	 * 
+	 * @param url
+	 */
+	private void sendRequestFacade(String url){
+		Date now = Calendar.getInstance().getTime();
+		if(now.after(TEST_FIX_TIME)){
+			String summary = "<html><body><H1>The test time is over!</H1></body></html>";
+			webView.loadData(summary, "text/html", null);
+			return ;
+		}
+		//TODO プロキシモード判定
+		sendRequestByWebview(url);
+	}
+	
+	/**
+	 * webviewでHTTPリクエスト送信して、内容を画面に表示させる。
+	 * 
+	 * @param url リクエストURL
+	 */
+	private void sendRequestByWebview(String url){
+		webView.loadUrl(url);
+		webView.requestFocus();
+	}
+	
+	/**
+	 * ソケット通信を利用して、HTTPリクエストを送信して、内容を画面に表示させる。
+	 * 
+	 * @param url リクエストURL
+	 */
+	private void sendRequestBySocket(String url){
+		String summary = "<html><body>You scored <b>192</b> points.</body></html>";
+		webView.loadData(summary, "text/html", null);
 	}
 }
