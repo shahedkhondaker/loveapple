@@ -152,7 +152,6 @@ public class LoveappleWebViewClient extends WebViewClient {
 	 * プロキシーサーバに経由しなくてもアクセス可能ホスト一覧を設定します。
 	 * @param hostWhiteList プロキシーサーバに経由しなくてもアクセス可能ホスト一覧
 	 */
-	@SuppressWarnings("unchecked")
 	public void setHostWhiteList(String[] hostWhiteList) {
 		this.hostWhiteList = new HashSet<String>();
 		if(ArrayUtils.isEmpty(hostWhiteList)){
@@ -167,7 +166,6 @@ public class LoveappleWebViewClient extends WebViewClient {
 	 * プロキシサーバに経由しなくてもアクセス可能なホスト一覧を設定します。
 	 * @param schemaWhiteList プロキシサーバに経由しなくてもアクセス可能なホスト一覧
 	 */
-	@SuppressWarnings("unchecked")
 	public void setSchemaWhiteList(String[] schemaWhiteList) {
 	    this.schemaWhiteList = new HashSet<String>();
 	    if(ArrayUtils.isEmpty(schemaWhiteList)){
