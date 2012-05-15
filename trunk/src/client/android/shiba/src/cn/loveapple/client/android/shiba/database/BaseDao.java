@@ -1,8 +1,8 @@
 /*
- * $HeadURL: https://loveapple.googlecode.com/svn/trunk/src/client/android/bbt/src/cn/loveapple/client/android/database/BaseDao.java $
- * $Author: hao0323@gmail.com $
- * $Revision: 239 $
- * $Date: 2011-08-13 17:18:21 +0900 (土, 13 8 2011) $
+ * $HeadURL$
+ * $Author$
+ * $Revision$
+ * $Date$
  *
  * ====================================================================
  *
@@ -40,10 +40,10 @@ import cn.loveapple.client.android.LoveappleShibaDatabaseOpenHelper;
 
 /**
  * 
- * @author $Author: hao0323@gmail.com $
- * @version $Revision: 239 $
- * @date $Date: 2011-08-13 17:18:21 +0900 (土, 13 8 2011) $
- * @id $Id: BaseDao.java 239 2011-08-13 08:18:21Z hao0323@gmail.com $
+ * @author $Author$
+ * @version $Revision$
+ * @date $Date$
+ * @id $Id$
  *
  */
 public abstract class BaseDao implements LoveappleDao{
