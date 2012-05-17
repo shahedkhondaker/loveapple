@@ -37,8 +37,8 @@ import android.view.KeyEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.View.OnKeyListener;
-import android.webkit.WebView;
 import android.widget.AutoCompleteTextView;
+import cn.loveapple.client.android.bbt.view.LoveappleWebView;
 import cn.loveapple.client.android.shiba.ShibaFacadeActivity;
 import cn.loveapple.client.android.util.StringUtils;
 
@@ -52,10 +52,10 @@ import cn.loveapple.client.android.util.StringUtils;
  *
  */
 public class RequestListener implements OnClickListener, OnKeyListener {
-	private WebView webView;
+	private LoveappleWebView webView;
 	private AutoCompleteTextView address;
 	
-	public RequestListener(WebView webView, AutoCompleteTextView address){
+	public RequestListener(LoveappleWebView webView, AutoCompleteTextView address){
 		this.webView = webView;
 		this.address = address;
 	}

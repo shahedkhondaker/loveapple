@@ -32,10 +32,10 @@
  */
 package cn.loveapple.client.android.shiba.listener;
 
-import cn.loveapple.client.android.shiba.ShibaFacadeActivity;
 import android.view.View;
 import android.view.View.OnClickListener;
-import android.webkit.WebView;
+import cn.loveapple.client.android.bbt.view.LoveappleWebView;
+import cn.loveapple.client.android.shiba.ShibaFacadeActivity;
 
 /**
  * ブラウザリロードリスナー
@@ -47,9 +47,9 @@ import android.webkit.WebView;
  *
  */
 public class ReloadListener implements OnClickListener {
-	private WebView webView;
+	private LoveappleWebView webView;
 	
-	public ReloadListener(WebView webView){
+	public ReloadListener(LoveappleWebView webView){
 		this.webView = webView;
 	}
 	

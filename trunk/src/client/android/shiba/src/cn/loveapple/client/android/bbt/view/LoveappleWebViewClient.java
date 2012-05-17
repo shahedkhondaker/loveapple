@@ -57,7 +57,6 @@ import cn.loveapple.client.android.util.StringUtils;
  * @id $Id$
  */
 public class LoveappleWebViewClient extends WebViewClient {
-	private static final Date TEST_FIX_TIME = new Date(2011, 6, 12);
 	/**
 	 * 実行されるアクティビティ
 	 */
@@ -85,17 +84,18 @@ public class LoveappleWebViewClient extends WebViewClient {
 	}
 
 	/**
+	 * HTTPプロキシーサーバを利用時に、ロードするURLを設定設定する
 	 * 
-	 * {@inheritDoc}
+	 * @param view
+	 * @param url
+	 * @return
 	 */
-	@Override
-	public void onLoadResource(WebView view, String url){
-		String baseUrl = activity.getProxyUrl();
+	private String setLoadUrl4HttpProxy(String url){
+		// HTTPプロキシーURLを取得
+		String baseUrl = activity.getHttpProxyUrl();
 		
 		if(StringUtils.isEmpty(baseUrl) || isWhiteSchema(url) || isWhiteHost(url)){
-			super.onLoadResource(view, url);
-			Log.d(LOG_TAG, "Access URL:" + url);
-			return ;
+			return url;
 		}
 		if(!url.startsWith(baseUrl)){
 			StringBuilder sb = new StringBuilder(url.length() + baseUrl.length());
@@ -113,6 +113,16 @@ public class LoveappleWebViewClient extends WebViewClient {
 			}
 			url = sb.toString();
 		}
+		
+		return url;
+	}
+	/**
+	 * 
+	 * {@inheritDoc}
+	 */
+	@Override
+	public void onLoadResource(WebView view, String url){
+		url = setLoadUrl4HttpProxy(url);
 		super.onLoadResource(view, url);
 		Log.d(LOG_TAG, "Access URL:" + url);
 	}
@@ -201,48 +211,8 @@ public class LoveappleWebViewClient extends WebViewClient {
 	@Override
 	public boolean shouldOverrideUrlLoading (WebView view, String url){
 		Log.d(LOG_TAG, "loading url:" + url);
-		Date now = new Date();
-		if(now.after(TEST_FIX_TIME)){
-			String summary = "<html><body><H1>The test time is over!</H1></body></html>";
-			view.loadData(summary, "text/html", null);
-			return true;
-		}
 		return super.shouldOverrideUrlLoading(view, url);
 	}
 	
 
-	/**
-	 * 
-	 * @param url
-	 */
-	private void sendRequestFacade(WebView view, String url){
-		Date now = Calendar.getInstance().getTime();
-		if(now.before(TEST_FIX_TIME)){
-			String summary = "<html><body><H1>The test time is over!</H1></body></html>";
-			view.loadData(summary, "text/html", null);
-			return ;
-		}
-		//TODO プロキシモード判定
-		sendRequestByWebview(view, url);
-	}
-	
-	/**
-	 * webviewでHTTPリクエスト送信して、内容を画面に表示させる。
-	 * 
-	 * @param url リクエストURL
-	 */
-	private void sendRequestByWebview(WebView view, String url){
-		view.loadUrl(url);
-		view.requestFocus();
-	}
-	
-	/**
-	 * ソケット通信を利用して、HTTPリクエストを送信して、内容を画面に表示させる。
-	 * 
-	 * @param url リクエストURL
-	 */
-	private void sendRequestBySocket(WebView view, String url){
-		String summary = "<html><body>You scored <b>192</b> points.</body></html>";
-		view.loadData(summary, "text/html", null);
-	}
 }
