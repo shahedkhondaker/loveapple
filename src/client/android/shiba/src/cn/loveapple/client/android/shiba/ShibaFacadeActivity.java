@@ -4,7 +4,9 @@ import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.Timer;
 
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View.OnKeyListener;
@@ -14,7 +16,9 @@ import android.webkit.WebView;
 import android.widget.AutoCompleteTextView;
 import android.widget.FrameLayout;
 import android.widget.ImageButton;
+import cn.loveapple.client.android.LoveappleHelper;
 import cn.loveapple.client.android.bbt.view.BannerTimerTask;
+import cn.loveapple.client.android.bbt.view.LoveappleWebView;
 import cn.loveapple.client.android.bbt.view.LoveappleWebViewClient;
 import cn.loveapple.client.android.shiba.database.CacheDao;
 import cn.loveapple.client.android.shiba.database.impl.CacheDaoImpl;
@@ -42,9 +46,14 @@ public class ShibaFacadeActivity extends BaseActivity {
 	private Timer bannerTimer;
 	
 	/**
-	 * WEBビュー
+	 * {@linkplain WebView}のラッパークラス
 	 */
-	private WebView webView;
+	private LoveappleWebView webView;
+	
+
+	// TODO
+	public static String DEFAULT_PROXY_HOST = "127.0.0.1";
+	public static int DEFAULT_PROXY_PORT = -1;
 
 	public static final int VIEW_URL_LIMIT = 100;
 
@@ -60,6 +69,14 @@ public class ShibaFacadeActivity extends BaseActivity {
 		//Timmer
 		bannerTimer = new Timer();
 		bannerTimer.schedule(new BannerTimerTask(this), 10000, 10000);
+		
+
+		// TODO - properly handle initial Intents
+		SharedPreferences prefs = PreferenceManager
+				.getDefaultSharedPreferences(this);
+		
+		//LoveappleHelper.setProxy(this, prefs.getString("pref_proxy_host", DEFAULT_PROXY_HOST),Integer.parseInt(prefs.getString("pref_proxy_port", DEFAULT_PROXY_PORT)));
+		LoveappleHelper.setProxy(this, DEFAULT_PROXY_HOST, DEFAULT_PROXY_PORT);
 	}
 
 	/**
@@ -68,7 +85,7 @@ public class ShibaFacadeActivity extends BaseActivity {
 	@Override
 	protected void initView() {
 
-		webView = (WebView) findViewById(R.id.web);
+		webView = (LoveappleWebView) findViewById(R.id.web);
 
 		// アドレスバーを初期化
 		AutoCompleteTextView address = (AutoCompleteTextView) findViewById(R.id.address);
@@ -176,10 +193,11 @@ public class ShibaFacadeActivity extends BaseActivity {
 	}
 	
 	/**
-	 * プロキシーを取得
+	 * HTTPプロキシーを取得
+	 * 
 	 * @return
 	 */
-	public String getProxyUrl(){
+	public String getHttpProxyUrl(){
 		return ShibaSetting.getProxyServerHost(this);
 	}
 	

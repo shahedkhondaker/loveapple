@@ -55,7 +55,7 @@ public class ShibaSetting extends PreferenceActivity {
 
 	public static String getProxyServerHost(Context context){
 		return PreferenceManager.getDefaultSharedPreferences(context).getString(
-				"proxy_server",
-				context.getResources().getStringArray(R.array.proxy_server_adds)[0]);
+				"http_proxy_server",
+				context.getResources().getStringArray(R.array.http_proxy_server_adds)[0]);
 	}
 }
