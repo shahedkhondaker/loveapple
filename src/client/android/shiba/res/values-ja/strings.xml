@@ -4,8 +4,10 @@
 	<string name="choose_address">アドレスを選択</string>
 	<string name="request">リクエスト</string>
 	<string name="proxy_server">プロキシサーバ</string>
+	<string name="http_proxy_server">HTTPプロキシサーバ</string>
 	<string name="choose_proxy_server">プロキシサーバを選択</string>
 	<string name="default_proxy_server">デフォルトプロキシサーバ</string>
 	<string name="not_use_proxy">プロキシサーバを使いません</string>
+	<string name="not_use_http_proxy">HTTPプロキシサーバを使いません</string>
 	<string name="setting">設定</string>
 </resources>

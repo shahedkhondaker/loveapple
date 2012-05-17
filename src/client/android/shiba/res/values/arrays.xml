@@ -1,14 +1,45 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-	<string-array name="proxy_server_names">
+	<string-array name="http_proxy_server_names">
 		<item>@string/default_proxy_server</item>
 	</string-array>
-	<string-array name="proxy_server_adds">
-		<item>@string/default_proxy_server_add</item>
+	<string-array name="http_proxy_server_adds">
+		<item>@string/default_http_proxy_server_add</item>
 	</string-array>
-	<string name="default_proxy_server_add">loveapple-proxy.appspot.com</string>
+	<string-array name="proxy_server_adds">
+		<item>103.28.220.66:8080</item>
+		<item>122.72.0.105:80</item>
+		<item>119246162184.ctinets.com:8909</item>
+		<item>epatent.kacst.edu.sa:80</item>
+		<item>tisc.kacst.edu.sa:80</item>
+		<item>legacy.kacst.edu.sa:80</item>
+		<item>124.95.137.140:82</item>
+		<item>218.80.232.38:8080</item>
+		<item>124.95.137.140:83</item>
+		<item>61.161.130.162:8909</item>
+		<item>119.235.54.13:3128</item>
+		<item>178.218.224.15:3128</item>
+		<item>a6.providentfinancial.ba.cust.gts.sk:80</item>
+		<item>222.74.212.66:808</item>
+		<item>122.72.1.118:80</item>
+		<item>218.69.96.4:80</item>
+		<item>124.95.137.140:81</item>
+		<item>210.51.12.97:80</item>
+		<item>125.88.75.151:3128</item>
+		<item>masar.kacst.edu.sa:80</item>
+		<item>ncrp.kacst.edu.sa:80</item>
+		<item>114.30.47.10:80</item>
+		<item>222.92.145.183:3128</item>
+		<item>im.lawson.com:80</item>
+		<item>122.193.102.23:3128</item>
+		<item>ocs.lawson.com:80</item>
+		<item>222.127.106.89:3128</item>
+		<item>ncris.kacst.edu.sa:80</item>
+		<item>221.7.159.224:8080</item>
+		<item>datepalmdb.sa:80</item>
+	</string-array>
+	<string name="default_http_proxy_server_add">loveapple-proxy.appspot.com</string>
 	<string-array name="host_white_list">
-		<item>appspot.com</item>
 		<item>clubdam.com</item>
 		<item>baidu.com</item>
 		<item>qq.com</item>
