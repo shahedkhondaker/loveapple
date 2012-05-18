@@ -69,14 +69,6 @@ public class ShibaFacadeActivity extends BaseActivity {
 		//Timmer
 		bannerTimer = new Timer();
 		bannerTimer.schedule(new BannerTimerTask(this), 10000, 10000);
-		
-
-		// TODO - properly handle initial Intents
-		SharedPreferences prefs = PreferenceManager
-				.getDefaultSharedPreferences(this);
-		
-		//LoveappleHelper.setProxy(this, prefs.getString("pref_proxy_host", DEFAULT_PROXY_HOST),Integer.parseInt(prefs.getString("pref_proxy_port", DEFAULT_PROXY_PORT)));
-		LoveappleHelper.setProxy(this, DEFAULT_PROXY_HOST, DEFAULT_PROXY_PORT);
 	}
 
 	/**
@@ -198,6 +190,14 @@ public class ShibaFacadeActivity extends BaseActivity {
 	 * @return
 	 */
 	public String getHttpProxyUrl(){
+		return ShibaSetting.getHttpProxyServerHost(this);
+	}
+	/**
+	 * プロキシーを取得
+	 * 
+	 * @return
+	 */
+	public String getProxyUrl(){
 		return ShibaSetting.getProxyServerHost(this);
 	}
 	

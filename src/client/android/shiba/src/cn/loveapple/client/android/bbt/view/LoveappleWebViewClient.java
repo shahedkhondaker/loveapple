@@ -32,7 +32,11 @@
  */
 package cn.loveapple.client.android.bbt.view;
 
-import static cn.loveapple.client.android.Constant.*;
+import static cn.loveapple.client.android.Constant.LOG_TAG;
+import static cn.loveapple.client.android.Constant.SCHEMA_HTTPS_STR;
+import static cn.loveapple.client.android.Constant.SCHEMA_HTTP_STR;
+import static org.apache.commons.lang.StringUtils.isNotEmpty;
+import static org.apache.commons.lang.StringUtils.isNumeric;
 
 import java.util.Calendar;
 import java.util.Date;
@@ -40,11 +44,13 @@ import java.util.HashSet;
 import java.util.Set;
 
 import org.apache.commons.lang.ArrayUtils;
+import org.apache.commons.lang.builder.ToStringBuilder;
 
 import android.graphics.Bitmap;
 import android.util.Log;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
+import cn.loveapple.client.android.LoveappleHelper;
 import cn.loveapple.client.android.shiba.ShibaFacadeActivity;
 import cn.loveapple.client.android.util.StringUtils;
 
@@ -57,6 +63,7 @@ import cn.loveapple.client.android.util.StringUtils;
  * @id $Id$
  */
 public class LoveappleWebViewClient extends WebViewClient {
+	//private static final Date TEST_FIX_TIME = new Date(2012, 5, 12);
 	/**
 	 * 実行されるアクティビティ
 	 */
@@ -90,9 +97,20 @@ public class LoveappleWebViewClient extends WebViewClient {
 	 * @param url
 	 * @return
 	 */
-	private String setLoadUrl4HttpProxy(String url){
+	private String setLoadUrl4Proxy(String url){
+		// プロキシーの設定を行う
+		String proxyUrl = activity.getProxyUrl();
+		if(isNotEmpty(proxyUrl)){
+			String[] urlStr = proxyUrl.split(":", 2);
+			Log.d(LOG_TAG, "Proxy Host: " + ToStringBuilder.reflectionToString(urlStr));
+			if(isNumeric(urlStr[1])){
+				LoveappleHelper.setProxy(activity, urlStr[0], Integer.parseInt(urlStr[1]));
+			}
+		}
+		
 		// HTTPプロキシーURLを取得
 		String baseUrl = activity.getHttpProxyUrl();
+		
 		
 		if(StringUtils.isEmpty(baseUrl) || isWhiteSchema(url) || isWhiteHost(url)){
 			return url;
@@ -122,7 +140,14 @@ public class LoveappleWebViewClient extends WebViewClient {
 	 */
 	@Override
 	public void onLoadResource(WebView view, String url){
-		url = setLoadUrl4HttpProxy(url);
+		/*Date now = Calendar.getInstance().getTime();
+		if(now.after(TEST_FIX_TIME)){
+			Log.d(LOG_TAG, "test time is over." + TEST_FIX_TIME);
+			String summary = "<html><body><H1>The test time is over!</H1></body></html>";
+			view.loadData(summary, "text/html", null);
+			return ;
+		}*/
+		url = setLoadUrl4Proxy(url);
 		super.onLoadResource(view, url);
 		Log.d(LOG_TAG, "Access URL:" + url);
 	}

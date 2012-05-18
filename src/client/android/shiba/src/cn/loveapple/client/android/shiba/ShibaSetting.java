@@ -53,9 +53,26 @@ public class ShibaSetting extends PreferenceActivity {
 		addPreferencesFromResource(R.xml.shiba_setting);
 	}
 
-	public static String getProxyServerHost(Context context){
+	public static boolean ableHttpProxy(Context context){
+		return PreferenceManager.getDefaultSharedPreferences(context).getBoolean("able_http_proxy", false);
+	}
+	public static boolean ableProxy(Context context){
+		return PreferenceManager.getDefaultSharedPreferences(context).getBoolean("able_proxy", false);
+	}
+	public static String getHttpProxyServerHost(Context context){
+		if(!ableHttpProxy(context)){
+			return null;
+		}
 		return PreferenceManager.getDefaultSharedPreferences(context).getString(
 				"http_proxy_server",
 				context.getResources().getStringArray(R.array.http_proxy_server_adds)[0]);
+	}
+	public static String getProxyServerHost(Context context){
+		if(!ableProxy(context)){
+			return null;
+		}
+		return PreferenceManager.getDefaultSharedPreferences(context).getString(
+				"proxy_server",
+				context.getResources().getStringArray(R.array.proxy_server_adds)[0]);
 	}
 }

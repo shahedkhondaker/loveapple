@@ -97,4 +97,11 @@ public class StringUtils extends org.apache.commons.lang.StringUtils {
 		}
 		return host.substring(0, endPoint);
 	}
+	
+	public static String[] explodeHostAndPort(String url){
+		if(isEmpty(url)){
+			return null;
+		}
+		return url.split(":", 2);
+	}
 }
