@@ -87,7 +87,7 @@ public class LoveappleHelper {
 		if(StringUtils.isEmpty(host) || port < 0){
 			return ;
 		}
-		setSystemProperties(host, port);
+		//setSystemProperties(host, port);
 		setWebkitProxy(ctx, host, port);
 	}
 

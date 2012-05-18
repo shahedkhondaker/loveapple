@@ -7,7 +7,7 @@
 	<string name="http_proxy_server">HTTP代理服务器</string>
 	<string name="choose_proxy_server">选择代理服务器</string>
 	<string name="default_proxy_server">默认服务器</string>
-	<string name="not_use_proxy">不使用代理服务器</string>
-	<string name="not_use_http_proxy">不使用HTTP代理服务器</string>
+	<string name="able_proxy">使用代理服务器</string>
+	<string name="able_http_proxy">使用HTTP代理服务器</string>
 	<string name="setting">设定</string>
 </resources>

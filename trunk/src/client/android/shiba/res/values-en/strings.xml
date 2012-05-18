@@ -7,7 +7,7 @@
 	<string name="http_proxy_server">HTTP Proxy Serve</string>
 	<string name="choose_proxy_server">Choose the proxy server</string>
 	<string name="default_proxy_server">Default proxy server</string>
-	<string name="not_use_proxy">No use proxy server</string>
-	<string name="not_use_http_proxy">No use http proxy server</string>
+	<string name="able_proxy">able proxy server</string>
+	<string name="able_http_proxy">able http proxy server</string>
 	<string name="setting">Setting</string>
 </resources>

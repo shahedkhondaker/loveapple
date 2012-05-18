@@ -7,7 +7,18 @@
 		<item>@string/default_http_proxy_server_add</item>
 	</string-array>
 	<string-array name="proxy_server_adds">
-		<item>103.28.220.66:8080</item>
+	    <!-- TODO プロキシサーバ未定 -->
+	    <item >172.30.6.125:8080</item>
+		<!-- http://www.cybersyndrome.net/plr5.html -->
+		<!-- 赤色 -->
+		<item>124.95.137.140:443</item>
+		<!-- 青 -->
+		<item>218.69.96.4:80</item>
+		<!-- 緑 -->
+		<item>122.72.0.105:80</item>
+		<!-- 灰色 -->
+		<item>59.37.163.156:3128</item>
+		<!-- 
 		<item>122.72.0.105:80</item>
 		<item>119246162184.ctinets.com:8909</item>
 		<item>epatent.kacst.edu.sa:80</item>
@@ -37,6 +48,7 @@
 		<item>ncris.kacst.edu.sa:80</item>
 		<item>221.7.159.224:8080</item>
 		<item>datepalmdb.sa:80</item>
+		 -->
 	</string-array>
 	<string name="default_http_proxy_server_add">loveapple-proxy.appspot.com</string>
 	<string-array name="host_white_list">
