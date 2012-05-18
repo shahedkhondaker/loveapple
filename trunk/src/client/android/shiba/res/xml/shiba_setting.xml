@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
 	<CheckBoxPreference android:title="@string/able_http_proxy" android:key="able_http_proxy" android:defaultValue="false" />
-	<ListPreference android:key="http_proxy_server"
+	<ListPreference android:key="@string/choose_proxy_server"
 					android:title="@string/http_proxy_server"
 					android:dialogTitle="@string/choose_proxy_server"
 					android:entries="@array/http_proxy_server_names"
@@ -9,7 +9,7 @@
 					android:defaultValue="@string/default_http_proxy_server_add"
 					android:dependency="able_http_proxy"></ListPreference>
 	<CheckBoxPreference android:title="@string/able_proxy" android:key="able_proxy" android:defaultValue="true" />
-	<ListPreference android:key="proxy_server"
+	<ListPreference android:key="@string/choose_proxy_server"
 					android:title="@string/proxy_server"
 					android:dialogTitle="@string/choose_proxy_server"
 					android:entries="@array/proxy_server_adds"
