@@ -10,4 +10,5 @@
 	<string name="able_proxy">able proxy server</string>
 	<string name="able_http_proxy">able http proxy server</string>
 	<string name="setting">Setting</string>
+	<string name="timeOver4Test">Test time is over. Update the last version.</string>
 </resources>
