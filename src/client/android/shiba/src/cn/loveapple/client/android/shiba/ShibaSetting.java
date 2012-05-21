@@ -34,6 +34,7 @@ package cn.loveapple.client.android.shiba;
 
 import static cn.loveapple.client.android.Constant.LOG_TAG;
 
+import java.util.Calendar;
 import java.util.Date;
 
 import android.content.Context;
@@ -60,9 +61,35 @@ public class ShibaSetting extends PreferenceActivity {
 
 	public static boolean isTestTimeOver(){
 		boolean istTestVersion = true;
-		final Date TEST_FIX_TIME = new Date(2012, 6, 20);
-
-		return istTestVersion && new Date().before(TEST_FIX_TIME);
+		
+		if(!istTestVersion){
+			return false;
+		}
+		Calendar now = Calendar.getInstance();
+		
+		final int TEST_FIX_YEAR = 2012;
+		final int TEST_FIX_MONTH = 6;
+		final int TEST_FIX_DATE = 20;
+		
+		int year = now.get(Calendar.YEAR);
+		int month = now.get(Calendar.MONTH);
+		int date = now.get(Calendar.DAY_OF_MONTH);
+		
+		Log.d(LOG_TAG, TEST_FIX_YEAR+"/" +TEST_FIX_MONTH+"/" + TEST_FIX_DATE + " --> " + year+"/"+month+"/"+date);
+		
+		if(TEST_FIX_YEAR < year){
+			return true;
+		} else if(TEST_FIX_YEAR == year){
+			if(TEST_FIX_MONTH < month){
+				return true;
+			}else if(TEST_FIX_MONTH == month){
+				return TEST_FIX_DATE < date;
+			}else{
+				return false;
+			}
+		}else{
+			return false;
+		}
 	}
 	
 	public static boolean ableHttpProxy(Context context){
