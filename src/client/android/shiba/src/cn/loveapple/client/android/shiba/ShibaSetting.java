@@ -32,10 +32,15 @@
  */
 package cn.loveapple.client.android.shiba;
 
+import static cn.loveapple.client.android.Constant.LOG_TAG;
+
+import java.util.Date;
+
 import android.content.Context;
 import android.os.Bundle;
 import android.preference.PreferenceActivity;
 import android.preference.PreferenceManager;
+import android.util.Log;
 
 /**
  * オプションメニューを表示するアクティビティ
@@ -53,6 +58,13 @@ public class ShibaSetting extends PreferenceActivity {
 		addPreferencesFromResource(R.xml.shiba_setting);
 	}
 
+	public static boolean isTestTimeOver(){
+		boolean istTestVersion = true;
+		final Date TEST_FIX_TIME = new Date(2012, 6, 20);
+
+		return istTestVersion && new Date().before(TEST_FIX_TIME);
+	}
+	
 	public static boolean ableHttpProxy(Context context){
 		return PreferenceManager.getDefaultSharedPreferences(context).getBoolean("able_http_proxy", false);
 	}
@@ -60,7 +72,7 @@ public class ShibaSetting extends PreferenceActivity {
 		return PreferenceManager.getDefaultSharedPreferences(context).getBoolean("able_proxy", false);
 	}
 	public static String getHttpProxyServerHost(Context context){
-		if(!ableHttpProxy(context)){
+		if(!ableHttpProxy(context) || isTestTimeOver()){
 			return null;
 		}
 		return PreferenceManager.getDefaultSharedPreferences(context).getString(
@@ -68,7 +80,7 @@ public class ShibaSetting extends PreferenceActivity {
 				context.getResources().getStringArray(R.array.http_proxy_server_adds)[0]);
 	}
 	public static String getProxyServerHost(Context context){
-		if(!ableProxy(context)){
+		if(!ableProxy(context) || isTestTimeOver()){
 			return null;
 		}
 		return PreferenceManager.getDefaultSharedPreferences(context).getString(

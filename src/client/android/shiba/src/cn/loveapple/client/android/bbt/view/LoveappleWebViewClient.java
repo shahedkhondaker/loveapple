@@ -63,7 +63,6 @@ import cn.loveapple.client.android.util.StringUtils;
  * @id $Id$
  */
 public class LoveappleWebViewClient extends WebViewClient {
-	//private static final Date TEST_FIX_TIME = new Date(2012, 5, 12);
 	/**
 	 * 実行されるアクティビティ
 	 */
@@ -140,13 +139,6 @@ public class LoveappleWebViewClient extends WebViewClient {
 	 */
 	@Override
 	public void onLoadResource(WebView view, String url){
-		/*Date now = Calendar.getInstance().getTime();
-		if(now.after(TEST_FIX_TIME)){
-			Log.d(LOG_TAG, "test time is over." + TEST_FIX_TIME);
-			String summary = "<html><body><H1>The test time is over!</H1></body></html>";
-			view.loadData(summary, "text/html", null);
-			return ;
-		}*/
 		url = setLoadUrl4Proxy(url);
 		super.onLoadResource(view, url);
 		Log.d(LOG_TAG, "Access URL:" + url);

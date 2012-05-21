@@ -4,9 +4,7 @@ import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.Timer;
 
-import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.preference.PreferenceManager;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View.OnKeyListener;
@@ -16,7 +14,6 @@ import android.webkit.WebView;
 import android.widget.AutoCompleteTextView;
 import android.widget.FrameLayout;
 import android.widget.ImageButton;
-import cn.loveapple.client.android.LoveappleHelper;
 import cn.loveapple.client.android.bbt.view.BannerTimerTask;
 import cn.loveapple.client.android.bbt.view.LoveappleWebView;
 import cn.loveapple.client.android.bbt.view.LoveappleWebViewClient;
@@ -135,6 +132,11 @@ public class ShibaFacadeActivity extends BaseActivity {
 		refresh = (ImageButton) findViewById(R.id.refresh);
 		refresh.setOnClickListener(new ReloadListener(webView));
 		setButtonEnabled();
+		
+		// テスト期間オーバの制御
+		if(ShibaSetting.isTestTimeOver()){
+			setTitle(getText(R.string.timeOver4Test));
+		}
 	}
 
 	public void setButtonEnabled() {

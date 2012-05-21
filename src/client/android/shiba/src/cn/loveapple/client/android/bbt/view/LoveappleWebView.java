@@ -32,6 +32,8 @@
  */
 package cn.loveapple.client.android.bbt.view;
 
+import java.util.Map;
+
 import android.content.Context;
 import android.util.AttributeSet;
 import android.webkit.WebView;
@@ -59,4 +61,18 @@ public class LoveappleWebView extends WebView {
 		super(context, attrs, defStyle);
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
+	public void loadUrl(String url){
+		super.loadUrl(url);
+	}
+	
+	/**
+	 * {@inheritDoc}
+	 */
+	public void loadUrl(String url, Map<String, String> extraHeaders){
+		super.loadUrl(url, extraHeaders);
+	}
+	
 }
