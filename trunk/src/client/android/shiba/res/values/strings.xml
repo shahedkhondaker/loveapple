@@ -10,4 +10,5 @@
 	<string name="able_proxy">使用代理服务器</string>
 	<string name="able_http_proxy">使用HTTP代理服务器</string>
 	<string name="setting">设定</string>
+	<string name="timeOver4Test">测试版本无效。请升级正式版本。</string>
 </resources>

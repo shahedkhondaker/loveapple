@@ -10,4 +10,5 @@
 	<string name="able_proxy">プロキシサーバ有効</string>
 	<string name="able_http_proxy">HTTPプロキシサーバ有効</string>
 	<string name="setting">設定</string>
+	<string name="timeOver4Test">試験期間オーバー。正式版にアップデータして下さい。</string>
 </resources>

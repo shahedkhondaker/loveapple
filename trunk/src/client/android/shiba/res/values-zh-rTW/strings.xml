@@ -10,4 +10,5 @@
 	<string name="able_proxy">使用代理服務器</string>
 	<string name="able_http_proxy">使用HTTP代理服務器</string>
 	<string name="setting">設定</string>
+	<string name="timeOver4Test">Test time is over. Update the last version.</string>
 </resources>
