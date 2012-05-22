@@ -14,15 +14,15 @@ import android.webkit.WebView;
 import android.widget.AutoCompleteTextView;
 import android.widget.FrameLayout;
 import android.widget.ImageButton;
-import cn.loveapple.client.android.bbt.view.BannerTimerTask;
-import cn.loveapple.client.android.bbt.view.LoveappleWebView;
-import cn.loveapple.client.android.bbt.view.LoveappleWebViewClient;
 import cn.loveapple.client.android.shiba.database.CacheDao;
 import cn.loveapple.client.android.shiba.database.impl.CacheDaoImpl;
 import cn.loveapple.client.android.shiba.listener.BackListener;
 import cn.loveapple.client.android.shiba.listener.ForwardListener;
 import cn.loveapple.client.android.shiba.listener.ReloadListener;
 import cn.loveapple.client.android.shiba.listener.RequestListener;
+import cn.loveapple.client.android.shiba.view.BannerTimerTask;
+import cn.loveapple.client.android.shiba.view.LoveappleWebView;
+import cn.loveapple.client.android.shiba.view.LoveappleWebViewClient;
 import cn.loveapple.client.android.util.StringUtils;
 
 /**
