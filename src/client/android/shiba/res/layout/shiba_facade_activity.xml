@@ -30,7 +30,7 @@
         	android:src="@drawable/ic_menu_refresh"
         	/> 
 	</LinearLayout>
-	<cn.loveapple.client.android.bbt.view.LoveappleWebView android:id="@+id/web" android:layout_width="fill_parent" android:layout_height="fill_parent"/>
+	<cn.loveapple.client.android.shiba.view.LoveappleWebView android:id="@+id/web" android:layout_width="fill_parent" android:layout_height="fill_parent"/>
 </LinearLayout>
 
  
