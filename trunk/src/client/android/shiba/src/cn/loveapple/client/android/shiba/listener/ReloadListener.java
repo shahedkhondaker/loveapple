@@ -34,8 +34,8 @@ package cn.loveapple.client.android.shiba.listener;
 
 import android.view.View;
 import android.view.View.OnClickListener;
-import cn.loveapple.client.android.bbt.view.LoveappleWebView;
 import cn.loveapple.client.android.shiba.ShibaFacadeActivity;
+import cn.loveapple.client.android.shiba.view.LoveappleWebView;
 
 /**
  * ブラウザリロードリスナー
