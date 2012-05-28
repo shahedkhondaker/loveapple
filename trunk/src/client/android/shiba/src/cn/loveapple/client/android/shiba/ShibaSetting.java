@@ -35,7 +35,6 @@ package cn.loveapple.client.android.shiba;
 import static cn.loveapple.client.android.Constant.LOG_TAG;
 
 import java.util.Calendar;
-import java.util.Date;
 
 import android.content.Context;
 import android.os.Bundle;
