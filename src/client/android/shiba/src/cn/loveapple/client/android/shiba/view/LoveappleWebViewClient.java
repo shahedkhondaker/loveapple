@@ -38,8 +38,6 @@ import static cn.loveapple.client.android.Constant.SCHEMA_HTTP_STR;
 import static org.apache.commons.lang.StringUtils.isNotEmpty;
 import static org.apache.commons.lang.StringUtils.isNumeric;
 
-import java.util.Calendar;
-import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
 
