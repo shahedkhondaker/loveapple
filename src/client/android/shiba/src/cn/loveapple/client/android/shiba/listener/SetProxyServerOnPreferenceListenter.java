@@ -30,34 +30,38 @@
  *
  * @author: loveapple
  */
-package cn.loveapple.client.android.shiba.service;
+package cn.loveapple.client.android.shiba.listener;
 
-import android.app.Service;
-import android.content.Intent;
-import android.content.pm.PackageManager;
-import android.os.IBinder;
+import cn.loveapple.client.android.shiba.R;
+import android.app.Activity;
+import android.preference.Preference;
+import android.preference.Preference.OnPreferenceChangeListener;
 
 /**
- * プロキシサーバアドレスデータ同期のサービス
+ * プロキシサーバを設定した際に実行するリスナー
  * 
  * @author $Author$
  * @version $Revision$
  * @date $Date$
  * @id $Id$
  */
-public class RsyncProxyServerList extends Service {
+public class SetProxyServerOnPreferenceListenter implements
+		OnPreferenceChangeListener {
+	private Activity active;
 	
-	
+	public SetProxyServerOnPreferenceListenter(Activity active){
+		this.active = active;
+	}
 
-	/**
-	 * {@inheritDoc}
-	 */
-	@Override
-	public IBinder onBind(Intent intent) {
-		PackageManager packageManager = getPackageManager();
+	public boolean onPreferenceChange(Preference preference, Object newValue) {
+		if(newValue != null){
+			preference.setSummary(
+					active.getResources().getString(R.string.proxy_server) 
+					+ " : " + newValue.toString());
+			return true;
+		}
 		
-		// TODO Auto-generated method stub
-		return null;
+		return false;
 	}
 
 }

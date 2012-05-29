@@ -1,5 +1,7 @@
 package cn.loveapple.client.android.shiba;
 
+import static cn.loveapple.client.android.util.DateUtil.*;
+
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.Timer;
@@ -134,7 +136,7 @@ public class ShibaFacadeActivity extends BaseActivity {
 		setButtonEnabled();
 		
 		// テスト期間オーバの制御
-		if(ShibaSetting.isTestTimeOver()){
+		if(isTestTimeOver()){
 			setTitle(getText(R.string.timeOver4Test));
 		}
 	}
