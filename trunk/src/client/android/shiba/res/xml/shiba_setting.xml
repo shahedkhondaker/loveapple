@@ -17,11 +17,11 @@
 					android:entryValues="@array/proxy_server_adds"
 					android:dependency="able_proxy"></ListPreference> -->
 	<EditTextPreference android:key="proxy_server"
-	    			android:title="@string/choose_proxy_server"
-	    			android:summary="@string/proxySummary"
-	    			android:dependency="able_proxy" />
+		android:title="@string/choose_proxy_server"
+		android:summary="@string/proxySummary"
+		android:dependency="able_proxy" />
 	<EditTextPreference android:key="http_proxy_server"
-	    			android:title="@string/choose_http_proxy_server"
-	    			android:summary="@string/httpProxySummary"
-	    			android:dependency="able_http_proxy" />
+		android:title="@string/choose_http_proxy_server"
+		android:summary="@string/httpProxySummary"
+		android:dependency="able_http_proxy" />
 </PreferenceScreen>

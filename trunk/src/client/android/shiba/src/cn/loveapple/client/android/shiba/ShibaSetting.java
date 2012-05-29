@@ -33,11 +33,16 @@
 package cn.loveapple.client.android.shiba;
 
 import static cn.loveapple.client.android.Constant.LOG_TAG;
+import static cn.loveapple.client.android.util.DateUtil.*;
 
 import java.util.Calendar;
 
+import cn.loveapple.client.android.shiba.listener.SetProxyServerOnPreferenceListenter;
+import cn.loveapple.client.android.shiba.service.RsyncProxyServerListService;
+
 import android.content.Context;
 import android.os.Bundle;
+import android.preference.EditTextPreference;
 import android.preference.PreferenceActivity;
 import android.preference.PreferenceManager;
 import android.util.Log;
@@ -56,39 +61,13 @@ public class ShibaSetting extends PreferenceActivity {
 		super.onCreate(savedInstanceState);
 		//xmlで定義した設定用の内容を読み込み
 		addPreferencesFromResource(R.xml.shiba_setting);
-	}
-
-	public static boolean isTestTimeOver(){
-		boolean istTestVersion = true;
 		
-		if(!istTestVersion){
-			return false;
-		}
-		Calendar now = Calendar.getInstance();
+		// プロキシサーバテキストボックスのリスナーを設定
+		EditTextPreference proxy_server = (EditTextPreference) findPreference("proxy_server");
+		proxy_server.setOnPreferenceChangeListener(new SetProxyServerOnPreferenceListenter(this));
+		EditTextPreference http_proxy_server = (EditTextPreference) findPreference("http_proxy_server");
+		http_proxy_server.setOnPreferenceChangeListener(new SetProxyServerOnPreferenceListenter(this));
 		
-		final int TEST_FIX_YEAR = 2012;
-		final int TEST_FIX_MONTH = 6;
-		final int TEST_FIX_DATE = 20;
-		
-		int year = now.get(Calendar.YEAR);
-		int month = now.get(Calendar.MONTH);
-		int date = now.get(Calendar.DAY_OF_MONTH);
-		
-		Log.d(LOG_TAG, TEST_FIX_YEAR+"/" +TEST_FIX_MONTH+"/" + TEST_FIX_DATE + " --> " + year+"/"+month+"/"+date);
-		
-		if(TEST_FIX_YEAR < year){
-			return true;
-		} else if(TEST_FIX_YEAR == year){
-			if(TEST_FIX_MONTH < month){
-				return true;
-			}else if(TEST_FIX_MONTH == month){
-				return TEST_FIX_DATE < date;
-			}else{
-				return false;
-			}
-		}else{
-			return false;
-		}
 	}
 	
 	public static boolean ableHttpProxy(Context context){
