@@ -32,6 +32,8 @@
  */
 package cn.loveapple.client.android.shiba.database.entity;
 
+import org.apache.commons.lang.builder.ToStringBuilder;
+
 /**
  * プロキシサーバ
  * 
@@ -41,29 +43,20 @@ package cn.loveapple.client.android.shiba.database.entity;
  * @id $Id$
  */
 public class ProxyServer {
+	private String host;
+	private String type;
+	private String local;
 	/**
-	 * @return the url
+	 * @return the host
 	 */
-	public String getUrl() {
-		return url;
+	public String getHost() {
+		return host;
 	}
 	/**
-	 * @param url the url to set
+	 * @param host the host to set
 	 */
-	public void setUrl(String url) {
-		this.url = url;
-	}
-	/**
-	 * @return the port
-	 */
-	public Integer getPort() {
-		return port;
-	}
-	/**
-	 * @param port the port to set
-	 */
-	public void setPort(Integer port) {
-		this.port = port;
+	public void setHost(String host) {
+		this.host = host;
 	}
 	/**
 	 * @return the type
@@ -89,8 +82,12 @@ public class ProxyServer {
 	public void setLocal(String local) {
 		this.local = local;
 	}
-	private String url;
-	private Integer port;
-	private String type;
-	private String local;
+	
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public String toString(){
+		return ToStringBuilder.reflectionToString(this);
+	}
 }

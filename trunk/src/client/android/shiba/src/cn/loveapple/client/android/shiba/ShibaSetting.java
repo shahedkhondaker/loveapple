@@ -65,6 +65,7 @@ public class ShibaSetting extends PreferenceActivity {
 		// プロキシサーバテキストボックスのリスナーを設定
 		EditTextPreference proxy_server = (EditTextPreference) findPreference("proxy_server");
 		proxy_server.setOnPreferenceChangeListener(new SetProxyServerOnPreferenceListenter(this));
+		//proxy_server.setOnPreferenceClickListener(onPreferenceClickListener)
 		EditTextPreference http_proxy_server = (EditTextPreference) findPreference("http_proxy_server");
 		http_proxy_server.setOnPreferenceChangeListener(new SetProxyServerOnPreferenceListenter(this));
 		

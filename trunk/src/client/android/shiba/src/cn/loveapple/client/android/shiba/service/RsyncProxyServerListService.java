@@ -32,10 +32,16 @@
  */
 package cn.loveapple.client.android.shiba.service;
 
+import static cn.loveapple.client.android.Constant.LOG_TAG;
+
+import org.apache.commons.lang.builder.ToStringBuilder;
+
 import android.app.Service;
 import android.content.Intent;
-import android.content.pm.PackageManager;
+import android.os.Binder;
 import android.os.IBinder;
+import android.util.Log;
+import cn.loveapple.client.android.ApiHelper;
 
 /**
  * プロキシサーバアドレスデータ同期のサービス
@@ -47,15 +53,58 @@ import android.os.IBinder;
  */
 public class RsyncProxyServerListService extends Service {
 
+	private final IBinder proxyServerListBinder = new ProxyServerListBinder();
+
+	public class ProxyServerListBinder extends Binder {
+		ProxyServerListBinder getService() {
+
+			return ProxyServerListBinder.this;
+		}
+	}
+
 	/**
 	 * {@inheritDoc}
 	 */
 	@Override
 	public IBinder onBind(Intent intent) {
-		PackageManager packageManager = getPackageManager();
-
-		// TODO Auto-generated method stub
-		return null;
+		return proxyServerListBinder;
 	}
+
+	@Override
+	public void onStart(Intent intent, int startId) {
+		Thread thr = new Thread(null, task, "RsyncProxyServerListService");
+		Log.d(LOG_TAG,
+				"start thread in service."
+						+ ToStringBuilder.reflectionToString(thr));
+		thr.start();
+	}
+
+	/**
+	 * プロキシサーバのリスト
+	 */
+	@Override
+	public void onCreate() {
+		super.onCreate();
+	}
+
+	/**
+	 * 
+	 */
+	@Override
+	public void onDestroy() {
+		super.onDestroy();
+	}
+
+	private Runnable task = new Runnable() {
+		public void run() {
+			synchronized (proxyServerListBinder) {
+				Log.d(LOG_TAG,
+						"in service."
+								+ ToStringBuilder.reflectionToString(ApiHelper
+										.getProxyServerListStorage(getPackageManager())));
+			}
+
+		}
+	};
 
 }
