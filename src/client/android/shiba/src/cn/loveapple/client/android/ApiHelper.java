@@ -32,30 +32,19 @@
  */
 package cn.loveapple.client.android;
 
-import static cn.loveapple.client.android.Constant.*;
+import static cn.loveapple.client.android.Constant.LOG_TAG;
+import static cn.loveapple.client.android.util.DateUtil.parseDate;
 
-import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-import org.apache.commons.lang.builder.ToStringBuilder;
-import org.apache.http.HttpEntity;
-import org.apache.http.HttpResponse;
-import org.apache.http.HttpStatus;
-import org.apache.http.ParseException;
-import org.apache.http.client.methods.HttpGet;
-import org.apache.http.impl.client.DefaultHttpClient;
-import org.apache.http.params.HttpConnectionParams;
-import org.apache.http.params.HttpParams;
-import org.apache.http.util.EntityUtils;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import android.app.Activity;
 import android.content.pm.PackageManager;
 import android.util.Log;
-
 import cn.loveapple.client.android.shiba.database.entity.ProxyServer;
 import cn.loveapple.client.android.util.ApiUtil;
 
@@ -69,18 +58,56 @@ import cn.loveapple.client.android.util.ApiUtil;
  */
 public class ApiHelper {
 	private static final String PROXY_SERVER_LIST_JSON_URL = "http://loveapple.sourceforge.jp/serverList.php";
+	
+	private static ProxyServerList proxyServerListStorage = null;
+	private static final String JSON_UPDATE_DATE_PATTERN = "yyyy/MM/dd HH:mm";
+	
+	/**
+	 * 
+	 * @param packageManager
+	 * @return
+	 */
+	public static ProxyServerList getProxyServerListStorage(PackageManager packageManager){
+		if(proxyServerListStorage == null){
+			try {
+				return reloadProxyServerList(packageManager);
+			} catch (JSONException e) {
+				Log.e(LOG_TAG, e.getMessage(), e);
+				return null;
+			}
+		}else{
+			return proxyServerListStorage;
+		}
+	}
 
-	public static ProxyServerList readProxyServerList(PackageManager packageManager) throws JSONException {
+	public static ProxyServerList reloadProxyServerList(PackageManager packageManager) throws JSONException {
 
 		String json = ApiUtil.getHttpBody(PROXY_SERVER_LIST_JSON_URL, packageManager);
-		
-		JSONArray jsonArray = new JSONArray(json);
+
+		proxyServerListStorage = new ProxyServerList();
 		JSONObject jsonObject = new JSONObject(json);
-		Log.d(LOG_TAG, json);
-		Log.d(LOG_TAG,ToStringBuilder.reflectionToString(jsonArray));
-		Log.d(LOG_TAG,ToStringBuilder.reflectionToString(jsonObject));
-		// TODO
-		return null;
+		JSONArray hostArray = jsonObject.getJSONArray("hosts");
+		
+		
+		// 最終更新日時を設定
+		String lastUpdate = jsonObject.getString("update").trim();
+		int updateStrLength = lastUpdate.length();
+		String timeZone = lastUpdate.substring(updateStrLength - 4).trim();
+		lastUpdate = lastUpdate.substring(0, updateStrLength - 4).trim();
+		proxyServerListStorage.setLastUpdate(parseDate(lastUpdate, JSON_UPDATE_DATE_PATTERN, timeZone));
+		
+		// ホストリストを設定
+		List<ProxyServer> hostList = new ArrayList<ProxyServer>(hostArray.length());
+		for(int i = 0; i < hostArray.length(); i++){
+			JSONObject hostObj = hostArray.getJSONObject(i);
+			ProxyServer host = new ProxyServer();
+			host.setLocal(hostObj.getString("local"));
+			host.setType(hostObj.getString("type"));
+			host.setHost(hostObj.getString("host"));
+			hostList.add(host);
+		}
+		proxyServerListStorage.setProxyServerList(hostList);
+		return proxyServerListStorage;
 	}
 
 	public static class ProxyServerList {

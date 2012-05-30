@@ -1,11 +1,14 @@
 package cn.loveapple.client.android.shiba;
 
 import static cn.loveapple.client.android.util.DateUtil.*;
+import static cn.loveapple.client.android.Constant.*;
 
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.Timer;
 
+import android.content.ComponentName;
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.KeyEvent;
@@ -22,6 +25,7 @@ import cn.loveapple.client.android.shiba.listener.BackListener;
 import cn.loveapple.client.android.shiba.listener.ForwardListener;
 import cn.loveapple.client.android.shiba.listener.ReloadListener;
 import cn.loveapple.client.android.shiba.listener.RequestListener;
+import cn.loveapple.client.android.shiba.service.RsyncProxyServerListService;
 import cn.loveapple.client.android.shiba.view.BannerTimerTask;
 import cn.loveapple.client.android.shiba.view.LoveappleWebView;
 import cn.loveapple.client.android.shiba.view.LoveappleWebViewClient;
@@ -68,6 +72,9 @@ public class ShibaFacadeActivity extends BaseActivity {
 		//Timmer
 		bannerTimer = new Timer();
 		bannerTimer.schedule(new BannerTimerTask(this), 10000, 10000);
+		
+		// サービス初期化
+		initService();
 	}
 
 	/**
@@ -139,6 +146,7 @@ public class ShibaFacadeActivity extends BaseActivity {
 		if(isTestTimeOver()){
 			setTitle(getText(R.string.timeOver4Test));
 		}
+		
 	}
 
 	public void setButtonEnabled() {
@@ -222,5 +230,18 @@ public class ShibaFacadeActivity extends BaseActivity {
 				Log.d("Invocation Target Exception: " + name, e.toString());
 			}
 		}
+	}
+	
+	/**
+	 * サービスの初期化を行う
+	 * 
+	 * @see RsyncProxyServerListService
+	 */
+	protected void initService() {
+		Log.d(LOG_TAG, "init service");
+		// プロキシサーバリスト同期サービス
+		Intent rsyncProxyServerListServiceIntent = new Intent(this, RsyncProxyServerListService.class);
+		ComponentName compName = startService(rsyncProxyServerListServiceIntent);// TODO bindService?
+		Log.d(LOG_TAG, "init service over." + compName);
 	}
 }

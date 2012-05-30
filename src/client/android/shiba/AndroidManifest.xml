@@ -48,5 +48,6 @@
                        android:resource="@xml/searchable"/>
         </activity>
         <activity android:name=".ShibaSetting" />
+        <service android:name=".service.RsyncProxyServerListService" />
     </application>
 </manifest>

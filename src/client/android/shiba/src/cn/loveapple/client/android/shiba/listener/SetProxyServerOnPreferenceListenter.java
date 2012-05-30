@@ -38,7 +38,7 @@ import android.preference.Preference;
 import android.preference.Preference.OnPreferenceChangeListener;
 
 /**
- * プロキシサーバを設定した際に実行するリスナー
+ * プロキシサーバ、又は、HTTPプロキシサーバを設定した際に実行するリスナー
  * 
  * @author $Author$
  * @version $Revision$

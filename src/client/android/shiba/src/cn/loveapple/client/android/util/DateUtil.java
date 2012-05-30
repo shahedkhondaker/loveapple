@@ -37,6 +37,7 @@ import static cn.loveapple.client.android.Constant.LOG_TAG;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.TimeZone;
 
 import org.apache.commons.lang.time.DateUtils;
 
@@ -64,7 +65,7 @@ public class DateUtil extends DateUtils{
 	 * @param pattern 時間パターン
 	 * @return 変換できない場合、<code>null</code>を戻す。成功した場合、変換結果を戻す
 	 */
-	public static Date paseDate(String source, String pattern){
+	public static Date parseDate(String source, String pattern){
 		if(source == null || pattern == null){
 			return null;
 		}
@@ -75,17 +76,40 @@ public class DateUtil extends DateUtils{
 			return null;
 		}
 	}
+	/**
+	 * 文字列を時間に変換する。
+	 * 
+	 * @see SimpleDateFormat 変換処理を行う
+	 * @param source 元の文字列
+	 * @param pattern 時間パターン
+	 * @param timeZone タイムゾーン
+	 * @return 変換できない場合、<code>null</code>を戻す。成功した場合、変換結果を戻す
+	 */
+	public static Date parseDate(String source, String pattern, String timeZone){
+		if(source == null || pattern == null){
+			return null;
+		}
+		try{
+			SimpleDateFormat format = new SimpleDateFormat(pattern);
+			if(StringUtils.isNotEmpty(timeZone)){
+				format.setTimeZone(TimeZone.getTimeZone(timeZone.trim()));
+			}
+			return format.parse(source);
+		}catch (Exception e) {
+			return null;
+		}
+	}
 	
 	/**
 	 * 日時文字列が正しいかどうかをチェックする。
 	 * 
-	 * @see #paseDate(String, String)
+	 * @see #parseDate(String, String)
 	 * @param source 元の文字列
 	 * @param pattern 時間パターン
 	 * @return 判定結果を戻す。
 	 */
 	public static boolean isDateStr(String source, String pattern){
-		return paseDate(source, pattern) != null;
+		return parseDate(source, pattern) != null;
 	}
 	
 	/**
