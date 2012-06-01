@@ -180,7 +180,7 @@ public class ProxyServerAdapter extends ArrayAdapter<ProxyServer> implements
 		try {
 			imageName.append("countrys");
 			imageName.append(File.separatorChar);
-			imageName.append(proxyServer.getLocal());
+			imageName.append(proxyServer.getLocal().toUpperCase());
 			imageName.append(".png");
 			is = getContext().getResources().getAssets().open(imageName.toString());
 			icon = BitmapFactory.decodeStream(is);
