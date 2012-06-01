@@ -35,13 +35,18 @@ package cn.loveapple.client.android.shiba.service;
 import static cn.loveapple.client.android.Constant.LOG_TAG;
 
 import org.apache.commons.lang.builder.ToStringBuilder;
+import org.json.JSONException;
 
+import android.app.AlarmManager;
+import android.app.PendingIntent;
 import android.app.Service;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Binder;
 import android.os.IBinder;
 import android.util.Log;
 import cn.loveapple.client.android.ApiHelper;
+import cn.loveapple.client.android.ApiHelper.ProxyServerList;
 
 /**
  * プロキシサーバアドレスデータ同期のサービス
@@ -52,7 +57,8 @@ import cn.loveapple.client.android.ApiHelper;
  * @id $Id$
  */
 public class RsyncProxyServerListService extends Service {
-
+	private ProxyServerList proxyServerList = null;
+	private PendingIntent alarmSender;
 	private final IBinder proxyServerListBinder = new ProxyServerListBinder();
 
 	public class ProxyServerListBinder extends Binder {
@@ -98,10 +104,24 @@ public class RsyncProxyServerListService extends Service {
 	private Runnable task = new Runnable() {
 		public void run() {
 			synchronized (proxyServerListBinder) {
+				try {
+					proxyServerList = ApiHelper.reloadProxyServerList(getPackageManager());
+				} catch (JSONException e) {
+					Log.e(LOG_TAG, "fail to reload proxy server list.", e);
+				}
 				Log.d(LOG_TAG,
-						"in service."
-								+ ToStringBuilder.reflectionToString(ApiHelper
-										.getProxyServerListStorage(getPackageManager())));
+						"reload proxy server list in service."
+								+ ToStringBuilder.reflectionToString(proxyServerList));
+				
+				/*TODO 定時実行
+				 * long now = System.currentTimeMillis();
+				alarmSender = PendingIntent.getService(this, 0,   
+	                    new Intent(this, this.getClass()), 0);  
+	            AlarmManager am = (AlarmManager)getSystemService(Context.ALARM_SERVICE);  
+	            am.set(AlarmManager.RTC, now + 10*1000, alarmSender);  
+	              
+	            // サービス終了  
+	            this.stopSelf();  */
 			}
 
 		}

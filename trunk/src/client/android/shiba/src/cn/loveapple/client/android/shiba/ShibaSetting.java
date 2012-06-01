@@ -32,20 +32,14 @@
  */
 package cn.loveapple.client.android.shiba;
 
-import static cn.loveapple.client.android.Constant.LOG_TAG;
-import static cn.loveapple.client.android.util.DateUtil.*;
-
-import java.util.Calendar;
-
-import cn.loveapple.client.android.shiba.listener.SetProxyServerOnPreferenceListenter;
-import cn.loveapple.client.android.shiba.service.RsyncProxyServerListService;
-
+import static cn.loveapple.client.android.util.DateUtil.isTestTimeOver;
 import android.content.Context;
 import android.os.Bundle;
 import android.preference.EditTextPreference;
+import android.preference.ListPreference;
 import android.preference.PreferenceActivity;
 import android.preference.PreferenceManager;
-import android.util.Log;
+import cn.loveapple.client.android.shiba.listener.SetProxyServerOnPreferenceListenter;
 
 /**
  * オプションメニューを表示するアクティビティ
@@ -63,11 +57,15 @@ public class ShibaSetting extends PreferenceActivity {
 		addPreferencesFromResource(R.xml.shiba_setting);
 		
 		// プロキシサーバテキストボックスのリスナーを設定
-		EditTextPreference proxy_server = (EditTextPreference) findPreference("proxy_server");
+		ListPreference proxy_server = (ListPreference) findPreference("proxy_server");
 		proxy_server.setOnPreferenceChangeListener(new SetProxyServerOnPreferenceListenter(this));
 		//proxy_server.setOnPreferenceClickListener(onPreferenceClickListener)
 		EditTextPreference http_proxy_server = (EditTextPreference) findPreference("http_proxy_server");
 		http_proxy_server.setOnPreferenceChangeListener(new SetProxyServerOnPreferenceListenter(this));
+		
+		//TODO プロキシサーバリスト
+		ProxyServerAdapter proxyServerAdapter = new ProxyServerAdapter(this, R.layout.list_proxy_server);
+		
 		
 	}
 	

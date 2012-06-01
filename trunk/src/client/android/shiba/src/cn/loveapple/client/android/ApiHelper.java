@@ -67,17 +67,8 @@ public class ApiHelper {
 	 * @param packageManager
 	 * @return
 	 */
-	public static ProxyServerList getProxyServerListStorage(PackageManager packageManager){
-		if(proxyServerListStorage == null){
-			try {
-				return reloadProxyServerList(packageManager);
-			} catch (JSONException e) {
-				Log.e(LOG_TAG, e.getMessage(), e);
-				return null;
-			}
-		}else{
-			return proxyServerListStorage;
-		}
+	public static ProxyServerList getProxyServerListStorage(){
+		return proxyServerListStorage;
 	}
 
 	public static ProxyServerList reloadProxyServerList(PackageManager packageManager) throws JSONException {
