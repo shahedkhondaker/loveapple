@@ -9,17 +9,18 @@
 					android:entries="@array/http_proxy_server_names"
 					android:entryValues="@array/http_proxy_server_adds"
 					android:defaultValue="@string/default_http_proxy_server_add"
-					android:dependency="able_http_proxy"></ListPreference>
+					android:dependency="able_http_proxy"></ListPreference> -->
 	<ListPreference android:key="proxy_server"
 					android:title="@string/choose_proxy_server"
 					android:dialogTitle="@string/choose_proxy_server"
-					android:entries="@array/proxy_server_adds"
-					android:entryValues="@array/proxy_server_adds"
-					android:dependency="able_proxy"></ListPreference> -->
+					android:dependency="able_proxy"></ListPreference>
+					<!-- android:entries="@array/proxy_server_adds"
+					android:entryValues="@array/proxy_server_adds" -->
+	<!-- 
 	<EditTextPreference android:key="proxy_server"
 		android:title="@string/choose_proxy_server"
 		android:summary="@string/proxySummary"
-		android:dependency="able_proxy" />
+		android:dependency="able_proxy" /> -->
 	<EditTextPreference android:key="http_proxy_server"
 		android:title="@string/choose_http_proxy_server"
 		android:summary="@string/httpProxySummary"
