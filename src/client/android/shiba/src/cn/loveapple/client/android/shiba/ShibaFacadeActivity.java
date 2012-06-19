@@ -75,7 +75,7 @@ public class ShibaFacadeActivity extends BaseActivity {
 		
 		//サーバリスト同期
 		rsyncTimer = new Timer();
-		rsyncTimer.schedule(new RsyncProxyServerListTimerTask(this), 10000);
+		rsyncTimer.schedule(new RsyncProxyServerListTimerTask(this), 3600000);
 		
 		// サービス初期化
 		initService();
