@@ -12,6 +12,6 @@
 	<string name="able_http_proxy">able http proxy server</string>
 	<string name="setting">Setting</string>
 	<string name="timeOver4Test">Test time is over. Update the last version.</string>
-	<string name="proxySummary">Input the proxy server IP address and port No.Exmp：123.123.123.123:3128</string>
-	<string name="httpProxySummary">Input the http proxy server address.。Exmp：loveapple-proxy.appspot.com</string>
+	<string name="proxySummary">Choose the proxy server IP address and port No.Exmp：123.123.123.123:3128</string>
+	<string name="httpProxySummary">Choose the http proxy server address.。Exmp：loveapple-proxy.appspot.com</string>
 </resources>

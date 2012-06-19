@@ -12,6 +12,6 @@
 	<string name="able_http_proxy">HTTPプロキシサーバ有効</string>
 	<string name="setting">設定</string>
 	<string name="timeOver4Test">試験期間オーバー。正式版にアップデータして下さい。</string>
-	<string name="proxySummary">プロキシサーバのIPとポート番号を入力して下さい。例：123.123.123.123:3128</string>
-	<string name="httpProxySummary">HTTPSをサポートするHTTPプロキシサーバのアドレスを入力して下さい。例：loveapple-proxy.appspot.com</string>
+	<string name="proxySummary">プロキシサーバのIPとポート番号を選択して下さい。例：123.123.123.123:3128</string>
+	<string name="httpProxySummary">HTTPSをサポートするHTTPプロキシサーバのアドレスを選択して下さい。例：loveapple-proxy.appspot.com</string>
 </resources>

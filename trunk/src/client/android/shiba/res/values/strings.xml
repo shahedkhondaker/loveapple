@@ -12,6 +12,6 @@
 	<string name="able_http_proxy">使用HTTP代理服务器</string>
 	<string name="setting">设定</string>
 	<string name="timeOver4Test">测试版本无效。请升级正式版本。</string>
-	<string name="proxySummary">输入代理服务器IP地址和端口。例：123.123.123.123:3128</string>
-	<string name="httpProxySummary">输入支持HTTPS通信的HTTP代理服务器地址。例：loveapple-proxy.appspot.com</string>
+	<string name="proxySummary">选择代理服务器IP地址和端口。例：123.123.123.123:3128</string>
+	<string name="httpProxySummary">选择支持HTTPS通信的HTTP代理服务器地址。例：loveapple-proxy.appspot.com</string>
 </resources>
