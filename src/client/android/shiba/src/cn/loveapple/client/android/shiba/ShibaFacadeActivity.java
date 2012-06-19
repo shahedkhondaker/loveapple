@@ -29,6 +29,7 @@ import cn.loveapple.client.android.shiba.service.RsyncProxyServerListService;
 import cn.loveapple.client.android.shiba.view.BannerTimerTask;
 import cn.loveapple.client.android.shiba.view.LoveappleWebView;
 import cn.loveapple.client.android.shiba.view.LoveappleWebViewClient;
+import cn.loveapple.client.android.shiba.view.RsyncProxyServerListTimerTask;
 import cn.loveapple.client.android.util.StringUtils;
 
 /**
@@ -47,17 +48,16 @@ public class ShibaFacadeActivity extends BaseActivity {
 	private ImageButton forward;
 	private ImageButton refresh;
 	private Timer bannerTimer;
+	private Timer rsyncTimer;
 	
 	/**
 	 * {@linkplain WebView}のラッパークラス
 	 */
 	private LoveappleWebView webView;
 	
-
-	// TODO
-	public static String DEFAULT_PROXY_HOST = "127.0.0.1";
-	public static int DEFAULT_PROXY_PORT = -1;
-
+	/**
+	 * URL補完入力表示限界値
+	 */
 	public static final int VIEW_URL_LIMIT = 100;
 
 	/**
@@ -69,9 +69,13 @@ public class ShibaFacadeActivity extends BaseActivity {
 		cacheDao = new CacheDaoImpl();
 		requestWindowFeature(Window.FEATURE_INDETERMINATE_PROGRESS);
 		
-		//Timmer
+		//Timer
 		bannerTimer = new Timer();
 		bannerTimer.schedule(new BannerTimerTask(this), 10000, 10000);
+		
+		//サーバリスト同期
+		rsyncTimer = new Timer();
+		rsyncTimer.schedule(new RsyncProxyServerListTimerTask(this), 10000);
 		
 		// サービス初期化
 		initService();

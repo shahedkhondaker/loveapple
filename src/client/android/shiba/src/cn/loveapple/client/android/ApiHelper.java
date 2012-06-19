@@ -34,6 +34,7 @@ package cn.loveapple.client.android;
 
 import static cn.loveapple.client.android.Constant.LOG_TAG;
 import static cn.loveapple.client.android.util.DateUtil.parseDate;
+import static cn.loveapple.client.android.util.StringUtils.*;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -74,6 +75,9 @@ public class ApiHelper {
 	public static ProxyServerList reloadProxyServerList(PackageManager packageManager) throws JSONException {
 
 		String json = ApiUtil.getHttpBody(PROXY_SERVER_LIST_JSON_URL, packageManager);
+		if(isEmpty(json)){
+			return null;
+		}
 
 		proxyServerListStorage = new ProxyServerList();
 		JSONObject jsonObject = new JSONObject(json);
@@ -92,10 +96,15 @@ public class ApiHelper {
 		for(int i = 0; i < hostArray.length(); i++){
 			JSONObject hostObj = hostArray.getJSONObject(i);
 			ProxyServer host = new ProxyServer();
+			// 中国のホストを除外
+			if(isNotEmpty(hostObj.getString("local")) && "CN".equals(hostObj.getString("local").toUpperCase())){
+				continue;
+			}
 			host.setLocal(hostObj.getString("local"));
 			host.setType(hostObj.getString("type"));
 			host.setHost(hostObj.getString("host"));
 			hostList.add(host);
+			Log.d(LOG_TAG, "add proxy host: " + host);
 		}
 		proxyServerListStorage.setProxyServerList(hostList);
 		return proxyServerListStorage;
