@@ -13,9 +13,12 @@
 	<ListPreference android:key="proxy_server"
 					android:title="@string/choose_proxy_server"
 					android:dialogTitle="@string/choose_proxy_server"
-					android:dependency="able_proxy"></ListPreference>
-					<!-- android:entries="@array/proxy_server_adds"
-					android:entryValues="@array/proxy_server_adds" -->
+					android:dependency="able_proxy"
+					android:summary="@string/proxySummary"
+					></ListPreference>
+				<!-- 	 android:entries="@array/proxy_server_adds"
+					android:entryValues="@array/proxy_server_adds"  -->
+					
 	<!-- 
 	<EditTextPreference android:key="proxy_server"
 		android:title="@string/choose_proxy_server"

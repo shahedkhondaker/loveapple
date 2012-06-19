@@ -68,6 +68,9 @@ import cn.loveapple.client.android.shiba.database.entity.ProxyServer;
 public class ProxyServerAdapter extends ArrayAdapter<ProxyServer> implements
 		Filterable {
 
+	/**
+	 * プロキシサーバリスト
+	 */
 	private ProxyServerList proxyServerList;
 	private List<ProxyServer> viewResult;
 	private LayoutInflater layoutInflater_;
@@ -193,4 +196,12 @@ public class ProxyServerAdapter extends ArrayAdapter<ProxyServer> implements
 		}
 		return icon;
 	}
+
+	/**
+	 * @return the proxyServerList
+	 */
+	public ProxyServerList getProxyServerList() {
+		return proxyServerList;
+	}
+	
 }

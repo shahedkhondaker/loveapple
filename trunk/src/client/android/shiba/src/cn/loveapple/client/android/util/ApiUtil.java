@@ -74,6 +74,7 @@ public class ApiUtil {
 			httpResponse = httpClient.execute(httpRequest);
 		} catch (Exception e) {
 			Log.e(LOG_TAG, "http response execute failed.", e);
+			return null;
 		}
 		if (httpResponse != null
 				&& httpResponse.getStatusLine().getStatusCode() == HttpStatus.SC_OK) {
@@ -83,6 +84,7 @@ public class ApiUtil {
 				body = EntityUtils.toString(httpEntity);
 			} catch (Exception e) {
 				Log.e(LOG_TAG, "get http response body failed.", e);
+				return null;
 			} finally {
 				try {
 					httpEntity.consumeContent();

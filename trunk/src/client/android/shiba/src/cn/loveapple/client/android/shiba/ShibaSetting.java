@@ -39,7 +39,9 @@ import android.preference.EditTextPreference;
 import android.preference.ListPreference;
 import android.preference.PreferenceActivity;
 import android.preference.PreferenceManager;
+import cn.loveapple.client.android.shiba.database.entity.ProxyServer;
 import cn.loveapple.client.android.shiba.listener.SetProxyServerOnPreferenceListenter;
+import cn.loveapple.client.android.util.StringUtils;
 
 /**
  * オプションメニューを表示するアクティビティ
@@ -63,11 +65,23 @@ public class ShibaSetting extends PreferenceActivity {
 		EditTextPreference http_proxy_server = (EditTextPreference) findPreference("http_proxy_server");
 		http_proxy_server.setOnPreferenceChangeListener(new SetProxyServerOnPreferenceListenter(this));
 		
-		//TODO プロキシサーバリスト
+		//テキスト版のプロキシサーバリストを生成
 		ProxyServerAdapter proxyServerAdapter = new ProxyServerAdapter(this, R.layout.list_proxy_server);
+		int listCount = proxyServerAdapter.getCount();
+		String[] entries = new String[listCount];
+		String[] entriesName = new String[listCount];
+		for (int i = 0; i < listCount; i++) {
+			ProxyServer proxyServer = proxyServerAdapter.getProxyServerList().getProxyServerList().get(i);
+			entries[i] = proxyServer.getHost();
+			entriesName[i] = proxyServer.getLocal() + ":" + proxyServer.getHost();
+		}
+		
+		proxy_server.setEntries(entriesName);
+		proxy_server.setEntryValues(entries);
 		
 		
 	}
+	
 	
 	public static boolean ableHttpProxy(Context context){
 		return PreferenceManager.getDefaultSharedPreferences(context).getBoolean("able_http_proxy", false);

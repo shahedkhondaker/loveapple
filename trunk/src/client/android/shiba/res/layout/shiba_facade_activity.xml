@@ -1,34 +1,34 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical"
-    android:layout_width="fill_parent"
-    android:layout_height="fill_parent"
-    >
-    <LinearLayout android:id="@+id/addressBar" android:orientation="horizontal" android:layout_width="fill_parent" android:layout_height="wrap_content">
-         <ImageButton
-        	android:id="@+id/back"
-        	android:layout_width="wrap_content"
-        	android:layout_height="wrap_content"
-        	android:src="@drawable/ic_menu_back"
-        	/>
-        <ImageButton
-        	android:id="@+id/forward"
-        	android:layout_width="wrap_content"
-        	android:layout_height="wrap_content"
-        	android:src="@drawable/ic_menu_forward"
-        	/>
-        <AutoCompleteTextView 
-        	android:id="@+id/address" 
-        	android:layout_width="wrap_content" 
-        	android:layout_height="wrap_content"
-        	android:layout_marginLeft="5dp"
-        	android:inputType="text" />
-        <ImageButton
-        	android:id="@+id/refresh"
-        	android:layout_width="wrap_content"
-        	android:layout_height="wrap_content"
-        	android:src="@drawable/ic_menu_refresh"
-        	/> 
+	android:orientation="vertical"
+	android:layout_width="fill_parent"
+	android:layout_height="fill_parent"
+	>
+	<LinearLayout android:id="@+id/addressBar" android:orientation="horizontal" android:layout_width="fill_parent" android:layout_height="wrap_content">
+		 <ImageButton
+			android:id="@+id/back"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:src="@drawable/ic_menu_back"
+			/>
+		<ImageButton
+			android:id="@+id/forward"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:src="@drawable/ic_menu_forward"
+			/>
+		<AutoCompleteTextView 
+			android:id="@+id/address" 
+			android:layout_width="wrap_content" 
+			android:layout_height="wrap_content"
+			android:layout_marginLeft="5dp"
+			android:inputType="text" />
+		<ImageButton
+			android:id="@+id/refresh"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:src="@drawable/ic_menu_refresh"
+			/> 
 	</LinearLayout>
 	<cn.loveapple.client.android.shiba.view.LoveappleWebView android:id="@+id/web" android:layout_width="fill_parent" android:layout_height="fill_parent"/>
 </LinearLayout>

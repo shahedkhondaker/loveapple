@@ -35,7 +35,6 @@ package cn.loveapple.client.android.shiba.service;
 import static cn.loveapple.client.android.Constant.LOG_TAG;
 
 import org.apache.commons.lang.builder.ToStringBuilder;
-import org.json.JSONException;
 
 import android.app.AlarmManager;
 import android.app.PendingIntent;
@@ -55,6 +54,7 @@ import cn.loveapple.client.android.ApiHelper.ProxyServerList;
  * @version $Revision$
  * @date $Date$
  * @id $Id$
+ * @deprecated TODO timerを使用？
  */
 public class RsyncProxyServerListService extends Service {
 	private ProxyServerList proxyServerList = null;
@@ -106,22 +106,25 @@ public class RsyncProxyServerListService extends Service {
 			synchronized (proxyServerListBinder) {
 				try {
 					proxyServerList = ApiHelper.reloadProxyServerList(getPackageManager());
-				} catch (JSONException e) {
+				} catch (Exception e) {
 					Log.e(LOG_TAG, "fail to reload proxy server list.", e);
+					return ;
 				}
 				Log.d(LOG_TAG,
 						"reload proxy server list in service."
 								+ ToStringBuilder.reflectionToString(proxyServerList));
 				
-				/*TODO 定時実行
-				 * long now = System.currentTimeMillis();
-				alarmSender = PendingIntent.getService(this, 0,   
-	                    new Intent(this, this.getClass()), 0);  
-	            AlarmManager am = (AlarmManager)getSystemService(Context.ALARM_SERVICE);  
-	            am.set(AlarmManager.RTC, now + 10*1000, alarmSender);  
+				try{
+					long now = System.currentTimeMillis();
+					alarmSender = PendingIntent.getService(RsyncProxyServerListService.this, 0,   
+		                    new Intent(RsyncProxyServerListService.this, this.getClass()), 0);  
+		            AlarmManager am = (AlarmManager)getSystemService(Context.ALARM_SERVICE);  
+		            am.set(AlarmManager.RTC, now + 10*1000, alarmSender);  
+				}catch (Exception e) {
+					Log.d(LOG_TAG, e.getMessage(), e);
+				}
 	              
-	            // サービス終了  
-	            this.stopSelf();  */
+	            //this.stopSelf(); 
 			}
 
 		}
