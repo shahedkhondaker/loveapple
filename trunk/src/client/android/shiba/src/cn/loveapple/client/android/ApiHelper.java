@@ -76,6 +76,10 @@ public class ApiHelper {
 
 		String json = ApiUtil.getHttpBody(PROXY_SERVER_LIST_JSON_URL, packageManager);
 		if(isEmpty(json)){
+			if(proxyServerListStorage == null){
+				proxyServerListStorage = new ProxyServerList();
+				proxyServerListStorage.setProxyServerList(new ArrayList<ProxyServer>(0));
+			}
 			return null;
 		}
 

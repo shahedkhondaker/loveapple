@@ -1,6 +1,6 @@
 package cn.loveapple.client.android.shiba.view;
 
-import static cn.loveapple.client.android.Constant.*;
+import static cn.loveapple.client.android.Constant.LOG_TAG;
 
 import java.util.TimerTask;
 

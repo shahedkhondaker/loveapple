@@ -41,7 +41,6 @@ import android.preference.PreferenceActivity;
 import android.preference.PreferenceManager;
 import cn.loveapple.client.android.shiba.database.entity.ProxyServer;
 import cn.loveapple.client.android.shiba.listener.SetProxyServerOnPreferenceListenter;
-import cn.loveapple.client.android.util.StringUtils;
 
 /**
  * オプションメニューを表示するアクティビティ
