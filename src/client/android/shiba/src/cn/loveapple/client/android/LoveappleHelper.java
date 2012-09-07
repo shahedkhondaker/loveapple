@@ -32,7 +32,7 @@
  */
 package cn.loveapple.client.android;
 
-import static cn.loveapple.client.android.Constant.*;
+import static cn.loveapple.client.android.Constant.LOG_TAG;
 
 import java.io.IOException;
 import java.lang.reflect.Field;
@@ -42,17 +42,9 @@ import java.net.Socket;
 
 import org.apache.http.HttpHost;
 
-import cn.loveapple.client.android.util.StringUtils;
-
-import android.app.Activity;
-import android.app.AlertDialog;
-import android.content.ActivityNotFoundException;
 import android.content.Context;
-import android.content.DialogInterface;
-import android.content.Intent;
-import android.net.ConnectivityManager;
-import android.net.Uri;
 import android.util.Log;
+import cn.loveapple.client.android.util.StringUtils;
 
 /**
  * ヘルパークラス

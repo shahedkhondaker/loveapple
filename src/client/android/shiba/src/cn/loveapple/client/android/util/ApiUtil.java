@@ -45,8 +45,6 @@ import org.apache.http.params.HttpConnectionParams;
 import org.apache.http.params.HttpParams;
 import org.apache.http.util.EntityUtils;
 
-import android.app.Activity;
-import android.app.Service;
 import android.content.pm.PackageManager;
 import android.util.Log;
 
