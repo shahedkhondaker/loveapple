@@ -39,6 +39,7 @@ import android.preference.EditTextPreference;
 import android.preference.ListPreference;
 import android.preference.PreferenceActivity;
 import android.preference.PreferenceManager;
+import android.widget.Toast;
 import cn.loveapple.client.android.shiba.database.entity.ProxyServer;
 import cn.loveapple.client.android.shiba.listener.SetProxyServerOnPreferenceListenter;
 
@@ -67,6 +68,9 @@ public class ShibaSetting extends PreferenceActivity {
 		//テキスト版のプロキシサーバリストを生成
 		ProxyServerAdapter proxyServerAdapter = new ProxyServerAdapter(this, R.layout.list_proxy_server);
 		int listCount = proxyServerAdapter.getCount();
+		//
+		Toast.makeText(this, R.string.invalidProxyList, Toast.LENGTH_LONG).show();
+		
 		String[] entries = new String[listCount];
 		String[] entriesName = new String[listCount];
 		for (int i = 0; i < listCount; i++) {

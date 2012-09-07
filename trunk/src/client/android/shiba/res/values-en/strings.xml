@@ -14,4 +14,5 @@
 	<string name="timeOver4Test">Test time is over. Update the last version.</string>
 	<string name="proxySummary">Choose the proxy server IP address and port No.Exmp：123.123.123.123:3128</string>
 	<string name="httpProxySummary">Choose the http proxy server address.。Exmp：loveapple-proxy.appspot.com</string>
+	<string name="invalidProxyList">Can\'t get proxy list from server.Please check your network configuration.</string>
 </resources>

@@ -14,4 +14,5 @@
 	<string name="timeOver4Test">测试版本无效。请升级正式版本。</string>
 	<string name="proxySummary">选择代理服务器IP地址和端口。例：123.123.123.123:3128</string>
 	<string name="httpProxySummary">选择支持HTTPS通信的HTTP代理服务器地址。例：loveapple-proxy.appspot.com</string>
+	<string name="invalidProxyList">无法从网络提取代理服务器列表，请确认是否已连接英特网。</string>
 </resources>
