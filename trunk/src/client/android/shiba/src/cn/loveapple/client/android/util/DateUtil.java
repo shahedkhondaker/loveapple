@@ -159,7 +159,7 @@ public class DateUtil extends DateUtils{
 	 * @return 判定結果
 	 */
 	public static boolean isTestTimeOver(){
-		boolean istTestVersion = true;
+		boolean istTestVersion = false;//
 		
 		if(!istTestVersion){
 			return false;

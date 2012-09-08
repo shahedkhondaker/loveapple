@@ -69,7 +69,9 @@ public class ShibaSetting extends PreferenceActivity {
 		ProxyServerAdapter proxyServerAdapter = new ProxyServerAdapter(this, R.layout.list_proxy_server);
 		int listCount = proxyServerAdapter.getCount();
 		//
-		Toast.makeText(this, R.string.invalidProxyList, Toast.LENGTH_LONG).show();
+		if(listCount < 1){
+			Toast.makeText(this, R.string.invalidProxyList, Toast.LENGTH_LONG).show();
+		}
 		
 		String[] entries = new String[listCount];
 		String[] entriesName = new String[listCount];

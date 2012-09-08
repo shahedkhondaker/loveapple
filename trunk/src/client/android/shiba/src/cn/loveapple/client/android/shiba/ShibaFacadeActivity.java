@@ -149,6 +149,8 @@ public class ShibaFacadeActivity extends BaseActivity {
 		// テスト期間オーバの制御
 		if(isTestTimeOver()){
 			setTitle(getText(R.string.timeOver4Test));
+		}else{
+			setTitle("");
 		}
 		
 	}
